@@ -140,19 +140,20 @@
   <div class="panel">
     <div class="hd">
       <div class="ttl">芯片解剖 · 从晶圆到纳米晶体管</div>
-      <div class="sub">第一次看建议从「基础概念」开始；① 晶体管、② 制造流程、④ 先进制程 等页可以动手交互</div>
+      <div class="sub">第一次看建议从「基础概念」开始；② 晶体管、③ 制造流程、⑤ 先进制程 等页可以动手交互</div>
     </div>
     <div class="tabs">
       <button class="tab on" data-s="chain">🗺️ 全链条</button>
       <button class="tab" data-s="basics">📘 基础概念</button>
       <div style="flex-basis:100%;height:0"></div>
-      <button class="tab" data-s="tr">① 晶体管</button>
-      <button class="tab" data-s="fab">② 制造流程</button>
-      <button class="tab" data-s="litho">③ 光刻</button>
-      <button class="tab" data-s="adv">④ 先进制程</button>
-      <button class="tab" data-s="mem">⑤ 存储器</button>
-      <button class="tab" data-s="pkg">⑥ 先进封装</button>
-      <button class="tab" data-s="pwr">⑦ 功率/化合物</button>
+      <button class="tab" data-s="wafer">① 硅片·掩膜</button>
+      <button class="tab" data-s="tr">② 晶体管</button>
+      <button class="tab" data-s="fab">③ 制造流程</button>
+      <button class="tab" data-s="litho">④ 光刻</button>
+      <button class="tab" data-s="adv">⑤ 先进制程</button>
+      <button class="tab" data-s="mem">⑥ 存储器</button>
+      <button class="tab" data-s="pkg">⑦ 先进封装</button>
+      <button class="tab" data-s="pwr">⑧ 功率/化合物</button>
     </div>
     <div class="stage">
 
@@ -244,7 +245,7 @@
           <b>三张图常被误解，逐一澄清：</b><br>
           ① 左图那些<b>金色圆点是芯片封装底部的焊球（或引脚）</b>，不是硅片本身——芯片靠它们焊到电路板、与外界通电通信。<br>
           ② 中图的<b>一颗裸晶（Die）就是"一整块芯片"</b>：一片指甲盖大的硅，内部按功能划成多个区——通常有<b>好几个 CPU 核、一个 GPU、大块缓存、I/O 接口</b>等（不是只有一个核）。<br>
-          ③ 右图是放大后的<b>晶体管阵列</b>：青色横条是"有源区"（源极/漏极所在），铜色竖线是一条条"栅极"。<b>每一个铜线与青条的交叉点，就是一个晶体管</b>（颜色与 ① 晶体管页完全对应）。整片硅上这样的交叉点有数百亿个。
+          ③ 右图是放大后的<b>晶体管阵列</b>：青色横条是"有源区"（源极/漏极所在），铜色竖线是一条条"栅极"。<b>每一个铜线与青条的交叉点，就是一个晶体管</b>（颜色与 ② 晶体管页完全对应）。整片硅上这样的交叉点有数百亿个。
         </div>
       
         <div class="subttl">关键澄清：晶体管是"长"出来的，不是"装"上去的</div>
@@ -330,20 +331,31 @@
             <p>经验规律：<b>同样面积上的晶体管数，大约每两年翻一倍</b>。芯片几十年来越做越强，背后就是它。</p>
           </div>
         </div>
-        <div class="note">导航：上方 🗺️ <b>全链条</b>是总览地图，本页是 📘 <b>基础概念</b>，再依次 ① 晶体管 · ② 制造流程 · ③ 光刻 · ④ 先进制程（含制程节点） · ⑤ 存储器 · ⑥ 先进封装 · ⑦ 功率/化合物。下面是<b>全篇术语图鉴</b>，可当索引随时回查。</div>
+        <div class="note">导航：上方 🗺️ <b>全链条</b>是总览地图，本页是 📘 <b>基础概念</b>，再依次 ① 硅片·掩膜 · ② 晶体管 · ③ 制造流程 · ④ 光刻 · ⑤ 先进制程（含制程节点） · ⑥ 存储器 · ⑦ 先进封装 · ⑧ 功率/化合物。下面是<b>全篇术语图鉴</b>，可当索引随时回查。</div>
 
         <div class="subttl">术语图鉴 · 速查（接着基础名词，按类别各配示意图）</div>
-        <div class="ghead">器件与结构（① 晶体管 / ④ 先进制程）</div>
+        <div class="ghead">材料与上游（① 硅片·掩膜）</div>
+        <div class="concept-grid">
+          <div class="ccard"><svg viewBox="0 0 92 50"><ellipse cx="46" cy="28" rx="32" ry="13" fill="url(#gSi)" stroke="#9fc0ec" stroke-width="0.7"/><path d="M33,19 l11,-2" stroke="#cfe0ff" stroke-width="2" stroke-linecap="round" opacity="0.65"/><path d="M57,22 l7,-1" stroke="#bcd4f5" stroke-width="1.3" stroke-linecap="round" opacity="0.5"/><path d="M14,30 l6,3 l-6,2 z" fill="#0a0e1a"/></svg><h5>晶圆 / 硅片</h5><p>镜面<b>单晶硅圆片</b>，造芯片的"画布"；左下小缺口标晶向，主流 300mm。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><g fill="#7fa8e0"><circle cx="16" cy="16" r="1.5"/><circle cx="25" cy="16" r="1.5"/><circle cx="34" cy="16" r="1.5"/><circle cx="16" cy="25" r="1.5"/><circle cx="25" cy="25" r="1.5"/><circle cx="34" cy="25" r="1.5"/><circle cx="16" cy="34" r="1.5"/><circle cx="25" cy="34" r="1.5"/><circle cx="34" cy="34" r="1.5"/></g><text x="25" y="46" font-size="6" fill="#9fc0ec" text-anchor="middle">单晶</text><line x1="45" y1="12" x2="45" y2="40" stroke="#3a4870" stroke-width="0.8" stroke-dasharray="2 2"/><g fill="none" stroke="#8a93a8" stroke-width="0.9"><path d="M55,15 L66,13 L70,21 L61,25 L54,20 Z"/><path d="M70,21 L79,19 L78,29 L70,31 Z"/><path d="M54,20 L61,25 L59,35 L53,32 Z"/><path d="M61,25 L70,31 L68,36 L59,35 Z"/></g><text x="66" y="46" font-size="6" fill="#aeb6c6" text-anchor="middle">多晶</text></svg><h5>单晶硅 / 多晶硅</h5><p>原子<b>整齐排成一片</b>=单晶(造芯片)；许多<b>小晶粒</b>=多晶硅(由<b>改良西门子法</b>提纯，是原料)。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><line x1="46" y1="7" x2="46" y2="16" stroke="#ffd9a0" stroke-width="1.4"/><path d="M44,8 l-3,4 M48,8 l3,4" stroke="#ffd9a0" stroke-width="1.1" fill="none"/><rect x="43" y="16" width="6" height="16" fill="url(#gSi)" stroke="#9fc0ec" stroke-width="0.5"/><path d="M32,42 L60,42 L56,32 Q46,36 36,32 Z" fill="#3a4255" stroke="#5a6477" stroke-width="0.8"/><ellipse cx="46" cy="32" rx="12" ry="3" fill="#ff9d3c"/><ellipse cx="46" cy="31.5" rx="8" ry="1.8" fill="#ffd9a0"/></svg><h5>直拉法 CZ</h5><p>籽晶接触熔硅、边转边<b>极慢上提</b>，拉出整根<b>单晶硅锭</b>——主流长晶法。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="42" y="10" width="8" height="32" fill="url(#gSi)" stroke="#9fc0ec" stroke-width="0.5"/><rect x="40" y="22" width="12" height="7" fill="#ff9d3c"/><g fill="none" stroke="#e0556e" stroke-width="1.6"><path d="M36,22 q-4,3 0,7"/><path d="M56,22 q4,3 0,7"/></g><path d="M60,18 L68,16 L66,22 Z" fill="#34d6cf"/><text x="74" y="22" font-size="6" fill="#9fb0cc">熔区</text></svg><h5>区熔法 FZ</h5><p>线圈把一小段硅<b>熔成"浮区"</b>慢慢扫过，<b>不碰坩埚→更纯</b>，多用于功率器件衬底。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><path d="M34,18 L54,18 L54,38 L34,38 Z" fill="url(#gSi)" opacity="0.85"/><path d="M34,18 L42,12 L62,12 L54,18 Z" fill="#5a76b0"/><path d="M54,18 L62,12 L62,32 L54,38 Z" fill="#3a4f7a"/><rect x="34" y="18" width="20" height="20" fill="none" stroke="#5eead4" stroke-width="1.2"/><text x="44" y="48" font-size="7" fill="#5eead4" text-anchor="middle">&lt;100&gt;</text></svg><h5>晶向 &lt;100&gt;</h5><p>单晶里<b>原子排列的方向</b>，影响后续工艺与解理；芯片主流用 &lt;100&gt; 面。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="17" y="20" width="22" height="20" rx="2" fill="#5a6273"/><text x="28" y="32" font-size="7" fill="#bcd0f0" text-anchor="middle">6~9N</text><text x="28" y="47" font-size="5.5" fill="#8b9bb8" text-anchor="middle">太阳能级</text><rect x="51" y="12" width="22" height="28" rx="2" fill="url(#gSi)"/><text x="62" y="29" font-size="7.5" fill="#cfe0ff" text-anchor="middle" font-weight="700">11N</text><text x="62" y="47" font-size="5.5" fill="#9fc0ec" text-anchor="middle">电子级</text></svg><h5>电子级 / 太阳能级</h5><p>造芯片要<b>电子级 11 个 9</b>(99.999999999%)；光伏用<b>太阳能级 6~9 个 9</b>——两个赛道。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="22" y="32" width="48" height="8" fill="url(#gOx)" opacity="0.55"/><g fill="#2b303a"><rect x="28" y="28" width="10" height="4"/><rect x="46" y="28" width="14" height="4"/></g><rect x="22" y="18" width="2" height="14" fill="#6f7e9c"/><rect x="68" y="18" width="2" height="14" fill="#6f7e9c"/><rect x="22" y="17" width="48" height="2.5" fill="#8ff7ec" opacity="0.78"/><path d="M82,14 L74,18 L82,22 Z" fill="#34d6cf"/></svg><h5>pellicle 保护膜</h5><p>掩膜上方的<b>防尘薄膜</b>：灰尘落在膜上(离焦)而非掩膜面，免得被印到<b>每颗</b>芯片。</p></div>
+        </div>
+        <div class="ghead">器件与结构（② 晶体管 / ⑤ 先进制程）</div>
         <div class="concept-grid">
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="34" width="64" height="12" fill="url(#gSi)"/><rect x="30" y="30" width="32" height="4" fill="url(#gOx)"/><rect x="30" y="18" width="32" height="12" fill="url(#gCu)"/><text x="46" y="14" font-size="7" fill="#f0c082" text-anchor="middle">栅</text><path d="M71,28 L62,32 L71,36 Z" fill="#34d6cf"/></svg><h5>栅氧化层</h5><p>栅极与沟道之间<b>极薄的绝缘膜</b>，靠它"隔空"控制沟道。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="30" width="64" height="16" fill="url(#gSi)"/><rect x="14" y="27" width="64" height="3" fill="#5eead4"/><rect x="26" y="15" width="40" height="9" fill="url(#gCu)"/><text x="46" y="12" font-size="6.5" fill="#f0c082" text-anchor="middle">+V</text><g fill="#5eead4"><circle cx="30" cy="28" r="1.5"/><circle cx="46" cy="28" r="1.5"/><circle cx="62" cy="28" r="1.5"/></g><path d="M67,18 L77,18 L72,26 Z" fill="#34d6cf"/></svg><h5>反型层</h5><p>加栅压后被"现拉"到硅表面的<b>电子薄层</b>，就是导通时的沟道。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="30" width="72" height="14" fill="url(#gSi)"/><rect x="16" y="30" width="18" height="9" fill="url(#gSD)"/><rect x="58" y="30" width="18" height="9" fill="url(#gSD)"/><rect x="38" y="26" width="16" height="4" fill="url(#gOx)"/><rect x="38" y="16" width="16" height="10" fill="url(#gCu)"/><line x1="46" y1="17" x2="46" y2="26" stroke="#c8b3ff" stroke-width="1" stroke-dasharray="2 1"/></svg><h5>MOSFET（场效应）</h5><p>用栅极<b>电场隔空开关</b>源漏间电流的晶体管，逻辑芯片的主力。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><line x1="22" y1="10" x2="70" y2="10" stroke="#e9a04c" stroke-width="1.5"/><line x1="22" y1="42" x2="70" y2="42" stroke="#6f7e9c" stroke-width="1.5"/><rect x="36" y="14" width="20" height="9" rx="1.5" fill="#2d3f63" stroke="#6f88c0"/><text x="46" y="21" font-size="5" fill="#cfe0ff" text-anchor="middle">P</text><rect x="36" y="29" width="20" height="9" rx="1.5" fill="#2d3f63" stroke="#6f88c0"/><text x="46" y="36" font-size="5" fill="#cfe0ff" text-anchor="middle">N</text><line x1="46" y1="23" x2="46" y2="29" stroke="#9fb0cc" stroke-width="0.8"/></svg><h5>CMOS（互补对）</h5><p><b>NMOS+PMOS</b> 一对互补开关，搭出逻辑门、低功耗，数字芯片的基础。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="12" y="38" width="68" height="8" fill="#34425f"/><rect x="42" y="12" width="10" height="26" fill="url(#gSi)"/><rect x="32" y="16" width="30" height="18" rx="2" fill="url(#gCu)" opacity="0.55"/></svg><h5>FinFET（鳍式）</h5><p>沟道立成一片"<b>鳍</b>"，栅极从<b>三面</b>包住，比平面控制力强（14/7nm 主力）。</p></div>
-          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="12" y="40" width="68" height="6" fill="#34425f"/><rect x="34" y="12" width="24" height="26" rx="3" fill="url(#gCu)" opacity="0.5"/><g fill="url(#gSi)"><rect x="38" y="16" width="16" height="4" rx="2"/><rect x="38" y="23" width="16" height="4" rx="2"/><rect x="38" y="30" width="16" height="4" rx="2"/></g></svg><h5>GAA 纳米片</h5><p>沟道做成几层<b>纳米薄片</b>，栅极 <b>360° 环绕</b>每片，3nm/2nm 方向。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="12" y="40" width="68" height="6" fill="#34425f"/><rect x="34" y="12" width="24" height="26" rx="3" fill="url(#gCu)" opacity="0.5"/><g fill="url(#gSi)"><rect x="38" y="16" width="16" height="4" rx="2"/><rect x="38" y="23" width="16" height="4" rx="2"/><rect x="38" y="30" width="16" height="4" rx="2"/></g></svg><h5>GAA 纳米片</h5><p>沟道做成几层<b>纳米薄片</b>，栅极 <b>360° 环绕</b>每片，3nm/2nm 方向（Intel 称 RibbonFET、三星称 MBCFET）。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="28" width="72" height="16" fill="url(#gSi)"/><rect x="12" y="28" width="28" height="10" fill="url(#gSD)"/><rect x="52" y="28" width="28" height="10" fill="url(#gSD)"/><rect x="40" y="20" width="12" height="8" fill="url(#gCu)"/><path d="M51 33 Q46 30 41 33" stroke="#f0738a" stroke-width="1.4" fill="none" stroke-dasharray="2 1"/></svg><h5>短沟道效应</h5><p>沟道太短时栅极<b>管不住、漏电</b>——逼出 FinFET / GAA 这些新结构。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="20" y="30" width="52" height="9" fill="url(#gSi)"/><rect x="40" y="30" width="12" height="6" fill="url(#gCu)"/><rect x="20" y="16" width="52" height="9" fill="url(#gSi)"/><rect x="40" y="16" width="12" height="6" fill="url(#gCu)"/><line x1="46" y1="25" x2="46" y2="30" stroke="#6f7e9c" stroke-width="1"/><text x="78" y="23" font-size="6" fill="#9fc0ec">n</text><text x="78" y="38" font-size="6" fill="#f0a0ae">p</text></svg><h5>CFET（互补 FET）</h5><p>把 <b>NMOS 与 PMOS 上下叠起来</b>，再省一半占地——GAA 之后的下一步结构。</p></div>
         </div>
-        <div class="ghead">制造与光刻（② 制造流程 / ③ 光刻）</div>
+        <div class="ghead">制造与光刻（③ 制造流程 / ④ 光刻）</div>
         <div class="concept-grid">
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="20" width="64" height="8" fill="#445a82"/><rect x="22" y="20" width="12" height="8" fill="#0a0e1a"/><rect x="46" y="20" width="12" height="8" fill="#0a0e1a"/><g stroke="#c8b3ff" stroke-width="1.2"><line x1="40" y1="30" x2="40" y2="40"/><line x1="64" y1="30" x2="64" y2="40"/></g></svg><h5>掩膜（光罩）</h5><p>刻有电路图案的<b>母版</b>，光透过它把图案印到硅片上。EUV 用反射式。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="32" width="64" height="12" fill="url(#gSi)"/><rect x="14" y="24" width="64" height="8" fill="#e0556e"/></svg><h5>光刻胶</h5><p>涂在硅片上的<b>感光材料</b>，曝光后显影出图形；EUV 胶是高壁垒耗材。</p></div>
@@ -358,22 +370,23 @@
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="30" width="72" height="14" fill="url(#gSi)"/><rect x="18" y="30" width="20" height="8" fill="url(#gSD)"/><rect x="54" y="30" width="20" height="8" fill="url(#gSD)"/><rect x="18" y="27" width="20" height="3" fill="#c9d0de"/><rect x="54" y="27" width="20" height="3" fill="#c9d0de"/><path d="M23,18 L33,18 L28,25.5 Z" fill="#34d6cf"/></svg><h5>硅化物</h5><p>在源/漏/栅顶<b>自对准生成金属硅化物</b>（钢灰），大幅降低接触电阻。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="14" width="72" height="30" fill="url(#gILD)"/><rect x="18" y="20" width="30" height="6" fill="url(#gCu)"/><rect x="54" y="20" width="20" height="6" fill="url(#gCu)"/><rect x="30" y="26" width="6" height="14" fill="url(#gCuV)"/><path d="M28,48 L38,48 L33,40.5 Z" fill="#34d6cf"/></svg><h5>大马士革 / via·ILD</h5><p><b>嵌铜布线</b>：在<b>层间介质 ILD</b> 里刻槽填铜，竖直的<b>通孔 via</b> 连上下层。</p></div>
         </div>
-        <div class="ghead">制程与经济（④ 先进制程）</div>
+        <div class="ghead">制程与经济（⑤ 先进制程）</div>
         <div class="concept-grid">
           <div class="ccard"><svg viewBox="0 0 92 50"><g fill="#34d6cf" opacity="0.85"><rect x="24" y="14" width="5" height="5"/><rect x="33" y="14" width="5" height="5"/><rect x="42" y="14" width="5" height="5"/><rect x="51" y="14" width="5" height="5"/><rect x="60" y="14" width="5" height="5"/><rect x="24" y="23" width="5" height="5"/><rect x="33" y="23" width="5" height="5"/><rect x="42" y="23" width="5" height="5"/><rect x="51" y="23" width="5" height="5"/><rect x="60" y="23" width="5" height="5"/><rect x="24" y="32" width="5" height="5"/><rect x="33" y="32" width="5" height="5"/><rect x="42" y="32" width="5" height="5"/><rect x="51" y="32" width="5" height="5"/><rect x="60" y="32" width="5" height="5"/></g></svg><h5>密度 MTr/mm²</h5><p>每平方毫米晶体管数，<b>真正可比</b>的先进度指标（"nm"已非物理尺寸）。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="18" y="38" width="56" height="8" fill="url(#gSi)"/><rect x="30" y="33" width="8" height="5" fill="url(#gSD)"/><rect x="48" y="33" width="8" height="5" fill="url(#gSD)"/><g fill="url(#gCu)"><rect x="18" y="28" width="56" height="3"/><rect x="18" y="22" width="56" height="3"/><rect x="18" y="16" width="56" height="3"/><rect x="18" y="10" width="56" height="3"/></g></svg><h5>FEOL / BEOL</h5><p>前段造出<b>1 层晶体管</b>（只一遍）、后段叠<b>十几层金属布线</b>（反复做）。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><circle cx="46" cy="25" r="19" fill="#1f4f3a" stroke="#5f7cb6"/><g stroke="#f0738a" stroke-width="1.6"><line x1="38" y1="18" x2="44" y2="24"/><line x1="44" y1="18" x2="38" y2="24"/><line x1="52" y1="28" x2="58" y2="34"/><line x1="58" y1="28" x2="52" y2="34"/></g></svg><h5>良率 Yield</h5><p>一片晶圆里<b>好芯片的比例</b>；die 越大越易碰到缺陷、良率越低、成本越高。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><polyline points="14,40 26,24 40,18 60,17 78,17" fill="none" stroke="#5eead4" stroke-width="2"/><line x1="40" y1="10" x2="40" y2="44" stroke="#f0738a" stroke-width="1.2" stroke-dasharray="2 2"/></svg><h5>功耗墙</h5><p>主频 ~2005 后<b>停涨</b>，受功耗 / 发热限制（Dennard 缩放终结）→ 转多核。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="22" width="64" height="8" fill="url(#gSi)"/><text x="46" y="28" font-size="5" fill="#cfe0ff" text-anchor="middle">器件层</text><g fill="url(#gCu)"><rect x="18" y="14" width="56" height="2.6"/><rect x="18" y="10" width="56" height="2.6"/></g><g fill="#e9a04c"><rect x="18" y="34" width="56" height="3"/><rect x="18" y="39" width="56" height="3"/></g><text x="82" y="13" font-size="5" fill="#9fb0cc" text-anchor="end">信号</text><text x="82" y="45" font-size="5" fill="#f0c082" text-anchor="end">供电·背面</text></svg><h5>背面供电（PowerVia/BSPDN）</h5><p>把<b>供电网络挪到晶圆背面</b>，正面全腾给信号线 → 降压损、提性能与密度。</p></div>
         </div>
-        <div class="ghead">存储器（⑤ 存储器）</div>
+        <div class="ghead">存储器（⑥ 存储器）</div>
         <div class="concept-grid">
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="12" y="34" width="68" height="10" fill="url(#gSi)"/><rect x="20" y="30" width="10" height="6" fill="url(#gSD)"/><rect x="38" y="30" width="10" height="6" fill="url(#gSD)"/><rect x="29" y="25" width="8" height="5" fill="url(#gCu)"/><rect x="58" y="12" width="6" height="22" fill="url(#gCu)"/><rect x="64" y="12" width="6" height="22" fill="#c9d0de"/></svg><h5>DRAM（1T1C）</h5><p>1 晶体管+1 电容存 1 bit，<b>会漏需刷新</b>（做主存/显存）。三星/海力士/美光。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><polygon points="32,16 46,23 32,30" fill="#1d2c46" stroke="#5b86c9"/><polygon points="60,23 46,30 60,37" fill="#1d2c46" stroke="#5b86c9"/><path d="M46,23 L50,23 L50,30 L46,30" fill="none" stroke="#7fe0d0" stroke-width="1.2"/></svg><h5>SRAM（6T）</h5><p>6 管锁存，<b>快、不刷新</b>但占地大（做片上缓存 Cache）。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><g fill="#c9a86a"><rect x="20" y="14" width="52" height="4"/><rect x="20" y="22" width="52" height="4"/><rect x="20" y="30" width="52" height="4"/><rect x="20" y="38" width="52" height="4"/></g><rect x="40" y="12" width="7" height="32" fill="#7b5ea8"/><rect x="42" y="12" width="3" height="32" fill="url(#gSi)"/></svg><h5>3D NAND</h5><p>上百层字线<b>竖叠</b>+垂直沟道，靠"加层数"降成本（非易失，SSD）。</p></div>
-          <div class="ccard"><svg viewBox="0 0 92 50"><g fill="url(#gSi)" stroke="#4a64a0" stroke-width="0.6"><rect x="26" y="12" width="40" height="6"/><rect x="26" y="20" width="40" height="6"/><rect x="26" y="28" width="40" height="6"/><rect x="26" y="36" width="40" height="8"/></g><g fill="url(#gCuV)"><rect x="36" y="12" width="3" height="32"/><rect x="54" y="12" width="3" height="32"/></g></svg><h5>HBM</h5><p>DRAM <b>垂直叠+TSV</b> 的高带宽显存，AI 标配（详见 ⑥ 先进封装）。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><g fill="url(#gSi)" stroke="#4a64a0" stroke-width="0.6"><rect x="26" y="12" width="40" height="6"/><rect x="26" y="20" width="40" height="6"/><rect x="26" y="28" width="40" height="6"/><rect x="26" y="36" width="40" height="8"/></g><g fill="url(#gCuV)"><rect x="36" y="12" width="3" height="32"/><rect x="54" y="12" width="3" height="32"/></g></svg><h5>HBM</h5><p>DRAM <b>垂直叠+TSV</b> 的高带宽显存，AI 标配（详见 ⑦ 先进封装）。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><polygon points="42,10 50,10 54,20 38,20" fill="#34d6cf"/><polygon points="38,20 54,20 58,30 34,30" fill="#5b86c9"/><polygon points="34,30 58,30 64,42 28,42" fill="#e9a04c"/></svg><h5>存储层级</h5><p>寄存器→SRAM→DRAM→NAND→HDD，<b>越上越快越贵越小</b>。</p></div>
         </div>
-        <div class="ghead">封装与集成（⑥ 先进封装）</div>
+        <div class="ghead">封装与集成（⑦ 先进封装）</div>
         <div class="concept-grid">
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="8" y="34" width="34" height="5" fill="url(#gSub)"/><rect x="10" y="23" width="14" height="11" fill="url(#gSi)"/><rect x="27" y="23" width="14" height="11" fill="url(#gSi)"/><text x="25" y="46" font-size="6" fill="#34d6cf" text-anchor="middle">2.5D</text><rect x="52" y="40" width="30" height="5" fill="url(#gSub)"/><g fill="url(#gSi)"><rect x="59" y="15" width="16" height="7"/><rect x="59" y="23" width="16" height="7"/><rect x="59" y="31" width="16" height="7"/></g><text x="67" y="48" font-size="6" fill="#b08bf0" text-anchor="middle">3D</text></svg><h5>2.5D / 3D</h5><p>并排在中介层上（2.5D）/ 垂直堆叠、TSV 直连（3D）——两条集成路线。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="12" y="40" width="68" height="5" fill="url(#gSub)"/><rect x="16" y="31" width="60" height="9" fill="url(#gSi)"/><rect x="20" y="19" width="22" height="12" fill="url(#gSi)" stroke="#6f88c0"/><rect x="50" y="19" width="22" height="12" fill="url(#gSi)" stroke="#6f88c0"/><text x="31" y="28" font-size="5" fill="#cfe0ff" text-anchor="middle">GPU</text><text x="61" y="28" font-size="5" fill="#cfe0ff" text-anchor="middle">HBM</text></svg><h5>CoWoS</h5><p>台积电 <b>2.5D 封装</b>：GPU 与 HBM 并排放在硅中介层上，AI 芯片标配。</p></div>
@@ -383,7 +396,7 @@
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="34" width="72" height="5" fill="url(#gSub)"/><g fill="url(#gSi)" stroke="#6f88c0"><rect x="16" y="18" width="16" height="16"/><rect x="38" y="18" width="16" height="16"/><rect x="60" y="18" width="16" height="16"/></g><g stroke="#34d6cf" stroke-width="1.4"><line x1="32" y1="26" x2="38" y2="26"/><line x1="54" y1="26" x2="60" y2="26"/></g></svg><h5>Chiplet</h5><p>把大芯片拆成多颗<b>小芯粒</b>分别造、再用封装拼起来（UCIe 互连）。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="13" width="64" height="11" fill="url(#gSi)"/><rect x="14" y="26" width="64" height="11" fill="url(#gSi)"/><g fill="url(#gCu)"><rect x="24" y="22" width="8" height="6"/><rect x="42" y="22" width="8" height="6"/><rect x="60" y="22" width="8" height="6"/></g></svg><h5>混合键合</h5><p>铜垫<b>直接对接</b>+介质键合，无焊料、亚微米间距，更密更省电（HBM4/3D）。</p></div>
         </div>
-        <div class="ghead">功率 / 化合物（⑦）</div>
+        <div class="ghead">功率 / 化合物（⑧）</div>
         <div class="concept-grid">
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="18" y="32" width="14" height="12" fill="url(#gSi)"/><text x="25" y="41" font-size="6" fill="#bcd0f0" text-anchor="middle">Si</text><rect x="40" y="15" width="13" height="29" fill="#3aa86b"/><text x="46" y="49" font-size="5.5" fill="#7fe0b0" text-anchor="middle">GaN</text><rect x="58" y="16" width="13" height="28" fill="url(#gCu)"/><text x="64" y="49" font-size="5.5" fill="#f0c082" text-anchor="middle">SiC</text></svg><h5>SiC / GaN（宽禁带）</h5><p>禁带更宽 → <b>耐高压高温、低损耗、高频</b>；用于电动车 / 光伏 / 快充 / 射频。</p></div>
         </div>
@@ -393,10 +406,138 @@
           <div class="nmrow"><div class="co" style="color:#5eead4">binning / Dennard 缩放</div><div class="de">按性能·缺陷分档出货（满血/屏蔽版）；缩小同时保持功耗密度（约 2005 终结）。</div></div>
           <div class="nmrow"><div class="co" style="color:#5eead4">EDA / IP</div><div class="de">芯片设计软件（Synopsys / Cadence / 西门子）/ 可复用电路模块（如 ARM）。</div></div>
           <div class="nmrow"><div class="co" style="color:#5eead4">代工 / IDM / OSAT / WFE</div><div class="de">只代工(台积电) / 设计制造一体(Intel·三星) / 封测厂(日月光·长电) / 晶圆制造设备(ASML·AMAT·Lam·TEL·KLA)。</div></div>
+          <div class="nmrow"><div class="co" style="color:#5eead4">SoC / NPU</div><div class="de"><b>SoC</b>＝把 CPU/GPU/NPU/IO 等<b>整合进一颗芯片</b>（片上系统）；<b>NPU</b>＝专做 AI 矩阵运算的处理器。</div></div>
+          <div class="nmrow"><div class="co" style="color:#5eead4">VDD / GND</div><div class="de">芯片的<b>电源</b>(VDD) 与<b>地</b>(GND)，是数字电路的两条供电基准。</div></div>
+          <div class="nmrow"><div class="co" style="color:#5eead4">LPP（EUV 光源）</div><div class="de">EUV 的产光方式——<b>CO₂ 激光打锡滴</b>产生 13.5nm 光（详见 ④ 光刻）。</div></div>
+          <div class="nmrow"><div class="co" style="color:#5eead4">IGBT</div><div class="de"><b>绝缘栅双极晶体管</b>，高压大电流的功率开关（电车/工业逆变，详见 ⑧ 功率/化合物）。</div></div>
         </div>
         <!-- gloss-end -->
       </div>
 
+      <!-- ===== SCENE: WAFER + MASK (upstream) ===== -->
+      <div class="scene" id="s-wafer" hidden>
+        <svg width="0" height="0" style="position:absolute"><defs>
+          <linearGradient id="gMelt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe39a"/><stop offset="0.45" stop-color="#ff9d3c"/><stop offset="1" stop-color="#c2410c"/></linearGradient>
+          <radialGradient id="gMeltR" cx="0.5" cy="0.35" r="0.8"><stop offset="0" stop-color="#fff0b8"/><stop offset="0.5" stop-color="#ff9d3c"/><stop offset="1" stop-color="#b8350a"/></radialGradient>
+          <linearGradient id="gWaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe0f5"/><stop offset="0.5" stop-color="#9fb6d4"/><stop offset="1" stop-color="#6f88ad"/></linearGradient>
+          <linearGradient id="gQz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe3ef" stop-opacity="0.85"/><stop offset="1" stop-color="#7fb8cc" stop-opacity="0.85"/></linearGradient>
+          <marker id="wArr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker>
+          <marker id="wArrL" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffd9a0"/></marker>
+        </defs></svg>
+
+        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">🧱 <b style="color:#e8eef9">上游：原料与掩膜</b>——造芯片前要先备齐两样东西：一片完美的<b style="color:#9fc0ec">单晶硅圆片（晶圆）</b>当"画布"，一套<b style="color:#c8b3ff">掩膜版</b>当光刻的"底片/模板"。这一页讲它俩怎么来的，备齐后就送进晶圆厂（→ ③ 制造流程 / ④ 光刻）。</div>
+
+        <div class="subttl">一、从一粒砂到一片镜面晶圆</div>
+        <div class="cap">硅来自最普通的<b>石英砂</b>，但要一路提纯到"<b>11 个 9</b>"、再长成<b>完美单晶</b>、切片抛光成镜面，才配当芯片的地基。投入→产出如下：</div>
+        <svg viewBox="0 0 620 208" style="margin-top:6px">
+          <g font-size="9.5" text-anchor="middle">
+            <!-- 1 石英砂 -->
+            <g><g fill="#cBa96a"><circle cx="40" cy="86" r="4"/><circle cx="52" cy="92" r="5"/><circle cx="64" cy="86" r="4"/><circle cx="46" cy="80" r="3.5"/><circle cx="58" cy="80" r="3.5"/><circle cx="70" cy="92" r="3.5"/><circle cx="34" cy="92" r="3.5"/></g>
+              <text x="52" y="120" fill="#e8eef9" font-weight="700">石英砂</text><text x="52" y="133" fill="#8b9bb8" font-size="8.5">SiO₂ · 普通砂</text></g>
+            <!-- 2 冶金硅 -->
+            <g><path d="M126,96 L160,96 L154,72 L132,72 Z" fill="#5a6273" stroke="#7a8395" stroke-width="0.8"/><path d="M132,72 L154,72 L150,66 L136,66 Z" fill="#6b7486"/>
+              <text x="143" y="120" fill="#e8eef9" font-weight="700">冶金级硅</text><text x="143" y="133" fill="#8b9bb8" font-size="8.5">≈98% · 电弧炉还原</text></g>
+            <!-- 3 多晶硅 -->
+            <g><g fill="#9aa4ba" stroke="#c2cbdd" stroke-width="0.5"><polygon points="226,96 246,96 250,74 236,66 222,74"/></g><polygon points="226,96 236,66 236,96" fill="#8893ab"/>
+              <text x="236" y="120" fill="#e8eef9" font-weight="700">电子级多晶硅</text><text x="236" y="133" fill="#8b9bb8" font-size="8.5">11N · 改良西门子法</text></g>
+            <!-- 4 单晶硅锭 -->
+            <g><ellipse cx="338" cy="62" rx="14" ry="4" fill="#9fc0ec"/><path d="M324,62 L324,98 Q338,104 352,98 L352,62" fill="url(#gWaf)"/><ellipse cx="338" cy="62" rx="14" ry="4" fill="#b9d2f0"/>
+              <text x="338" y="120" fill="#e8eef9" font-weight="700">单晶硅锭</text><text x="338" y="133" fill="#8b9bb8" font-size="8.5">直拉 CZ · 晶向&lt;100&gt;</text></g>
+            <!-- 5 切片 -->
+            <g><path d="M430,62 L430,98 Q444,104 458,98 L458,62" fill="url(#gWaf)" opacity="0.6"/><ellipse cx="444" cy="62" rx="14" ry="4" fill="#9fc0ec" opacity="0.6"/>
+              <g stroke="#16243a" stroke-width="0.8"><line x1="434" y1="60" x2="434" y2="100"/><line x1="440" y1="60" x2="440" y2="102"/><line x1="448" y1="60" x2="448" y2="102"/><line x1="454" y1="60" x2="454" y2="100"/></g>
+              <ellipse cx="470" cy="86" rx="4" ry="13" fill="url(#gWaf)"/>
+              <text x="448" y="120" fill="#e8eef9" font-weight="700">切片</text><text x="448" y="133" fill="#8b9bb8" font-size="8.5">金刚线锯</text></g>
+            <!-- 6 镜面晶圆 -->
+            <g><ellipse cx="565" cy="84" rx="30" ry="14" fill="url(#gWaf)" stroke="#cfe0f5" stroke-width="0.8"/><path d="M551,74 L557,72" stroke="#eaf2ff" stroke-width="2" stroke-linecap="round"/><path d="M583,76 L589,75" stroke="#dfeaf8" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/><path d="M538,86 l6,3 l-6,2 z" fill="#16243a"/>
+              <text x="565" y="120" fill="#e8eef9" font-weight="700">镜面晶圆</text><text x="565" y="133" fill="#8b9bb8" font-size="8.5">研磨+CMP抛光</text></g>
+            <!-- arrows + methods -->
+            <g stroke="#34d6cf" stroke-width="1.4" fill="none">
+              <line x1="82" y1="86" x2="120" y2="86" marker-end="url(#wArr)"/><line x1="166" y1="86" x2="214" y2="86" marker-end="url(#wArr)"/>
+              <line x1="258" y1="80" x2="318" y2="80" marker-end="url(#wArr)"/><line x1="360" y1="80" x2="420" y2="80" marker-end="url(#wArr)"/><line x1="486" y1="84" x2="528" y2="84" marker-end="url(#wArr)"/></g>
+            <g font-size="8" fill="#7fd9cf"><text x="101" y="74">提纯</text><text x="190" y="74">再提纯</text><text x="288" y="68">长单晶</text><text x="390" y="68">锯片</text><text x="507" y="74">抛光</text></g>
+          </g>
+          <text x="310" y="175" font-size="10.5" fill="#9bb0d0" text-anchor="middle">越往右越"纯、越完美"：杂质从百分级一路压到万亿分级，最后长成一整根无缺陷单晶、再切薄抛亮。</text>
+          <rect x="40" y="186" width="540" height="0.6" fill="#23304d"/>
+          <text x="310" y="200" font-size="10" fill="#8b9bb8" text-anchor="middle">硅料分两档：<tspan fill="#bdd0ea">太阳能级</tspan>(6~9个9，光伏用) ｜ <tspan fill="#9fc0ec">电子级</tspan>(11个9，造芯片用)——新闻里"硅料涨价"多指太阳能级。</text>
+        </svg>
+
+        <div class="subttl">直拉法（CZ）：把熔硅"拉"成一根完美单晶</div>
+        <svg viewBox="0 0 620 300" style="margin-top:4px">
+          <!-- pull rod + seed -->
+          <rect x="304" y="14" width="12" height="44" rx="2" fill="#8b97ad"/>
+          <rect x="296" y="56" width="28" height="8" rx="2" fill="#b9c2d4"/>
+          <rect x="307" y="64" width="6" height="14" fill="#9fc0ec"/>
+          <!-- ingot: neck -> crown -> body, dipping into melt -->
+          <path d="M307,78 L313,78 L313,90 L322,104 L322,196 Q310,202 298,196 L298,104 L307,90 Z" fill="url(#gWaf)" stroke="#cfe0f5" stroke-width="0.7"/>
+          <path d="M298,104 L322,104" stroke="#eaf2ff" stroke-width="0.8" opacity="0.6"/>
+          <!-- crucible + melt -->
+          <path d="M236,196 L384,196 L372,262 Q310,276 248,262 Z" fill="#3a4255" stroke="#5a6477" stroke-width="1.5"/>
+          <path d="M248,200 L372,200 L362,254 Q310,266 258,254 Z" fill="url(#gMeltR)"/>
+          <ellipse cx="310" cy="200" rx="62" ry="9" fill="#ffcf7a"/>
+          <ellipse cx="310" cy="199" rx="56" ry="7" fill="url(#gMeltR)"/>
+          <!-- where ingot meets melt: meniscus glow -->
+          <ellipse cx="310" cy="197" rx="15" ry="4" fill="#fff0b8" opacity="0.9"/>
+          <!-- heater coils -->
+          <g fill="none" stroke="#e0556e" stroke-width="3" opacity="0.8"><path d="M224,206 q-8,16 0,32"/><path d="M396,206 q8,16 0,32"/></g>
+          <g fill="#c2410c" font-size="8"><text x="210" y="226" text-anchor="end">加热器</text></g>
+          <!-- crucible rotation + pull/rotate arrows -->
+          <path d="M232,274 q78,22 156,0" fill="none" stroke="#9fb0cc" stroke-width="1.2" marker-end="url(#wArr)"/>
+          <text x="310" y="288" font-size="9" fill="#8b9bb8" text-anchor="middle">坩埚反向旋转</text>
+          <g stroke="#ffd9a0" stroke-width="1.6" fill="none"><line x1="310" y1="40" x2="310" y2="14" marker-end="url(#wArrL)"/></g>
+          <path d="M330,26 q14,6 0,14" fill="none" stroke="#ffd9a0" stroke-width="1.4" marker-end="url(#wArrL)"/>
+          <!-- labels -->
+          <line x1="316" y1="60" x2="430" y2="48" stroke="#5d6b88" stroke-width="0.8"/><text x="434" y="46" font-size="10.5" fill="#9fc0ec">籽晶 Seed</text><text x="434" y="59" font-size="9" fill="#7f9bc8">给出晶格"模板"</text>
+          <line x1="318" y1="36" x2="398" y2="24" stroke="#5d6b88" stroke-width="0.8"/><text x="402" y="22" font-size="10" fill="#ffd9a0">极慢提拉 + 旋转</text>
+          <line x1="322" y1="150" x2="452" y2="150" stroke="#5d6b88" stroke-width="0.8"/><text x="456" y="147" font-size="10.5" fill="#e8eef9" font-weight="700">单晶硅锭</text><text x="456" y="160" font-size="9" fill="#9fb0cc">硅原子按籽晶晶格排列<tspan x="456" dy="11">凝固→整根单晶 &lt;100&gt;</tspan></text>
+          <line x1="300" y1="232" x2="150" y2="232" stroke="#5d6b88" stroke-width="0.8"/><text x="146" y="229" font-size="10.5" fill="#ffb86a" text-anchor="end">熔融硅 ≈1414℃</text><text x="146" y="242" font-size="9" fill="#c98f5a" text-anchor="end">石英坩埚盛装</text>
+          <line x1="250" y1="210" x2="150" y2="200" stroke="#5d6b88" stroke-width="0.8"/><text x="146" y="198" font-size="9.5" fill="#9fb0cc" text-anchor="end">石英坩埚</text>
+          <text x="540" y="288" font-size="9.5" fill="#8b9bb8" text-anchor="end">保护气氛 Ar · 直径决定晶圆尺寸（主流 300mm）</text>
+        </svg>
+        <div class="note">关键参数：<b>纯度 11N</b>（99.999999999%）｜ <b>主流 300mm</b>（12 吋；曾用 200mm，450mm 未量产）｜ <b>晶向 &lt;100&gt;</b> ｜ 纳米级超平整、极低缺陷。另有<b>区熔法（FZ）</b>不接触坩埚、更纯，多用于<b>功率器件</b>衬底（→ ⑧ 功率/化合物）。</div>
+
+        <div class="subttl">二、掩膜版：把电路图变成光刻的"底片"</div>
+        <div class="cap">设计公司用 EDA 把电路画成<b>版图</b>（这步属"设计"，不展开）→ 交给掩膜厂做成<b>掩膜版（photomask / 光罩）</b>。光刻时，光<b>透过</b>或<b>反射</b>掩膜，把图形<b>投影缩小 4×</b> 印到晶圆上。掩膜＝光刻的"底片/模板"。</div>
+        <svg viewBox="0 0 620 300" style="margin-top:4px">
+          <!-- DUV transmission mask (left) -->
+          <text x="160" y="20" font-size="11.5" fill="#cfe0ff" text-anchor="middle" font-weight="700">DUV 透射式掩膜</text>
+          <g stroke="#7fb6ff" stroke-width="1.6" opacity="0.85"><line x1="120" y1="34" x2="120" y2="70" marker-end="url(#wArr)"/><line x1="160" y1="34" x2="160" y2="70" marker-end="url(#wArr)"/><line x1="200" y1="34" x2="200" y2="70" marker-end="url(#wArr)"/></g>
+          <text x="245" y="44" font-size="9" fill="#9fc0ec" text-anchor="start">入射 DUV 光 ↓</text>
+          <!-- pellicle -->
+          <rect x="96" y="74" width="128" height="3" fill="#8ff7ec" opacity="0.7"/><rect x="96" y="74" width="4" height="20" fill="#5a6477"/><rect x="220" y="74" width="4" height="20" fill="#5a6477"/>
+          <text x="250" y="80" font-size="8.5" fill="#7fd9cf" text-anchor="start">pellicle 保护膜（防尘）</text>
+          <!-- quartz substrate -->
+          <rect x="92" y="110" width="136" height="20" fill="url(#gQz)"/>
+          <!-- chrome pattern on bottom -->
+          <g fill="#2b303a"><rect x="100" y="104" width="22" height="8"/><rect x="138" y="104" width="14" height="8"/><rect x="176" y="104" width="26" height="8"/></g>
+          <!-- transmitted light through gaps -->
+          <g stroke="#7fb6ff" stroke-width="1.4" opacity="0.7"><line x1="130" y1="132" x2="130" y2="158" marker-end="url(#wArr)"/><line x1="165" y1="132" x2="165" y2="158" marker-end="url(#wArr)"/><line x1="212" y1="132" x2="212" y2="158" marker-end="url(#wArr)"/></g>
+          <text x="160" y="178" font-size="9.5" fill="#9bb0d0" text-anchor="middle">透过空隙的光 → 投影缩小 4× 印到晶圆</text>
+          <line x1="124" y1="108" x2="40" y2="120" stroke="#5d6b88" stroke-width="0.8"/><text x="38" y="118" font-size="9" fill="#aeb6c6" text-anchor="end">铬吸收层</text><text x="38" y="129" font-size="8" fill="#7f8ca6" text-anchor="end">（图形·挡光）</text>
+          <line x1="120" y1="120" x2="40" y2="150" stroke="#5d6b88" stroke-width="0.8"/><text x="38" y="153" font-size="9" fill="#9fd0e0" text-anchor="end">石英基板（透明）</text>
+          <!-- divider -->
+          <line x1="312" y1="14" x2="312" y2="286" stroke="#23304d" stroke-width="1"/>
+          <!-- EUV reflective mask (right) -->
+          <text x="466" y="20" font-size="11.5" fill="#cfe0ff" text-anchor="middle" font-weight="700">EUV 反射式掩膜</text>
+          <!-- incoming + reflected EUV -->
+          <g stroke="#c8b3ff" stroke-width="1.8"><line x1="380" y1="40" x2="430" y2="104" marker-end="url(#wArr)"/></g>
+          <g stroke="#8ff7ec" stroke-width="1.8"><line x1="442" y1="104" x2="500" y2="44" marker-end="url(#wArr)"/></g>
+          <text x="372" y="52" font-size="9" fill="#c8b3ff" text-anchor="start">入射 EUV ↘</text><text x="506" y="44" font-size="9" fill="#8ff7ec" text-anchor="start">↗ 反射 EUV</text>
+          <!-- Mo/Si multilayer reflective stack -->
+          <g>
+            <rect x="372" y="108" width="188" height="34" fill="#243049" stroke="#3a4a6a" stroke-width="0.6"/>
+            <g fill="#8a78c0"><rect x="372" y="110" width="188" height="2.6"/><rect x="372" y="116" width="188" height="2.6"/><rect x="372" y="122" width="188" height="2.6"/><rect x="372" y="128" width="188" height="2.6"/><rect x="372" y="134" width="188" height="2.6"/></g>
+          </g>
+          <!-- absorber pattern on top -->
+          <g fill="#101521"><rect x="384" y="100" width="26" height="9"/><rect x="430" y="100" width="16" height="9"/><rect x="474" y="100" width="30" height="9"/><rect x="524" y="100" width="20" height="9"/></g>
+          <line x1="410" y1="104" x2="470" y2="170" stroke="#5d6b88" stroke-width="0.8"/><text x="474" y="170" font-size="9" fill="#aeb6c6">吸收层 TaN（图形）</text>
+          <line x1="466" y1="132" x2="396" y2="186" stroke="#5d6b88" stroke-width="0.8"/><text x="392" y="189" font-size="9" fill="#b9a6e8" text-anchor="end">Mo/Si 多层反射膜（约 40 对）</text>
+          <text x="466" y="214" font-size="9.5" fill="#9bb0d0" text-anchor="middle">EUV 被所有材料吸收 → 只能靠多层镜<b>反射</b>，做不了透射式</text>
+        </svg>
+        <div class="note">关键事实：掩膜是 <b>4× 放大版</b>（投影时缩小 4 倍，缓解掩膜制造精度压力）｜ 一套先进芯片要 <b>几十~上百张</b>掩膜（每层一张）｜ 一张高端 <b>EUV 掩膜可达数百万美元</b> ｜ 表面贴 <b>pellicle 薄膜</b>挡灰（落在掩膜上的尘点会被一并印到每颗芯片上）。掩膜用在光刻——详见 ④ 光刻。</div>
+
+        <div class="note" style="border-left-color:#5eead4;background:rgba(94,234,212,.07)">备齐这两样上游产物——<b>空白晶圆（画布）</b> + <b>掩膜版（底片）</b>——就送进晶圆厂：先在晶圆上<b>造出晶体管层（前段）</b>、再<b>叠几十层金属布线（后段）</b>。怎么造，见 ③ 制造流程；怎么把掩膜图形印上去，见 ④ 光刻。</div>
+      </div>
       <!-- ===== SCENE 2: TRANSISTOR ===== -->
       <div class="scene" id="s-tr" hidden>
         <div class="ctrls" style="margin-top:2px">
@@ -691,7 +832,7 @@
           <path d="M132 98 L122 98 L122 214 L132 214" fill="none" stroke="#e9a04c" stroke-width="1.4"/>
           <text x="116" y="160" font-size="10.5" fill="url(#gCu)" text-anchor="end" transform="rotate(-90 116 160)">互连层：金属布线 10~20 层</text>
         </svg>
-        <div class="note">在主流逻辑芯片里，<b>晶体管只有最底下薄薄一层</b>（铺在硅表面）。它们上方再叠 <b>10~20 层金属布线</b>（称 BEOL 后段工艺），像立交桥一样把上亿个晶体管按电路连起来——所以芯片"很多层"，但<b>那些大多是"布线层"，不是"晶体管层"</b>。真正的多层晶体管堆叠（3D），见 ④ 先进制程（3D 那段）。</div>
+        <div class="note">在主流逻辑芯片里，<b>晶体管只有最底下薄薄一层</b>（铺在硅表面）。它们上方再叠 <b>10~20 层金属布线</b>（称 BEOL 后段工艺），像立交桥一样把上亿个晶体管按电路连起来——所以芯片"很多层"，但<b>那些大多是"布线层"，不是"晶体管层"</b>。真正的多层晶体管堆叠（3D），见 ⑤ 先进制程（3D 那段）。</div>
         <div class="note" style="border-left-color:#e9a04c;background:rgba(233,160,76,.06)"><b>为什么要这么多层布线？</b>单个晶体管只是一个<b>开关</b>，自己不会"算"。布线的作用是把上亿个开关<b>连成电路</b>：让一个晶体管的输出（漏极）去控制另一个的输入（栅极），再接上电源、地、时钟和对外引脚——信号（0 / 1）在这张开关网络里层层触发、流动，就是"运算"。叠这么多层，是因为<b>要连的线实在太多（布线密度）</b>：下层细而短走本地连接，上层粗而长走全局信号与供电——<b>不是"一层对应一个晶体管"</b>。</div>
       </div>
 
@@ -1285,7 +1426,7 @@
         </svg>
         <div class="note">NAND 闪存把电荷存在每个单元的<b>电荷俘获层</b>里（断电也不丢 = 非易失）。平面 NAND 缩到极限后，改走 <b>3D：把上百层"字线 / 控制栅"竖着叠起来</b>，再用一道刻蚀打出<b>垂直沟道孔</b>穿过所有层——<b>每个"字线 × 沟道"的交点就是一个存储单元</b>，一根柱子上的单元串成一串(NAND string)。妙处是<b>靠"加层数"而不是"缩尺寸"来降低每比特成本</b>，所以层数竞赛(200→300→400+)成了主线。玩家：<b>三星 / SK 海力士(含 Solidigm) / 美光 / 铠侠·闪迪</b>，国产 <b>长江存储 YMTC</b>——也是国产存储突破最快的方向。</div>
 
-        <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>从研究角度记住三点：</b>① 存储是典型的<b>强周期、寡头</b>生意——产品高度标准化(近似大宗商品)，供需错配→价格大起大落，<b>景气周期</b>对相关公司业绩与股价影响极大。② 格局：<b>DRAM</b> ≈ 三星 / SK 海力士 / 美光(+长鑫)，<b>NAND</b> ≈ 三星 / SK 海力士 / 美光 / 铠侠·闪迪(+长江存储)。③ <b>HBM 改变了游戏</b>：它把本属周期品的 DRAM 变成<b>绑定 AI、供不应求的高毛利产品</b>(见⑥先进封装)，是当前存储里最贵、最紧的细分。</div>
+        <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>从研究角度记住三点：</b>① 存储是典型的<b>强周期、寡头</b>生意——产品高度标准化(近似大宗商品)，供需错配→价格大起大落，<b>景气周期</b>对相关公司业绩与股价影响极大。② 格局：<b>DRAM</b> ≈ 三星 / SK 海力士 / 美光(+长鑫)，<b>NAND</b> ≈ 三星 / SK 海力士 / 美光 / 铠侠·闪迪(+长江存储)。③ <b>HBM 改变了游戏</b>：它把本属周期品的 DRAM 变成<b>绑定 AI、供不应求的高毛利产品</b>(见⑦先进封装)，是当前存储里最贵、最紧的细分。</div>
         <!-- mem-end -->
       </div>
 
@@ -1473,7 +1614,7 @@
       </div>
 
       <div class="scene" id="s-chain">
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">🗺️ 这是<b style="color:#e8eef9">全局地图</b>——先看懂整条链，再按上方导航钻细节：器件原理 → <b>① 晶体管 / ④ 先进制程</b>；光刻 → <b>③ 光刻</b>；制造工序 → <b>② 制造流程</b>；存储 → <b>⑤ 存储器</b>；封装 → <b>⑥ 先进封装</b>；功率器件 → <b>⑦ 功率/化合物</b>。</div>
+        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">🗺️ 这是<b style="color:#e8eef9">全局地图</b>——先看懂整条链，再按上方导航钻细节：上游原料 → <b>① 硅片·掩膜</b>；器件原理 → <b>② 晶体管 / ⑤ 先进制程</b>；光刻 → <b>④ 光刻</b>；制造工序 → <b>③ 制造流程</b>；存储 → <b>⑥ 存储器</b>；封装 → <b>⑦ 先进封装</b>；功率器件 → <b>⑧ 功率/化合物</b>。</div>
         <div class="subttl">一张图看懂：两条上游汇成主干</div>
         <svg viewBox="0 0 620 168">
           <defs><marker id="ca" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker></defs>
@@ -1497,12 +1638,12 @@
 
         <div class="subttl">逐段拆解：投入 → 产出 → 由谁做</div>
         <div class="nm">
-          <div class="nmrow"><div class="co" style="color:#bdebd0">①硅材料链</div><div class="de">石英砂 → 工业硅 → 电子级多晶硅(硅料) → 单晶硅棒(直拉法) → 切片抛光。<b style="color:#e8eef9">产出：空白晶圆</b>。由硅料厂、硅片厂做。</div></div>
-          <div class="nmrow"><div class="co" style="color:#c8b3ff">②芯片设计</div><div class="de">用 EDA 软件 + IP 核，把规格做成电路版图并"流片"。<b style="color:#e8eef9">产出：掩膜版</b>。由设计公司、EDA/IP 厂、掩膜厂做。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">③前段 FEOL</div><div class="de">在晶圆上造晶体管(隔离 → 栅极 → 源漏 → 接触)，<b>只做一遍</b>。<b style="color:#e8eef9">产出：带晶体管层的晶圆</b>。由晶圆代工厂 / IDM 做(设备厂、材料厂供应)。 ↪ 工序详见 ② 制造流程。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">④后段 BEOL</div><div class="de">叠 10~20 层金属布线，<b>反复做</b>。<b style="color:#e8eef9">产出：布线完成的整片晶圆</b>(满是未切开的芯片)。由晶圆代工厂 / IDM 做。 ↪ 详见 ② 制造流程。</div></div>
+          <div class="nmrow"><div class="co" style="color:#bdebd0">①硅材料链</div><div class="de">石英砂 → 工业硅 → 电子级多晶硅(硅料) → 单晶硅棒(直拉法) → 切片抛光。<b style="color:#e8eef9">产出：空白晶圆</b>。由硅料厂、硅片厂做。 ↪ 详见 ① 硅片·掩膜。</div></div>
+          <div class="nmrow"><div class="co" style="color:#c8b3ff">②芯片设计</div><div class="de">用 EDA 软件 + IP 核，把规格做成电路版图并"流片"。<b style="color:#e8eef9">产出：掩膜版</b>。由设计公司、EDA/IP 厂、掩膜厂做。 ↪ 掩膜制作详见 ① 硅片·掩膜。</div></div>
+          <div class="nmrow"><div class="co" style="color:#5eead4">③前段 FEOL</div><div class="de">在晶圆上造晶体管(隔离 → 栅极 → 源漏 → 接触)，<b>只做一遍</b>。<b style="color:#e8eef9">产出：带晶体管层的晶圆</b>。由晶圆代工厂 / IDM 做(设备厂、材料厂供应)。 ↪ 工序详见 ③ 制造流程。</div></div>
+          <div class="nmrow"><div class="co" style="color:#5eead4">④后段 BEOL</div><div class="de">叠 10~20 层金属布线，<b>反复做</b>。<b style="color:#e8eef9">产出：布线完成的整片晶圆</b>(满是未切开的芯片)。由晶圆代工厂 / IDM 做。 ↪ 详见 ③ 制造流程。</div></div>
           <div class="nmrow"><div class="co" style="color:#34d6cf">⑤晶圆测试</div><div class="de">用探针扎每一颗芯片测好坏。<b style="color:#e8eef9">产出：标好良品的晶圆</b>(良率)。由代工厂 / 测试厂做。</div></div>
-          <div class="nmrow"><div class="co" style="color:#e9a04c">⑥封装</div><div class="de">减薄 → 切割成裸晶 → 贴装键合 → 塑封做出引脚/焊球。<b style="color:#e8eef9">产出：封装好的芯片</b>。由封测厂(OSAT)做。 ↪ 详见 ⑥ 先进封装。</div></div>
+          <div class="nmrow"><div class="co" style="color:#e9a04c">⑥封装</div><div class="de">减薄 → 切割成裸晶 → 贴装键合 → 塑封做出引脚/焊球。<b style="color:#e8eef9">产出：封装好的芯片</b>。由封测厂(OSAT)做。 ↪ 详见 ⑦ 先进封装。</div></div>
           <div class="nmrow"><div class="co" style="color:#f0c082">⑦成测 & 出货</div><div class="de">成品测试、打标、出货分销。<b style="color:#e8eef9">产出：可用的成品芯片</b>。由封测厂、分销商做。</div></div>
         </div>
         <div class="note">把这条"产物链"连起来就是全貌：<b>石英砂 → 工业硅 → 多晶硅 → 硅棒 → 空白晶圆</b>；另一边 <b>设计 → 掩膜版</b>；两者汇入晶圆厂，<b>前段造出晶体管层 → 后段叠好多层布线 → 整片晶圆 → 测试 → 切成裸晶 → 封装 → 成品芯片</b>。每一步都清楚"投入什么、产出什么"。</div>
@@ -1519,7 +1660,7 @@
 
 <script>
 (function(){
-  var scenes={chain:'s-chain',basics:'s-basics',tr:'s-tr',fab:'s-fab',litho:'s-litho',adv:'s-adv',mem:'s-mem',pkg:'s-pkg',pwr:'s-pwr'};
+  var scenes={chain:'s-chain',basics:'s-basics',wafer:'s-wafer',tr:'s-tr',fab:'s-fab',litho:'s-litho',adv:'s-adv',mem:'s-mem',pkg:'s-pkg',pwr:'s-pwr'};
   document.querySelectorAll('.tab').forEach(function(t){
     t.addEventListener('click',function(){
       document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});
