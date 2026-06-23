@@ -1230,6 +1230,8 @@
           </g>
         </svg>
         <div class="note">回答你的问题：<b>绝大多数逻辑芯片（CPU/GPU）的晶体管确实只有平铺的 1 层</b>，靠上面的多层金属布线连接。<b>但"3D"已经无处不在</b>：① <b>3D NAND 闪存</b>早已把存储单元<b>垂直堆叠 100~300+ 层</b>；② <b>先进封装 / Chiplet</b> 把多颗裸晶上下键合（如 HBM 显存、AMD 的 3D V-Cache）；③ 逻辑上正在研发 <b>CFET</b>（把两种晶体管上下叠）和背面供电。趋势就是从"平面缩小"转向"向上叠高"。</div>
+        <div class="subttl">附：另一条路线之争 —— 华为「韬(τ)定律」</div>
+        <div class="note" style="border-left-color:#f0a0ae;background:rgba(240,160,174,.07)"><b>📌 提醒：这是"厂商提案 / 战略叙事"，不是摩尔定律那样被业界长期验证的"定律"，读时请打个折。</b><br>2026 年 5 月，华为在 <b>IEEE ISCAS 2026</b>（上海）由<b>何庭波</b>提出「<b>韬(τ)定律</b>」(Tau Scaling Law)：与其继续<b>几何缩微</b>（把晶体管越做越小、依赖 EUV），不如转向<b>"时间缩微"</b>——系统性压低电路的<b>时间常数 τ</b>（信号翻转一次所需的基本时间），配合 <b>LogicFolding（逻辑折叠）</b>等设计手段，在<b>不依赖 EUV</b> 的前提下提升等效性能与密度。华为称该思路过去六年已用于约 <b>381 款量产芯片</b>，2026 秋首批<b>麒麟</b>芯片将采用 LogicFolding，并称高端芯片密度有望 <b>2031 年达到等效 1.4nm</b>；这也被称为中国企业首次在全球半导体领域提出体系化的演进范式。<br><b>怎么看（投研视角）</b>：本质是对<b>先进光刻设备受限</b>的公开回应——把竞争从"造更小的管子"转向"用设计 / 架构换性能"。方向上与本页的 <b>背面供电、3D 堆叠、Chiplet</b> 同属"<b>不靠单纯缩微</b>"的延续；但其性能 / 密度承诺多为<b>华为自述、面向未来</b>，需第三方数据验证，<b>"定律"二字更多是叙事</b>。作为<b>非 EUV 路线</b>的代表性思路，对理解中国半导体的突围方向有参考价值。</div>
       </div>
 
       <!-- ===== SCENE: LITHO ===== -->
@@ -1238,18 +1240,19 @@
         <div class="cap">光刻 = 用光透过<b>掩膜（光罩）</b>把电路图案印到涂了<b>光刻胶</b>的硅片上（这套动作就是下面这套"图案转印"）。能画多细由<b>瑞利公式</b>决定：<b>分辨率 ≈ k₁ · λ / NA</b>——<b>波长 λ 越短、镜头数值孔径 NA 越大，线就越细</b>。于是先进制程把光源从 <b>DUV（193nm）</b>一路推到 <b>EUV（13.5nm）</b>，并不断加大 NA。</div>
 
         <div class="subttl">这套动作叫「图案转印」：涂胶 → 曝光 → 显影 → 刻蚀 → 去胶，制造里每做一层新图形就重复一次</div>
-        <svg viewBox="0 0 620 130">
+        <svg viewBox="0 0 620 146">
           <defs><marker id="luv" markerWidth="7" markerHeight="7" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#c8b3ff"/></marker></defs>
-          <g><text x="55" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">①涂胶</text><rect x="14" y="80" width="82" height="20" fill="#3a4870"/><rect x="14" y="68" width="82" height="12" fill="#e0556e"/></g>
-          <text x="108" y="84" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
-          <g><text x="175" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">②曝光</text><rect x="134" y="30" width="82" height="9" fill="#445a82"/><rect x="134" y="30" width="28" height="9" fill="#0a0e1a"/><rect x="188" y="30" width="28" height="9" fill="#0a0e1a"/><g stroke="#c8b3ff" stroke-width="1.6"><line x1="168" y1="41" x2="168" y2="66" marker-end="url(#luv)"/><line x1="175" y1="41" x2="175" y2="66" marker-end="url(#luv)"/><line x1="182" y1="41" x2="182" y2="66" marker-end="url(#luv)"/></g><rect x="134" y="80" width="82" height="20" fill="#3a4870"/><rect x="134" y="68" width="82" height="12" fill="#e0556e"/></g>
-          <text x="228" y="84" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
-          <g><text x="295" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">③显影</text><rect x="254" y="80" width="82" height="20" fill="#3a4870"/><rect x="254" y="68" width="28" height="12" fill="#e0556e"/><rect x="308" y="68" width="28" height="12" fill="#e0556e"/></g>
-          <text x="348" y="84" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
-          <g><text x="415" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">④刻蚀</text><rect x="374" y="80" width="82" height="20" fill="#3a4870"/><rect x="374" y="74" width="28" height="6" fill="#f2d35a"/><rect x="428" y="74" width="28" height="6" fill="#f2d35a"/><rect x="374" y="68" width="28" height="12" fill="#e0556e"/><rect x="428" y="68" width="28" height="12" fill="#e0556e"/></g>
-          <text x="468" y="84" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
-          <g><text x="535" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">⑤去胶</text><rect x="494" y="80" width="82" height="20" fill="#3a4870"/><rect x="494" y="74" width="28" height="6" fill="#f2d35a"/><rect x="548" y="74" width="28" height="6" fill="#f2d35a"/></g>
-          <text x="310" y="120" font-size="11" fill="#aebbd2" text-anchor="middle">涂胶→曝光→显影→刻蚀→去胶。每要做出一层新图形（隔离、栅极、每条接触和每层布线），就重复一次这套动作。</text>
+          <g><text x="55" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">①涂胶</text><text x="55" y="25" font-size="7" fill="#7f8ca6" text-anchor="middle">底材+薄膜+胶</text><rect x="14" y="84" width="82" height="16" fill="#3a4870"/><rect x="14" y="77" width="82" height="7" fill="#f2d35a"/><rect x="14" y="66" width="82" height="11" fill="#e0556e"/></g>
+          <text x="108" y="86" font-size="14" fill="#34d6cf" text-anchor="middle">&#8594;</text>
+          <g><text x="175" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">②曝光</text><text x="175" y="25" font-size="7" fill="#7f8ca6" text-anchor="middle">透掩膜照光</text><rect x="134" y="34" width="82" height="8" fill="#445a82"/><rect x="134" y="34" width="28" height="8" fill="#0a0e1a"/><rect x="188" y="34" width="28" height="8" fill="#0a0e1a"/><g stroke="#c8b3ff" stroke-width="1.5"><line x1="169" y1="44" x2="169" y2="63" marker-end="url(#luv)"/><line x1="175" y1="44" x2="175" y2="63" marker-end="url(#luv)"/><line x1="181" y1="44" x2="181" y2="63" marker-end="url(#luv)"/></g><rect x="134" y="84" width="82" height="16" fill="#3a4870"/><rect x="134" y="77" width="82" height="7" fill="#f2d35a"/><rect x="134" y="66" width="82" height="11" fill="#e0556e"/><rect x="162" y="66" width="26" height="11" fill="#ffe6b0" opacity="0.45"/></g>
+          <text x="228" y="86" font-size="14" fill="#34d6cf" text-anchor="middle">&#8594;</text>
+          <g><text x="295" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">③显影</text><text x="295" y="25" font-size="7" fill="#7fd0c4" text-anchor="middle">胶开口·膜没动</text><rect x="254" y="84" width="82" height="16" fill="#3a4870"/><rect x="254" y="77" width="82" height="7" fill="#f2d35a"/><rect x="254" y="66" width="28" height="11" fill="#e0556e"/><rect x="308" y="66" width="28" height="11" fill="#e0556e"/></g>
+          <text x="348" y="86" font-size="14" fill="#34d6cf" text-anchor="middle">&#8594;</text>
+          <g><text x="415" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">④刻蚀</text><text x="415" y="25" font-size="7" fill="#7fd0c4" text-anchor="middle">挖穿膜·胶还在</text><rect x="374" y="84" width="82" height="16" fill="#3a4870"/><rect x="374" y="77" width="28" height="7" fill="#f2d35a"/><rect x="428" y="77" width="28" height="7" fill="#f2d35a"/><rect x="374" y="66" width="28" height="11" fill="#e0556e"/><rect x="428" y="66" width="28" height="11" fill="#e0556e"/></g>
+          <text x="468" y="86" font-size="14" fill="#34d6cf" text-anchor="middle">&#8594;</text>
+          <g><text x="535" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">⑤去胶</text><text x="535" y="25" font-size="7" fill="#7fd0c4" text-anchor="middle">留下图形化的膜</text><rect x="494" y="84" width="82" height="16" fill="#3a4870"/><rect x="494" y="77" width="28" height="7" fill="#f2d35a"/><rect x="548" y="77" width="28" height="7" fill="#f2d35a"/></g>
+          <g font-size="8.5"><rect x="150" y="112" width="11" height="7" fill="#e0556e"/><text x="164" y="118" fill="#9fb0cc">光刻胶</text><rect x="214" y="112" width="11" height="7" fill="#f2d35a"/><text x="228" y="118" fill="#9fb0cc">待刻蚀薄膜</text><rect x="306" y="112" width="11" height="7" fill="#3a4870"/><text x="320" y="118" fill="#9fb0cc">底材/上一层</text></g>
+          <text x="310" y="138" font-size="10.5" fill="#aebbd2" text-anchor="middle">关键差别：<tspan fill="#7fd0c4">显影</tspan>只洗掉受光的胶（膜还连着）；<tspan fill="#7fd0c4">刻蚀</tspan>才顺着开口把<tspan fill="#f2d35a">膜</tspan>挖穿；去胶后剩下的就是图形化的膜。</text>
         </svg>
 
         <div class="ghead" style="color:#c8b3ff">① EUV 的光怎么"造"出来：锡等离子体光源（LPP）</div>
@@ -1290,19 +1293,20 @@
           <text x="150" y="226" font-size="8.5" fill="#8aa0c8" text-anchor="middle">光穿过玻璃透镜与透明掩膜——可在空气中、相对成熟</text>
           <line x1="310" y1="20" x2="310" y2="214" stroke="#2a3550" stroke-width="1"/>
           <text x="466" y="15" font-size="11" fill="#b08bf0" text-anchor="middle" font-weight="700">EUV：反射式（镜子 + 真空）</text>
-          <g fill="#8fa6d6" stroke="#c7d4ee" stroke-width="0.8">
-            <rect x="470" y="34" width="70" height="9" rx="1" transform="rotate(8 505 38)"/>
-            <rect x="360" y="92" width="46" height="8" rx="1" transform="rotate(-32 383 96)"/>
-            <rect x="548" y="104" width="44" height="8" rx="1" transform="rotate(34 570 108)"/>
-            <rect x="452" y="150" width="44" height="8" rx="1" transform="rotate(-20 474 154)"/>
+          <g transform="rotate(-3 490 40)"><rect x="446" y="37" width="88" height="5" rx="1" fill="#8fa6d6" stroke="#c7d4ee" stroke-width="0.7"/><g fill="#11161f"><rect x="458" y="42" width="9" height="3"/><rect x="486" y="42" width="9" height="3"/><rect x="514" y="42" width="9" height="3"/></g></g>
+          <text x="490" y="30" font-size="8" fill="#9aa8c2" text-anchor="middle">反射掩膜（图案在镜面·朝下）</text>
+          <g stroke="#b08bf0" stroke-width="1.7" fill="none"><path d="M481,76 L487,47" marker-end="url(#euvP2)"/><path d="M491,47 L499,76" marker-end="url(#euvP2)"/></g>
+          <path d="M487,47 L487,33" stroke="#5d6b88" stroke-width="0.6" stroke-dasharray="2 2"/><text x="446" y="70" font-size="7.5" fill="#9a8cc0" text-anchor="end">照明 ↑</text><text x="540" y="40" font-size="7.5" fill="#c8b3ff" text-anchor="start">≈6° 斜入射</text>
+          <g fill="#8fa6d6" stroke="#c7d4ee" stroke-width="0.7">
+            <rect x="482" y="76" width="44" height="5" rx="1" transform="rotate(16 504 78)"/>
+            <rect x="432" y="108" width="44" height="5" rx="1" transform="rotate(-16 454 110)"/>
+            <rect x="496" y="140" width="44" height="5" rx="1" transform="rotate(16 518 142)"/>
+            <rect x="432" y="170" width="44" height="5" rx="1" transform="rotate(-16 454 172)"/>
           </g>
-          <rect x="470" y="30" width="70" height="4" rx="1" transform="rotate(8 505 32)" fill="#6f7e9c"/>
-          <text x="505" y="24" font-size="8" fill="#9aa8c2" text-anchor="middle">反射掩膜（图案做在镜面上）</text>
-          <g stroke="#b08bf0" stroke-width="1.8" fill="none"><path d="M330,70 L378,92" marker-end="url(#euvP2)"/><path d="M388,90 L498,46" marker-end="url(#euvP2)"/><path d="M512,46 L566,104" marker-end="url(#euvP2)"/><path d="M566,114 L478,150" marker-end="url(#euvP2)"/><path d="M474,160 L474,196" marker-end="url(#euvP2)"/></g>
-          <text x="324" y="68" font-size="8" fill="#9a8cc0" text-anchor="end">来自光源 IF →</text>
-          <text x="372" y="118" font-size="7.5" fill="#9fb8e0" text-anchor="middle">照明镜</text><text x="582" y="128" font-size="7.5" fill="#9fb8e0" text-anchor="middle">投影镜</text>
-          <rect x="446" y="196" width="60" height="14" fill="url(#gSi)"/><text x="476" y="206" font-size="8" fill="#bcd0f0" text-anchor="middle">硅片</text>
-          <text x="466" y="226" font-size="8.5" fill="#b9a3e8" text-anchor="middle">EUV 被玻璃/空气吸收 → 只能全用镜子、全程真空，掩膜也反射</text>
+          <g stroke="#b08bf0" stroke-width="1.7" fill="none"><path d="M499,80 L460,108" marker-end="url(#euvP2)"/><path d="M458,112 L512,140" marker-end="url(#euvP2)"/><path d="M514,144 L460,170" marker-end="url(#euvP2)"/><path d="M460,174 L480,194" marker-end="url(#euvP2)"/></g>
+          <text x="556" y="112" font-size="7.5" fill="#9fb8e0" text-anchor="start">投影镜</text><text x="556" y="123" font-size="7" fill="#7f8ca6" text-anchor="start">约6面</text>
+          <rect x="450" y="196" width="60" height="14" fill="url(#gSi)"/><text x="480" y="206" font-size="8" fill="#bcd0f0" text-anchor="middle">硅片</text>
+          <text x="466" y="226" font-size="8.5" fill="#b9a3e8" text-anchor="middle">镜面<b>近垂直入射</b>（掠射角小）· 全程真空 · 掩膜也反射</text>
         </svg>
         <div class="note">这是 EUV 最反直觉、也最贵的地方：<b>13.5nm EUV 会被几乎所有材料（玻璃、空气）吸收，没法像 DUV 那样用透镜</b>。于是整条光路<b>全部改用反射镜</b>，连<b>掩膜都是反射式</b>的（图案做在镜面上，斜约 6° 入射）。镜子是<b>钼/硅(Mo/Si)多层膜</b>反射镜，<b>单面也只反射约 70%</b>；一台机器十多面镜子叠下来，<b>光走到硅片只剩百分之几</b>——这就是为什么<b>光源功率</b>要拼命做大。掩膜还要加一层极薄的<b>防护膜 Pellicle</b> 挡颗粒，本身就是难做的高价耗材。</div>
         <div class="ghead" style="color:#c8b3ff">③ 怎么画得更细：两个杠杆——更大的 NA，和多重曝光</div>
