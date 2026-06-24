@@ -1278,30 +1278,48 @@
           <text x="551" y="104" font-size="9" fill="#c8b3ff">中间焦点 IF</text><text x="551" y="118" font-size="7.5" fill="#9a8cc0">→ 送往照明 / 掩膜</text>
         </svg>
         <div class="note">EUV 不是一盏"灯"——它是用<b>大功率 CO₂ 激光每秒轰击约 5 万颗锡(Sn)液滴</b>，把锡打成<b>等离子体</b>，等离子体辐射出 <b>13.5nm</b> 极紫外光；再用<b>椭球收集镜</b>聚到"中间焦点"送进光学系统。这条链路<b>效率极低</b>（注入功率 → 可用 EUV 仅约百分之几），整机功耗<b>兆瓦级</b>，且必须<b>全程真空</b>。光源的稳定与功率，正是 EUV 良率与产能的命门。</div>
-        <div class="ghead" style="color:#c8b3ff">② 光怎么"走"：全反射光路 + 反射式掩膜</div>
-        <svg viewBox="0 0 620 232">
-          <defs><marker id="duvA" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5b7bd4"/></marker>
-          <marker id="euvP2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#b08bf0"/></marker></defs>
-          <text x="150" y="15" font-size="11" fill="#5b7bd4" text-anchor="middle" font-weight="700">DUV：透射式（玻璃透镜）</text>
-          <rect x="140" y="22" width="20" height="6" rx="2" fill="#5b7bd4"/><text x="186" y="28" font-size="8" fill="#7f90b0" text-anchor="start">光源 193nm</text>
-          <polygon points="150,28 120,196 180,196" fill="#5b7bd4" opacity="0.10"/>
-          <line x1="150" y1="28" x2="150" y2="196" stroke="#5b7bd4" stroke-width="1.6" marker-end="url(#duvA)"/>
-          <ellipse cx="150" cy="56" rx="42" ry="10" fill="rgba(150,185,235,0.28)" stroke="#8fb0e0"/><text x="200" y="58" font-size="8" fill="#9fb0cc" text-anchor="start">玻璃透镜</text>
-          <g><rect x="108" y="92" width="84" height="8" fill="#11161f"/><rect x="120" y="92" width="10" height="8" fill="#0a0e1a"/><rect x="150" y="92" width="10" height="8" fill="#0a0e1a"/><rect x="172" y="92" width="10" height="8" fill="#0a0e1a"/></g><text x="200" y="99" font-size="8" fill="#9fb0cc" text-anchor="start">透射掩膜（光穿过）</text>
-          <ellipse cx="150" cy="132" rx="34" ry="8" fill="rgba(150,185,235,0.28)" stroke="#8fb0e0"/>
-          <rect x="116" y="196" width="68" height="14" fill="url(#gSi)"/><text x="150" y="206" font-size="8" fill="#bcd0f0" text-anchor="middle">硅片</text>
-          <text x="150" y="226" font-size="8.5" fill="#8aa0c8" text-anchor="middle">光穿过玻璃透镜与透明掩膜——可在空气中、相对成熟</text>
-          <line x1="310" y1="20" x2="310" y2="214" stroke="#2a3550" stroke-width="1"/>
-          <text x="466" y="15" font-size="11" fill="#b08bf0" text-anchor="middle" font-weight="700">EUV：反射式（镜子 + 真空）</text>
-          <g transform="rotate(-3 490 40)"><rect x="448" y="37" width="84" height="5" rx="1" fill="#8fa6d6" stroke="#c7d4ee" stroke-width="0.7"/><g fill="#11161f"><rect x="460" y="42" width="9" height="3"/><rect x="486" y="42" width="9" height="3"/><rect x="512" y="42" width="9" height="3"/></g></g>
-          <text x="490" y="30" font-size="8" fill="#9aa8c2" text-anchor="middle">反射掩膜（图案在镜面·朝下）</text>
-          <g stroke="#b08bf0" stroke-width="1.7" fill="none"><path d="M483,74 L489,47" marker-end="url(#euvP2)"/></g>
-          <text x="450" y="66" font-size="7.5" fill="#9a8cc0" text-anchor="end">照明 ↑</text><text x="528" y="40" font-size="7.5" fill="#c8b3ff" text-anchor="start">≈6° 入射</text>
-          <g stroke="#cfe0ff" stroke-width="3" stroke-linecap="round"><line x1="515" y1="74" x2="521" y2="98"/><line x1="451" y1="109" x2="451" y2="135"/><line x1="515" y1="146" x2="521" y2="170"/></g>
-          <g stroke="#b08bf0" stroke-width="1.7" fill="none"><path d="M495,47 L512,82" marker-end="url(#euvP2)"/><path d="M514,88 L456,118" marker-end="url(#euvP2)"/><path d="M456,122 L512,152" marker-end="url(#euvP2)"/><path d="M514,158 L490,191" marker-end="url(#euvP2)"/></g>
-          <text x="536" y="92" font-size="7.5" fill="#9fb8e0" text-anchor="start">投影镜组</text><text x="536" y="103" font-size="7" fill="#7f8ca6" text-anchor="start">Mo/Si 多层镜</text><text x="536" y="114" font-size="7" fill="#7f8ca6" text-anchor="start">逐级反射·缩 4×</text>
-          <rect x="458" y="196" width="62" height="14" fill="url(#gSi)"/><text x="489" y="206" font-size="8" fill="#bcd0f0" text-anchor="middle">硅片</text>
-          <text x="466" y="225" font-size="7.8" fill="#9aa0b8" text-anchor="middle">每面都是<b>反射</b>（光不穿透镜面）· 全程真空 ·（真实各镜近垂直入射，此处放大折角以看清"反射"）</text>
+        <div class="ghead" style="color:#c8b3ff">② 光怎么"走"：DUV 折射式 vs EUV 反射式（全程真空）</div>
+        <div class="cap"><b>一句话对比：</b><b style="color:#7fa6e8">DUV（193nm）＝折射式</b> —— 用<b>玻璃透镜</b>+<b>透明掩膜</b>（光穿过），可在空气中、或<b>浸没在水里</b>（n≈1.44，把 NA 抬到 1.35）；<b style="color:#b08bf0">EUV（13.5nm）＝反射式</b> —— 会被玻璃和空气吸收，所以<b>全改用镜子、全程真空、连掩膜都反射</b>。下面分别画出两者光路：</div>
+        <svg viewBox="0 0 620 300">
+          <text x="310" y="18" font-size="12" fill="#7fa6e8" text-anchor="middle" font-weight="700">DUV（193nm）· 折射式：玻璃透镜 + 透明掩膜（光穿过）</text>
+          <rect x="278" y="30" width="64" height="15" rx="3" fill="#2a3a5c" stroke="#5b7bd4"/><text x="310" y="41" font-size="8.5" fill="#cfe0ff" text-anchor="middle">ArF 193nm</text>
+          <polygon points="270,46 350,46 326,250 294,250" fill="#5b7bd4" opacity="0.10"/>
+          <line x1="310" y1="45" x2="310" y2="250" stroke="#5b7bd4" stroke-width="1.3" stroke-dasharray="3 2" opacity="0.55"/>
+          <path d="M268,70 Q310,60 352,70 Q310,80 268,70 Z" fill="#bcd4f5" opacity="0.45" stroke="#8fb0e0" stroke-width="0.8"/><line x1="356" y1="70" x2="446" y2="70" stroke="#5d6b88" stroke-width="0.7"/><text x="450" y="73" font-size="9.5" fill="#9fb0cc" text-anchor="start">照明镜组（聚光）</text>
+          <rect x="252" y="100" width="116" height="7" rx="1" fill="#bfe3ef" opacity="0.78"/><g fill="#2b303a"><rect x="270" y="98" width="14" height="5"/><rect x="303" y="98" width="14" height="5"/><rect x="336" y="98" width="14" height="5"/></g><line x1="372" y1="103" x2="446" y2="103" stroke="#5d6b88" stroke-width="0.7"/><text x="450" y="106" font-size="9.5" fill="#9fb0cc" text-anchor="start">透射掩膜（光穿过）</text>
+          <g fill="#bcd4f5" opacity="0.42" stroke="#8fb0e0" stroke-width="0.8"><path d="M268,138 Q310,128 352,138 Q310,148 268,138 Z"/><path d="M274,164 Q310,155 346,164 Q310,173 274,164 Z"/><path d="M280,190 Q310,182 340,190 Q310,198 280,190 Z"/><path d="M286,214 Q310,207 334,214 Q310,221 286,214 Z"/></g>
+          <line x1="356" y1="176" x2="446" y2="176" stroke="#5d6b88" stroke-width="0.7"/><text x="450" y="173" font-size="9.5" fill="#9fb0cc" text-anchor="start">投影物镜</text><text x="450" y="186" font-size="8.5" fill="#7f8ca6" text-anchor="start">实际二三十片透镜</text>
+          <rect x="288" y="242" width="44" height="8" fill="#34d6cf" opacity="0.30"/><line x1="334" y1="246" x2="446" y2="246" stroke="#5d6b88" stroke-width="0.7"/><text x="450" y="249" font-size="8.5" fill="#7fd0c4" text-anchor="start">浸没水 n≈1.44（抬高 NA）</text>
+          <rect x="282" y="250" width="56" height="14" fill="url(#gSi)"/><text x="310" y="260" font-size="8.5" fill="#bcd0f0" text-anchor="middle">硅片（缩 4×）</text>
+          <text x="310" y="286" font-size="9.5" fill="#8aa0c8" text-anchor="middle">光大致竖直穿过透镜与透明掩膜 —— 折射式，可在空气中或浸没水中</text>
+        </svg>
+        <svg viewBox="0 0 620 444">
+          <text x="310" y="17" font-size="11.5" fill="#b08bf0" text-anchor="middle" font-weight="700">EUV · 反射式真实光路：照明系统（刻面镜）→ 反射掩膜 → 6 面投影镜 → 硅片（全程真空）</text>
+          <rect x="12" y="26" width="596" height="408" rx="8" fill="none" stroke="#23304d" stroke-dasharray="4 4"/><text x="600" y="40" font-size="8.5" fill="#5d6b88" text-anchor="end">全程真空</text>
+          <!-- intermediate focus (from collector in ①) -->
+          <circle cx="58" cy="150" r="4" fill="#d9c7ff"/><circle cx="58" cy="150" r="9" fill="none" stroke="#b8a6e0" stroke-width="0.7" opacity="0.5"/>
+          <text x="58" y="134" font-size="9" fill="#b9a3e8" text-anchor="middle">中间焦点 IF</text><text x="58" y="170" font-size="7.5" fill="#7f8ca6" text-anchor="middle">←①收集镜聚焦</text>
+          <!-- field facet mirror -->
+          <g transform="rotate(-52 140 226)"><rect x="120" y="223" width="40" height="6" rx="2" fill="#8fa6d6" stroke="#c7d4ee" stroke-width="0.6"/><g stroke="#43506a" stroke-width="0.5"><line x1="128" y1="223" x2="128" y2="229"/><line x1="136" y1="223" x2="136" y2="229"/><line x1="144" y1="223" x2="144" y2="229"/><line x1="152" y1="223" x2="152" y2="229"/></g></g>
+          <text x="138" y="252" font-size="8.5" fill="#9fb8e0" text-anchor="middle">场刻面镜 FFM</text>
+          <!-- pupil facet mirror -->
+          <g transform="rotate(34 220 162)"><rect x="200" y="159" width="40" height="6" rx="2" fill="#8fa6d6" stroke="#c7d4ee" stroke-width="0.6"/><g stroke="#43506a" stroke-width="0.5"><line x1="208" y1="159" x2="208" y2="165"/><line x1="216" y1="159" x2="216" y2="165"/><line x1="224" y1="159" x2="224" y2="165"/><line x1="232" y1="159" x2="232" y2="165"/></g></g>
+          <text x="232" y="146" font-size="8.5" fill="#9fb8e0" text-anchor="middle">光瞳刻面镜 PFM</text>
+          <!-- reticle -->
+          <g transform="rotate(-3 332 64)"><rect x="272" y="60" width="120" height="6" rx="1" fill="#8fa6d6" stroke="#c7d4ee" stroke-width="0.8"/><g fill="#11161f"><rect x="288" y="66" width="12" height="3.5"/><rect x="326" y="66" width="12" height="3.5"/><rect x="362" y="66" width="12" height="3.5"/></g></g>
+          <text x="332" y="50" font-size="9.5" fill="#9aa8c2" text-anchor="middle">反射掩膜（图案在镜面·朝下）</text><text x="402" y="72" font-size="8.5" fill="#c8b3ff">≈6°</text>
+          <!-- illuminator beam: IF -> FFM -> PFM -> reticle -->
+          <g stroke="#9a7fd0" stroke-width="1.4" fill="none" opacity="0.95"><path d="M62,154 L132,222" marker-end="url(#euvR)"/><path d="M148,222 L210,170" marker-end="url(#euvR)"/><path d="M228,158 L322,74" marker-end="url(#euvR)"/></g>
+          <!-- 6 projection mirrors (large curved aspheric), faithful fold -->
+          <g stroke="#cfe0ff" stroke-width="3.4" fill="none" stroke-linecap="round"><path d="M452,138 Q438,154 452,170"/><path d="M322,100 Q336,116 322,132"/><path d="M470,218 Q456,234 470,250"/><path d="M322,274 Q336,290 322,306"/><path d="M464,330 Q450,346 464,362"/><path d="M379,404 Q383,392 391,380"/></g>
+          <g font-size="11" font-weight="700" fill="#cfe0ff"><text x="466" y="158">M1</text><text x="304" y="120" text-anchor="end">M2</text><text x="484" y="238">M3</text><text x="304" y="296" text-anchor="end">M4</text><text x="478" y="350">M5</text><text x="398" y="392">M6</text></g>
+          <!-- projection beam fold reticle->M1..M6->wafer -->
+          <g stroke="#b08bf0" stroke-width="1.5" fill="none"><path d="M340,76 L446,150" marker-end="url(#euvR)"/><path d="M446,150 L328,116" marker-end="url(#euvR)"/><path d="M328,116 L460,230" marker-end="url(#euvR)"/><path d="M460,230 L330,288" marker-end="url(#euvR)"/><path d="M330,288 L456,344" marker-end="url(#euvR)"/><path d="M456,344 L386,388" marker-end="url(#euvR)"/><path d="M385,392 L382,408" marker-end="url(#euvR)"/></g>
+          <text x="392" y="138" font-size="8" fill="#8b9bb8">光阑(M1–M2)</text><text x="392" y="184" font-size="8" fill="#8b9bb8">中间像(M2–M3)</text>
+          <!-- wafer -->
+          <rect x="350" y="410" width="64" height="14" fill="url(#gSi)"/><text x="382" y="420" font-size="9" fill="#bcd0f0" text-anchor="middle">硅片（缩 4×·扫描）</text>
+          <!-- callouts -->
+          <g font-size="8.5"><text x="30" y="350" fill="#7fd0c4">照明系统：刻面镜(FFM/PFM)把光均匀化、并设定照明光瞳</text><text x="30" y="364" fill="#7fd0c4">（离轴/dipole 等），整形成弧形场照到掩膜</text><text x="30" y="384" fill="#9fc0ec">投影光学：6 面大块曲面(非球面) Mo/Si 镜，每面近垂直入射 &lt;15°</text><text x="30" y="398" fill="#9fc0ec">逐面反射、整体缩 4×；M1–M2 间设光阑，其后成一次中间像</text></g>
         </svg>
         <div class="note">这是 EUV 最反直觉、也最贵的地方：<b>13.5nm EUV 会被几乎所有材料（玻璃、空气）吸收，没法像 DUV 那样用透镜</b>。于是整条光路<b>全部改用反射镜</b>，连<b>掩膜都是反射式</b>的（图案做在镜面上，斜约 6° 入射）。镜子是<b>钼/硅(Mo/Si)多层膜</b>反射镜，<b>单面也只反射约 70%</b>；一台机器十多面镜子叠下来，<b>光走到硅片只剩百分之几</b>——这就是为什么<b>光源功率</b>要拼命做大。掩膜还要加一层极薄的<b>防护膜 Pellicle</b> 挡颗粒，本身就是难做的高价耗材。</div>
         <div class="ghead" style="color:#c8b3ff">③ 怎么画得更细：两个杠杆——更大的 NA，和多重曝光</div>
