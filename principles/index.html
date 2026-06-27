@@ -481,6 +481,25 @@
           <text x="310" y="200" font-size="10" fill="#8b9bb8" text-anchor="middle">硅料分两档：<tspan fill="#bdd0ea">太阳能级</tspan>(6~9个9，光伏用) ｜ <tspan fill="#9fc0ec">电子级</tspan>(11个9，造芯片用)——新闻里"硅料涨价"多指太阳能级。</text>
         </svg>
 
+        <div class="subttl">抛光片之后：有些应用还要"长一层"外延片</div>
+        <div class="cap">上面磨好的镜面晶圆叫<b>抛光片（polished wafer）</b>，可直接用。但很多高端应用会在抛光片表面再用 <b>CVD 外延</b>"长"出一层<b>更完美的单晶硅薄层</b>，叫<b>外延片（epi wafer）</b>——晶格更纯净、缺陷更少、掺杂可精确控制。</div>
+        <svg viewBox="0 0 620 100" style="margin-top:4px">
+          <text x="150" y="16" font-size="10.5" fill="#9fc0ec" text-anchor="middle" font-weight="700">抛光片</text>
+          <rect x="60" y="32" width="180" height="44" fill="url(#gWaf)" stroke="#cfe0f5" stroke-width="0.7"/>
+          <path d="M66,35 L80,32" stroke="#eaf2ff" stroke-width="2" stroke-linecap="round"/>
+          <text x="150" y="59" font-size="9" fill="#16243a" text-anchor="middle" font-weight="700">单晶硅衬底</text>
+          <text x="150" y="92" font-size="8.5" fill="#8b9bb8" text-anchor="middle">直接用：常规逻辑 / 存储</text>
+          <text x="300" y="56" font-size="17" fill="#34d6cf" text-anchor="middle">→</text>
+          <text x="300" y="72" font-size="8" fill="#7fd9cf" text-anchor="middle">CVD 外延</text>
+          <text x="470" y="16" font-size="10.5" fill="#ffd9a0" text-anchor="middle" font-weight="700">外延片</text>
+          <rect x="380" y="40" width="180" height="36" fill="url(#gWaf)" stroke="#cfe0f5" stroke-width="0.7"/>
+          <rect x="380" y="31" width="180" height="9" fill="#ffce8a"/>
+          <text x="470" y="60" font-size="9" fill="#16243a" text-anchor="middle" font-weight="700">衬底</text>
+          <line x1="560" y1="35" x2="586" y2="30" stroke="#5d6b88" stroke-width="0.7"/><text x="589" y="32" font-size="8" fill="#e3b06a">外延层</text>
+          <text x="470" y="92" font-size="8.5" fill="#8b9bb8" text-anchor="middle">先进 CMOS / 功率 / CIS</text>
+        </svg>
+        <div class="note"><b>为什么要外延</b>：先进 CMOS 抑制闩锁、<b>功率器件</b>（耐压厚外延）、<b>CIS 图像传感器</b>等都要外延片；外延层的厚度与掺杂决定器件性能。所以硅片不止"抛光片"一种，<b>外延片是更高价值的形态</b>（第二轨「材料 · 硅片」详谈份额与玩家）。</div>
+
         <div class="subttl">直拉法（CZ）：把熔硅"拉"成一根完美单晶</div>
         <svg viewBox="0 0 620 300" style="margin-top:4px">
           <!-- pull rod + seed -->
@@ -1022,6 +1041,16 @@
         </div>
         <div class="note">💡 注意看 ▣ CMP 那几步（第 4、13、15、19）：<b>上一步沉积出来的表面是凹凸 / 隆起的（⌇），抛光头把它磨平</b>——这正是 CMP 存在的意义；虚线就是被磨掉的部分。前段 FEOL（1~15）只走一遍造出晶体管；后段 BEOL（16~19）每叠一层铜都重复一次并再做一次铜 CMP，共 10~20 层。所以一颗芯片只有一层晶体管，却有十几层布线。</div>
 
+        <div class="ghead" style="color:#7fd0c4">每步背后的耗材：电子特气在工艺里干嘛</div>
+        <div class="cap">上面每道<b>沉积 / 刻蚀 / 掺杂 / 清洗</b>，靠的不只是设备，还有大量<b>电子特种气体</b>（纯度 6N~7N）——它们是真正的"工艺耗材"：</div>
+        <div class="nm">
+          <div class="nmrow"><div class="co" style="color:#9fd6c0">刻蚀气</div><div class="de"><b>含氟 / 含氯气体</b>（CF₄、SF₆、Cl₂、HBr…）：把没被胶保护的膜一层层"咬"掉，决定刻蚀形貌与选择比。</div></div>
+          <div class="nmrow"><div class="co" style="color:#c8b3ff">沉积前驱体</div><div class="de"><b>CVD/ALD 源气</b>（硅烷 SiH₄、WF₆、TEOS、各种金属有机前驱体…）：在表面反应"长"出氧化层 / 金属 / 介质薄膜。</div></div>
+          <div class="nmrow"><div class="co" style="color:#f0c082">掺杂源</div><div class="de"><b>注入 / 扩散杂质源</b>（B₂H₆、PH₃、AsH₃…）：提供硼 / 磷 / 砷，把硅变成 P 型 / N 型。</div></div>
+          <div class="nmrow"><div class="co" style="color:#8fb0e0">大宗 / 清洗气</div><div class="de"><b>N₂、Ar、H₂、NF₃…</b>：吹扫、保护气氛与腔体清洗（NF₃ 清反应腔）。</div></div>
+        </div>
+        <div class="note">这些气体多数<b>有毒 / 易燃 / 腐蚀</b>，对纯度与供应稳定性要求极高——也是<b>第二轨「材料 · 电子特气」</b>讲的产业卡点。</div>
+
         <div class="subttl">后段叠完后的真实截面（多层布线）</div>
         <svg viewBox="0 0 620 300">
           <rect x="120" y="270" width="380" height="26" fill="#3a4870"/><text x="310" y="288" font-size="10" fill="#8b9bb8" text-anchor="middle">硅衬底</text>
@@ -1278,6 +1307,24 @@
           <g font-size="8.5"><rect x="150" y="112" width="11" height="7" fill="#e0556e"/><text x="164" y="118" fill="#9fb0cc">光刻胶</text><rect x="214" y="112" width="11" height="7" fill="#f2d35a"/><text x="228" y="118" fill="#9fb0cc">待刻蚀薄膜</text><rect x="306" y="112" width="11" height="7" fill="#3a4870"/><text x="320" y="118" fill="#9fb0cc">底材/上一层</text></g>
           <text x="310" y="138" font-size="10.5" fill="#aebbd2" text-anchor="middle">关键差别：<tspan fill="#7fd0c4">显影</tspan>只洗掉受光的胶（膜还连着）；<tspan fill="#7fd0c4">刻蚀</tspan>才顺着开口把<tspan fill="#f2d35a">膜</tspan>挖穿；去胶后剩下的就是图形化的膜。</text>
         </svg>
+
+        <div class="ghead" style="color:#e0556e">为什么"受光的胶"会被洗掉：光刻胶的感光机制</div>
+        <div class="cap">显影能"只洗掉该走的那部分"，靠的是光刻胶<b>受光后溶解性改变</b>：<b style="color:#f3a0b0">正胶</b>受光处变<b>可溶</b>（洗掉受光区，主流先进制程都用正胶）；<b style="color:#9fd6c0">负胶</b>受光处<b>交联固化</b>变不可溶（洗掉的是没受光的区域）。</div>
+        <svg viewBox="0 0 620 104" style="margin-top:4px">
+          <defs><marker id="luv2" markerWidth="7" markerHeight="7" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#c8b3ff"/></marker></defs>
+          <text x="155" y="15" font-size="10.5" fill="#f3a0b0" text-anchor="middle" font-weight="700">正胶：受光处被洗掉</text>
+          <rect x="70" y="30" width="170" height="7" fill="#445a82"/><rect x="70" y="30" width="58" height="7" fill="#0a0e1a"/><rect x="182" y="30" width="58" height="7" fill="#0a0e1a"/>
+          <text x="256" y="36" font-size="8" fill="#8b9bb8">掩膜</text>
+          <g stroke="#c8b3ff" stroke-width="1.3"><line x1="148" y1="39" x2="148" y2="58" marker-end="url(#luv2)"/><line x1="162" y1="39" x2="162" y2="58" marker-end="url(#luv2)"/></g>
+          <rect x="70" y="76" width="170" height="14" fill="#3a4870"/><rect x="70" y="65" width="58" height="11" fill="#e0556e"/><rect x="182" y="65" width="58" height="11" fill="#e0556e"/>
+          <text x="155" y="101" font-size="8" fill="#9fb0cc" text-anchor="middle">受光中段被显影洗掉 → 中间开口</text>
+          <text x="465" y="15" font-size="10.5" fill="#9fd6c0" text-anchor="middle" font-weight="700">负胶：未受光处被洗掉</text>
+          <rect x="380" y="30" width="170" height="7" fill="#445a82"/><rect x="380" y="30" width="58" height="7" fill="#0a0e1a"/><rect x="492" y="30" width="58" height="7" fill="#0a0e1a"/>
+          <g stroke="#c8b3ff" stroke-width="1.3"><line x1="458" y1="39" x2="458" y2="58" marker-end="url(#luv2)"/><line x1="472" y1="39" x2="472" y2="58" marker-end="url(#luv2)"/></g>
+          <rect x="380" y="76" width="170" height="14" fill="#3a4870"/><rect x="438" y="65" width="54" height="11" fill="#5fae8e"/>
+          <text x="465" y="101" font-size="8" fill="#9fb0cc" text-anchor="middle">受光中段交联留下 → 中间是胶</text>
+        </svg>
+        <div class="note"><b>化学放大胶（CAR，DUV/EUV 主流）的关键</b>：胶里掺<b>光酸产生剂（PAG）</b>，曝光后放出<b>光酸 H⁺</b>；再经<b>后烘（PEB）</b>，<b>一个</b>光酸催化断开<b>许多</b>"保护基团"（一变多、把微弱曝光信号放大），受光区于是由不可溶变可溶、被显影液洗掉。<b>"光 → 光酸 → 去保护 → 可溶 → 显影"</b>就是受光的胶被洗掉的真正机理；EUV 光子数少、更依赖这种化学放大，EUV 胶因此是极高壁垒耗材。</div>
 
         <div class="ghead" style="color:#c8b3ff">① EUV 的光怎么"造"出来：锡等离子体光源（LPP）</div>
         <svg viewBox="0 0 620 212">
