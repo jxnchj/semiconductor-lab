@@ -1103,10 +1103,10 @@
         <div class="subttl">三大厂的命名标准（互不统一，同名≠等价）</div>
         <div class="nm">
           <div class="nmrow"><div class="co" style="color:#5eead4">台积电 TSMC</div><div class="de">N7 → N5 → N3 → <b style="color:#e8eef9">N2</b> → A16/A14。N3 仍用 FinFET，<b style="color:#e8eef9">N2 起改用 GAA</b>。"A"=埃(0.1nm)，进入"埃米时代"。全球约九成 5nm 以下芯片由它代工。</div></div>
-          <div class="nmrow"><div class="co" style="color:#b08bf0">三星 Samsung</div><div class="de">改用 SF 体系：7LPP(首批量产 EUV) → 5LPE → 4LPE → <b style="color:#e8eef9">SF3</b>(3nm，业界最早上 GAA，自称 MBCFET) → SF2 → SF1.4。</div></div>
-          <div class="nmrow"><div class="co" style="color:#e9a04c">英特尔 Intel</div><div class="de">曾用"真实"nm，但其 10nm 密度≈别家 7nm，数字上显得落后。2021 改名：Intel 7 → 4 → 3 → 20A → <b style="color:#e8eef9">18A</b>。20A/18A 首发 RibbonFET(GAA) + PowerVia(背面供电)，密度上对标台积电 N2。</div></div>
+          <div class="nmrow"><div class="co" style="color:#b08bf0">三星 Samsung</div><div class="de">改用 SF 体系：7LPP(首批量产 EUV) → 5LPE → 4LPE → <b style="color:#e8eef9">SF3</b>(3nm GAA 二代；业界最早量产 GAA 是其一代 3GAE/SF3E，2022，自称 MBCFET) → SF2 → SF1.4(已传推迟至 2028–29)。</div></div>
+          <div class="nmrow"><div class="co" style="color:#e9a04c">英特尔 Intel</div><div class="de">曾用"真实"nm，但其 10nm 密度≈别家 7nm，数字上显得落后。2021 改名：Intel 7 → 4 → 3 → <b style="color:#e8eef9">18A</b>（20A 于 2024 取消、未量产）。18A 首发 RibbonFET(GAA) + PowerVia(背面供电)，密度上对标台积电 N2。</div></div>
         </div>
-        <div class="note">没有行业统一标准，<b>真正可比的是密度</b>（每平方毫米晶体管数 MTr/mm²）、功耗与性能。举个反差例子：台积电 N3E 的<b>最小金属间距约 23nm、栅极间距（CPP）约 45–48nm</b>，密度约 <b>170–200 MTr/mm²</b> 量级——"3nm"这个名字里，根本找不到 3nm 这个尺寸。</div>
+        <div class="note">没有行业统一标准，<b>真正可比的是密度</b>（每平方毫米晶体管数 MTr/mm²）、功耗与性能。举个反差例子：台积电 N3E 的<b>最小金属间距约 23nm、栅极间距（CPP）约 45–48nm</b>，密度约 <b>200–220 MTr/mm²</b>（N3≈197、N3E≈216，峰值口径）——"3nm"这个名字里，根本找不到 3nm 这个尺寸。</div>
 
         <div class="subttl">为什么越先进越贵：良率与成本</div>
         <svg viewBox="0 0 620 246">
@@ -1437,7 +1437,7 @@
           </g>
         </svg>
         <div class="note">多重曝光：单次分辨率不够时，把一层图形<b>拆成多块掩膜 / 多道工序</b>叠出来。图中 <b>SADP 自对准双重成形</b>——先做较稀的"芯轴"，侧壁长一圈侧墙，去掉芯轴后<b>侧墙变成两倍密的线</b>。<b>DUV(193nm) 时代正是靠它硬做到 7nm</b>；EUV 能少拆几次，但最细处仍需多重曝光。<b>每多一次 = 多一套掩膜、多一道工序 = 更贵更慢</b>，这是先进制程成本飙升的重要原因。</div>
-        <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>为什么光刻是最硬的卡脖子环节：</b>EUV 光刻机<b>全球只有 ASML 一家</b>能造，一台标准 EUV ~1.5 亿美元、<b>High-NA（EXE:5200B）约 3.8 亿美元</b>，年产量有限。配套同样高度垄断：<b>光刻胶</b>（JSR / 东京应化 / 信越 / 住友，EUV 金属氧化物胶 Inpria）、<b>掩膜基板</b>（Hoya / AGC）、<b>防护膜 Pellicle</b>（三井）、<b>光学</b>（蔡司）。进展（2026）：<b>Intel 率先用上 High-NA</b>（EXE:5200B，175 片/小时），三星、SK 海力士跟进；<b>台积电因太贵暂缓</b>（A14 暂不用 High-NA），High-NA 量产普遍预期 2027–28。对国产替代，EUV 仍是<b>尚未突破</b>的最高壁垒。</div>
+        <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>为什么光刻是最硬的卡脖子环节：</b>EUV 光刻机<b>全球只有 ASML 一家</b>能造，一台标准 EUV 约 2 亿美元级（现役 NXE:3800E 约 2.2–2.4 亿）、<b>High-NA（EXE:5200B）约 3.8 亿美元</b>，年产量有限。配套同样高度垄断：<b>光刻胶</b>（JSR / 东京应化 / 信越 / 住友，EUV 金属氧化物胶 Inpria）、<b>掩膜基板</b>（Hoya / AGC）、<b>防护膜 Pellicle</b>（三井）、<b>光学</b>（蔡司）。进展（2026）：<b>Intel 率先用上 High-NA</b>（EXE:5200B，175 片/小时），三星、SK 海力士跟进；<b>台积电因太贵暂缓</b>（A14 暂不用 High-NA），High-NA 量产普遍预期 2027–28。对国产替代，EUV 仍是<b>尚未突破</b>的最高壁垒。</div>
       </div>
 
       <!-- ===== SCENE 6: MEMORY ===== -->
@@ -1714,11 +1714,11 @@
           <line x1="92" y1="74" x2="118" y2="74" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgD)"/><text x="90" y="71" font-size="8" fill="#aab4c6" text-anchor="end">塑封 molding</text>
           <line x1="372" y1="120" x2="300" y2="146" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgD)"/><text x="374" y="112" font-size="8.5" fill="#cfe0ff" font-weight="700">DRAM 存储颗粒</text><text x="374" y="123" font-size="7.5" fill="#9fb8e0">×8~16 层（已减薄叠放）</text>
           <line x1="372" y1="170" x2="298" y2="170" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgD)"/><text x="374" y="167" font-size="8.5" fill="#f0c082">TSV 硅通孔（信号·电源竖直直通）</text>
-          <line x1="372" y1="206" x2="280" y2="204" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgD)"/><text x="374" y="203" font-size="8.5" fill="#d6deea">微凸点（层间连接）</text><text x="374" y="214" font-size="7.5" fill="#9fb8e0">→ HBM4 改用混合键合</text>
+          <line x1="372" y1="206" x2="280" y2="204" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgD)"/><text x="374" y="203" font-size="8.5" fill="#d6deea">微凸点（层间连接）</text><text x="374" y="214" font-size="7.5" fill="#9fb8e0">→ HBM4E/16层起导入混合键合</text>
           <line x1="372" y1="252" x2="306" y2="252" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgD)"/><text x="374" y="249" font-size="8.5" fill="#bcd0f0">基底逻辑 die</text><text x="374" y="260" font-size="7.5" fill="#9fb8e0">控制器/IO/ECC/刷新/供电</text>
           <text x="216" y="288" font-size="8" fill="#8fe9e1" text-anchor="middle">↓ 整颗 HBM 再用微凸点接到硅中介层上</text>
         </svg>
-        <div class="note">HBM（高带宽存储）把<b>一颗基底逻辑 die + 上面叠 8~16 层减薄的 DRAM</b>用 <b>TSV 硅通孔</b>竖直打穿、上下直连，做成一个"存储立方体"。因为连接是<b>又宽又短的竖井</b>，带宽极高、功耗低。<b>当下主力 HBM3E</b>：8/12 层、单颗 24/36 GB、带宽约 <b>1.2 TB/s</b>（一颗 AI GPU 旁边放 6~8 颗，如 NVIDIA B200＝8 颗 ≈ 192 GB）。<b>2026 量产的 HBM4</b>：接口位宽<b>翻倍到 2048-bit</b>、带宽约 <b>2 TB/s 以上</b>、最高 16 层 / 48 GB，并改用<b>混合键合</b>（见下）。</div>
+        <div class="note">HBM（高带宽存储）把<b>一颗基底逻辑 die + 上面叠 8~16 层减薄的 DRAM</b>用 <b>TSV 硅通孔</b>竖直打穿、上下直连，做成一个"存储立方体"。因为连接是<b>又宽又短的竖井</b>，带宽极高、功耗低。<b>当下主力 HBM3E</b>：8/12 层、单颗 24/36 GB、带宽约 <b>1.2 TB/s</b>（一颗 AI GPU 旁边放 6~8 颗，如 NVIDIA B200＝8 颗 ≈ 192 GB）。<b>2026 量产的 HBM4</b>：接口位宽<b>翻倍到 2048-bit</b>、带宽约 <b>2 TB/s 以上</b>、规格上限 16 层 / 48 GB（首代量产为 12 层 / 36 GB，仍用 MR-MUF/TCB；<b>混合键合</b>预计 16 层 / HBM4E 世代导入，见下）。</div>
         <div class="subttl">E · 层间互连的进化：微凸点 → 混合键合</div>
         <svg viewBox="0 0 620 200">
           <text x="150" y="15" font-size="11" fill="#9fb0cc" text-anchor="middle" font-weight="700">微凸点 Microbump（现行）</text>
@@ -1730,7 +1730,7 @@
           <text x="150" y="180" font-size="8.5" fill="#aebbd2" text-anchor="middle">铜柱 + 焊料凸点，间距 ~10~25µm；</text>
           <text x="150" y="192" font-size="8.5" fill="#aebbd2" text-anchor="middle">芯片间有缝（填 underfill），电阻 / 热阻偏高</text>
           <line x1="310" y1="22" x2="310" y2="170" stroke="#2a3550" stroke-width="1"/>
-          <text x="465" y="15" font-size="11" fill="#5eead4" text-anchor="middle" font-weight="700">混合键合 Hybrid Bonding（HBM4 / 3D 趋势）</text>
+          <text x="465" y="15" font-size="11" fill="#5eead4" text-anchor="middle" font-weight="700">混合键合 Hybrid Bonding（HBM4E·3D 堆叠趋势）</text>
           <rect x="354" y="38" width="222" height="62" fill="url(#gSi)" stroke="#5a76b0"/><text x="465" y="64" font-size="8.5" fill="#bcd0f0" text-anchor="middle">上层 die</text>
           <rect x="354" y="100" width="222" height="60" fill="url(#gSi)" stroke="#5a76b0"/><text x="465" y="134" font-size="8.5" fill="#bcd0f0" text-anchor="middle">下层 die</text>
           <g fill="url(#gCu)"><rect x="390" y="93" width="16" height="14"/><rect x="438" y="93" width="16" height="14"/><rect x="486" y="93" width="16" height="14"/><rect x="534" y="93" width="16" height="14"/></g>
@@ -1743,7 +1743,7 @@
         <div class="subttl">F · 产业现状：为什么先进封装＝当前 AI 算力的瓶颈</div>
         <div class="nm">
           <div class="nmrow"><div class="co" style="color:#5eead4">2.5D 封装</div><div class="de">CoWoS 几乎由<b style="color:#e8eef9">台积电</b>独家大规模供应；2026 年 NVIDIA 一家就订走约<b style="color:#e8eef9">六成</b>产能，交期一度排到 <b>50+ 周</b>。台积电正把 CoWoS 产能向 <b>~13 万片/月</b>扩。</div></div>
-          <div class="nmrow"><div class="co" style="color:#b08bf0">HBM</div><div class="de">三家：<b style="color:#e8eef9">SK 海力士（领先）/ 三星 / 美光</b>。HBM3E 当前主力，<b style="color:#e8eef9">HBM4 于 2026 量产</b>（SK 海力士 16 层 48GB、美光 12 层 36GB、三星 2026 初出货）。</div></div>
+          <div class="nmrow"><div class="co" style="color:#b08bf0">HBM</div><div class="de">三家：<b style="color:#e8eef9">SK 海力士（领先）/ 三星 / 美光</b>。HBM3E 当前主力，<b style="color:#e8eef9">HBM4 于 2026 量产</b>（首代均为 12 层 36GB：SK 海力士 / 美光量产、三星 2026 初出货；SK 的 16 层 48GB 为已展示样品，对应下一代平台）。</div></div>
           <div class="nmrow"><div class="co" style="color:#e9a04c">谁在用</div><div class="de">NVIDIA <b style="color:#e8eef9">Blackwell</b>（双 GPU die＋8×HBM3E）、下一代 <b style="color:#e8eef9">Rubin</b>（HBM4＋CoWoS-L＋SoIC 3D 堆叠）；AMD <b style="color:#e8eef9">MI300/MI350</b> 系列。先进封装＋HBM 已是 AI 算力扩张最紧的两个卡点之一。</div></div>
         </div>
         <div class="note" style="border-left-color:#e9a04c;background:rgba(233,160,76,.06)">一句话收尾：当晶体管已经难再快速变小，<b>"把更多芯片更密地拼起来、叠起来、用 HBM 喂饱它们"</b>成了 AI 芯片继续变强的主战场——所以<b>先进封装(CoWoS) 与 HBM 的产能，直接决定了能造出多少 AI 算力</b>。</div>
