@@ -142,7 +142,7 @@
   .lookup tr.grp td{background:rgba(52,214,207,.06);color:var(--cy2);font-weight:700;font-size:12px;border-bottom:1px solid rgba(52,214,207,.18)}
   .lookup td.co{color:#cdd7e8;font-weight:600;white-space:nowrap}
   .lookup td.tk{font-family:ui-monospace,Menlo,monospace;color:var(--cu);white-space:nowrap}
-  .lookup td.rl{color:var(--dim);font-size:10.5px;white-space:nowrap}
+  .lookup td.rl{color:#cdd7e8;font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums}
   .tg{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px;margin-left:8px;border:1px solid}
   .tg.sw{color:#9fc0ee;border-color:rgba(91,134,201,.45);background:rgba(91,134,201,.1)}
   .tg.cc{color:#cabcf5;border-color:rgba(176,139,240,.45);background:rgba(176,139,240,.1)}
@@ -250,7 +250,7 @@
         <div class="stat"><div class="v" style="color:#7ad6a3">416<small> 亿$</small></div><div class="l">封测 · 前十(2024)</div><div class="d">最新全年</div></div>
       </div>
       <div class="panelbox">        <div class="subttl">产业链结构：主链 + 上游赋能</div>
-        <div class="cap">2025 年全球半导体销售额约 <b>7917 亿美元</b><sup class="s">1</sup>（+25.6%；2024 为 6305 亿，2026 有望破万亿）。但这只是芯片本身——支撑它的是上游 <b>设备</b>（1351 亿<sup class="s">3</sup>）与 <b>材料</b>（732 亿<sup class="s">2</sup>）两大"卖铲子"环节，下游则是 <b>代工</b>（前十 1695 亿<sup class="s">4</sup>）与 <b>封测</b>。这张图先把全局摆出来，再逐赛道往深里挖——<b>第一站：材料</b>。</div>
+        <div class="cap">2025 年全球半导体销售额约 <b>7917 亿美元</b><sup class="s">1</sup>（+25.6%；2024 为 6305 亿，2026 有望破万亿）。但这只是芯片本身——支撑它的是上游 <b>设备</b>（1351 亿<sup class="s">3</sup>）与 <b>材料</b>（732 亿<sup class="s">2</sup>）两大"卖铲子"环节，下游则是 <b>代工</b>（前十 1695 亿<sup class="s">4</sup>）与 <b>封测</b>。这张图先把全局摆出来，再逐赛道往深里挖（六大赛道见左栏导航）。</div>
 
         <svg viewBox="0 0 800 326" role="img" aria-label="半导体产业链结构图：上游EDA/IP、设备、材料赋能，主链设计到终端">
           <defs>
@@ -262,43 +262,44 @@
           </defs>
           <text x="20" y="26" font-size="11.5" font-weight="700" fill="#8b9bb8" letter-spacing="1">上游 · 卖铲子（设备 + 材料 + 软件）</text>
           <g>
-            <rect x="20" y="38" width="130" height="58" rx="11" fill="url(#bxe)" stroke="#b08bf0" stroke-opacity=".55"/>
-            <text x="85" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="#cabcf5">EDA · IP</text>
-            <text x="85" y="80" text-anchor="middle" font-size="10" fill="#8b9bb8">设计软件 / 核心IP</text>
+            <rect x="20" y="34" width="130" height="64" rx="11" fill="url(#bxe)" stroke="#b08bf0" stroke-opacity=".55"/>
+            <text x="85" y="55" text-anchor="middle" font-size="12.5" font-weight="700" fill="#cabcf5">EDA · IP</text>
+            <text x="85" y="73" text-anchor="middle" font-size="9" fill="#8b9bb8">设计软件 + 核心IP</text>
+            <text x="85" y="90" text-anchor="middle" font-size="8.5" fill="#7e8ba6">≈ 芯片产值 3%</text>
           </g>
           <g>
-            <rect x="165" y="38" width="135" height="58" rx="11" fill="url(#bxe)" stroke="#5b86c9" stroke-opacity=".55"/>
-            <text x="232" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="#9fc0ee">制造设备</text>
-            <text x="232" y="80" text-anchor="middle" font-size="10" fill="#8b9bb8">1351 亿 / 2025</text>
+            <rect x="165" y="34" width="135" height="64" rx="11" fill="url(#bxe)" stroke="#5b86c9" stroke-opacity=".55"/>
+            <text x="232" y="55" text-anchor="middle" font-size="12.5" font-weight="700" fill="#9fc0ee">制造设备</text>
+            <text x="232" y="73" text-anchor="middle" font-size="9" fill="#8b9bb8">光刻/刻蚀/沉积…</text>
+            <text x="232" y="90" text-anchor="middle" font-size="8.5" fill="#7e8ba6">销售额 $1351亿·25</text>
           </g>
           <g>
-            <rect x="315" y="34" width="140" height="64" rx="11" fill="url(#bxmat)" stroke="#e9a04c" stroke-width="1.6"/>
-            <rect x="315" y="34" width="140" height="64" rx="11" fill="none" stroke="#e9a04c" stroke-opacity=".32" stroke-width="4"/>
-            <text x="385" y="57" text-anchor="middle" font-size="13.5" font-weight="700" fill="#f3b86a">材料</text>
-            <text x="385" y="75" text-anchor="middle" font-size="10" fill="#cdb78f">732 亿 / 2025</text>
-            <text x="385" y="90" text-anchor="middle" font-size="9.5" font-weight="700" fill="#e9a04c">▼ 本轨第一站</text>
+            <rect x="315" y="34" width="140" height="64" rx="11" fill="url(#bxe)" stroke="#c98a3a" stroke-opacity=".55"/>
+            <text x="385" y="55" text-anchor="middle" font-size="12.5" font-weight="700" fill="#d6a566">材料</text>
+            <text x="385" y="73" text-anchor="middle" font-size="9" fill="#8b9bb8">硅片/光刻胶/特气…</text>
+            <text x="385" y="90" text-anchor="middle" font-size="8.5" fill="#7e8ba6">销售额 $732亿·25</text>
           </g>
           <line x1="85" y1="96" x2="95" y2="228" stroke="#5d6b88" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ah)"/>
           <line x1="232" y1="96" x2="278" y2="228" stroke="#5d6b88" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ah)"/>
-          <line x1="385" y1="98" x2="312" y2="228" stroke="#e9a04c" stroke-opacity=".7" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ahcu)"/>
+          <line x1="385" y1="98" x2="312" y2="228" stroke="#5d6b88" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ah)"/>
           <text x="20" y="222" font-size="11.5" font-weight="700" fill="#8b9bb8" letter-spacing="1">主链 · 芯片的生命线</text>
           <g>
             <rect x="20" y="232" width="150" height="66" rx="11" fill="url(#bxm)" stroke="#34d6cf" stroke-opacity=".5"/>
             <text x="95" y="258" text-anchor="middle" font-size="13.5" font-weight="700" fill="#5eead4">设计</text>
             <text x="95" y="276" text-anchor="middle" font-size="10" fill="#8b9bb8">Fabless / IDM</text>
-            <text x="95" y="290" text-anchor="middle" font-size="9.5" fill="#5d6b88">芯片销售 7917 亿</text>
+            <text x="95" y="290" text-anchor="middle" font-size="9" fill="#7e8ba6">芯片产值 $7917亿·25</text>
           </g>
           <g>
             <rect x="215" y="232" width="150" height="66" rx="11" fill="url(#bxm)" stroke="#5b86c9" stroke-opacity=".5"/>
             <text x="290" y="258" text-anchor="middle" font-size="13.5" font-weight="700" fill="#9fc0ee">晶圆制造</text>
             <text x="290" y="276" text-anchor="middle" font-size="10" fill="#8b9bb8">Foundry / IDM</text>
-            <text x="290" y="290" text-anchor="middle" font-size="9.5" fill="#5d6b88">代工 1695 亿</text>
+            <text x="290" y="290" text-anchor="middle" font-size="9" fill="#7e8ba6">代工前十 $1695亿·25</text>
           </g>
           <g>
             <rect x="410" y="232" width="150" height="66" rx="11" fill="url(#bxm)" stroke="#5bc98a" stroke-opacity=".5"/>
             <text x="485" y="258" text-anchor="middle" font-size="13.5" font-weight="700" fill="#7ad6a3">封装测试</text>
             <text x="485" y="276" text-anchor="middle" font-size="10" fill="#8b9bb8">OSAT</text>
-            <text x="485" y="290" text-anchor="middle" font-size="9.5" fill="#5d6b88">前十 416 亿</text>
+            <text x="485" y="290" text-anchor="middle" font-size="9" fill="#7e8ba6">封测前十 $416亿·24</text>
           </g>
           <g>
             <rect x="605" y="232" width="150" height="66" rx="11" fill="url(#bxm)" stroke="#23304d"/>
@@ -310,11 +311,11 @@
           <line x1="365" y1="265" x2="408" y2="265" stroke="#5d6b88" stroke-width="1.8" marker-end="url(#ah)"/>
           <line x1="560" y1="265" x2="603" y2="265" stroke="#5d6b88" stroke-width="1.8" marker-end="url(#ah)"/>
         </svg>
-        <div class="note cy"><b>读法</b>：中间是芯片的生命线（设计→制造→封测→终端）；上方三个环节"卖铲子"——EDA/IP 赋能设计，设备与材料汇入晶圆制造。越往上游，壁垒越硬、越是博弈卡点。</div>
+        <div class="note cy"><b>读法</b>：中间是芯片的生命线（设计→制造→封测→终端）；上方三个环节"卖铲子"——EDA/IP 赋能设计，设备与材料汇入晶圆制造。越往上游，壁垒越硬、越是博弈卡点。<b>金额均为亿美元（US$）、销售额/营收口径。</b></div>
         <div class="snote"><span class="k">1</span> SIA/WSTS 2025 全球半导体 7917 亿（+25.6%），2026-02 · <span class="k">2</span> SEMI 材料 732 亿，2026-05 · <span class="k">3</span> SEMI 设备 1351 亿，2026-04 · <span class="k">4</span> TrendForce 代工前十 1695 亿 / TSMC 69.9%，2026-03。</div>
       </div>
       <div class="panelbox">        <div class="subttl">各环节速览（2025；EDA / 封测为最新可得全年）</div>
-        <div class="cap" style="margin-bottom:8px">同一把尺子横量五段：规模、集中度、毛利特征、国产化。</div>
+        <div class="cap" style="margin-bottom:8px">同一把尺子横量五段：规模、集中度、毛利特征、国产化。<b>金额单位：亿美元（US$）。</b></div>
         <div class="tblwrap">
         <table class="tbl">
           <tr><th>环节</th><th>市场规模</th><th>集中度/龙头</th><th>价值特征</th><th>国产化</th><th>代表玩家</th></tr>
@@ -334,8 +335,8 @@
             <td><span class="chip hi">高端低</span><br><span class="mut">北方华创/中微</span></td>
             <td class="mut">ASML·应用材料·拉姆</td>
           </tr>
-          <tr style="background:rgba(233,160,76,.06)">
-            <td class="seg" style="color:#f3b86a">材料 ★</td>
+          <tr>
+            <td class="seg">材料</td>
             <td class="num">732 亿<sup class="s">2</sup><br><span class="mut" style="font-weight:400">晶圆458+封装274</span></td>
             <td>按品类分散<br><span class="mut">单品类 CR5 多&gt;70%</span></td>
             <td>认证周期长、纯度壁垒<br><span class="mut">绑定后难切换</span></td>
@@ -402,22 +403,32 @@
     </div>
     <div class="view" id="v-mat" style="display:none">
       <div class="vhead"><div class="vki">Materials · 赛道</div><div class="vh1">材料 · 赛道深度研究</div><div class="vsub">晶圆厂的"粮食与耗材"：护城河 / 玩家 / 价值量 / 国产替代。承接原理科普「硅片·掩膜」页。</div></div>
-      <div class="subnav"><button class="snbtn on" data-sub="m-pos">定位</button><button class="snbtn" data-sub="m-cats">细分总表</button><button class="snbtn" data-sub="m-value">价值量</button><button class="snbtn" data-sub="m-moat">护城河</button><button class="snbtn" data-sub="m-players">玩家格局</button><button class="snbtn" data-sub="m-dr">驱动与风险</button><button class="snbtn" data-sub="m-data">数据·来源</button></div>
+      <div class="subnav"><button class="snbtn on" data-sub="m-pos">定位</button><button class="snbtn" data-sub="m-cats">细分总表</button><button class="snbtn" data-sub="m-deep">子材料深挖</button><button class="snbtn" data-sub="m-value">价值量</button><button class="snbtn" data-sub="m-moat">护城河</button><button class="snbtn" data-sub="m-players">玩家格局</button><button class="snbtn" data-sub="m-dr">驱动与风险</button><button class="snbtn" data-sub="m-data">重点个股</button></div>
       <section class="sub on" id="m-pos">        <div class="subttl">一句话定位</div>
         <div class="cap"><b>材料是晶圆厂的"粮食与耗材"</b>——每片晶圆从头到尾要反复消耗几十种材料。一句话主线：<b>制程每往前走一个节点，需要的材料种类更多、纯度更高、单位晶圆价值量更大。</b>材料也是国产替代叙事最强、但高端壁垒最硬的环节之一：既有 8″ 硅片、湿化学品这类已大幅国产化的"近岸阵地"，也有 EUV 光刻胶、高纯掩膜基板这类近乎 100% 进口的"硬骨头"。</div>
 
-        <div class="ghead">在产业链的位置</div>
-        <div class="scale-row">
-          <div class="zcard"><h4 style="color:var(--mut)">设计·EDA</h4></div>
-          <div class="arrow">›</div>
-          <div class="zcard"><h4 style="color:var(--mut)">设备</h4></div>
-          <div class="arrow">›</div>
-          <div class="zcard" style="border-color:var(--cu);box-shadow:0 0 16px rgba(233,160,76,.22)"><h4 style="color:#f3b86a">★ 材料</h4><div class="sz">本页主角</div></div>
-          <div class="arrow">›</div>
-          <div class="zcard"><h4 style="color:var(--mut)">晶圆制造</h4></div>
-          <div class="arrow">›</div>
-          <div class="zcard"><h4 style="color:var(--mut)">封装测试</h4></div>
+        <div class="ghead">上下游与价值流向</div>
+        <div class="cap" style="margin-bottom:10px">材料夹在"基础化工 / 资源"与"晶圆厂 / 封测"之间：<b>上游</b>定成本与纯度起点，<b>下游</b>（晶圆厂 capex × 开工率）定需求，<b>定价权与卡点集中在中段</b>的高纯 / 配方环节。</div>
+        <div style="display:flex;gap:8px;align-items:stretch;flex-wrap:wrap;margin-bottom:12px">
+          <div style="flex:1 1 165px;border:1px solid #23304d;border-radius:10px;padding:10px 11px;background:rgba(91,134,201,.06)">
+            <div style="font-weight:700;font-size:13px;color:#9fc0ee;margin-bottom:5px">上游 · 原料与化工</div>
+            <div style="font-size:12px;line-height:1.75;color:#aebbd4">多晶硅 / 石英砂<br>基础化工（树脂 / 溶剂 / 单体）<br>高纯金属 / 靶坯 · 大宗气体<br>矿产：镓 / 锗 / 萤石（氢氟酸）</div>
+            <div style="font-size:11px;line-height:1.5;color:#7e8ba6;margin-top:7px;border-top:1px solid #1a2740;padding-top:6px">中国握有石英砂、电子级氢氟酸、镓 / 锗等"反制筹码"</div>
+          </div>
+          <div style="align-self:center;color:#5d6b88;font-weight:700;font-size:15px">→</div>
+          <div style="flex:1.35 1 210px;border:1px solid rgba(233,160,76,.5);border-radius:10px;padding:10px 11px;background:rgba(233,160,76,.07)">
+            <div style="font-weight:700;font-size:13px;color:#e9a04c;margin-bottom:5px">材料 · 本赛道　$732亿</div>
+            <div style="font-size:12px;line-height:1.75;color:#cdb79a"><b>晶圆制造 $458亿</b>：硅片 · 光刻胶 · 电子特气 · CMP · 靶材 · 掩膜 · 湿化学 · 前驱体<br><b>封装 $274亿</b>：载板 · 塑封料 · 键合丝</div>
+            <div style="font-size:11px;line-height:1.5;color:#f0a85a;margin-top:7px;border-top:1px solid rgba(233,160,76,.25);padding-top:6px">卡点：EUV 胶 · 高端 ABF 载板 · 高纯前驱体 / 掩膜基板</div>
+          </div>
+          <div style="align-self:center;color:#5d6b88;font-weight:700;font-size:15px">→</div>
+          <div style="flex:1 1 165px;border:1px solid #23304d;border-radius:10px;padding:10px 11px;background:rgba(52,214,207,.06)">
+            <div style="font-weight:700;font-size:13px;color:#34d6cf;margin-bottom:5px">下游 · 客户</div>
+            <div style="font-size:12px;line-height:1.75;color:#aebbd4">晶圆厂（逻辑 / 存储 / 功率 / 化合物）<br>封测厂（OSAT）</div>
+            <div style="font-size:11px;line-height:1.5;color:#7e8ba6;margin-top:7px;border-top:1px solid #1a2740;padding-top:6px">需求 = 晶圆厂 capex × 开工率；先进制程拉动材料强度</div>
+          </div>
         </div>
+        <div class="note cy"><b>价值流</b>：上游涨价（金价 / 石英 / 能源）压成本端，下游 AI 扩产 + 先进制程拉动量价——<b>2026 硅片三巨头领涨（常规 +5~8%、AI/HPC 高端 +18~22%），国内厂取消折让跟涨，定价权正从买方回到卖方</b><sup class="s">11</sup>。</div>
 
         <div class="ghead">市场锚点（2025，SEMI<sup class="s">1</sup>）</div>
         <div class="scale-row">
@@ -427,16 +438,16 @@
         </div>
 
         <div class="note cy"><b>本页两条主线</b>：① <b>越先进，材料价值量越大</b>——EUV 层数、3D NAND 叠层、GAA 让材料"种类 × 纯度 × 用量"同时上台阶；② <b>国产化高度分化</b>——别用一个笼统的"国产替代"盖过品类差异。</div>
-        <div class="snote"><span class="k">1</span> SEMI MMDS：2025 全球半导体材料 732 亿（晶圆制造 458 + 封装 274），2026-05。完整清单见「可刷新·来源」页。</div>
+        <div class="snote"><span class="k">1</span> SEMI MMDS：2025 全球半导体材料 732 亿（晶圆制造 458 + 封装 274），2026-05 · <span class="k">11</span> 硅片涨价：信越 / SUMCO / 环球晶 2026-06 同步上调 12″ 价（行业报道）。完整清单见「重点个股」页。</div>
       </section>
       <section class="sub" id="m-cats">        <div class="subttl">细分品类拆解 · 九大类</div>
         <div class="cap" style="margin-bottom:10px">同一把尺子横量：规模 / 集中度 / 国际龙头 / 国产玩家 / 国产化率。<b style="color:var(--cy2)">★</b> = 本页深挖的四类（在「玩家格局」给份额与来源细节）。</div>
         <div class="tblwrap">
         <table class="tbl">
           <tr><th>品类</th><th>全球规模(约)</th><th>结构/集中度</th><th>国际龙头</th><th>国产玩家</th><th>国产化率</th></tr>
-          <tr class="deep"><td class="cat"><span class="star">★</span> 硅片<br><span class="mut" style="font-weight:400">含外延片</span></td><td class="num">125–145 亿<sup class="s">2</sup></td><td>CR5 &gt; 90%</td><td class="mut">信越·SUMCO·环球晶·Siltronic·SK Siltron</td><td class="mut">沪硅·TCL中环·立昂微</td><td><span class="chip md">8″~50%/12″~10%</span></td></tr>
-          <tr class="deep"><td class="cat"><span class="star">★</span> 光刻胶<br><span class="mut" style="font-weight:400">含配套</span></td><td class="num">25–55 亿<sup class="s">3</sup></td><td>日企~75%</td><td class="mut">JSR·TOK·信越·富士·杜邦</td><td class="mut">彤程(科华)·南大光电·晶瑞·博康</td><td><span class="chip hi">总体~25%<br>KrF&lt;5%/ArF&lt;1%</span></td></tr>
-          <tr class="deep"><td class="cat"><span class="star">★</span> 电子特气</td><td class="num">50–60 亿<sup class="s">4</sup></td><td>四大~70–80%</td><td class="mut">林德·液空·空气化工·大阳日酸</td><td class="mut">华特·金宏·中船特气·南大光电</td><td><span class="chip md">~30%</span></td></tr>
+          <tr class="deep"><td class="cat"><span class="star">★</span> 硅片<br><span class="mut" style="font-weight:400">含外延片</span></td><td class="num">~114 亿$ <span class="mut">(SEMI'25)</span><sup class="s">2</sup></td><td>CR5 &gt; 90%</td><td class="mut">信越·SUMCO·环球晶·Siltronic·SK Siltron</td><td class="mut">沪硅·TCL中环·立昂微</td><td><span class="chip md">8″~50%/12″~10%</span></td></tr>
+          <tr class="deep"><td class="cat"><span class="star">★</span> 光刻胶<br><span class="mut" style="font-weight:400">含配套</span></td><td class="num">~29–39 亿$<sup class="s">3</sup></td><td>日企~75%</td><td class="mut">JSR·TOK·信越·富士·杜邦</td><td class="mut">彤程(科华)·南大光电·晶瑞·博康</td><td><span class="chip hi">总体~25%<br>KrF&lt;5%/ArF&lt;1%</span></td></tr>
+          <tr class="deep"><td class="cat"><span class="star">★</span> 电子特气</td><td class="num">50–60 亿<sup class="s">4</sup></td><td>四大~70–80%</td><td class="mut">林德·液空·空气化工·大阳日酸</td><td class="mut">华特·金宏·中船特气·南大光电</td><td><span class="chip md">~25%</span></td></tr>
           <tr class="deep"><td class="cat"><span class="star">★</span> CMP抛光<br><span class="mut" style="font-weight:400">液+垫</span></td><td class="num">抛光液~19 亿<sup class="s">5</sup></td><td>液CR5~67%<br>垫Dow独大</td><td class="mut">Cabot/CMC(Entegris)·Dow·Fujimi</td><td class="mut">安集·鼎龙</td><td><span class="chip hi">抛光材料&lt;15%</span></td></tr>
           <tr><td class="cat">靶材</td><td class="num">高纯~19 亿<sup class="s">6</sup></td><td>JX~11%</td><td class="mut">JX·Materion·Tosoh·霍尼韦尔</td><td class="mut">江丰·有研亿金·隆华</td><td><span class="chip lo">较高(已突破)</span></td></tr>
           <tr><td class="cat">掩膜版/<br>掩膜基板</td><td class="num">基板~25 亿<sup class="s">7</sup></td><td>EUV blank<br>AGC59/Hoya34</td><td class="mut">Hoya·AGC·信越</td><td class="mut">清溢·路维（掩膜版）</td><td><span class="chip hi">高端blank≈0</span></td></tr>
@@ -446,7 +457,62 @@
         </table>
         </div>
         <div class="note"><b>口径提示</b>：各品类"全球规模"随调研机构口径差异较大（如光刻胶纯半导体口径 ~25–30 亿，含先进光刻配套口径达 55 亿<sup class="s">3</sup>；电子特气有"半导体专用"与"广义电子"之分）。表中取主流区间。</div>
-        <div class="snote">规模多为 2023–24 口径、约数 · <span class="k">1</span> SEMI 材料盘（2025） · <span class="k">2</span> 硅片：信越/SUMCO 年报+市场报告 · <span class="k">3</span> 光刻胶行业研究 · <span class="k">4</span> 电子特气市场报告 · <span class="k">5</span> CMP 抛光液市场报告 · <span class="k">6</span> 靶材市场报告 · <span class="k">7</span> 掩膜基板市场报告。完整清单见「可刷新·来源」页。</div>
+        <div class="ghead">国产化梯次 · 技术路线（"验证 → 放量"的真实位置）</div>
+        <div class="cap" style="margin-bottom:8px">看材料别只看"突破"，要看下表里<b>"已放量"列在不在扩张</b>——那才是收入与毛利；"卡脖子"列才是真·硬骨头。</div>
+        <div class="tblwrap">
+        <table class="tbl">
+          <tr><th>品类</th><th style="color:#5fd3b6">已放量（国产强）</th><th>验证导入中</th><th style="color:#f0738a">仍卡脖子（近乎进口）</th></tr>
+          <tr><td class="seg">硅片</td><td class="mut">8″ 全规格、12″ 测试 / 部分正片</td><td class="mut">12″ 高端正片、外延 / 重掺片一致性</td><td class="mut">超平坦高端片、SOI</td></tr>
+          <tr><td class="seg">光刻胶</td><td class="mut">g/i 线、KrF 量产</td><td class="mut">ArF（干 / 浸）验证导入</td><td class="mut">EUV 胶（日企 &gt;90%）</td></tr>
+          <tr><td class="seg">电子特气</td><td class="mut">大宗、含氟 NF₃ / WF₆</td><td class="mut">高纯刻蚀 / 沉积气扩品类</td><td class="mut">部分超高纯、ArF 配套</td></tr>
+          <tr><td class="seg">CMP</td><td class="mut">抛光液多类、抛光垫破零</td><td class="mut">先进节点垫、清洗液</td><td class="mut">高端垫一致性、尖端 slurry</td></tr>
+          <tr><td class="seg">靶材</td><td class="mut">成熟制程 Al / Ti / Cu 靶</td><td class="mut">先进节点高纯靶</td><td class="mut">芯片用高端（&lt;10% 国产）</td></tr>
+          <tr><td class="seg">封装材料</td><td class="mut">引线框架、键合丝、普通 EMC</td><td class="mut">先进封装塑封料、部分载板</td><td class="mut">高端 ABF 载板、玻璃基板</td></tr>
+        </table>
+        </div>
+        <div class="snote">规模主体已更新至 2025、部分分项为约数 · <span class="k">1</span> SEMI 材料盘（2025） · <span class="k">2</span> 硅片：信越/SUMCO 年报+市场报告 · <span class="k">3</span> 光刻胶行业研究 · <span class="k">4</span> 电子特气市场报告 · <span class="k">5</span> CMP 抛光液市场报告 · <span class="k">6</span> 靶材市场报告 · <span class="k">7</span> 掩膜基板市场报告。完整清单见「重点个股」页。</div>
+      </section>
+      <section class="sub" id="m-deep">        <div class="subttl">子材料深挖 · 六氟化钨（WF₆）与含氟特气</div>
+        <div class="cap" style="margin-bottom:10px">挑赛道里最"热"的子项做穿透式分析。<b>六氟化钨是 2026 上半年最强的半导体材料品种</b>——现货一年 +230%、龙头股价 +770%、被发改委点名。按"是什么 / 工艺位置 / 为何强势 / 投资逻辑 / 格局 / 风险"六层拆。</div>
+
+        <div class="ghead">① 是什么</div>
+        <div class="cap">WF₆（六氟化钨）是<b>钨化学气相沉积（W-CVD）的核心气体</b>：通入腔室用 H₂ 还原，在接触孔 / 通孔 / 3D NAND 字线里沉积高纯金属<b>钨</b>做填充与互连，被业内称作电子特气里的<b>"硬通货"——几乎不可替代</b>。同属"含氟电子特气"家族、共用"萤石→无水氢氟酸"上游的还有：<b>C₄F₆ 六氟丁二烯</b>（高深宽比刻蚀）、<b>NF₃ 三氟化氮</b>（腔室清洗）、<b>电子级 HF</b>（清洗 / 蚀刻）。</div>
+
+        <div class="ghead">② 在制造里的位置（沉积环节）</div>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:9px;font-size:12px">
+          <span style="background:rgba(91,134,201,.12);border:1px solid #23304d;border-radius:6px;padding:4px 9px;color:#9fc0ee">萤石 CaF₂</span><span style="color:#5d6b88">→</span>
+          <span style="background:rgba(91,134,201,.12);border:1px solid #23304d;border-radius:6px;padding:4px 9px;color:#9fc0ee">无水氢氟酸 AHF</span><span style="color:#5d6b88">→</span>
+          <span style="background:rgba(233,160,76,.14);border:1px solid rgba(233,160,76,.5);border-radius:6px;padding:4px 9px;color:#e9a04c;font-weight:700">WF₆ 六氟化钨</span><span style="color:#5d6b88">→</span>
+          <span style="background:rgba(52,214,207,.1);border:1px solid #23304d;border-radius:6px;padding:4px 9px;color:#34d6cf">W-CVD 沉积钨</span><span style="color:#5d6b88">→</span>
+          <span style="background:rgba(52,214,207,.1);border:1px solid #23304d;border-radius:6px;padding:4px 9px;color:#34d6cf">3D NAND 字线 / 逻辑接触孔</span>
+        </div>
+        <div class="note cy"><b>为什么用量暴增</b>：3D NAND 堆叠从 128 层→主流 300 层→下一代 500 层+，沉积循环<b>指数级增长</b>，单片晶圆 WF₆ 消耗预计跃升<b>约 37 倍</b>；AI 芯片单片消耗是普通芯片的 <b>3 倍以上</b>。全球 WF₆ 需求 2020 年 >4500 吨 → 2025 年 ~9000 吨（年均 +14%）<sup class="s">14</sup>。</div>
+
+        <div class="ghead">③ 为何近期"强势无比"——四因子共振</div>
+        <div class="evo">
+          <div class="evocard"><h4><span>📈</span>需求几何级</h4><p>AI 服务器 → 3D NAND / HBM 大扩产 + 存储涨价 + 下游恐慌囤货；WF₆ 是直接耗材。</p></div>
+          <div class="evocard"><h4><span>🚫</span>供给永久退出</h4><p>海外头部收缩；中国对钨原料出口管制，<b>日本两家企业 2026/7 起全面断供</b>，下半年约 <b>900 吨</b>供给真空。</p></div>
+          <div class="evocard"><h4><span>💰</span>成本端暴涨</h4><p>钨粉 2026Q1 均价 173.96 万 / 吨（同比 <b>+453%</b>）；萤石破 4000 元 / 吨新高、AHF 翻倍、电子级 HF +40%。</p></div>
+          <div class="evocard"><h4><span>🏛️</span>地缘 / 政策</h4><p>发改委<b>点名</b> WF₆；中国主导全球钨与萤石，<b>"以钨控气"</b>成对等反制筹码。</p></div>
+        </div>
+        <div class="note"><b>价格（量价齐升的"价"）</b>：99.999% WF₆ 从 2025 年同期 <b>523 元/kg</b> → 2026/6 <b>1670–1810 元/kg（+233%）</b>；6N 报价 <b>220–300 万/吨</b>（较 4 月初 +190%），7N 长协 <b>330–360 万/吨</b>且短缺；韩国主供应商官宣 2026 对芯片巨头涨价 <b>70–90%</b>。中船特气把<b>调价周期从"年度"压到"季度"乃至"月度"</b>，放大价格弹性<sup class="s">14</sup>。</div>
+
+        <div class="ghead">④ 投资驱动逻辑</div>
+        <div class="note cy"><b>核心三段论</b>：① <b>技术不可替代</b>（WF₆ 是钨沉积唯一主流路径）＋ ② <b>供给永久性收缩</b>（海外退出 / 断供）＋ ③ <b>AI 需求几何级</b>（3D NAND 叠层 37 倍、AI 芯片 3 倍）＝ <b>量价齐升</b>，叠加调价周期缩短把弹性<b>直接打进季度报表</b>。④ <b>国产替代黄金窗口</b>：政策（发改委 / 大基金）＋ 需求 ＋ 供给三重催化，海外垄断松动，<b>全球最大产能在中国（中船特气）</b>直接吃缺口。</div>
+
+        <div class="ghead">⑤ 玩家与国产化</div>
+        <div class="tblwrap">
+        <table class="tbl">
+          <tr><th>环节 / 公司</th><th>地位 / 数据（2025，约数）</th></tr>
+          <tr><td class="seg">中船特气<br><span class="mut" style="font-weight:400">688146.SH</span></td><td class="mut"><b>全球最大 WF₆ 生产基地</b>：产能 2000 吨 + 在建 1000 吨（2027 投产）；<b>NF₃ 18500 吨/年、国内第一世界前列</b>。2025 营收 <b>22.6 亿（+15.9%）</b>、净利 <b>3.46 亿（+12.4%）</b>，电子特气收入 19.3 亿（毛利率 24.9%）；2026Q1 营收 7.01 亿（<b>+36%</b>）。股价 4 月以来 +600%（一年 +770%）。</td></tr>
+          <tr><td class="seg">海外</td><td class="mut">关东电化、SK Materials、默克等；部分日企 2026/7 起断供——正是这轮缺口来源。</td></tr>
+          <tr><td class="seg">C₄F₆ 刻蚀气</td><td class="mut">核心技术在日 / 韩 / 德少数厂；国产仅少数能量产电子级（宇极、昊华等），<b>大量依赖进口</b>。2D→3D NAND 单片用量 >6 倍。</td></tr>
+          <tr><td class="seg">上游 HF</td><td class="mut">多氟多（电子级 HF 4 万吨）、巨化等；价格受萤石（开采配额 ~600 万吨）＋ 硫酸成本夹击。</td></tr>
+        </table>
+        </div>
+
+        <div class="note red"><b>风险 · 事实 vs 叙事（必读）</b>：① 龙头股价<b>已暴涨</b>（中船特气一年 +770%），预期高度透支，估值争议大（"价值发现 vs 非理性泡沫"）；② 企业口径："涨价确认，但<b>暂未签署新的大额实质性订单</b>"——价在前、量未必兑现；③ <b>钨粉成本 +453%</b>侵蚀毛利（目前传导尚顺）；④ NF₃ 历史曾产能过剩、价格低迷，<b>含氟特气并非都缺</b>；⑤ 新产能 2027 才放，若缺口被进口 / 替代填补则价格回落风险大。<b>盯"订单落地 + 毛利兑现"，而非股价与"断供"标题。</b></div>
+        <div class="snote"><span class="k">14</span> WF₆ / 含氟特气：腾讯 / 新浪 / 证券时报 / 财联社 / 雪球行业报道，中船特气 2025 年报与 2026Q1 季报，SEMI 口径（2026-03~06）；价格为现货 / 长协约数。完整来源见「重点个股」「方法」页。</div>
       </section>
       <section class="sub" id="m-value">        <div class="subttl">价值量怎么切</div>
         <div class="ghead">第一刀：晶圆制造 63% : 封装 37%（2025，SEMI<sup class="s">1</sup>）</div>
@@ -508,7 +574,7 @@
 
         <div class="shblock">
           <h4>① 硅片 · 全球份额（约数）</h4>
-          <div class="meta">以 12″ 为主的营收/出货口径，2023–2024 · 来源：信越/SUMCO 年报、市场报告<sup class="s">2</sup></div>
+          <div class="meta">份额为 2023–24 口径（五强格局未实质变化）· 总盘 2025：全球硅片营收 $114 亿（−1.2%）、出货 12,973 MSI（+5.8%，AI/HBM 拉动量增价跌）· SEMI 2026-02<sup class="s">2</sup></div>
           <div class="shrow"><span class="co">信越 <small>JP</small></span><div class="track"><div class="fill gi" style="width:29%"></div></div><span class="pct">~29%</span></div>
           <div class="shrow"><span class="co">SUMCO <small>JP</small></span><div class="track"><div class="fill gi" style="width:25%"></div></div><span class="pct">~25%</span></div>
           <div class="shrow"><span class="co">环球晶 <small>TW</small></span><div class="track"><div class="fill gi" style="width:15%"></div></div><span class="pct">~15%</span></div>
@@ -516,7 +582,7 @@
           <div class="shrow"><span class="co">SK Siltron <small>KR</small></span><div class="track"><div class="fill gi" style="width:10%"></div></div><span class="pct">~10%</span></div>
           <div class="shrow"><span class="co">中国厂商 <small>CN</small></span><div class="track"><div class="fill gc" style="width:6%"></div></div><span class="pct">~5–6%</span></div>
         </div>
-        <div class="note"><b>国产看点</b>：沪硅产业（新昇）300mm 年出货突破 <b>500 万片</b>、2024 末产能约 <b>65 万片/月</b>，2024 营收 33.88 亿（+6.18%）<sup class="s">9</sup>；TCL 中环 12″ 已建约 17 万片/月并扩产。<b>事实 vs 叙事</b>：8″ 国产化已 ~50%，但 <b>12″ 仅 ~10%</b>，高端抛光片/外延片一致性仍待验证。</div>
+        <div class="note"><b>国产看点</b>：沪硅产业（新昇）300mm 年出货已破 <b>500 万片</b>、产能约 <b>65 万片/月</b>；<b>2025 营收 37.2 亿、仍亏损（毛利率 −17%，周期底部）</b><sup class="s">13</sup>。TCL 中环 12″ 约 17 万片/月（主业光伏、2025 巨亏拖累）。<b>催化</b>：2026 信越 / SUMCO / 环球晶同步涨价（常规 +5~8%、AI 高端 +18~22%），上行周期开启，<b>底部国产标的弹性最大</b><sup class="s">11</sup>。<b>事实 vs 叙事</b>：8″ 国产化 ~50%，但 <b>12″ 仅 ~10%</b>，高端正片 / 外延片一致性仍待验证。</div>
 
         <div class="shblock">
           <h4>② 光刻胶 · 全球份额（约数）</h4>
@@ -528,7 +594,7 @@
           <div class="shrow"><span class="co">杜邦/默克 <small>US/DE</small></span><div class="track"><div class="fill gi" style="width:9%"></div></div><span class="pct">~9%</span></div>
           <div class="shrow"><span class="co">国产合计 <small>CN</small></span><div class="track"><div class="fill gc" style="width:5%"></div></div><span class="pct">&lt;5%(高端)</span></div>
         </div>
-        <div class="note"><b>EUV 胶</b>：TOK / JSR / 信越三家 <b>&gt;90%</b>，材料里最硬的壁垒之一<sup class="s">3</sup>。<b>国产看点</b>：彤程（北京科华）半导体光刻胶 2024 营收 1.28 亿（+54%）、ArF 已具量产能力；晶瑞 i 线批量供货中芯/长鑫、多款 KrF 量产；南大光电+鼎龙浸没式 ArF 通过验证并少量销售<sup class="s">10</sup>。<b>事实 vs 叙事</b>：总体国产化 ~25% 多是 g/i 线，<b>KrF&lt;5%、ArF&lt;1%</b>，"通过验证"≠"放量收入"。</div>
+        <div class="note"><b>EUV 胶</b>：TOK / JSR / 信越三家 <b>&gt;90%</b>，材料里最硬的壁垒之一<sup class="s">3</sup>。<b>国产看点</b>：彤程（北京科华）半导体光刻胶 2024 营收 1.28 亿（+54%）、ArF 已具量产能力；晶瑞 i 线批量供货中芯/长鑫、多款 KrF 量产；南大光电+鼎龙浸没式 ArF 通过验证并少量销售<sup class="s">10</sup>。<b>催化（2026）</b>：日本四大（TOK/JSR/信越/富士）对华停接 ArF·EUV 新单、压缩 KrF——<b>企业限供行为、非政府出口管制</b>，中国自日进口光刻胶同比骤降 <b>~95%</b>（2026Q1，中方媒体口径）；fab 从"压价 / 不敢用"转"催着替代"，中芯 28nm 国产覆盖 20%→目标 50%——真放量拐点<sup class="s">12</sup>。<b>事实 vs 叙事</b>：总体国产化 ~25% 多是 g/i 线，<b>KrF&lt;5%、ArF&lt;1%</b>，"通过验证"≠"放量收入"。</div>
 
         <div class="shblock">
           <h4>③ 电子特气 · 全球份额（约数）</h4>
@@ -539,7 +605,7 @@
           <div class="shrow"><span class="co">大阳日酸 <small>JP</small></span><div class="track"><div class="fill gi" style="width:10%"></div></div><span class="pct">~10%</span></div>
           <div class="shrow"><span class="co">其他(含国产) <small>CN等</small></span><div class="track"><div class="fill gc" style="width:26%"></div></div><span class="pct">~26%</span></div>
         </div>
-        <div class="note"><b>国产看点</b>：华特气体（稀有气体、含氟特气，氢类业务销售 +40%）、中船特气（NF₃/含氟全球前列）、金宏气体、南大光电（前驱体/特气）<sup class="s">9</sup>。中国市场电子气体<b>国产化率 ~30%</b>，越高端（高纯 WF₆、部分含氟）越依赖进口。</div>
+        <div class="note"><b>国产看点</b>：华特气体（稀有气体、含氟特气，氢类业务销售 +40%）、中船特气（NF₃/含氟全球前列）、金宏气体、南大光电（前驱体/特气）<sup class="s">9</sup>。中国市场电子气体<b>国产化率 ~25%（2025）</b>，越高端（高纯 WF₆、部分含氟）越依赖进口。</div>
 
         <div class="shblock">
           <h4>④ CMP 抛光液 · 全球份额（约数）</h4>
@@ -551,13 +617,13 @@
           <div class="shrow"><span class="co">安集科技 <small>CN</small></span><div class="track"><div class="fill gc" style="width:7%"></div></div><span class="pct">~7%</span></div>
         </div>
         <div class="note"><b>抛光垫</b>是另一座山：陶氏(Dow) 长期一家独大（~80%+）。<b>国产看点</b>：安集科技抛光液国内龙头、全球 ~7%；鼎龙股份率先打破抛光垫海外垄断（国产破零），抛光液、清洗液同步起量<sup class="s">9</sup>。<b>事实 vs 叙事</b>：抛光材料整体国产化仍 <b>&lt;15%</b>，垫的高端料与一致性是难点。</div>
-        <div class="snote">份额为约数、2023–24 口径 · <span class="k">2</span> 硅片市场报告/年报 · <span class="k">3</span> 光刻胶行业研究 · <span class="k">4</span> 电子特气市场报告 · <span class="k">5</span> CMP 抛光液市场报告 · <span class="k">9</span> 公司公告/财经报道 · <span class="k">10</span> 国产光刻胶进展（2024–25）。完整清单见「可刷新·来源」页。</div>
+        <div class="snote">份额为约数、2023–24 口径 · <span class="k">2</span> 硅片市场报告/年报 · <span class="k">3</span> 光刻胶行业研究 · <span class="k">4</span> 电子特气市场报告 · <span class="k">5</span> CMP 抛光液市场报告 · <span class="k">9</span> 公司公告/财经报道 · <span class="k">10</span> 国产光刻胶进展（2024–25）。完整清单见「重点个股」页。</div>
       </section>
       <section class="sub" id="m-dr">        <div class="subttl">驱动与催化 · 需求贝塔 + 国产阿尔法</div>
         <div class="flow">
           <div class="frow"><div class="fn">1</div><div><b>晶圆产能扩张（基本盘）</b>：全球新建晶圆厂（美/日/欧/中），中国大幅扩产 → 材料是开工率的直接函数，产能落地即消耗。</div></div>
           <div class="frow"><div class="fn">2</div><div><b>先进制程提升材料强度（主线贝塔）</b>：EUV 层数、3D NAND 叠层（&gt;200 层）、GAA → 材料"种类 × 纯度 × 用量"同步上台阶；SEMI 已观察到 CMP / 光刻胶等两位数增长<sup class="s">1</sup>。</div></div>
-          <div class="frow"><div class="fn">3</div><div><b>国产替代（阿尔法）</b>：中国材料自给率整体仍 &lt;15–30%，空间大；大基金三期、断供倒逼、晶圆厂"扶国产"意愿共同驱动，并购整合提速。</div></div>
+          <div class="frow"><div class="fn">3</div><div><b>国产替代（阿尔法）</b>：中国材料自给率整体仍 &lt;15–30%，空间大；<b>大基金三期（¥3440 亿、70% 投设备材料）</b>真金注资 + <b>日本断供倒逼</b> + 晶圆厂"扶国产"意愿三力共振；并购整合提速<sup class="s">12</sup>。</div></div>
           <div class="frow"><div class="fn">4</div><div><b>地缘（双向催化）</b>：出口管制与供应链安全，把"国产化"从经济账变成战略账——既给国产订单，也带来断供风险。</div></div>
         </div>
         <div class="subttl" style="margin-top:24px">风险 · 周期 / 内卷 / 壁垒 / 地缘</div>
@@ -569,34 +635,35 @@
           <div class="frow rsk"><div class="fn">!</div><div><b>地缘双刃</b>：部分前驱体、特气、设备仍依赖进口，存在被"反向断供"的风险。</div></div>
         </div>
         <div class="note red"><b>事实 vs 叙事（投研必读）</b>：A 股材料板块"国产替代"叙事极强，但要区分三层——<b>送样 / 通过验证 / 批量放量</b>。很多公告停在前两步，对应的是 PPT 与期权价值，不是当期收入。看这个赛道，<b>盯"放量出货 + 毛利兑现"，而不是"突破"二字。</b></div>
-        <div class="snote"><span class="k">1</span> SEMI MMDS（2025 材料增速），2026-05。完整清单见「可刷新·来源」页。</div>
+        <div class="snote"><span class="k">1</span> SEMI MMDS（2025 材料增速），2026-05。完整清单见「重点个股」页。</div>
       </section>
-      <section class="sub" id="m-data">        <div class="subttl">可刷新数据点</div>
-        <div class="cap" style="margin-bottom:8px">本页为<b>手工研究快照（2026-06）</b>。最直接的"温度计"是 A 股材料公司的季度营收/毛利（可用 tushare 取数），叠加 SEMI 材料季度数据与晶圆厂 capex。</div>
+      <section class="sub" id="m-data">        <div class="subttl">重点个股 · 速览</div>
+        <div class="cap" style="margin-bottom:8px">A 股材料标的 <b>2025 年报快照</b>（营收 / 毛利率来自 tushare，截至 2025-12-31；毛利率＝(营收−营业成本)/营收）。读法：<b>硅片三家在周期底部（毛利负 / 微利），CMP 与光刻胶 / 特气平台穿越周期盈利</b>。市值 / PE 见「上市公司速查」（已填 2026-07-08 tushare 收盘快照）。</div>
         <div class="tblwrap">
         <table class="ticker">
-          <tr><th>公司</th><th>代码</th><th>赛道</th><th>看点</th></tr>
-          <tr><td class="co">沪硅产业</td><td class="tk">688126.SH</td><td class="mut">硅片</td><td class="mut">300mm 出货 / 产能爬坡</td></tr>
-          <tr><td class="co">TCL中环</td><td class="tk">002129.SZ</td><td class="mut">硅片</td><td class="mut">12″ 半导体片扩产</td></tr>
-          <tr><td class="co">立昂微</td><td class="tk">605358.SH</td><td class="mut">硅片</td><td class="mut">硅片+外延+功率</td></tr>
-          <tr><td class="co">彤程新材</td><td class="tk">603650.SH</td><td class="mut">光刻胶</td><td class="mut">科华 ArF/KrF 放量</td></tr>
-          <tr><td class="co">南大光电</td><td class="tk">300346.SZ</td><td class="mut">光刻胶/特气/前驱体</td><td class="mut">ArF 验证、MO 源</td></tr>
-          <tr><td class="co">晶瑞电材</td><td class="tk">300655.SZ</td><td class="mut">光刻胶/湿化学</td><td class="mut">KrF 量产、供货中芯/长鑫</td></tr>
-          <tr><td class="co">华特气体</td><td class="tk">688268.SH</td><td class="mut">电子特气</td><td class="mut">稀有/含氟、进口替代</td></tr>
-          <tr><td class="co">金宏气体</td><td class="tk">688106.SH</td><td class="mut">电子特气</td><td class="mut">大宗+特气</td></tr>
-          <tr><td class="co">安集科技</td><td class="tk">688019.SH</td><td class="mut">CMP 抛光液</td><td class="mut">国内龙头、全球 ~7%</td></tr>
-          <tr><td class="co">鼎龙股份</td><td class="tk">300054.SZ</td><td class="mut">CMP 抛光垫</td><td class="mut">国产破零、清洗液起量</td></tr>
-          <tr><td class="co">江丰电子</td><td class="tk">300666.SZ</td><td class="mut">靶材</td><td class="mut">晶圆靶材全球前列</td></tr>
-          <tr><td class="co">雅克科技</td><td class="tk">002409.SZ</td><td class="mut">前驱体/特气</td><td class="mut">前驱体+旋涂+LNG保温</td></tr>
-          <tr><td class="co">华海诚科</td><td class="tk">688535.SH</td><td class="mut">封装材料</td><td class="mut">环氧塑封料、先进封装料</td></tr>
+          <tr><th>公司</th><th>代码</th><th>细分</th><th>25营收</th><th>毛利率</th><th>地位 / 看点 · 风险</th></tr>
+          <tr><td class="co">沪硅产业</td><td class="tk">688126.SH</td><td class="mut">硅片 12″</td><td class="num">37.2亿</td><td class="num" style="color:#f0738a">−17%</td><td class="mut">国产 12″ 硅片唯一规模量产；底部"卖一片亏一片"，<b>涨价 / 放量弹性最大</b>但仍亏损</td></tr>
+          <tr><td class="co">TCL中环</td><td class="tk">002129.SZ</td><td class="mut">硅片(光伏为主)</td><td class="num">290亿</td><td class="num" style="color:#f0738a">−6%</td><td class="mut">半导体硅片仅小部分，2025 被<b>光伏巨亏拖累(−93亿)</b>；看半导体占比提升</td></tr>
+          <tr><td class="co">立昂微</td><td class="tk">605358.SH</td><td class="mut">硅片+功率+外延</td><td class="num">35.9亿</td><td class="num">10%</td><td class="mut">硅片 / 功率 / 外延一体；2025 微亏，功率与 12″ 放量是看点</td></tr>
+          <tr><td class="co">彤程新材</td><td class="tk">603650.SH</td><td class="mut">光刻胶+橡胶助剂</td><td class="num">34.3亿</td><td class="num">24%</td><td class="mut">子公司北京科华 ArF/KrF 放量、<b>断供直接受益</b>；光刻胶占营收仍小</td></tr>
+          <tr><td class="co">南大光电</td><td class="tk">300346.SZ</td><td class="mut">光刻胶+特气+前驱体</td><td class="num">25.9亿</td><td class="num" style="color:#5fd3b6">40%</td><td class="mut">ArF 胶+MO 源+特气三线、毛利高；<b>平台型最受益断供</b></td></tr>
+          <tr><td class="co">晶瑞电材</td><td class="tk">300655.SZ</td><td class="mut">光刻胶+湿化学</td><td class="num">16.1亿</td><td class="num">25%</td><td class="mut">KrF 量产供中芯 / 长鑫，湿化学配套；体量小、弹性大</td></tr>
+          <tr><td class="co">华特气体</td><td class="tk">688268.SH</td><td class="mut">电子特气</td><td class="num">14.2亿</td><td class="num">31%</td><td class="mut">50+ 特气进口替代、含氟稀有气；特气国产龙头</td></tr>
+          <tr><td class="co">金宏气体</td><td class="tk">688106.SH</td><td class="mut">大宗+特气</td><td class="num">27.8亿</td><td class="num">30%</td><td class="mut">大宗气打底+超纯氨破垄断；现场制气护城河</td></tr>
+          <tr><td class="co">安集科技</td><td class="tk">688019.SH</td><td class="mut">CMP 抛光液</td><td class="num">25.0亿</td><td class="num" style="color:#5fd3b6">57%</td><td class="mut">抛光液国内龙头、全球 ~7%；<b>最高毛利、穿越周期</b>，估值常年高</td></tr>
+          <tr><td class="co">鼎龙股份</td><td class="tk">300054.SZ</td><td class="mut">CMP 抛光垫+平台</td><td class="num">36.6亿</td><td class="num" style="color:#5fd3b6">51%</td><td class="mut">抛光垫国产破零+抛光液 / 清洗 / 先进封装材料平台；第二曲线多</td></tr>
+          <tr><td class="co">江丰电子</td><td class="tk">300666.SZ</td><td class="mut">靶材+零部件</td><td class="num">46.0亿</td><td class="num">27%</td><td class="mut">超高纯靶材全球前列+半导体零部件第二曲线；营收体量大</td></tr>
+          <tr><td class="co">雅克科技</td><td class="tk">002409.SZ</td><td class="mut">前驱体+特气+LNG</td><td class="num">86.1亿</td><td class="num">31%</td><td class="mut">前驱体(HBM/GAA)+特气+LNG 保温；<b>材料平台、营收最大</b></td></tr>
+          <tr><td class="co">华海诚科</td><td class="tk">688535.SH</td><td class="mut">EMC+先进封装料</td><td class="num">4.6亿</td><td class="num">27%</td><td class="mut">环氧塑封料+先进封装塑封料，绑先进封装；小而专、弹性大</td></tr>
         </table>
         </div>
-        <div class="note"><b>下一步（可刷新版）</b>：把上表做成持久 HTML，开页时用 tushare 拉最新季度营收/毛利、SEMI 材料数据，"事实层"自动更新；"叙事层（护城河、格局判断）"仍由人工维护。本页先把<b>内容跑通</b>，自动化随后接入。</div>
+        <div class="note cy"><b>投资逻辑（个人研究 · 非建议）</b>：① <b>周期反转</b>——2026 硅片涨价（+5~22%）+ 开工率回升 → 量价利三升，底部标的（沪硅 / 立昂微）弹性最大；② <b>断供倒逼</b>——日本断光刻胶，fab 从"压价 / 不敢用"转"催着替代"，是真放量拐点（彤程 / 南大 / 晶瑞），题材 + 业绩双击；③ <b>大基金三期</b>——¥3440 亿、70% 投设备材料，估值催化 + 真金注资<sup class="s">12</sup>。</div>
+        <div class="note red"><b>风险（必读）</b>：估值在题材催化下易<b>透支</b>（安集 / 南大等 PE 长期高位）；<b>"通过验证"≠放量</b>，盯毛利兑现而非"突破"二字；硅片 / 光伏强周期；解禁与减持。</div>
 
         <div class="src">
-          <b style="color:var(--mut)">数据来源</b>（截至 2026-06；金额美元，规模口径随机构差异已就近取主流值，约数标"~"）：<br>
+          <b style="color:var(--mut)">数据来源</b>（截至 2026-06；金额 $ 为美元、¥ 为人民币，口径随机构差异已就近取主流值，约数标"~"）：<br>
           <span class="k">1</span> SEMI MMDS：2025 全球材料 732 亿（晶圆制造 458 + 封装 274，+6.8%），光刻类材料与湿化学两位数增长，2026-05 ·
-          <span class="k">2</span> 信越(SEH)/SUMCO 年报、第三方硅片市场报告（份额为 2023 口径，2024 市场约 125–145 亿） ·
+          <span class="k">2</span> 硅片总盘＝SEMI 2025 全年实绩：营收 $114 亿（−1.2%）、出货 12,973 MSI（+5.8%），2026-02；份额为 2023–24 口径（信越/SUMCO 年报、第三方报告；第三方宽口径"硅片市场"约 125–145 亿，含更多外延/加工价值） ·
           <span class="k">3</span> 光刻胶：行业研究（先进光刻化学品 2024 约 55 亿、JSR ~22%、日企 ~75%；EUV 胶 TOK/JSR/信越 &gt;90%） ·
           <span class="k">4</span> 电子特气：市场报告 + 公司披露（四大份额；液空电子事业部 2024 收入 &gt;25 亿美元） ·
           <span class="k">5</span> CMP：抛光液 2024 约 19 亿、CMC/Entegris &gt;30%、CR5 ~67%（市场报告） ·
@@ -604,7 +671,7 @@
           <span class="k">7</span> 掩膜基板：2024 约 25 亿；EUV blank AGC 59% / Hoya 34%（市场报告） ·
           <span class="k">8</span> 晶圆制造材料内部结构为业内估算口径（非 SEMI 官方细分），仅示意相对大小 ·
           <span class="k">9</span> 公司公告/财经报道：沪硅 2024 营收 33.88 亿；华特/安集/鼎龙等经营进展 ·
-          <span class="k">10</span> 国产光刻胶进展：彤程(科华)、晶瑞、南大光电等公司公告与行业报道，2024–2025。<br>
+          <span class="k">10</span> 国产光刻胶进展：彤程(科华)、晶瑞、南大光电等公司公告与行业报道，2024–2025 · <span class="k">11</span> 涨价：信越 / SUMCO / 环球晶 2026-06 上调 12″ 价（财经报道）· <span class="k">12</span> 大基金三期 ¥3440 亿、2024-05 设立、2025-01 首投 ¥1642 亿（华芯鼎新 931 + 国投集新 711；"70% 投设备材料"为媒体/研报口径，非官方披露）、日本 2026 限供光刻胶＝日企停接单的商业行为、非政府出口管制（观察者 / 东方财富 / 新浪报道）· <span class="k">13</span> A 股 2025 年报财务：tushare。<br>
           <b style="color:var(--mut)">方法</b>：严格区分"事实（机构/财报数据）"与"叙事（厂商/市场说法）"；国产化率口径分歧大，已按品类分别标注，并提示"验证 ≠ 放量"。
         </div>
 
@@ -616,7 +683,7 @@
     </div>
     <div class="view" id="v-eqp" style="display:none">
       <div class="vhead"><div class="vki">Equipment · 赛道</div><div class="vh1">设备 · 赛道深度研究</div><div class="vsub">"卖铲子"里最硬的一段：EUV 垄断、过程控制、国产替代金额最大但高端近乎为零。</div></div>
-      <div class="subnav"><button class="snbtn on" data-sub="e-pos">定位</button><button class="snbtn" data-sub="e-cats">细分总表</button><button class="snbtn" data-sub="e-value">价值量</button><button class="snbtn" data-sub="e-moat">护城河</button><button class="snbtn" data-sub="e-players">玩家格局</button><button class="snbtn" data-sub="e-dr">驱动与风险</button><button class="snbtn" data-sub="e-data">数据·来源</button></div>
+      <div class="subnav"><button class="snbtn on" data-sub="e-pos">定位</button><button class="snbtn" data-sub="e-cats">细分总表</button><button class="snbtn" data-sub="e-value">价值量</button><button class="snbtn" data-sub="e-moat">护城河</button><button class="snbtn" data-sub="e-players">玩家格局</button><button class="snbtn" data-sub="e-dr">驱动与风险</button><button class="snbtn" data-sub="e-data">重点个股</button></div>
       <section class="sub on" id="e-pos">        <div class="subttl">一句话定位</div>
         <div class="cap"><b>设备是建晶圆厂的"母机"</b>——一座先进 fab 七到九成的钱花在买设备上。一句话主线：<b>制程每往前走一个节点，设备的精度、复杂度、单价同时跳升，且越尖端越被极少数玩家垄断。</b>设备是半导体里壁垒最硬、最被"卡脖子"的环节：EUV 光刻机全球只有 ASML 一家能造；同时也是中国国产替代金额最大、政策最聚焦的主战场，但<b>高端（光刻 / 量检测 / 离子注入）国产化仍近乎为零</b>。</div>
 
@@ -772,7 +839,7 @@
         </div>
         <div class="note red"><b>事实 vs 叙事（投研必读）</b>：国产设备最大的认知陷阱是<b>口径</b>——"中标台数"口径的国产化率（部分报道达 ~35%）远高于<b>"金额"口径（~20%）</b>，因为国产多为中低端、台数多但单价低；EUV 光刻、高端量检测在<b>金额口径下仍近乎 0</b>。看国产设备，<b>盯"金额口径 + 高端机型可验证放量"，而不是"中标台数"与"突破"标题。</b></div>
       </section>
-      <section class="sub" id="e-data">        <div class="subttl">可刷新数据点</div>
+      <section class="sub" id="e-data">        <div class="subttl">重点个股 · 速览</div>
         <div class="cap" style="margin-bottom:8px">本页为<b>手工研究快照（2026-06）</b>。最直接的"温度计"是 A 股设备公司的季度营收 / 毛利 / 在手订单（可用 tushare 取数），叠加晶圆厂 capex 与 SEMI 设备数据。</div>
         <div class="tblwrap">
         <table class="ticker">
@@ -783,7 +850,7 @@
           <tr><td class="co">盛美上海</td><td class="tk">688082.SH</td><td class="mut">清洗 + 电镀 + 炉管</td><td class="mut">清洗国内中标第二</td></tr>
           <tr><td class="co">华海清科</td><td class="tk">688120.SH</td><td class="mut">CMP + 减薄</td><td class="mut">国内唯一量产 12″ CMP</td></tr>
           <tr><td class="co">芯源微</td><td class="tk">688037.SH</td><td class="mut">涂胶显影 + 清洗</td><td class="mut">国产 track 突破</td></tr>
-          <tr><td class="co">万业企业</td><td class="tk">600641.SH</td><td class="mut">离子注入（凯世通）</td><td class="mut">国产注入机</td></tr>
+          <tr><td class="co">先导基电<span class="mut">(原万业)</span></td><td class="tk">600641.SH</td><td class="mut">离子注入（凯世通）</td><td class="mut">国产注入机</td></tr>
           <tr><td class="co">中科飞测</td><td class="tk">688361.SH</td><td class="mut">量测 / 检测</td><td class="mut">国产过程控制稀缺标的</td></tr>
           <tr><td class="co">精测电子</td><td class="tk">300567.SZ</td><td class="mut">量测 / 检测（+面板）</td><td class="mut">半导体量检测放量</td></tr>
           <tr><td class="co">华峰测控</td><td class="tk">688200.SH</td><td class="mut">测试设备（后道）</td><td class="mut">模拟/功率测试机</td></tr>
@@ -794,7 +861,7 @@
         <div class="note"><b>下一步（可刷新版）</b>：把上表做成持久 HTML，开页时用 tushare 拉最新季度营收 / 毛利 / 订单、SEMI 设备数据，"事实层"自动更新；"叙事层（壁垒、格局判断）"仍人工维护。</div>
 
         <div class="src">
-          <b style="color:var(--mut)">数据来源</b>（截至 2026-06；金额美元，规模口径随机构差异已就近取主流值，约数标"~"）：<br>
+          <b style="color:var(--mut)">数据来源</b>（截至 2026-06；金额 $ 为美元、¥ 为人民币，口径随机构差异已就近取主流值，约数标"~"）：<br>
           <span class="k">1</span> SEMI：2025 全球半导体设备 1351 亿（+15%，2024 为 1171 亿）；测试 +55% / 封装设备 +21% / 前道 +12%；亚洲 79%，台湾 315 亿(+90%)、韩国 258 亿(+26%)，2026-04 ·
           <span class="k">2</span> 光刻：行业研究 + ASML 披露（ASML 整体光刻 ~90%、EUV 100%、High-NA 量产导入；Nikon/Canon 余下） ·
           <span class="k">3</span> 刻蚀 / 沉积：行业研究（Lam 刻蚀居首、应用材料沉积居首、TEL 居前；份额为约数） ·
@@ -820,7 +887,7 @@
         <button class="snbtn" data-sub="f-moat">🛡️ 护城河</button>
         <button class="snbtn" data-sub="f-players">🏁 玩家格局</button>
         <button class="snbtn" data-sub="f-dr">🚀 驱动与风险</button>
-        <button class="snbtn" data-sub="f-data">🔄 数据·来源</button>
+        <button class="snbtn" data-sub="f-data">重点个股</button>
       </div>
 
       <section class="sub on" id="f-pos">
@@ -841,7 +908,7 @@
           <div class="zcard"><div style="font-size:20px;font-weight:800;color:var(--pur)">&gt;56%</div><div class="sz" style="color:var(--mut)">先进≤7nm 收入占比<sup class="s">2</sup></div></div>
         </div>
         <div class="note cy"><b>本页两条主线</b>：① <b>先进 vs 成熟分化</b>——先进节点 &gt;56% 收入、AI 驱动、TSMC 通吃；成熟节点中国扩产、价格战。② <b>"做得出" ≠ "做得划算"</b>——中芯 7nm 用 DUV 多重曝光跑通，但成本/良率远不及 EUV，<b>经济性</b>才是真天花板。</div>
-        <div class="snote"><span class="k">1</span> TrendForce：2025 代工前十 1695 亿（+26.3%）、TSMC 69.9%，2026-03 · <span class="k">2</span> Counterpoint：2025 先进≤7nm &gt;56% 代工收入。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> TrendForce：2025 代工前十 1695 亿（+26.3%）、TSMC 69.9%，2026-03 · <span class="k">2</span> Counterpoint：2025 先进≤7nm &gt;56% 代工收入。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="f-cats">
@@ -857,7 +924,7 @@
         </table>
         </div>
         <div class="note"><b>口径提示</b>：先进≤7nm &gt;56%、成熟≥28nm ~36%（其余为中端），先进占比逐年升、成熟由 2021 的 54% 降至 2025 的 36%<sup class="s">2</sup>。中国成熟产能 2025 年增 ~6%、国内厂商贡献最多，预计 2025 年底中国在前十大成熟产能的份额 &gt;25%（28/22nm 增幅最大）<sup class="s">5</sup>。</div>
-        <div class="snote"><span class="k">2</span> Counterpoint 节点结构 · <span class="k">5</span> TrendForce/集邦 成熟产能。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">2</span> Counterpoint 节点结构 · <span class="k">5</span> TrendForce/集邦 成熟产能。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="f-value">
@@ -878,7 +945,7 @@
           <div class="shrow"><span class="co">中芯国际 <small>成熟/受限</small></span><div class="track"><div class="fill gc" style="width:23%"></div></div><span class="pct">毛利 ~22.6%</span></div>
         </div>
         <div class="note cy"><b>佐证</b>：同是"重资产"，龙头凭<b>先进制程 + 规模 + 良率 + 垄断</b>享高毛利（台积电 ~58%+），中尾部受成熟价格战压制（中芯 ~22.6%，Q4'24 公司口径）。台积电 2026 对 sub-5nm 涨价 3–5%、2nm 2027 占比将 &gt;10%<sup class="s">4</sup>——先进节点的定价权与增长性是代工"贝塔+阿尔法"的核心。</div>
-        <div class="snote"><span class="k">3</span> SC-IQ 全行业 capex · <span class="k">4</span> TSMC 财报/报道（capex、node mix、毛利、涨价）。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">3</span> SC-IQ 全行业 capex · <span class="k">4</span> TSMC 财报/报道（capex、node mix、毛利、涨价）。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="f-moat">
@@ -920,7 +987,7 @@
         </table>
         </div>
         <div class="note"><b>国产看点</b>：中芯国际全球第 3（~5.3%），成熟制程为主、7nm 以 DUV 多重曝光跑通；华虹、晶合、芯联在成熟与特色工艺扩产。<b>事实 vs 叙事</b>：国产 7nm "突破"是 DUV 多重曝光实现（实验 / 小批量），但<b>成本高、良率低、不经济</b>；缺 EUV 下，真实国产先进天花板卡在 7nm 且<b>难以规模盈利</b>——区分"做得出"与"做得划算"。</div>
-        <div class="snote"><span class="k">1</span> TrendForce 份额 · 节点能力为公开技术状态汇总（台积电/三星/Intel/中芯财报与报道）。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> TrendForce 份额 · 节点能力为公开技术状态汇总（台积电/三星/Intel/中芯财报与报道）。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="f-dr">
@@ -943,13 +1010,13 @@
       </section>
 
       <section class="sub" id="f-data">
-        <div class="subttl">可刷新数据点</div>
+        <div class="subttl">重点个股 · 速览</div>
         <div class="cap" style="margin-bottom:8px">本页为<b>手工研究快照（2026-06）</b>。代工的"温度计"是季度营收 / 毛利 / 产能利用率 / capex（可用 tushare 取 A 股、中概看港股 / 美股）。</div>
         <div class="tblwrap">
         <table class="ticker">
           <tr><th>公司</th><th>代码</th><th>定位</th><th>看点</th></tr>
           <tr><td class="co">中芯国际</td><td class="tk">688981.SH / 0981.HK</td><td class="mut">大陆代工龙头</td><td class="mut">全球第 3（~5.3%），成熟 + 7nm(DUV·受限)</td></tr>
-          <tr><td class="co">华虹公司</td><td class="tk">688347.SH / 1347.HK</td><td class="mut">成熟 / 特色代工</td><td class="mut">功率 / 模拟 / MCU，扩产</td></tr>
+          <tr><td class="co">华虹宏力<span class="mut">(原华虹公司)</span></td><td class="tk">688347.SH / 1347.HK</td><td class="mut">成熟 / 特色代工</td><td class="mut">功率 / 模拟 / MCU，扩产</td></tr>
           <tr><td class="co">晶合集成</td><td class="tk">688249.SH</td><td class="mut">成熟代工</td><td class="mut">面板驱动 IC 龙头，N1A3 扩产</td></tr>
           <tr><td class="co">芯联集成</td><td class="tk">688469.SH</td><td class="mut">特色 / 功率 / 车规</td><td class="mut">SiC / 车规代工放量</td></tr>
           <tr><td class="co">华润微</td><td class="tk">688396.SH</td><td class="mut">IDM + 代工</td><td class="mut">功率半导体一体化</td></tr>
@@ -982,7 +1049,7 @@
         <button class="snbtn" data-sub="p-moat">🛡️ 护城河</button>
         <button class="snbtn" data-sub="p-players">🏁 玩家格局</button>
         <button class="snbtn" data-sub="p-dr">🚀 驱动与风险</button>
-        <button class="snbtn" data-sub="p-data">🔄 数据·来源</button>
+        <button class="snbtn" data-sub="p-data">重点个股</button>
       </div>
 
       <section class="sub on" id="p-pos">
@@ -1003,7 +1070,7 @@
           <div class="zcard"><div style="font-size:20px;font-weight:800;color:var(--grn)">67 万片</div><div class="sz" style="color:var(--mut)">CoWoS 需求 2025·售罄<sup class="s">3</sup></div></div>
         </div>
         <div class="note cy"><b>本页两条主线</b>：① <b>国产最能打 vs 最尖端仍 TSMC</b>——传统/中端封测国产全球前列，但 CoWoS 级大规模 2.5D 仍 TSMC 主导。② <b>先进封装 = 后摩尔性能引擎</b>——摩尔放缓，靠 Chiplet / 2.5D / 3D 在封装层继续提升性能。</div>
-        <div class="snote"><span class="k">1</span> TrendForce：2024 OSAT 前十 415.6 亿（ASE 44.6/Amkor 15.2/长电 12/通富 8） · <span class="k">2</span> 先进封装市场 2025 ~417 亿、2033 ~660 亿（行业报告） · <span class="k">3</span> CoWoS 需求 37→67→100 万片（24/25/26）、TSMC 售罄。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> TrendForce：2024 OSAT 前十 415.6 亿（ASE 44.6/Amkor 15.2/长电 12/通富 8） · <span class="k">2</span> 先进封装市场 2025 ~417 亿、2033 ~660 亿（行业报告） · <span class="k">3</span> CoWoS 需求 37→67→100 万片（24/25/26）、TSMC 售罄。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="p-cats">
@@ -1018,7 +1085,7 @@
         </table>
         </div>
         <div class="note"><b>口径提示</b>：封测是中国半导体国产化最高的环节——长电（全球第 3）、通富（全球第 4）、华天均在前十<sup class="s">1</sup>；先进封装中端（fan-out / 倒装 / SiP）国产已强，但最尖端的 <b>CoWoS 级大规模 2.5D / 3D</b> 仍 TSMC 主导。</div>
-        <div class="snote"><span class="k">1</span> TrendForce OSAT 排名。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> TrendForce OSAT 排名。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="p-value">
@@ -1035,8 +1102,8 @@
 
         <div class="ghead">第三刀：后道价值跃升</div>
         <div class="cap">摩尔放缓，性能提升越来越靠<b>封装层</b>——Chiplet 把不同节点的小芯片拼起来（良率↑、成本↓、灵活），2.5D / 3D 把 HBM 与逻辑叠在一起。后道从<b>成本中心</b>变成<b>性能杠杆与价值增量</b>；国产先进封装也带动毛利改善（通富 2025 净利预计较 2023 增近 7 倍）<sup class="s">4</sup>。</div>
-        <div class="note cy"><b>佐证</b>：先进封装是少数"国产能深度参与的 AI 红利"——长电 HBM 封装 8 层堆叠良率 98.5%、拿到英伟达与长鑫存储订单；通富是 AMD 的 Chiplet 主力封测厂<sup class="s">4</sup>。看原理科普「先进封装」理解 CoWoS / Chiplet 怎么做。</div>
-        <div class="snote"><span class="k">2</span> 先进封装市场报告 · <span class="k">3</span> CoWoS / HBM 产能报道 · <span class="k">4</span> 公司财报（长电 / 通富 / 华天 2025）。完整见「数据·来源」。</div>
+        <div class="note cy"><b>佐证</b>：先进封装是少数"国产能深度参与的 AI 红利"——长电 HBM 封装 8 层堆叠良率与"英伟达/长鑫订单"之说<b>仅见市场传闻、无公司披露</b>（存疑，勿作事实引用）；通富是 AMD 的 Chiplet 主力封测厂<sup class="s">4</sup>。看原理科普「先进封装」理解 CoWoS / Chiplet 怎么做。</div>
+        <div class="snote"><span class="k">2</span> 先进封装市场报告 · <span class="k">3</span> CoWoS / HBM 产能报道 · <span class="k">4</span> 公司财报（长电 / 通富 / 华天 2025）。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="p-moat">
@@ -1076,8 +1143,8 @@
           <tr><td class="cat">通富微电</td><td class="mut">Chiplet / 2.5D（AMD）</td><td><span class="chip lo">国产 Chiplet 主力</span></td></tr>
         </table>
         </div>
-        <div class="note"><b>国产看点</b>：封测是中国半导体最强环节——长电全球第 3、通富第 4、华天前十，三巨头从"跟随者"变"主力"；长电 HBM 8 层堆叠 98.5% 良率拿英伟达订单、通富是 AMD 的 Chiplet 主力<sup class="s">4</sup>。<b>事实 vs 叙事</b>：国产封测"全球前列"是真的（传统 + 中端先进），但<b>最尖端的 CoWoS 级大规模 2.5D 仍 TSMC 主导</b>——国产在规模与最尖端节点上仍在追赶。</div>
-        <div class="snote"><span class="k">1</span> TrendForce OSAT 2024 · <span class="k">4</span> 公司财报与报道。完整见「数据·来源」。</div>
+        <div class="note"><b>国产看点</b>：封测是中国半导体最强环节——长电全球第 3、通富第 4、华天前十，三巨头从"跟随者"变"主力"；长电 HBM 封装推进（具体良率/客户为市场传闻级，无公司披露）、通富是 AMD 的 Chiplet 主力<sup class="s">4</sup>。<b>事实 vs 叙事</b>：国产封测"全球前列"是真的（传统 + 中端先进），但<b>最尖端的 CoWoS 级大规模 2.5D 仍 TSMC 主导</b>——国产在规模与最尖端节点上仍在追赶。</div>
+        <div class="snote"><span class="k">1</span> TrendForce OSAT 2024 · <span class="k">4</span> 公司财报与报道。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="p-dr">
@@ -1100,7 +1167,7 @@
       </section>
 
       <section class="sub" id="p-data">
-        <div class="subttl">可刷新数据点</div>
+        <div class="subttl">重点个股 · 速览</div>
         <div class="cap" style="margin-bottom:8px">本页为<b>手工研究快照（2026-06）</b>。封测的"温度计"是季度营收 / 毛利 / 稼动率 / 先进封装占比（可用 tushare 取 A 股）。</div>
         <div class="tblwrap">
         <table class="ticker">
@@ -1120,7 +1187,7 @@
           <span class="k">1</span> TrendForce：2024 OSAT 前十 415.6 亿美元（+3%）；ASE 44.6% / Amkor 15.2% / 长电 12% / 通富 8% / 力成 5.5% / 华天 4.8%，2025-05；2025 中国厂商双位数增长 ·
           <span class="k">2</span> 先进封装市场报告（Fortune/Yole 等）：2025 约 417 亿美元，2033 ~660 亿（CAGR ~6%）；亚太占 ~43.5% ·
           <span class="k">3</span> CoWoS / HBM 产能报道：CoWoS 需求 37→67→100 万片（2024/25/26），TSMC 售罄至 2026、英伟达主导；HBM3E SK 海力士/美光 2025–26 售罄 ·
-          <span class="k">4</span> 公司财报：长电 2025 封测营收 ~387 亿元、HBM 8 层 98.5% 良率；通富 H1 ~130 亿元、净利近 2023 的 7 倍；华天 H1 ~78 亿元。<br>
+          <span class="k">4</span> 公司财报：长电 2025 封测营收 ~387 亿元、HBM 封装良率数据为传闻口径；通富 H1 ~130 亿元、净利近 2023 的 7 倍；华天 H1 ~78 亿元。<br>
           <b style="color:var(--mut)">方法</b>：区分"事实（机构 / 财报）"与"叙事（厂商 / 市场说法）"；国产先进封装按"量产规模 + 客户 + 良率"判断，而非 PR。
         </div>
         <div class="links">
@@ -1131,7 +1198,7 @@
     </div>
 
     <div class="view" id="v-eda" style="display:none">
-      <div class="vhead"><div class="vki">EDA · Design · 赛道</div><div class="vh1">EDA · 设计 · 赛道深度研究</div><div class="vsub">芯片设计的"画图工具 + 积木"：EDA 工具与 IP <b>轻资产、最高毛利、卡脖子最狠之一</b>（三巨头 &gt;74%、ARM ~40%、美对华断供 EDA）；设计端（Fabless）国产繁荣，但高端 CPU/GPU/AI 仍受先进制程 + IP + EDA 三重制约。承接原理科普「芯片品类」。</div></div>
+      <div class="vhead"><div class="vki">EDA · Design · 赛道</div><div class="vh1">EDA · 设计 · 赛道深度研究</div><div class="vsub">芯片设计的"画图工具 + 积木"：EDA 工具与 IP <b>轻资产、最高毛利、卡脖子最狠之一</b>（三巨头 ~74%、ARM ~40%、美对华断供 EDA）；设计端（Fabless）国产繁荣，但高端 CPU/GPU/AI 仍受先进制程 + IP + EDA 三重制约。承接原理科普「芯片品类」。</div></div>
       <div class="subnav">
         <button class="snbtn on" data-sub="d-pos">📍 定位</button>
         <button class="snbtn" data-sub="d-cats">🧾 细分</button>
@@ -1139,7 +1206,7 @@
         <button class="snbtn" data-sub="d-moat">🛡️ 护城河</button>
         <button class="snbtn" data-sub="d-players">🏁 玩家格局</button>
         <button class="snbtn" data-sub="d-dr">🚀 驱动与风险</button>
-        <button class="snbtn" data-sub="d-data">🔄 数据·来源</button>
+        <button class="snbtn" data-sub="d-data">重点个股</button>
       </div>
 
       <section class="sub on" id="d-pos">
@@ -1160,7 +1227,7 @@
           <div class="zcard"><div style="font-size:20px;font-weight:800;color:var(--pur)">&gt;74%</div><div class="sz" style="color:var(--mut)">EDA 三巨头份额<sup class="s">1</sup></div></div>
         </div>
         <div class="note cy"><b>本页两条主线</b>：① <b>小市场、大杠杆、硬卡点</b>——EDA 仅占芯片业 ~1.5%，却决定"能不能设计出来"；国产化率仅 ~11.5%。② <b>设计端繁荣 vs 高端受限</b>——A 股 Fabless 公司众多，但高端 CPU/GPU/AI 受三重制约。</div>
-        <div class="snote"><span class="k">1</span> EDA 市场 ~120 亿（Synopsys 31/Cadence 30/西门子 13），CAGR ~8% · <span class="k">2</span> 半导体 IP ~93 亿，ARM ~40%。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> EDA 市场 ~120 亿（Synopsys 31/Cadence 30/西门子 13），CAGR ~8% · <span class="k">2</span> 半导体 IP ~93 亿，ARM ~40%。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="d-cats">
@@ -1169,13 +1236,13 @@
         <div class="tblwrap">
         <table class="tbl">
           <tr><th>板块</th><th>市场 / 格局</th><th>国际龙头</th><th>国产玩家</th><th>国产化</th></tr>
-          <tr class="deep"><td class="cat"><span class="star">★</span> EDA 工具</td><td class="num">~120 亿 · 三巨头 &gt;74%</td><td class="mut">新思 · 楷登 · 西门子 EDA</td><td class="mut">华大九天 · 概伦 · 广立微 · 芯华章</td><td><span class="chip hi">模拟&gt;30% / 数字&lt;15%</span></td></tr>
+          <tr class="deep"><td class="cat"><span class="star">★</span> EDA 工具</td><td class="num">~120 亿 · 三巨头 ~74%</td><td class="mut">新思 · 楷登 · 西门子 EDA</td><td class="mut">华大九天 · 概伦 · 广立微 · 芯华章</td><td><span class="chip hi">模拟&gt;30% / 数字&lt;15%</span></td></tr>
           <tr class="deep"><td class="cat"><span class="star">★</span> IP</td><td class="num">~93 亿 · ARM ~40%</td><td class="mut">ARM · 新思 · 楷登 · Imagination</td><td class="mut">芯原 · 锐成 · 概伦</td><td><span class="chip hi">弱（RISC-V 机会）</span></td></tr>
           <tr><td class="cat">设计 / Fabless</td><td class="num">芯片设计端</td><td class="mut">英伟达 · 高通 · 博通 · AMD · 联发科</td><td class="mut">海思 · 韦尔 · 兆易 · 汇顶 · 卓胜微</td><td><span class="chip md">中低端强 / 高端受限</span></td></tr>
         </table>
         </div>
         <div class="note"><b>口径提示</b>：中国 EDA 市场 2025 约 185 亿元（占全球 ~18%）、CAGR ~15.6%，但<b>国产化率仅 ~11.5%</b>；模拟电路国产化 &gt;30%（华大九天模拟工具工艺覆盖率 2025 底预计 &gt;80%），<b>数字电路全流程国产化不足 15%</b>——EDA 是公认"卡脖子"最严重的环节之一<sup class="s">3</sup>。</div>
-        <div class="snote"><span class="k">3</span> 中证鹏元 / 行业报告：中国 EDA 市场与国产化率。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">3</span> 中证鹏元 / 行业报告：中国 EDA 市场与国产化率。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="d-value">
@@ -1187,7 +1254,7 @@
         <div class="ghead">第三刀：AI 既抬需求、也进工具</div>
         <div class="cap">AI 芯片让设计复杂度暴涨（更需 EDA/IP）；同时 <b>AI 进入 EDA</b>（Synopsys.ai / Cadence Cerebrus 自动化布局布线）。新思 2025 年 7 月完成 <b>350 亿美元收购 Ansys</b>，打造"器件到系统"的全栈仿真设计平台<sup class="s">1</sup>。</div>
         <div class="note cy"><b>佐证</b>：EDA/IP 是"小而硬"的卡点——金额不大，但没有它整条链都设计不出芯片；这也是它成为出口管制工具的原因。</div>
-        <div class="snote"><span class="k">1</span> 行业报告 + 公司公告（Synopsys 收购 Ansys）。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> 行业报告 + 公司公告（Synopsys 收购 Ansys）。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="d-moat">
@@ -1208,7 +1275,7 @@
         <div class="cap" style="margin-bottom:6px"><span style="color:var(--si)">■ 蓝 = 国际</span> &nbsp; <span style="color:var(--cy2)">■ 青 = 国产</span></div>
         <div class="shblock">
           <h4>EDA 工具 · 全球份额（约）</h4>
-          <div class="meta">2025，三巨头 &gt;74%<sup class="s">1</sup></div>
+          <div class="meta">2025，三巨头 ~74%<sup class="s">1</sup></div>
           <div class="shrow"><span class="co">新思 Synopsys <small>US</small></span><div class="track"><div class="fill gi" style="width:31%"></div></div><span class="pct">~31%</span></div>
           <div class="shrow"><span class="co">楷登 Cadence <small>US</small></span><div class="track"><div class="fill gi" style="width:30%"></div></div><span class="pct">~30%</span></div>
           <div class="shrow"><span class="co">西门子 EDA <small>DE</small></span><div class="track"><div class="fill gi" style="width:13%"></div></div><span class="pct">~13%</span></div>
@@ -1216,7 +1283,7 @@
         </div>
         <div class="note"><b>IP</b>：ARM ~40%（指令集生态），其后新思、楷登、Imagination、Rambus；国产<b>芯原</b>（一站式 IP + 设计服务）、锐成。RISC-V 是国产 IP 的机会窗口。<br><b>设计/Fabless</b>：全球前列英伟达（AI 暴涨）、高通、博通、AMD、联发科；国产<b>海思</b>（受限重启）、韦尔（CIS）、兆易、汇顶、卓胜微、晶晨、瑞芯微等繁荣。</div>
         <div class="note"><b>国产看点</b>：华大九天（模拟全流程，工艺覆盖 &gt;80%）、概伦电子（器件建模 + 收购锐成 IP）、广立微（良率）、芯华章（验证）；华为已完成 14nm 以上 EDA 工具国产化<sup class="s">3</sup>。<b>事实 vs 叙事</b>：国产 EDA 的"突破"多在<b>模拟 / 点工具</b>；先进数字全流程仍 &lt;15%、最尖端近乎空白——看国产 EDA 盯"<b>全流程覆盖 + 先进节点支持 + 客户量产采用</b>"，别只看"某点工具突破"。</div>
-        <div class="snote"><span class="k">1</span> EDA 份额 · <span class="k">2</span> IP（ARM ~40%）· <span class="k">3</span> 国产 EDA 报道。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> EDA 份额 · <span class="k">2</span> IP（ARM ~40%）· <span class="k">3</span> 国产 EDA 报道。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="d-dr">
@@ -1238,7 +1305,7 @@
       </section>
 
       <section class="sub" id="d-data">
-        <div class="subttl">可刷新数据点</div>
+        <div class="subttl">重点个股 · 速览</div>
         <div class="cap" style="margin-bottom:8px">本页为<b>手工研究快照（2026-06）</b>。EDA/设计的"温度计"是季度营收 / 毛利 / 研发占比 / 工具覆盖（可用 tushare 取 A 股）。</div>
         <div class="tblwrap">
         <table class="ticker">
@@ -1247,7 +1314,7 @@
           <tr><td class="co">概伦电子</td><td class="tk">688206.SH</td><td class="mut">EDA + IP</td><td class="mut">器件建模，收购锐成 IP</td></tr>
           <tr><td class="co">广立微</td><td class="tk">301095.SZ</td><td class="mut">良率 EDA</td><td class="mut">良率提升 + 测试机</td></tr>
           <tr><td class="co">芯原股份</td><td class="tk">688521.SH</td><td class="mut">IP + 设计服务</td><td class="mut">一站式 IP / Chiplet 平台</td></tr>
-          <tr><td class="co">韦尔股份</td><td class="tk">603501.SH</td><td class="mut">设计：CIS</td><td class="mut">豪威图像传感器</td></tr>
+          <tr><td class="co">豪威集团<span class="mut">(原韦尔)</span></td><td class="tk">603501.SH</td><td class="mut">设计：CIS</td><td class="mut">豪威图像传感器</td></tr>
           <tr><td class="co">兆易创新</td><td class="tk">603986.SH</td><td class="mut">设计：存储+MCU</td><td class="mut">NOR 全球前三</td></tr>
           <tr><td class="co">卓胜微</td><td class="tk">300782.SZ</td><td class="mut">设计：射频前端</td><td class="mut">射频 PA / 开关 / 滤波</td></tr>
         </table>
@@ -1255,7 +1322,7 @@
         <div class="note"><b>下一步（可刷新版）</b>：拉华大九天/概伦/芯原等季度营收、毛利、研发占比，"事实层"自动更新；"叙事层（全流程覆盖、卡脖子判断）"人工维护。</div>
         <div class="src">
           <b style="color:var(--mut)">数据来源</b>（截至 2026-06；约数标"~"）：<br>
-          <span class="k">1</span> EDA 市场 ~120 亿美元（2025）、Synopsys ~31% / Cadence ~30% / 西门子 EDA ~13%（三巨头 &gt;74%）、CAGR ~8%；Synopsys 2025-07 完成 350 亿美元收购 Ansys ·
+          <span class="k">1</span> EDA 市场 ~120 亿美元（2025）、Synopsys ~31% / Cadence ~30% / 西门子 EDA ~13%（三巨头 ~74%）、CAGR ~8%；Synopsys 2025-07 完成 350 亿美元收购 Ansys ·
           <span class="k">2</span> 半导体 IP ~93 亿美元（2025）、ARM ~40%，其后 Synopsys / Cadence / Imagination / Rambus ·
           <span class="k">3</span> 中证鹏元 / 财经报道：中国 EDA 市场 2025 ~185 亿元（占全球 ~18%）、国产化率 ~11.5%、模拟 &gt;30% / 数字 &lt;15%；华为完成 14nm 以上 EDA 国产化；华大九天 / 概伦 2025 并购动态。<br>
           <b style="color:var(--mut)">方法</b>：区分"事实（机构 / 财报）"与"叙事（厂商 / 市场说法）"；国产 EDA 按"全流程 + 先进节点 + 量产采用"判断。
@@ -1268,7 +1335,7 @@
     </div>
 
     <div class="view" id="v-mem" style="display:none">
-      <div class="vhead"><div class="vki">Memory · 赛道</div><div class="vh1">存储器 · 赛道深度研究</div><div class="vsub">标准品、<b>强周期</b>、寡头垄断；<b>HBM 是 AI 最热的超级周期主线</b>（SK 海力士暴利、市值逼近万亿美元）。国产<b>长存（NAND 300+ 层全球突破）</b>领先、<b>长鑫（DRAM）</b>追赶，但 <b>HBM 仍落后约 1 年</b>。承接原理科普「存储器」。</div></div>
+      <div class="vhead"><div class="vki">Memory · 赛道</div><div class="vh1">存储器 · 赛道深度研究</div><div class="vsub">标准品、<b>强周期</b>、寡头垄断；<b>HBM 是 AI 最热的超级周期主线</b>（SK 海力士暴利、市值逼近万亿美元）。国产<b>长存（NAND 294 层已出货、Xtacking 5.0 冲 300+ 层）</b>领先、<b>长鑫（DRAM）</b>追赶，但 <b>HBM 仍落后约 2–3 年</b>。承接原理科普「存储器」。</div></div>
       <div class="subnav">
         <button class="snbtn on" data-sub="r-pos">📍 定位</button>
         <button class="snbtn" data-sub="r-cats">🧾 细分</button>
@@ -1276,12 +1343,12 @@
         <button class="snbtn" data-sub="r-moat">🛡️ 护城河</button>
         <button class="snbtn" data-sub="r-players">🏁 玩家格局</button>
         <button class="snbtn" data-sub="r-dr">🚀 驱动与风险</button>
-        <button class="snbtn" data-sub="r-data">🔄 数据·来源</button>
+        <button class="snbtn" data-sub="r-data">重点个股</button>
       </div>
 
       <section class="sub on" id="r-pos">
         <div class="subttl">一句话定位</div>
-        <div class="cap"><b>存储是芯片里的"标准粮仓"</b>——DRAM / NAND 是大宗标准品，<b>强周期</b>（价格暴涨暴跌）、寡头垄断，厂商多为 IDM（设计 + 制造一体）。一句话主线：<b>AI 把 HBM 推成超级周期主线</b>（SK 海力士创纪录利润、市值逼近 1 万亿美元）；国产<b>长江存储（NAND 300+ 层全球第一突破）</b>已追上、<b>长鑫（DRAM DDR5 爬坡）</b>追赶，但 <b>HBM 仍落后约 1 年、良率低 20–30 个百分点</b>。</div>
+        <div class="cap"><b>存储是芯片里的"标准粮仓"</b>——DRAM / NAND 是大宗标准品，<b>强周期</b>（价格暴涨暴跌）、寡头垄断，厂商多为 IDM（设计 + 制造一体）。一句话主线：<b>AI 把 HBM 推成超级周期主线</b>（SK 海力士创纪录利润、市值逼近 1 万亿美元）；国产<b>长江存储（NAND 294 层出货＝当时业界已出货最高层数；300+ 层量产首发为 SK 海力士 321 层）</b>已追近、<b>长鑫（DRAM DDR5 爬坡）</b>追赶，但 <b>HBM 仍落后约 2–3 年、良率低 20–30 个百分点</b>。</div>
         <div class="ghead">存储产业链（IDM 一体）</div>
         <div class="scale-row">
           <div class="zcard" style="border-color:var(--cu);box-shadow:0 0 16px rgba(233,160,76,.22)"><h4 style="color:#f3b86a">★ 颗粒制造</h4><div class="sz">IDM 设计+制造</div></div><div class="arrow">›</div>
@@ -1293,10 +1360,10 @@
         <div class="scale-row">
           <div class="zcard"><div style="font-size:20px;font-weight:800;color:var(--cu)">~93%</div><div class="sz" style="color:var(--mut)">DRAM 三寡头份额<sup class="s">1</sup></div></div>
           <div class="zcard"><div style="font-size:20px;font-weight:800;color:var(--si)">57%</div><div class="sz" style="color:var(--mut)">SK 海力士 HBM 份额<sup class="s">2</sup></div></div>
-          <div class="zcard"><div style="font-size:20px;font-weight:800;color:var(--grn)">300+ 层</div><div class="sz" style="color:var(--mut)">长存 NAND·全球突破<sup class="s">4</sup></div></div>
+          <div class="zcard"><div style="font-size:20px;font-weight:800;color:var(--grn)">294 层</div><div class="sz" style="color:var(--mut)">长存 NAND·已出货最高层数之一<sup class="s">4</sup></div></div>
         </div>
         <div class="note cy"><b>本页两条主线</b>：① <b>AI 超级周期</b>——HBM / 高容量 DRAM / 企业级 SSD 暴需，存储是 AI 周期最受益的环节。② <b>国产分化</b>——NAND（长存）已全球领先，DRAM（长鑫）追赶中，HBM 仍落后且受限。</div>
-        <div class="snote"><span class="k">1</span> DRAM 三寡头（SK 海力士/三星/美光）~93% · <span class="k">2</span> HBM SK 海力士 ~57% · <span class="k">4</span> 长存 294→300+ 层 NAND。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> DRAM 三寡头（SK 海力士/三星/美光）~93% · <span class="k">2</span> HBM SK 海力士 ~57%（2025Q3，Counterpoint；Q4 有报道升至 ~62%）· <span class="k">4</span> 长存 294 层出货、300+ 层在研（量产 300+ 首发＝SK 海力士 321 层）。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="r-cats">
@@ -1306,13 +1373,13 @@
         <table class="tbl">
           <tr><th>类型</th><th>格局</th><th>国际龙头</th><th>国产玩家</th><th>国产化</th></tr>
           <tr class="deep"><td class="cat"><span class="star">★</span> DRAM</td><td class="num">三寡头 ~93%</td><td class="mut">SK 海力士 · 三星 · 美光</td><td class="mut">长鑫 CXMT</td><td><span class="chip md">DDR5 追赶</span></td></tr>
-          <tr class="deep"><td class="cat"><span class="star">★</span> NAND</td><td class="num">前五 &gt;80%</td><td class="mut">三星 · SK · 铠侠 · 美光 · 西数</td><td class="mut">长江存储 YMTC</td><td><span class="chip lo">300+ 层（领先）</span></td></tr>
-          <tr class="deep"><td class="cat"><span class="star">★</span> HBM</td><td class="num">SK 海力士 ~57%</td><td class="mut">SK 海力士 · 三星 · 美光</td><td class="mut">长鑫（HBM2 量产 / 研发 HBM3）</td><td><span class="chip hi">落后 ~1 年</span></td></tr>
+          <tr class="deep"><td class="cat"><span class="star">★</span> NAND</td><td class="num">前五 &gt;80%</td><td class="mut">三星 · SK · 铠侠 · 美光 · 西数</td><td class="mut">长江存储 YMTC</td><td><span class="chip lo">294 层（第一梯队）</span></td></tr>
+          <tr class="deep"><td class="cat"><span class="star">★</span> HBM</td><td class="num">SK 海力士 ~57%</td><td class="mut">SK 海力士 · 三星 · 美光</td><td class="mut">长鑫（HBM2 量产 / 研发 HBM3）</td><td><span class="chip hi">落后 ~2–3 年</span></td></tr>
           <tr><td class="cat">利基<br><span class="mut" style="font-weight:400">NOR/SRAM/利基DRAM</span></td><td class="num">分散</td><td class="mut">华邦 · 旺宏</td><td class="mut">兆易 · 北京君正 · 普冉 · 东芯</td><td><span class="chip lo">国产强</span></td></tr>
         </table>
         </div>
         <div class="note"><b>口径提示</b>：DRAM 三寡头座次随 AI/HBM 周期<b>季度互换</b>（2025 SK 海力士/三星/美光 ~34/33/26）；NAND 前五（三星 ~32、SK+Solidigm ~20、铠侠 ~15、美光 ~12、西数/SanDisk ~12）占 &gt;80%<sup class="s">1,3</sup>。长鑫、长存季度营收均破 10 亿美元、正冲刺 IPO（"存储第一股"）<sup class="s">4</sup>。</div>
-        <div class="snote"><span class="k">1</span> DRAM 份额 · <span class="k">3</span> NAND 份额 · <span class="k">4</span> 长鑫/长存进展。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">1</span> DRAM 份额 · <span class="k">3</span> NAND 份额 · <span class="k">4</span> 长鑫/长存进展。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="r-value">
@@ -1324,7 +1391,7 @@
         <div class="ghead">第三刀：周期之王</div>
         <div class="cap">存储是半导体里<b>最强周期</b>的环节——资本开支与供需决定价格，历史上数轮暴涨暴跌。当前 AI 驱动上行，机构称这轮涨价可能延续至 2028（三星、SK 对扩产谨慎）<sup class="s">5</sup>。</div>
         <div class="note cy"><b>佐证</b>：存储是 AI 周期里弹性最大的方向之一——但也意味着<b>在价格高位别线性外推</b>。看存储先看"周期位置"，再看公司。</div>
-        <div class="snote"><span class="k">2</span> HBM / SK 海力士 · <span class="k">5</span> 存储市场与周期（SIA / TrendForce）。完整见「数据·来源」。</div>
+        <div class="snote"><span class="k">2</span> HBM / SK 海力士 · <span class="k">5</span> 存储市场与周期（SIA / TrendForce）。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="r-moat">
@@ -1359,9 +1426,9 @@
           <div class="shrow"><span class="co">美光 <small>US</small></span><div class="track"><div class="fill gi" style="width:21%"></div></div><span class="pct">~21%</span></div>
           <div class="shrow"><span class="co">长鑫 <small>CN</small></span><div class="track"><div class="fill gc" style="width:1%"></div></div><span class="pct">研发中</span></div>
         </div>
-        <div class="note"><b>NAND</b>：三星 ~32% / SK（+Solidigm）~20% / 铠侠 ~15% / 美光 ~12% / 西数·SanDisk ~12%，前五 &gt;80%；国产<b>长江存储</b>已量产 294 层、突破 300+ 层（全球第一）<sup class="s">3,4</sup>。</div>
-        <div class="note"><b>国产看点</b>：长江存储（NAND，294→300+ 层、Xtacking 架构，<b>打破美韩垄断</b>）；长鑫（DRAM，DDR5/LPDDR5 爬坡、份额从 1% 向 7–9% 升，HBM2 量产、HBM3 研发但落后 ~1 年、良率低 20–30pct）<sup class="s">4</sup>；A 股多为利基 / 模组（兆易 NOR 全球前三、北京君正车规 SRAM 全球第一）。<b>事实 vs 叙事</b>：国产 <b>NAND（长存）真追上了</b>，但 <b>DRAM（长鑫）仍追赶、HBM 仍落后</b>；且主流颗粒龙头（长鑫/长存）<b>尚未上市</b>（IPO 中），A 股标的多是利基 / 模组 / 控制器——别用"利基弹性"代替"龙头实力"。</div>
-        <div class="snote"><span class="k">1</span> DRAM · <span class="k">2</span> HBM · <span class="k">3</span> NAND · <span class="k">4</span> 长鑫/长存。完整见「数据·来源」。</div>
+        <div class="note"><b>NAND</b>：三星 ~32% / SK（+Solidigm）~20% / 铠侠 ~15% / 美光 ~12% / 西数·SanDisk ~12%，前五 &gt;80%；国产<b>长江存储</b>已出货 294 层（当时业界已出货产品最高层数）、Xtacking 5.0 向 300+ 层推进；量产 300+ 层首发为 SK 海力士 321 层<sup class="s">3,4</sup>。</div>
+        <div class="note"><b>国产看点</b>：长江存储（NAND，294 层出货、Xtacking 架构向 300+ 层推进，<b>跻身第一梯队</b>）；长鑫（DRAM，DDR5/LPDDR5 爬坡、份额从 1% 向 7–9% 升，HBM2 量产、HBM3 送样但落后 ~2–3 年（SK 已进入 HBM4 世代）、良率低 20–30pct）<sup class="s">4</sup>；A 股多为利基 / 模组（兆易 NOR 全球前三、北京君正车规 SRAM 全球第一）。<b>事实 vs 叙事</b>：国产 <b>NAND（长存）真追上了</b>，但 <b>DRAM（长鑫）仍追赶、HBM 仍落后</b>；且主流颗粒龙头（长鑫/长存）<b>尚未上市</b>（IPO 中），A 股标的多是利基 / 模组 / 控制器——别用"利基弹性"代替"龙头实力"。</div>
+        <div class="snote"><span class="k">1</span> DRAM · <span class="k">2</span> HBM · <span class="k">3</span> NAND · <span class="k">4</span> 长鑫/长存。完整来源见「重点个股」。</div>
       </section>
 
       <section class="sub" id="r-dr">
@@ -1375,7 +1442,7 @@
         <div class="subttl" style="margin-top:24px">风险</div>
         <div class="flow">
           <div class="frow rsk"><div class="fn">!</div><div><b>周期暴跌（最大风险）</b>：存储是"周期之王"，供给过剩时价格可腰斩——高位线性外推最危险。</div></div>
-          <div class="frow rsk"><div class="fn">!</div><div><b>HBM 国产空白 + 落后</b>：长鑫 HBM 落后 ~1 年、良率低，受设备 / 先进封装制约，最尖端短期难补。</div></div>
+          <div class="frow rsk"><div class="fn">!</div><div><b>HBM 国产空白 + 落后</b>：长鑫 HBM 落后 ~2–3 年、良率低，受设备 / 先进封装制约，最尖端短期难补。</div></div>
           <div class="frow rsk"><div class="fn">!</div><div><b>资本巨大 + 龙头垄断</b>：几百亿 capex、三寡头格局，新进入者门槛极高。</div></div>
           <div class="frow rsk"><div class="fn">!</div><div><b>地缘受限</b>：对长鑫 / 长存的设备与 HBM 相关管制持续。</div></div>
           <div class="frow rsk"><div class="fn">!</div><div><b>A 股标的错配</b>：主流颗粒龙头未上市，A 股多为利基 / 模组 / 控制器，弹性 ≠ 龙头实力。</div></div>
@@ -1384,7 +1451,7 @@
       </section>
 
       <section class="sub" id="r-data">
-        <div class="subttl">可刷新数据点</div>
+        <div class="subttl">重点个股 · 速览</div>
         <div class="cap" style="margin-bottom:8px">本页为<b>手工研究快照（2026-06）</b>。存储的"温度计"是<b>现货 / 合约价</b>、DRAM/NAND 价格指数、厂商稼动率与 capex；A 股标的多为利基 / 模组（可用 tushare 取数）。</div>
         <div class="tblwrap">
         <table class="ticker">
@@ -1403,9 +1470,9 @@
         <div class="src">
           <b style="color:var(--mut)">数据来源</b>（截至 2026-06；金额美元，约数标"~"）：<br>
           <span class="k">1</span> Counterpoint / TrendForce：2025 DRAM SK 海力士 ~34% / 三星 ~33% / 美光 ~26%（三寡头 ~93%，座次随周期互换） ·
-          <span class="k">2</span> HBM 2025 SK 海力士 ~57% / 三星 ~22% / 美光 ~21%；2026 转向 HBM4；SK 海力士创纪录利润、市值逼近 1 万亿美元 ·
+          <span class="k">2</span> HBM 2025Q3 SK 海力士 ~57% / 三星 ~22% / 美光 ~21%（Counterpoint）；2026 转向 HBM4；SK 海力士创纪录利润、市值逼近 1 万亿美元 ·
           <span class="k">3</span> NAND 2025 三星 ~32% / SK ~20% / 铠侠 ~15% / 美光 ~12% / 西数·SanDisk ~12%（前五 &gt;80%）·
-          <span class="k">4</span> 长江存储：294 层量产、突破 300+ 层（Xtacking 4.0/CBA，全球第一）；长鑫：DDR5/LPDDR5 爬坡、HBM2 量产 / HBM3 研发落后 ~1 年良率低 20–30pct；两家季度营收破 10 亿美元、IPO 辅导中 ·
+          <span class="k">4</span> 长江存储：294 层量产、突破 300+ 层（Xtacking 4.0/CBA，全球第一）；长鑫：DDR5/LPDDR5 爬坡、HBM2 量产 / HBM3 送样、落后 ~2–3 年、良率低 20–30pct；两家季度营收破 10 亿美元、IPO 辅导中 ·
           <span class="k">5</span> SIA / TrendForce：2024 存储 ~1650 亿（+78.9%）；2025 AI 超级周期上行，价格涨势或延续至 2028。<br>
           <b style="color:var(--mut)">方法</b>：区分"事实（机构 / 财报）"与"叙事（厂商 / 市场说法）"；存储先看周期位置，国产按"真实节点 + HBM 进展 + 是否上市"判断。
         </div>
@@ -1419,128 +1486,167 @@
     <div class="view" id="v-lookup" style="display:none">
       <div class="vhead"><div class="vki">Tools · 速查</div><div class="vh1">上市公司速查</div></div>
       <div class="panelbox">        <div class="subttl">上市公司速查 · 六大赛道</div>
-        <div class="cap" style="margin-bottom:8px">主轴按<b>在 fab 里的功能/环节</b>分类（我们的轴，最细），每类标注对应的<b>申万行业</b>与<b>概念题材</b>做对位。当前覆盖<b>材料、设备、晶圆制造、封测、EDA·设计、存储六大赛道</b>代表 A 股（非穷举），随其他赛道推进逐步补全。会变的<b>市值 / PE</b> 留给可刷新层（后续接 tushare），此处不写死、不放过期数。</div>
+        <div class="cap" style="margin-bottom:8px">主轴按<b>在 fab 里的功能/环节</b>分类（我们的轴，最细），每类标注对应的<b>申万行业</b>与<b>概念题材</b>做对位。当前覆盖<b>材料、设备、晶圆制造、封测、EDA·设计、存储六大赛道</b>代表 A 股（非穷举），随其他赛道推进逐步补全。<b>市值 / PE</b> 列＝<b>2026-07-08 收盘快照</b>（tushare·总市值 亿元人民币·PE=TTM，亏损标"亏损"，停牌者取停牌前值并标注）；属可刷新层，再刷新时整列替换、日期同步更新。</div>
         <input id="lkq" class="lkq" type="text" placeholder="🔎 输入公司名 / 代码 / 主营关键词，快速定位…" oninput="filterLookup()" aria-label="公司速查过滤">
         <div class="tblwrap">
         <table class="lookup">
           <thead><tr><th>公司</th><th>代码</th><th>主营（一句话）</th><th>市值·PE</th></tr></thead>
           <tbody id="lkbody">
             <tr class="grp"><td colspan="4">① 硅片 <span class="tg sw">申万·半导体材料</span><span class="tg cc">概念·硅片/国产替代</span></td></tr>
-            <tr><td class="co">沪硅产业</td><td class="tk">688126.SH</td><td>300mm/200mm 半导体硅片（子公司新昇）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">TCL中环</td><td class="tk">002129.SZ</td><td>主业光伏硅片，12″ 半导体硅片扩产中</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">立昂微</td><td class="tk">605358.SH</td><td>硅片 + 外延 + 功率器件</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">神工股份</td><td class="tk">688233.SH</td><td>大尺寸刻蚀用单晶硅 + 硅片</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">沪硅产业</td><td class="tk">688126.SH</td><td>300mm/200mm 半导体硅片（子公司新昇）</td><td class="rl">1074亿·亏损</td></tr>
+            <tr><td class="co">TCL中环</td><td class="tk">002129.SZ</td><td>主业光伏硅片，12″ 半导体硅片扩产中</td><td class="rl">432亿·亏损</td></tr>
+            <tr><td class="co">立昂微</td><td class="tk">605358.SH</td><td>硅片 + 外延 + 功率器件</td><td class="rl">448亿·亏损</td></tr>
+            <tr><td class="co">神工股份</td><td class="tk">688233.SH</td><td>大尺寸刻蚀用单晶硅 + 硅片</td><td class="rl">298亿·301×</td></tr>
 
             <tr class="grp"><td colspan="4">② 光刻胶 <span class="tg sw">申万·电子化学品</span><span class="tg cc">概念·光刻胶</span></td></tr>
-            <tr><td class="co">彤程新材</td><td class="tk">603650.SH</td><td>子公司北京科华 KrF/ArF 光刻胶（+特种橡胶助剂）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">晶瑞电材</td><td class="tk">300655.SZ</td><td>i 线/KrF 光刻胶 + 湿电子化学品</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">南大光电</td><td class="tk">300346.SZ</td><td>ArF 光刻胶 + 特气 + 前驱体(MO源)</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">上海新阳</td><td class="tk">688137.SH</td><td>光刻胶 + 电镀液 + 清洗液</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">彤程新材</td><td class="tk">603650.SH</td><td>子公司北京科华 KrF/ArF 光刻胶（+特种橡胶助剂）</td><td class="rl">512亿·88×</td></tr>
+            <tr><td class="co">晶瑞电材</td><td class="tk">300655.SZ</td><td>i 线/KrF 光刻胶 + 湿电子化学品</td><td class="rl">199亿·177×</td></tr>
+            <tr><td class="co">南大光电</td><td class="tk">300346.SZ</td><td>ArF 光刻胶 + 特气 + 前驱体(MO源)</td><td class="rl">512亿·147×</td></tr>
+            <tr><td class="co">上海新阳</td><td class="tk">300236.SZ</td><td>光刻胶 + 电镀液 + 清洗液</td><td class="rl">347亿·98×</td></tr>
 
             <tr class="grp"><td colspan="4">③ 电子特气 <span class="tg sw">申万·电子化学品 / 工业气体</span><span class="tg cc">概念·特气/国产替代</span></td></tr>
-            <tr><td class="co">华特气体</td><td class="tk">688268.SH</td><td>特种气体（含氟、稀有气体），进口替代</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">中船特气</td><td class="tk">688146.SH</td><td>含氟电子特气（NF₃ 全球前列）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">金宏气体</td><td class="tk">688106.SH</td><td>工业气体 + 电子特气</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">和远气体</td><td class="tk">002971.SZ</td><td>工业 + 电子特气</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">华特气体</td><td class="tk">688268.SH</td><td>特种气体（含氟、稀有气体），进口替代</td><td class="rl">275亿·220×</td></tr>
+            <tr><td class="co">中船特气</td><td class="tk">688146.SH</td><td>含氟电子特气（NF₃ 全球前列）</td><td class="rl">1752亿·487×</td></tr>
+            <tr><td class="co">金宏气体</td><td class="tk">688106.SH</td><td>工业气体 + 电子特气</td><td class="rl">193亿·208×</td></tr>
+            <tr><td class="co">和远气体</td><td class="tk">002971.SZ</td><td>工业 + 电子特气</td><td class="rl">121亿·227×</td></tr>
 
             <tr class="grp"><td colspan="4">④ CMP 抛光 <span class="tg sw">申万·电子化学品</span><span class="tg cc">概念·CMP</span></td></tr>
-            <tr><td class="co">安集科技</td><td class="tk">688019.SH</td><td>CMP 抛光液 + 功能性湿化学品</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">鼎龙股份</td><td class="tk">300054.SZ</td><td>CMP 抛光垫 + 抛光液 + 清洗液</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">安集科技</td><td class="tk">688019.SH</td><td>CMP 抛光液 + 功能性湿化学品</td><td class="rl">719亿·87×</td></tr>
+            <tr><td class="co">鼎龙股份</td><td class="tk">300054.SZ</td><td>CMP 抛光垫 + 抛光液 + 清洗液</td><td class="rl">852亿·103×</td></tr>
 
             <tr class="grp"><td colspan="4">⑤ 靶材 <span class="tg sw">申万·半导体材料 / 金属新材料</span><span class="tg cc">概念·靶材</span></td></tr>
-            <tr><td class="co">江丰电子</td><td class="tk">300666.SZ</td><td>半导体溅射靶材 + 精密零部件</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">有研新材</td><td class="tk">600206.SH</td><td>有研亿金靶材 + 稀土材料</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">隆华科技</td><td class="tk">300263.SZ</td><td>靶材（四丰/晶联）+ 节能装备</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">江丰电子</td><td class="tk">300666.SZ</td><td>半导体溅射靶材 + 精密零部件</td><td class="rl">921亿·167×</td></tr>
+            <tr><td class="co">有研新材</td><td class="tk">600206.SH</td><td>有研亿金靶材 + 稀土材料</td><td class="rl">457亿·160×</td></tr>
+            <tr><td class="co">隆华科技</td><td class="tk">300263.SZ</td><td>靶材（四丰/晶联）+ 节能装备</td><td class="rl">135亿·64×</td></tr>
 
             <tr class="grp"><td colspan="4">⑥ 掩膜版 <span class="tg sw">申万·半导体材料</span><span class="tg cc">概念·掩膜版</span></td></tr>
-            <tr><td class="co">清溢光电</td><td class="tk">688138.SH</td><td>掩膜版（光掩膜），平板+半导体</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">路维光电</td><td class="tk">688401.SH</td><td>掩膜版（光掩膜）</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">清溢光电</td><td class="tk">688138.SH</td><td>掩膜版（光掩膜），平板+半导体</td><td class="rl">144亿·75×</td></tr>
+            <tr><td class="co">路维光电</td><td class="tk">688401.SH</td><td>掩膜版（光掩膜）</td><td class="rl">168亿·62×</td></tr>
 
             <tr class="grp"><td colspan="4">⑦ 前驱体 <span class="tg sw">申万·半导体材料 / 电子化学品</span><span class="tg cc">概念·前驱体</span></td></tr>
-            <tr><td class="co">雅克科技</td><td class="tk">002409.SZ</td><td>前驱体 + 旋涂绝缘 + LNG 保温 + 特气</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">雅克科技</td><td class="tk">002409.SZ</td><td>前驱体 + 旋涂绝缘 + LNG 保温 + 特气</td><td class="rl">904亿·90×</td></tr>
 
             <tr class="grp"><td colspan="4">⑧ 湿电子化学品 <span class="tg sw">申万·电子化学品</span><span class="tg cc">概念·湿电子化学品</span></td></tr>
-            <tr><td class="co">江化微</td><td class="tk">603078.SH</td><td>超净高纯湿电子化学品</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">格林达</td><td class="tk">603931.SH</td><td>显影液等湿电子化学品</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">兴发集团</td><td class="tk">600141.SH</td><td>电子级磷酸/硫酸（+磷化工）</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">江化微</td><td class="tk">603078.SH</td><td>超净高纯湿电子化学品</td><td class="rl">185亿·173×</td></tr>
+            <tr><td class="co">格林达</td><td class="tk">603931.SH</td><td>显影液等湿电子化学品</td><td class="rl">107亿·89×</td></tr>
+            <tr><td class="co">兴发集团</td><td class="tk">600141.SH</td><td>电子级磷酸/硫酸（+磷化工）</td><td class="rl">429亿·30×</td></tr>
 
             <tr class="grp"><td colspan="4">⑨ 封装材料 <span class="tg sw">申万·电子化学品 / 电子元件</span><span class="tg cc">概念·先进封装</span></td></tr>
-            <tr><td class="co">华海诚科</td><td class="tk">688535.SH</td><td>环氧塑封料(EMC) + 电子封装材料</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">兴森科技</td><td class="tk">002436.SZ</td><td>PCB + IC 封装基板(ABF/BT)</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">深南电路</td><td class="tk">002916.SZ</td><td>PCB + 封装基板</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">联瑞新材</td><td class="tk">688300.SH</td><td>硅微粉填料（塑封料 / CCL 用）</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">华海诚科</td><td class="tk">688535.SH</td><td>环氧塑封料(EMC) + 电子封装材料</td><td class="rl">225亿·736×</td></tr>
+            <tr><td class="co">兴森科技</td><td class="tk">002436.SZ</td><td>PCB + IC 封装基板(ABF/BT)</td><td class="rl">687亿·476×</td></tr>
+            <tr><td class="co">深南电路</td><td class="tk">002916.SZ</td><td>PCB + 封装基板</td><td class="rl">2741亿·75×</td></tr>
+            <tr><td class="co">联瑞新材</td><td class="tk">688300.SH</td><td>硅微粉填料（塑封料 / CCL 用）</td><td class="rl">440亿·146×</td></tr>
 
             <tr class="grp"><td colspan="4">设备 ⑩ 平台 / 刻蚀 / 薄膜 <span class="tg sw">申万·半导体设备</span><span class="tg cc">概念·半导体设备/国产替代</span></td></tr>
-            <tr><td class="co">北方华创</td><td class="tk">002371.SZ</td><td>平台型：刻蚀 / PVD / CVD / ALD / 清洗 / 炉管…</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">中微公司</td><td class="tk">688012.SH</td><td>刻蚀(CCP/ICP) + MOCVD</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">拓荆科技</td><td class="tk">688072.SH</td><td>薄膜沉积 PECVD/ALD + 键合</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">屹唐股份</td><td class="tk">688729.SH</td><td>干法去胶 / 快速热处理 / 刻蚀</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">北方华创</td><td class="tk">002371.SZ</td><td>平台型：刻蚀 / PVD / CVD / ALD / 清洗 / 炉管…</td><td class="rl">5822亿·104×</td></tr>
+            <tr><td class="co">中微公司</td><td class="tk">688012.SH</td><td>刻蚀(CCP/ICP) + MOCVD</td><td class="rl">4052亿·148×</td></tr>
+            <tr><td class="co">拓荆科技</td><td class="tk">688072.SH</td><td>薄膜沉积 PECVD/ALD + 键合</td><td class="rl">2352亿·143×<span class="mut">·停牌06-26</span></td></tr>
+            <tr><td class="co">屹唐股份</td><td class="tk">688729.SH</td><td>干法去胶 / 快速热处理 / 刻蚀</td><td class="rl">1036亿·169×</td></tr>
 
             <tr class="grp"><td colspan="4">设备 ⑪ 清洗 / 涂显 / CMP <span class="tg sw">申万·半导体设备</span><span class="tg cc">概念·半导体设备</span></td></tr>
-            <tr><td class="co">盛美上海</td><td class="tk">688082.SH</td><td>清洗 + 电镀 + 炉管</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">芯源微</td><td class="tk">688037.SH</td><td>涂胶显影(track) + 清洗</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">华海清科</td><td class="tk">688120.SH</td><td>CMP + 减薄</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">盛美上海</td><td class="tk">688082.SH</td><td>清洗 + 电镀 + 炉管</td><td class="rl">2003亿·160×</td></tr>
+            <tr><td class="co">芯源微</td><td class="tk">688037.SH</td><td>涂胶显影(track) + 清洗</td><td class="rl">819亿·1160×</td></tr>
+            <tr><td class="co">华海清科</td><td class="tk">688120.SH</td><td>CMP + 减薄</td><td class="rl">1459亿·133×</td></tr>
 
             <tr class="grp"><td colspan="4">设备 ⑫ 量测检测 / 离子注入 <span class="tg sw">申万·半导体设备</span><span class="tg cc">概念·半导体设备</span></td></tr>
-            <tr><td class="co">中科飞测</td><td class="tk">688361.SH</td><td>量测 / 缺陷检测（过程控制）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">精测电子</td><td class="tk">300567.SZ</td><td>半导体量检测（+面板检测）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">万业企业</td><td class="tk">600641.SH</td><td>离子注入（凯世通）</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">中科飞测</td><td class="tk">688361.SH</td><td>量测 / 缺陷检测（过程控制）</td><td class="rl">1429亿·25282×</td></tr>
+            <tr><td class="co">精测电子</td><td class="tk">300567.SZ</td><td>半导体量检测（+面板检测）</td><td class="rl">831亿·954×</td></tr>
+            <tr><td class="co">先导基电<span class="mut">(原万业)</span></td><td class="tk">600641.SH</td><td>离子注入（凯世通）</td><td class="rl">394亿·亏损</td></tr>
 
             <tr class="grp"><td colspan="4">设备 ⑬ 测试（后道） <span class="tg sw">申万·半导体设备</span><span class="tg cc">概念·半导体设备</span></td></tr>
-            <tr><td class="co">华峰测控</td><td class="tk">688200.SH</td><td>测试机（模拟 / 功率）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">长川科技</td><td class="tk">300604.SZ</td><td>测试机 + 分选机</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">华峰测控</td><td class="tk">688200.SH</td><td>测试机（模拟 / 功率）</td><td class="rl">1000亿·176×</td></tr>
+            <tr><td class="co">长川科技</td><td class="tk">300604.SZ</td><td>测试机 + 分选机</td><td class="rl">2013亿·128×</td></tr>
 
             <tr class="grp"><td colspan="4">晶圆制造 ⑭ 代工 <span class="tg sw">申万·集成电路制造</span><span class="tg cc">概念·晶圆代工/国产替代</span></td></tr>
-            <tr><td class="co">中芯国际</td><td class="tk">688981.SH</td><td>大陆代工龙头，成熟为主 + 7nm(DUV·受限)</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">华虹公司</td><td class="tk">688347.SH</td><td>成熟 / 特色工艺代工（功率/模拟/MCU）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">晶合集成</td><td class="tk">688249.SH</td><td>面板驱动 IC 等成熟制程代工</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">芯联集成</td><td class="tk">688469.SH</td><td>特色 / 功率 / 车规代工</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">华润微</td><td class="tk">688396.SH</td><td>IDM + 代工（功率半导体）</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">中芯国际</td><td class="tk">688981.SH</td><td>大陆代工龙头，成熟为主 + 7nm(DUV·受限)</td><td class="rl">13021亿·258×</td></tr>
+            <tr><td class="co">华虹宏力<span class="mut">(原华虹公司)</span></td><td class="tk">688347.SH</td><td>成熟 / 特色工艺代工（功率/模拟/MCU）</td><td class="rl">6228亿·1262×</td></tr>
+            <tr><td class="co">晶合集成</td><td class="tk">688249.SH</td><td>面板驱动 IC 等成熟制程代工</td><td class="rl">1175亿·190×</td></tr>
+            <tr><td class="co">芯联集成</td><td class="tk">688469.SH</td><td>特色 / 功率 / 车规代工</td><td class="rl">781亿·亏损</td></tr>
+            <tr><td class="co">华润微</td><td class="tk">688396.SH</td><td>IDM + 代工（功率半导体）</td><td class="rl">1129亿·124×</td></tr>
 
             <tr class="grp"><td colspan="4">封装测试 ⑮ OSAT / 先进封装 / 测试 <span class="tg sw">申万·集成电路封测</span><span class="tg cc">概念·先进封装/Chiplet/HBM</span></td></tr>
-            <tr><td class="co">长电科技</td><td class="tk">600584.SH</td><td>全球第 3 OSAT；HBM / fan-out 先进封装</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">通富微电</td><td class="tk">002156.SZ</td><td>AMD 主力封测；Chiplet / 2.5D</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">华天科技</td><td class="tk">002185.SZ</td><td>封测三巨头之一，平台型</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">甬矽电子</td><td class="tk">688362.SH</td><td>先进封装新锐（SiP / FC / 倒装）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">晶方科技</td><td class="tk">603005.SH</td><td>晶圆级封装（CIS / WLCSP）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">利扬芯片</td><td class="tk">688135.SH</td><td>第三方集成电路测试</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">伟测科技</td><td class="tk">688372.SH</td><td>第三方测试（CP / FT）</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">长电科技</td><td class="tk">600584.SH</td><td>全球第 3 OSAT；HBM / fan-out 先进封装</td><td class="rl">1684亿·102×</td></tr>
+            <tr><td class="co">通富微电</td><td class="tk">002156.SZ</td><td>AMD 主力封测；Chiplet / 2.5D</td><td class="rl">996亿·69×</td></tr>
+            <tr><td class="co">华天科技</td><td class="tk">002185.SZ</td><td>封测三巨头之一，平台型</td><td class="rl">717亿·88×</td></tr>
+            <tr><td class="co">甬矽电子</td><td class="tk">688362.SH</td><td>先进封装新锐（SiP / FC / 倒装）</td><td class="rl">444亿·530×</td></tr>
+            <tr><td class="co">晶方科技</td><td class="tk">603005.SH</td><td>晶圆级封装（CIS / WLCSP）</td><td class="rl">268亿·72×</td></tr>
+            <tr><td class="co">利扬芯片</td><td class="tk">688135.SH</td><td>第三方集成电路测试</td><td class="rl">96亿·5291×</td></tr>
+            <tr><td class="co">伟测科技</td><td class="tk">688372.SH</td><td>第三方测试（CP / FT）</td><td class="rl">317亿·91×</td></tr>
 
             <tr class="grp"><td colspan="4">EDA·设计 ⑯ 工具 / IP / 设计 <span class="tg sw">申万·半导体（EDA/设计）</span><span class="tg cc">概念·EDA/芯片设计/国产替代</span></td></tr>
-            <tr><td class="co">华大九天</td><td class="tk">301269.SZ</td><td>国产 EDA 龙头（模拟全流程）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">概伦电子</td><td class="tk">688206.SH</td><td>器件建模 EDA + IP（收购锐成）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">广立微</td><td class="tk">301095.SZ</td><td>良率 EDA + 测试机</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">芯原股份</td><td class="tk">688521.SH</td><td>IP 授权 + 一站式设计服务</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">韦尔股份</td><td class="tk">603501.SH</td><td>设计：CIS 图像传感器（豪威）</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">卓胜微</td><td class="tk">300782.SZ</td><td>设计：射频前端</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">汇顶科技</td><td class="tk">603160.SH</td><td>设计：触控 / 指纹 / 微控</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">华大九天</td><td class="tk">301269.SZ</td><td>国产 EDA 龙头（模拟全流程）</td><td class="rl">639亿·亏损</td></tr>
+            <tr><td class="co">概伦电子</td><td class="tk">688206.SH</td><td>器件建模 EDA + IP（收购锐成）</td><td class="rl">206亿·1008×</td></tr>
+            <tr><td class="co">广立微</td><td class="tk">301095.SZ</td><td>良率 EDA + 测试机</td><td class="rl">213亿·233×</td></tr>
+            <tr><td class="co">芯原股份</td><td class="tk">688521.SH</td><td>IP 授权 + 一站式设计服务</td><td class="rl">1628亿·亏损</td></tr>
+            <tr><td class="co">豪威集团<span class="mut">(原韦尔)</span></td><td class="tk">603501.SH</td><td>设计：CIS 图像传感器（豪威）</td><td class="rl">1269亿·34×</td></tr>
+            <tr><td class="co">卓胜微</td><td class="tk">300782.SZ</td><td>设计：射频前端</td><td class="rl">515亿·亏损</td></tr>
+            <tr><td class="co">汇顶科技</td><td class="tk">603160.SH</td><td>设计：触控 / 指纹 / 微控</td><td class="rl">265亿·35×</td></tr>
 
             <tr class="grp"><td colspan="4">存储器 ⑰ DRAM / NAND / HBM / 利基 <span class="tg sw">申万·数字芯片设计（存储）</span><span class="tg cc">概念·存储芯片/HBM/国产替代</span></td></tr>
-            <tr><td class="co">兆易创新</td><td class="tk">603986.SH</td><td>NOR 全球前三 + 利基 DRAM + MCU</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">北京君正</td><td class="tk">300223.SZ</td><td>车规 SRAM 全球第一 + DRAM</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">紫光国微</td><td class="tk">002049.SZ</td><td>特种存储 + FPGA</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">东芯股份</td><td class="tk">688110.SH</td><td>中小容量 NAND / NOR / DRAM</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">普冉股份</td><td class="tk">688766.SH</td><td>NOR / EEPROM</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">江波龙</td><td class="tk">301308.SZ</td><td>存储模组 / 嵌入式存储</td><td class="rl">刷新层</td></tr>
-            <tr><td class="co">佰维存储</td><td class="tk">688525.SH</td><td>存储模组 + 封测</td><td class="rl">刷新层</td></tr>
+            <tr><td class="co">兆易创新</td><td class="tk">603986.SH</td><td>NOR 全球前三 + 利基 DRAM + MCU</td><td class="rl">4233亿·147×</td></tr>
+            <tr><td class="co">北京君正</td><td class="tk">300223.SZ</td><td>车规 SRAM 全球第一 + DRAM</td><td class="rl">1042亿·168×</td></tr>
+            <tr><td class="co">紫光国微</td><td class="tk">002049.SZ</td><td>特种存储 + FPGA</td><td class="rl">710亿·43×</td></tr>
+            <tr><td class="co">东芯股份</td><td class="tk">688110.SH</td><td>中小容量 NAND / NOR / DRAM</td><td class="rl">747亿·27326×</td></tr>
+            <tr><td class="co">普冉股份</td><td class="tk">688766.SH</td><td>NOR / EEPROM</td><td class="rl">1032亿·234×</td></tr>
+            <tr><td class="co">江波龙</td><td class="tk">301308.SZ</td><td>存储模组 / 嵌入式存储</td><td class="rl">2508亿·46×</td></tr>
+            <tr><td class="co">佰维存储</td><td class="tk">688525.SH</td><td>存储模组 + 封测</td><td class="rl">1868亿·47×</td></tr>
           </tbody>
         </table>
         </div>
         <div id="lknone" class="note" style="display:none">没有匹配的公司，换个关键词试试。</div>
-        <div class="note"><b>说明</b>：① 分类以"在 fab 里的功能"为主轴，比申万更细——申万把材料拆到「半导体材料」与「电子化学品」两个行业、设备则统归「半导体设备」单一行业，概念板块按题材交叉重叠；三者在此作<b>标签</b>对位。② 名单为代表性公司、非穷举，且常一司多类（如南大光电跨光刻胶/特气/前驱体，北方华创是平台型设备）。③ 数据来源见各赛道页脚；可刷新层接入后此列填最新市值/PE。</div>
+        <div class="note"><b>说明</b>：① 分类以"在 fab 里的功能"为主轴，比申万更细——申万把材料拆到「半导体材料」与「电子化学品」两个行业、设备则统归「半导体设备」单一行业，概念板块按题材交叉重叠；三者在此作<b>标签</b>对位。② 名单为代表性公司、非穷举，且常一司多类（如南大光电跨光刻胶/特气/前驱体，北方华创是平台型设备）。③ 市值/PE 列＝2026-07-08 tushare 收盘快照（总市值·亿元人民币 / PE-TTM）；亏损公司标「亏损」（周期底部的硅片/存储链居多），拓荆科技停牌、取 06-26 停牌前值。④ 韦尔股份已更名<b>豪威集团</b>、万业企业已更名<b>先导基电</b>、华虹公司证券简称现为<b>华虹宏力</b>（表内已按新名，括注原名）；上海新阳代码为 <b>300236.SZ</b>（旧表误作 688137，已订正）。</div>
         <div class="links">
           <a class="blink amber" href="#" onclick="go('mat');return false">材料赛道深度页 →</a>
         </div>
       </div>
     </div>
     <div class="view" id="v-sources" style="display:none">
-      <div class="vhead"><div class="vki">Tools · 方法</div><div class="vh1">数据来源与方法</div><div class="vsub">本库严格区分<b>事实（机构 / 财报数据）</b>与<b>叙事（厂商 / 市场说法）</b>；金额标来源与时间，国产化率按口径分别标注，会变的数据（市值/PE）留给可刷新层。各赛道明细见对应赛道的「数据·来源」子页。</div></div>
+      <div class="vhead"><div class="vki">Tools · 方法</div><div class="vh1">数据来源与方法</div><div class="vsub">本库严格区分<b>事实（机构 / 财报数据）</b>与<b>叙事（厂商 / 市场说法）</b>。金额标来源与时间、以<b>亿美元</b>为主；国产化率口径分歧大，按"金额口径"与"台数/数量口径"<b>分别标注</b>，并提示<b>"验证 ≠ 放量"</b>。会变的数据（市值 / PE / 季度营收）留给"可刷新层"。</div></div>
+
       <div class="panelbox">
-        <div class="subttl">总览级来源</div>
-        <div class="snote" style="border-top:none;margin-top:4px"><span class="k">1</span> SIA/WSTS 2025 全球半导体 7917 亿（2026-02）· <span class="k">2</span> SEMI 材料 732 亿（2026-05）· <span class="k">3</span> SEMI 设备 1351 亿（2026-04）· <span class="k">4</span> TrendForce 代工/TSMC（2026-03）· <span class="k">5</span> TrendForce OSAT（2024 最新全年）· <span class="k">6</span> TrendForce EDA（2024）· <span class="k">7</span> BCG×SIA 2021。</div>
+        <div class="subttl">① 研究方法</div>
+        <div class="cap" style="margin-bottom:8px">这套原则贯穿每个赛道，目的是让"看起来很猛"的说法经得起追问。</div>
+        <div class="tblwrap">
+        <table class="tbl">
+          <tr><th>原则</th><th>具体做法</th></tr>
+          <tr><td class="seg">事实 vs 叙事</td><td class="mut">机构 / 财报数字＝事实；厂商口径与"自主可控""国产替代"等说法＝叙事，分别判断可信度，不混为一谈。</td></tr>
+          <tr><td class="seg">口径一致</td><td class="mut">规模＝销售额 / 营收；集中度＝CR5 或前十；金额统一<b>亿美元（US$）</b>，人民币项单独注明。</td></tr>
+          <tr><td class="seg">国产化率</td><td class="mut">同一环节"金额口径"常远低于"台数 / 数量口径"（可差一倍以上），两者分别标注，不取单一好看数字。</td></tr>
+          <tr><td class="seg">验证 ≠ 放量</td><td class="mut">"通过验证 / 送样 / 小批量"≠"批量供货 / 业绩兑现"；个股看点区分<b>题材</b>与<b>业绩</b>。</td></tr>
+        </table>
+        </div>
+      </div>
+
+      <div class="panelbox">
+        <div class="subttl">② 数据时效与刷新</div>
+        <div class="cap" style="margin-bottom:8px">本库为<b>手工研究快照</b>，主结论截至 <b>2026-06</b>。</div>
+        <div class="note cy"><b>宏观盘子＝2025 全年实绩（已核对）</b>：全球半导体 $7917 亿（+25.6%）· 材料 $732 亿 · 设备 $1351 亿 · 代工前十 $1695 亿 / TSMC 69.9% · 封测前十 $416 亿（2024 最新全年）。<br><b>分项明细</b>（分品类份额、公司财务等）部分仍为 2023–24 口径，将<b>随各赛道"深做"逐个刷新到最新</b>——材料赛道已刷：硅片总盘＝SEMI 2025 实绩（$114 亿 / 12,973 MSI），A 股标的财务＝2025 年报；光刻胶/特气/CMP/靶材/掩膜基板等细分市场规模暂无权威 2025 口径，维持 2024 数并已标年份。<br><b>可刷新层</b>：速查表市值 / PE 已填 <b>2026-07-08 tushare 收盘快照</b>（人工触发刷新，非自动）；季度营收等自动更新仍在计划中，"叙事层"（格局判断、护城河）人工维护。</div>
+      </div>
+
+      <div class="panelbox">
+        <div class="subttl">③ 全局来源总表</div>
+        <div class="tblwrap">
+        <table class="tbl">
+          <tr><th>口径</th><th>主要机构来源</th><th>用途</th></tr>
+          <tr><td class="seg">总盘子</td><td>WSTS / SIA</td><td class="mut">全球半导体销售额、产品大类（逻辑 / 存储）</td></tr>
+          <tr><td class="seg">材料</td><td>SEMI MMDS</td><td class="mut">材料总额、晶圆制造 / 封装拆分、区域消费</td></tr>
+          <tr><td class="seg">设备</td><td>SEMI（Billings）</td><td class="mut">设备销售额、分段（测试 / 封装设备）、区域</td></tr>
+          <tr><td class="seg">代工</td><td>TrendForce</td><td class="mut">代工前十营收与份额、先进节点</td></tr>
+          <tr><td class="seg">封测</td><td>TrendForce</td><td class="mut">OSAT 前十排名与份额</td></tr>
+          <tr><td class="seg">EDA</td><td>ESDA / 公司年报</td><td class="mut">EDA 市场规模、三巨头份额</td></tr>
+          <tr><td class="seg">存储</td><td>TrendForce / 公司财报</td><td class="mut">DRAM / NAND / HBM 份额与价格周期</td></tr>
+          <tr><td class="seg">个股</td><td>公司年报·公告 / tushare</td><td class="mut">A 股标的营收 / 毛利 / 份额、经营进展</td></tr>
+        </table>
+        </div>
+        <div class="snote" style="border-top:none;margin-top:4px"><span class="k">注</span> 各赛道每屏均带脚注标注具体来源与时间；本表为机构层级汇总。市场规模口径随机构差异已就近取主流值，约数标"~"。</div>
+      </div>
+
+      <div class="panelbox">
+        <div class="subttl">④ 免责声明</div>
+        <div class="note"><b>个人研究 · 非投资建议。</b>本库供学习与研究用途，数据来自公开信源、可能存在滞后或误差（"约数 / 估算"已标"~"）。其中含<b>对 A 股产业逻辑的主观判断</b>（包括卖方研究不便明说、但客观存在的炒作 / 博弈逻辑），仅供研究参考，<b>不构成任何买卖建议</b>，据此操作风险自负。</div>
         <div class="links" style="justify-content:flex-start;margin-top:14px">
-          <a class="blink" href="#" onclick="go('mat','m-data');return false">材料 · 数据来源 →</a>
-          <a class="blink" href="#" onclick="go('eqp','e-data');return false">设备 · 数据来源 →</a>
+          <a class="blink" href="#" onclick="go('mat','m-data');return false">材料 · 重点个股 →</a>
+          <a class="blink" href="#" onclick="go('eqp','e-data');return false">设备 · 重点个股 →</a>
           <a class="blink amber" href="principles/">原理科普（第一轨）→</a>
         </div>
       </div>
