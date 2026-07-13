@@ -163,6 +163,7 @@
       <button class="tab" data-g="A" data-s="basics">📘 基础概念</button>
       <button class="tab" data-g="B" data-s="tr" hidden>晶体管</button>
       <button class="tab" data-g="B" data-s="advstruct" hidden>先进结构演进</button>
+      <button class="tab" data-g="C" data-s="eda" hidden>设计·EDA</button>
       <button class="tab" data-g="C" data-s="wafer" hidden>硅片·掩膜</button>
       <button class="tab" data-g="C" data-s="fab" hidden>前道·制造流程</button>
       <button class="tab" data-g="C" data-s="litho" hidden>光刻</button>
@@ -434,6 +435,350 @@
       </div>
 
       <!-- ===== SCENE: WAFER + MASK (upstream) ===== -->
+      <!-- ===== SCENE: DESIGN & EDA ===== -->
+      <div class="scene" id="s-eda" hidden>
+        <svg width="0" height="0" style="position:absolute"><defs>
+          <marker id="edA" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker>
+          <marker id="edAo" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e9a04c"/></marker>
+          <marker id="edAd" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#9fb0cc"/></marker>
+        </defs></svg>
+
+        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">后面各页讲芯片怎么<b style="color:#e8eef9">「造」</b>；这一页讲更靠前的一步——芯片怎么<b style="color:#c8b3ff">「画」</b>出来。设计的终点是一个叫 <b style="color:#8fd6ad">GDSII</b> 的版图文件，它正是「<b>硅片·掩膜</b>」页里掩膜版的来源：<b style="color:#e8eef9">设计的终点＝制造的起点</b>。全程离不开 <b style="color:#f3cf9c">EDA 软件</b>（电子设计自动化）——没有它，上亿晶体管的芯片靠人手画不出来。</div>
+
+        <div class="subttl">一、从一个想法到一片版图：设计全流程</div>
+        <div class="cap">整个流程是一场<b>逐级"翻译"</b>：把人类的需求一步步翻成硅片能实现的几何图形。分两大段——<b>前端（逻辑设计）</b>管"电路做什么"，<b>后端（物理设计）</b>管"电路长什么样"。</div>
+        <svg viewBox="0 0 660 330" style="margin-top:6px">
+          <text x="12" y="26" font-size="10.5" fill="#c8b3ff" font-weight="700">前端 · 逻辑设计——决定「电路做什么」（人力密集）</text>
+          <g font-size="8.5" text-anchor="middle">
+            <rect x="12" y="36" width="148" height="66" rx="8" fill="#16243a" stroke="#5d6b88"/>
+            <text x="86" y="52" font-size="10.5" fill="#e8eef9" font-weight="700">① 规格 Spec</text>
+            <text x="86" y="66" fill="#9fb0cc">「要做一颗什么芯片」</text>
+            <text x="86" y="78" fill="#8b9bb8">算力 · 功耗 · 面积 · 接口</text>
+            <text x="86" y="94" fill="#7fd0c4">产物：规格书</text>
+            <rect x="168" y="36" width="148" height="66" rx="8" fill="#16243a" stroke="#5d6b88"/>
+            <text x="242" y="52" font-size="10.5" fill="#e8eef9" font-weight="700">② 架构设计</text>
+            <text x="242" y="66" fill="#9fb0cc">拆成模块、画框图</text>
+            <text x="242" y="78" fill="#8b9bb8">CPU核 · 缓存 · 总线 · 加速器</text>
+            <text x="242" y="94" fill="#7fd0c4">产物：架构/微架构文档</text>
+            <rect x="324" y="36" width="148" height="66" rx="8" fill="#16243a" stroke="#8f7be0"/>
+            <text x="398" y="52" font-size="10.5" fill="#e8eef9" font-weight="700">③ RTL 编码</text>
+            <text x="398" y="66" fill="#9fb0cc">用硬件语言把逻辑写出来</text>
+            <text x="398" y="78" fill="#8b9bb8">Verilog：每个时钟拍数据怎么流</text>
+            <text x="398" y="94" fill="#7fd0c4">产物：RTL 代码</text>
+            <rect x="480" y="36" width="148" height="66" rx="8" fill="#16243a" stroke="#8f7be0"/>
+            <text x="554" y="52" font-size="10.5" fill="#e8eef9" font-weight="700">④ 功能验证</text>
+            <text x="554" y="66" fill="#9fb0cc">仿真＋形式验证，找逻辑 bug</text>
+            <text x="554" y="78" fill="#8b9bb8">bug 在这里改，代价最小</text>
+            <text x="554" y="94" fill="#7fd0c4">产物：验证通过的 RTL</text>
+            <path d="M160 69 L168 69" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+            <path d="M316 69 L324 69" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+            <path d="M472 69 L480 69" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+          </g>
+          <path d="M554,102 Q554,130 330,130 Q100,130 86,156" fill="none" stroke="#34d6cf" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#edAd)"/>
+          <text x="330" y="124" font-size="8.5" fill="#8aa0c8" text-anchor="middle">逻辑对了，交给后端"落到硅上"</text>
+          <text x="12" y="150" font-size="10.5" fill="#7fd0c4" font-weight="700">后端 · 物理设计——决定「电路长什么样」（算力密集，高度自动化）</text>
+          <g font-size="8.5" text-anchor="middle">
+            <rect x="12" y="160" width="148" height="66" rx="8" fill="#16243a" stroke="#3aa86b"/>
+            <text x="86" y="176" font-size="10.5" fill="#e8eef9" font-weight="700">⑤ 逻辑综合</text>
+            <text x="86" y="190" fill="#9fb0cc">RTL 自动"翻译"成门级网表</text>
+            <text x="86" y="202" fill="#8b9bb8">从标准单元库里挑"积木"实现</text>
+            <text x="86" y="218" fill="#7fd0c4">产物：网表＋时序约束</text>
+            <rect x="168" y="160" width="148" height="66" rx="8" fill="#16243a" stroke="#3aa86b"/>
+            <text x="242" y="176" font-size="10.5" fill="#e8eef9" font-weight="700">⑥ 布局布线 P&amp;R</text>
+            <text x="242" y="190" fill="#9fb0cc">摆上亿单元 · 连数十公里导线</text>
+            <text x="242" y="202" fill="#8b9bb8">（下方动画逐步拆解 ↓）</text>
+            <text x="242" y="218" fill="#7fd0c4">产物：物理版图</text>
+            <rect x="324" y="160" width="148" height="66" rx="8" fill="#16243a" stroke="#e9a04c"/>
+            <text x="398" y="176" font-size="10.5" fill="#e8eef9" font-weight="700">⑦ 签核 Signoff</text>
+            <text x="398" y="190" fill="#9fb0cc">STA · DRC · LVS 三关全过</text>
+            <text x="398" y="202" fill="#8b9bb8">任何一关不过 → 回去返工</text>
+            <text x="398" y="218" fill="#7fd0c4">产物：签核通过的版图</text>
+            <rect x="480" y="160" width="148" height="66" rx="8" fill="#1d3552" stroke="#34d6cf"/>
+            <text x="554" y="176" font-size="10.5" fill="#e8eef9" font-weight="700">⑧ GDSII · 流片</text>
+            <text x="554" y="190" fill="#9fb0cc">版图按"掩膜层"打包成文件</text>
+            <text x="554" y="202" fill="#8b9bb8">交掩膜厂制版 → 晶圆厂开造</text>
+            <text x="554" y="218" fill="#7fd0c4">产物：GDSII → 掩膜版</text>
+            <path d="M160 193 L168 193" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+            <path d="M316 193 L324 193" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+            <path d="M472 193 L480 193" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+          </g>
+          <path d="M60 258 L600 258" stroke="#5d6b88" stroke-width="1.4" marker-end="url(#edAo)"/>
+          <text x="60" y="248" font-size="9" fill="#9fb0cc" text-anchor="start">抽象（想法 · 文字 · 代码）</text>
+          <text x="600" y="248" font-size="9" fill="#f0c082" text-anchor="end">具体（几何图形 · 硅片）</text>
+          <text x="330" y="278" font-size="9.5" fill="#9bb0d0" text-anchor="middle">越往右越具体、越接近硅片，改错的代价也越大：RTL 阶段改几行代码就行；</text>
+          <text x="330" y="292" font-size="9.5" fill="#9bb0d0" text-anchor="middle">流片后才发现＝重做掩膜再流片（respin），先进节点一套掩膜可达千万美元级、耽误数月 <tspan fill="#8b9bb8">[~估算]</tspan>。</text>
+          <text x="330" y="312" font-size="9" fill="#8aa0c8" text-anchor="middle">"验证"不是一站：从 ④ 的功能仿真到 ⑦ 的签核，每一步产物都要被检查——见下文第四节。</text>
+        </svg>
+
+        <div class="subttl">二、同一个电路的三副面孔：代码 → 门 → 版图</div>
+        <div class="cap">设计流程的本质，是把<b>同一个电路</b>在三种表示之间变换。拿最简单的<b>与非门（NAND）</b>举例——人只写第一种，后两种由 EDA 工具自动生成：</div>
+        <svg viewBox="0 0 660 300" style="margin-top:6px">
+          <!-- ① RTL -->
+          <text x="100" y="30" font-size="11" fill="#c8b3ff" text-anchor="middle" font-weight="700">① RTL（人写的代码）</text>
+          <rect x="14" y="44" width="172" height="78" rx="8" fill="#0d1526" stroke="#23304d"/>
+          <g font-size="9.5" fill="#8fd6ad" font-family="ui-monospace,Menlo,Consolas,monospace">
+            <text x="24" y="66">module nand2(a,b,y);</text>
+            <text x="24" y="84">  assign y = ~(a &amp; b);</text>
+            <text x="24" y="102">endmodule</text>
+          </g>
+          <text x="100" y="140" font-size="8.5" fill="#8b9bb8" text-anchor="middle">只描述「做什么」：</text>
+          <text x="100" y="152" font-size="8.5" fill="#8b9bb8" text-anchor="middle">y 是 a 与 b 的"与非"</text>
+          <path d="M190 84 L236 84" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+          <text x="213" y="72" font-size="8.5" fill="#7fd0c4" text-anchor="middle">逻辑综合</text>
+          <text x="213" y="98" font-size="8" fill="#8b9bb8" text-anchor="middle">（自动）</text>
+          <!-- ② gate-level -->
+          <text x="330" y="30" font-size="11" fill="#7fd0c4" text-anchor="middle" font-weight="700">② 门级网表（用哪些"积木"）</text>
+          <path d="M300,60 L300,108 L322,108 A24,24 0 0 0 322,60 Z" fill="#16243a" stroke="#7fd0c4" stroke-width="1.6"/>
+          <circle cx="350" cy="84" r="4.5" fill="#0a0e1a" stroke="#7fd0c4" stroke-width="1.6"/>
+          <line x1="276" y1="72" x2="300" y2="72" stroke="#9fb0cc" stroke-width="1.4"/>
+          <line x1="276" y1="96" x2="300" y2="96" stroke="#9fb0cc" stroke-width="1.4"/>
+          <line x1="355" y1="84" x2="382" y2="84" stroke="#9fb0cc" stroke-width="1.4"/>
+          <text x="270" y="75" font-size="9.5" fill="#e8eef9" text-anchor="end">a</text>
+          <text x="270" y="99" font-size="9.5" fill="#e8eef9" text-anchor="end">b</text>
+          <text x="388" y="87" font-size="9.5" fill="#e8eef9" text-anchor="start">y</text>
+          <text x="330" y="140" font-size="8.5" fill="#8b9bb8" text-anchor="middle">与非门符号（圆圈＝取反）</text>
+          <text x="330" y="152" font-size="8.5" fill="#8b9bb8" text-anchor="middle">CMOS 实现＝4 个晶体管：</text>
+          <text x="330" y="164" font-size="8.5" fill="#8b9bb8" text-anchor="middle">2 个 PMOS 并联 + 2 个 NMOS 串联</text>
+          <path d="M400 84 L446 84" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+          <text x="423" y="72" font-size="8.5" fill="#7fd0c4" text-anchor="middle">布局布线</text>
+          <text x="423" y="98" font-size="8" fill="#8b9bb8" text-anchor="middle">（自动）</text>
+          <!-- ③ layout -->
+          <text x="556" y="30" font-size="11" fill="#f0c082" text-anchor="middle" font-weight="700">③ 物理版图（几何图形）</text>
+          <!-- N-well -->
+          <rect x="472" y="44" width="168" height="92" fill="#26334f" stroke="#5d6b88" stroke-dasharray="4 3" stroke-width="1"/>
+          <text x="478" y="56" font-size="7.5" fill="#8aa0c8">N 阱</text>
+          <!-- VDD rail -->
+          <rect x="472" y="58" width="168" height="11" fill="url(#gCu)"/>
+          <text x="480" y="67" font-size="7.5" fill="#0a0e1a" font-weight="700">VDD</text>
+          <!-- P diffusion (PMOS) -->
+          <rect x="492" y="86" width="128" height="26" fill="url(#gSD)" stroke="#2c7a4f" stroke-width="0.6"/>
+          <!-- N diffusion (NMOS) -->
+          <rect x="492" y="168" width="128" height="26" fill="url(#gSD)" stroke="#2c7a4f" stroke-width="0.6"/>
+          <!-- VSS rail -->
+          <rect x="472" y="212" width="168" height="11" fill="url(#gCu)"/>
+          <text x="480" y="221" font-size="7.5" fill="#0a0e1a" font-weight="700">VSS</text>
+          <!-- poly gates -->
+          <rect x="524" y="78" width="11" height="116" fill="#d68c3e" opacity="0.92"/>
+          <rect x="572" y="78" width="11" height="116" fill="#d68c3e" opacity="0.92"/>
+          <text x="529" y="208" font-size="9" fill="#f0ad55" text-anchor="middle" font-weight="700">a</text>
+          <text x="577" y="208" font-size="9" fill="#f0ad55" text-anchor="middle" font-weight="700">b</text>
+          <!-- VDD stubs to PMOS sources (left & right regions, parallel PMOS) -->
+          <rect x="502" y="69" width="8" height="30" fill="url(#gCu)" opacity="0.9"/>
+          <rect x="602" y="69" width="8" height="30" fill="url(#gCu)" opacity="0.9"/>
+          <!-- Y metal: PMOS middle drain -> NMOS left drain -> out -->
+          <path d="M553,99 L553,148 L505,148 L505,181" fill="none" stroke="#e9a04c" stroke-width="7" opacity="0.9"/>
+          <path d="M553,148 L648,148" fill="none" stroke="#e9a04c" stroke-width="7" opacity="0.9"/>
+          <text x="648" y="142" font-size="9" fill="#f0c082" text-anchor="end">y</text>
+          <!-- VSS stub from NMOS right source -->
+          <rect x="602" y="186" width="8" height="32" fill="url(#gCu)" opacity="0.9"/>
+          <!-- contacts -->
+          <g fill="#16243a" stroke="#0a0e1a" stroke-width="0.8">
+            <rect x="503" y="95" width="6" height="6"/><rect x="603" y="95" width="6" height="6"/>
+            <rect x="550" y="95" width="6" height="6"/>
+            <rect x="502" y="178" width="6" height="6"/><rect x="603" y="178" width="6" height="6"/>
+          </g>
+          <!-- labels with pointer lines -->
+          <line x1="466" y1="169" x2="490" y2="174" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="464" y="170" font-size="7.5" fill="#8fd6ad" text-anchor="end">扩散区（源漏）</text>
+          <line x1="466" y1="193" x2="500" y2="183" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="464" y="196" font-size="7.5" fill="#9fb0cc" text-anchor="end">接触孔</text>
+          <line x1="466" y1="120" x2="524" y2="130" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="464" y="122" font-size="7.5" fill="#f0ad55" text-anchor="end">多晶硅栅（光刻印的就是它）</text>
+          <line x1="638" y1="168" x2="620" y2="152" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="640" y="176" font-size="7.5" fill="#f0c082" text-anchor="end">金属互连</text>
+          <text x="330" y="280" font-size="9.5" fill="#9bb0d0" text-anchor="middle">版图上<tspan fill="#e8eef9" font-weight="700">每种颜色＝一层掩膜＝一道工艺</tspan>：扩散区一层、多晶硅一层、接触孔一层、每层金属各一层……</text>
+          <text x="330" y="294" font-size="9.5" fill="#8aa0c8" text-anchor="middle">GDSII 就是把这些色块按层打包的文件。左右 PMOS 接 VDD（并联）、下方 NMOS 串到 VSS——与②完全等价。[△示意：教科书级简化版图]</text>
+        </svg>
+
+        <div class="subttl">三、版图是怎么"长"出来的：布局布线六步（点「下一步 ›」逐步看）</div>
+        <div class="step-nav" style="margin-bottom:10px">
+          <button class="btn" id="edprev">‹ 上一步</button>
+          <button class="btn acc" id="edplay">▶ 自动播放</button>
+          <button class="btn" id="ednext">下一步 ›</button>
+          <div class="step-dots" id="edots"></div>
+        </div>
+        <div class="stepname" id="edname"></div>
+        <svg viewBox="0 0 660 430" style="margin-top:8px" id="edsvg">
+          <!-- die + IO pad ring (always visible) -->
+          <g id="ed-die">
+            <rect x="150" y="18" width="380" height="380" rx="4" fill="#0d1526" stroke="#3a4a6a" stroke-width="1.6"/>
+            <g id="ed-pads"></g>
+            <line x1="545" y1="30" x2="527" y2="27" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="548" y="33" font-size="8.5" fill="#9fb0cc" text-anchor="start">IO 焊盘环：</text>
+            <text x="548" y="45" font-size="8" fill="#8b9bb8" text-anchor="start">芯片与外界的接口</text>
+          </g>
+          <!-- 1 floorplan -->
+          <g id="ed-fp" opacity="0">
+            <rect x="184" y="52" width="112" height="88" rx="3" fill="#26334f" stroke="#5d6b88"/>
+            <text x="240" y="92" font-size="9" fill="#aebbd8" text-anchor="middle" font-weight="700">SRAM 宏</text>
+            <text x="240" y="104" font-size="7.5" fill="#8b9bb8" text-anchor="middle">（现成的大积木）</text>
+            <rect x="184" y="148" width="112" height="56" rx="3" fill="#26334f" stroke="#5d6b88"/>
+            <text x="240" y="180" font-size="9" fill="#aebbd8" text-anchor="middle" font-weight="700">SRAM 宏</text>
+            <rect x="436" y="316" width="62" height="50" rx="3" fill="#26334f" stroke="#5d6b88"/>
+            <text x="467" y="344" font-size="9" fill="#aebbd8" text-anchor="middle" font-weight="700">PLL</text>
+          </g>
+          <g id="ed-fplabel" opacity="0">
+            <rect x="330" y="252" width="122" height="16" rx="4" fill="rgba(10,14,26,0.82)"/>
+            <text x="391" y="264" font-size="8.5" fill="#9fb0cc" text-anchor="middle">空地＝标准单元核心区</text>
+          </g>
+          <!-- 2 power grid -->
+          <g id="ed-pg" opacity="0">
+            <rect x="174" y="42" width="332" height="332" fill="none" stroke="#e9a04c" stroke-width="1.8" opacity="0.9"/>
+            <rect x="180" y="48" width="320" height="320" fill="none" stroke="#e9a04c" stroke-width="1.2" opacity="0.6"/>
+            <g stroke="#e9a04c" stroke-width="3" opacity="0.4">
+              <line x1="232" y1="48" x2="232" y2="368"/><line x1="288" y1="48" x2="288" y2="368"/>
+              <line x1="344" y1="48" x2="344" y2="368"/><line x1="400" y1="48" x2="400" y2="368"/>
+              <line x1="456" y1="48" x2="456" y2="368"/>
+            </g>
+            <line x1="545" y1="60" x2="508" y2="55" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="548" y="63" font-size="8.5" fill="#f0c082" text-anchor="start">电源环＋条带</text>
+            <text x="548" y="75" font-size="8" fill="#8b9bb8" text-anchor="start">VDD/VSS 输电干线，</text>
+            <text x="548" y="86" font-size="8" fill="#8b9bb8" text-anchor="start">保证各角落电压不塌</text>
+          </g>
+          <!-- 3 placement -->
+          <g id="ed-place" opacity="0">
+            <g id="ed-cells"></g>
+            <circle cx="594" cy="318" r="52" fill="#0d1526" stroke="#34d6cf" stroke-width="1.2"/>
+            <line x1="548" y1="295" x2="500" y2="270" stroke="#34d6cf" stroke-width="0.8" stroke-dasharray="3 2"/>
+            <g>
+              <rect x="558" y="296" width="20" height="30" fill="#3a5f8f" stroke="#16243a"/>
+              <rect x="580" y="296" width="26" height="30" fill="#2f4d78" stroke="#16243a"/>
+              <rect x="608" y="296" width="16" height="30" fill="#3a5f8f" stroke="#16243a"/>
+              <g fill="#d68c3e"><rect x="564" y="292" width="4" height="8"/><rect x="590" y="292" width="4" height="8"/><rect x="598" y="292" width="4" height="8"/><rect x="612" y="292" width="4" height="8"/></g>
+              <g fill="#7fd0c4" font-size="7" text-anchor="middle"><text x="568" y="340">与非门</text><text x="593" y="340">触发器</text><text x="616" y="340">反相器</text></g>
+            </g>
+            <text x="594" y="384" font-size="8" fill="#8b9bb8" text-anchor="middle">放大：每个小块＝一个标准单元</text>
+            <text x="594" y="395" font-size="8" fill="#8b9bb8" text-anchor="middle">（橙色凸起＝多晶硅栅引脚）</text>
+          </g>
+          <!-- 4 CTS -->
+          <g id="ed-cts" opacity="0">
+            <g stroke="#f0ad55" stroke-width="2" fill="none" opacity="0.95">
+              <line x1="260" y1="208" x2="420" y2="208"/>
+              <line x1="260" y1="128" x2="260" y2="288"/><line x1="420" y1="128" x2="420" y2="288"/>
+              <line x1="222" y1="128" x2="298" y2="128"/><line x1="222" y1="288" x2="298" y2="288"/>
+              <line x1="382" y1="128" x2="458" y2="128"/><line x1="382" y1="288" x2="458" y2="288"/>
+            </g>
+            <g fill="#f0ad55">
+              <path d="M336,202 L344,208 L336,214 Z"/>
+              <path d="M256,124 L264,128 L256,132 Z"/><path d="M256,284 L264,288 L256,292 Z"/>
+              <path d="M416,124 L424,128 L416,132 Z"/><path d="M416,284 L424,288 L416,292 Z"/>
+            </g>
+            <circle cx="340" cy="208" r="5" fill="#f0ad55"/>
+            <line x1="545" y1="150" x2="424" y2="170" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="548" y="147" font-size="8.5" fill="#f0ad55" text-anchor="start">时钟树（H 形对称）</text>
+            <text x="548" y="159" font-size="8" fill="#8b9bb8" text-anchor="start">圆点＝时钟源，</text>
+            <text x="548" y="170" font-size="8" fill="#8b9bb8" text-anchor="start">三角＝缓冲器，</text>
+            <text x="548" y="181" font-size="8" fill="#8b9bb8" text-anchor="start">让时钟同时到达各处</text>
+          </g>
+          <!-- 5 routing -->
+          <g id="ed-route" opacity="0">
+            <g id="ed-wires"></g>
+            <line x1="545" y1="230" x2="500" y2="235" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="548" y="227" font-size="8.5" fill="#f0c082" text-anchor="start">信号布线（都是铜）</text>
+            <text x="548" y="239" font-size="8" fill="#8b9bb8" text-anchor="start">深色＝下层金属（横向）</text>
+            <text x="548" y="250" font-size="8" fill="#8b9bb8" text-anchor="start">浅色＝上层金属（纵向）</text>
+            <text x="548" y="261" font-size="8" fill="#8b9bb8" text-anchor="start">横竖交替、分层避让</text>
+          </g>
+          <!-- 6 signoff -->
+          <g id="ed-sign" opacity="0">
+            <g font-size="8.5">
+              <rect x="8" y="60" width="130" height="34" rx="8" fill="#12241c" stroke="#3aa86b"/>
+              <text x="73" y="74" fill="#8fd6ad" text-anchor="middle" font-weight="700">DRC ✓ 规则检查</text>
+              <text x="73" y="87" fill="#7ca88a" text-anchor="middle" font-size="7.5">版图没违反工艺规则</text>
+              <rect x="8" y="102" width="130" height="34" rx="8" fill="#12241c" stroke="#3aa86b"/>
+              <text x="73" y="116" fill="#8fd6ad" text-anchor="middle" font-weight="700">LVS ✓ 一致性</text>
+              <text x="73" y="129" fill="#7ca88a" text-anchor="middle" font-size="7.5">版图＝电路图，没接错</text>
+              <rect x="8" y="144" width="130" height="34" rx="8" fill="#12241c" stroke="#3aa86b"/>
+              <text x="73" y="158" fill="#8fd6ad" text-anchor="middle" font-weight="700">STA ✓ 时序收敛</text>
+              <text x="73" y="171" fill="#7ca88a" text-anchor="middle" font-size="7.5">最慢路径赶得上时钟</text>
+              <rect x="8" y="196" width="130" height="40" rx="8" fill="#1d3552" stroke="#34d6cf" stroke-width="1.4"/>
+              <text x="73" y="212" fill="#cdeef0" text-anchor="middle" font-weight="700" font-size="9.5">GDSII 出片</text>
+              <text x="73" y="226" fill="#8aa0c8" text-anchor="middle" font-size="7.5">→ 掩膜厂（硅片·掩膜页）</text>
+              <path d="M150 214 L142 214" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#edA)"/>
+            </g>
+          </g>
+        </svg>
+        <div class="cap" id="edcap" style="min-height:60px"></div>
+
+        <div class="subttl">四、验证：设计里最大的"隐形工程"</div>
+        <svg viewBox="0 0 660 240" style="margin-top:6px">
+          <text x="30" y="26" font-size="10.5" fill="#e8eef9" font-weight="700">一颗芯片的工程投入去哪了</text>
+          <rect x="30" y="44" width="195" height="30" fill="#34d6cf" opacity="0.85"/>
+          <rect x="225" y="44" width="105" height="30" fill="#5d6b88" opacity="0.85"/>
+          <text x="127" y="63" font-size="9.5" fill="#06222b" text-anchor="middle" font-weight="700">验证 ~60–70%</text>
+          <text x="277" y="63" font-size="9" fill="#cfe0ff" text-anchor="middle">设计实现</text>
+          <text x="30" y="92" font-size="8.5" fill="#8b9bb8">[~估算：业界历年调查（Wilson Research 等）的普遍口径，随项目类型浮动]</text>
+          <text x="30" y="118" font-size="9.5" fill="#9bb0d0">为什么这么重？因为硬件<tspan fill="#e8eef9" font-weight="700">不能打补丁</tspan>——软件上线后能改，</text>
+          <text x="30" y="132" font-size="9.5" fill="#9bb0d0">芯片流片后逻辑就焊死在硅里了，只能重来。</text>
+          <text x="30" y="158" font-size="9" fill="#8aa0c8">前端验证：功能仿真 · 形式验证 · 硬件仿真加速（Emulation）</text>
+          <text x="30" y="172" font-size="9" fill="#8aa0c8">后端签核：STA 时序 · DRC 规则 · LVS 一致性（签核工具须经代工厂认证）</text>
+          <text x="420" y="26" font-size="10.5" fill="#e8eef9" font-weight="700" text-anchor="start">同一个 bug，发现越晚代价越高</text>
+          <g>
+            <rect x="420" y="150" width="56" height="30" fill="#e0556e" opacity="0.45"/>
+            <rect x="500" y="110" width="56" height="70" fill="#e0556e" opacity="0.65"/>
+            <rect x="580" y="50" width="56" height="130" fill="#e0556e" opacity="0.9"/>
+            <g font-size="8.5" fill="#e8eef9" text-anchor="middle">
+              <text x="448" y="196">RTL 仿真时</text><text x="528" y="196">签核阶段</text><text x="608" y="196">流片之后</text>
+            </g>
+            <g font-size="8" fill="#d493a3" text-anchor="middle">
+              <text x="448" y="210">改几行代码</text><text x="528" y="210">返工数周</text><text x="608" y="210">respin：重做掩膜</text>
+            </g>
+            <text x="608" y="222" font-size="8" fill="#d493a3" text-anchor="middle">千万美元级+数月 [~估算]</text>
+          </g>
+          <text x="330" y="238" font-size="9" fill="#8aa0c8" text-anchor="middle">设计成本随节点飙升：7nm 一颗芯片设计费 ≈3 亿美元、5nm ≈5.4 亿美元 [~估算·单源 IBS 口径]——大头就在验证与物理实现。</text>
+        </svg>
+
+        <div class="subttl">五、EDA 三大件：谁在流程的哪一段，为什么后来者难追</div>
+        <div class="cap">上面每一步背后都是一套专业软件。全球能提供<b>全流程工具链</b>的只有三家（合计份额 ~74% <span style="color:#8b9bb8">[✓已核实·2025，详见第二轨]</span>）——各自有"事实标准"环节：</div>
+        <svg viewBox="0 0 660 200" style="margin-top:6px">
+          <g font-size="9" fill="#9fb0cc" text-anchor="middle" font-weight="700">
+            <text x="180" y="30">仿真验证</text><text x="290" y="30">逻辑综合</text><text x="400" y="30">布局布线</text><text x="510" y="30">物理验证/签核</text><text x="610" y="30">模拟/定制设计</text>
+          </g>
+          <line x1="120" y1="38" x2="650" y2="38" stroke="#23304d" stroke-width="1"/>
+          <g font-size="10" text-anchor="start" font-weight="700">
+            <text x="12" y="70" fill="#e8eef9">新思 Synopsys</text>
+            <text x="12" y="120" fill="#e8eef9">楷登 Cadence</text>
+            <text x="12" y="170" fill="#e8eef9">西门子 EDA</text>
+          </g>
+          <g font-size="7.5" fill="#8b9bb8" text-anchor="start">
+            <text x="12" y="83">综合与时序签核起家</text>
+            <text x="12" y="133">模拟/定制的"事实标准"</text>
+            <text x="12" y="183">物理验证 Calibre 一家独大</text>
+          </g>
+          <!-- Synopsys row y=66 -->
+          <g>
+            <circle cx="180" cy="66" r="7" fill="#34d6cf"/><text x="180" y="88" font-size="7.5" fill="#7fd0c4" text-anchor="middle">VCS</text>
+            <circle cx="290" cy="66" r="7" fill="#34d6cf"/><text x="290" y="88" font-size="7.5" fill="#7fd0c4" text-anchor="middle">Fusion Compiler</text>
+            <circle cx="400" cy="66" r="7" fill="none" stroke="#34d6cf" stroke-width="1.6"/>
+            <circle cx="510" cy="66" r="7" fill="#34d6cf"/><text x="510" y="88" font-size="7.5" fill="#7fd0c4" text-anchor="middle">PrimeTime（时序标准）</text>
+            <circle cx="610" cy="66" r="7" fill="none" stroke="#34d6cf" stroke-width="1.6"/>
+          </g>
+          <!-- Cadence row y=116 -->
+          <g>
+            <circle cx="180" cy="116" r="7" fill="#34d6cf"/><text x="180" y="138" font-size="7.5" fill="#7fd0c4" text-anchor="middle">Xcelium/Palladium</text>
+            <circle cx="290" cy="116" r="7" fill="none" stroke="#34d6cf" stroke-width="1.6"/>
+            <circle cx="400" cy="116" r="7" fill="#34d6cf"/><text x="400" y="138" font-size="7.5" fill="#7fd0c4" text-anchor="middle">Innovus</text>
+            <circle cx="510" cy="116" r="7" fill="none" stroke="#34d6cf" stroke-width="1.6"/>
+            <circle cx="610" cy="116" r="7" fill="#34d6cf"/><text x="610" y="138" font-size="7.5" fill="#7fd0c4" text-anchor="middle">Virtuoso（模拟标准）</text>
+          </g>
+          <!-- Siemens row y=166 -->
+          <g>
+            <circle cx="180" cy="166" r="7" fill="none" stroke="#34d6cf" stroke-width="1.6"/>
+            <circle cx="290" cy="166" r="7" fill="none" stroke="#34d6cf" stroke-width="1.6"/>
+            <circle cx="400" cy="166" r="7" fill="none" stroke="#34d6cf" stroke-width="1.6"/>
+            <circle cx="510" cy="166" r="7" fill="#34d6cf"/><text x="510" y="188" font-size="7.5" fill="#7fd0c4" text-anchor="middle">Calibre（DRC/LVS 标准）</text>
+            <circle cx="610" cy="166" r="7" fill="none" stroke="#34d6cf" stroke-width="1.6"/>
+          </g>
+          <g font-size="8" fill="#8b9bb8">
+            <circle cx="380" cy="14" r="5" fill="#34d6cf"/><text x="390" y="17" text-anchor="start">＝该环节"事实标准"或最强</text>
+            <circle cx="548" cy="14" r="5" fill="none" stroke="#34d6cf" stroke-width="1.4"/><text x="558" y="17" text-anchor="start">＝有竞争力产品</text>
+          </g>
+        </svg>
+        <div class="note"><b>难点① 工具链耦合</b>：从仿真到签核是<b>几十种工具咬合成的流水线</b>，数据格式、时序库、流程脚本层层衔接——缺一环，整条流程就断。买家要的不是"一个好工具"，而是"一条能签核流片的完整链"，这天然偏向全家桶玩家。</div>
+        <div class="note"><b>难点② 工艺绑定（PDK）</b>：<b>PDK（工艺设计套件）</b>是代工厂发给设计公司的"说明书＋积木库"——设计规则、器件模型、标准单元库都在里面，<b>设计与制造靠它握手</b>。先进节点的 PDK 是代工厂与头部 EDA <b>协同开发、相互认证</b>的：工具没被台积电/三星认证，就进不了先进制程的设计流程——后来者连"上牌桌"的资格都难拿。</div>
+        <div class="note"><b>难点③ 人才与生态</b>：全球工程师在三巨头的工具上学习、工作、积累脚本和方法学，高校教学、IP 交付格式也长在这套生态上。换工具＝重训整个团队＋重建全部流程，切换成本极高——这是比技术更深的护城河。</div>
+        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">谁在做（接第二轨）</b>：三巨头的收入与份额、国产 EDA（华大九天、概伦电子、广立微…）能替代到哪一步、IP 与 Fabless 的生意模式，属第二轨「EDA·设计」赛道页——<a href="../atlas.html#eda" style="color:#8fd6ad;font-weight:700">直达第二轨 EDA·设计 →</a>。本页只讲"芯片是怎么画出来的"。</div>
+      </div>
       <div class="scene" id="s-wafer" hidden>
         <svg width="0" height="0" style="position:absolute"><defs>
           <linearGradient id="gMelt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe39a"/><stop offset="0.45" stop-color="#ff9d3c"/><stop offset="1" stop-color="#c2410c"/></linearGradient>
@@ -535,7 +880,7 @@
         <div class="note">关键参数：<b>纯度 11N</b>（99.999999999%）｜ <b>主流 300mm</b>（12 吋；曾用 200mm，450mm 未量产）｜ <b>晶向 &lt;100&gt;</b> ｜ 纳米级超平整、极低缺陷。另有<b>区熔法（FZ）</b>不接触坩埚、更纯，多用于<b>功率器件</b>衬底（→ 功率/化合物）。</div>
 
         <div class="subttl">二、掩膜版：把电路图变成光刻的"底片"</div>
-        <div class="cap">设计公司用 EDA 把电路画成<b>版图</b>（这步属"设计"，不展开）→ 交给掩膜厂做成<b>掩膜版（photomask / 光罩）</b>。光刻时，光<b>透过</b>或<b>反射</b>掩膜，把图形<b>投影缩小 4×</b> 印到晶圆上。掩膜＝光刻的"底片/模板"。</div>
+        <div class="cap">设计公司用 EDA 把电路画成<b>版图</b>（怎么画出来的详见 <b>设计·EDA</b>）→ 交给掩膜厂做成<b>掩膜版（photomask / 光罩）</b>。光刻时，光<b>透过</b>或<b>反射</b>掩膜，把图形<b>投影缩小 4×</b> 印到晶圆上。掩膜＝光刻的"底片/模板"。</div>
         <svg viewBox="0 0 620 300" style="margin-top:4px">
           <!-- DUV transmission mask (left) -->
           <text x="160" y="20" font-size="11.5" fill="#cfe0ff" text-anchor="middle" font-weight="700">DUV 透射式掩膜</text>
@@ -1261,7 +1606,7 @@
           <g stroke="#e9a04c" stroke-width="3"><line x1="356" y1="146" x2="566" y2="146"/><line x1="356" y1="158" x2="566" y2="158"/><line x1="356" y1="170" x2="566" y2="170"/></g><text x="574" y="158" font-size="7.5" fill="#e9a04c" text-anchor="start" transform="rotate(90 574 158)">专供电</text>
           <g fill="url(#gCuV)"><rect x="420" y="100" width="5" height="46"/><rect x="496" y="100" width="5" height="46"/></g><text x="466" y="190" font-size="8" fill="#f0c082" text-anchor="middle">纳米 TSV：背面供电直达晶体管</text>
         </svg>
-        <div class="note">传统芯片<b>信号线和供电线都挤在正面</b>的十几层金属里，互相抢空间、供电路径也长。<b>背面供电（BSPDN）</b>把<b>供电网络搬到晶圆背面</b>，用<b>纳米级 TSV</b> 从背面直达晶体管：正面腾出来专走信号、布线更松，供电路径更短 → <b>压降更小、性能 / 能效更好</b>。进展：<b>Intel 18A（PowerVia）已量产</b>，<b>台积电 A16（超级电轨 SPR）2026 下半年</b>，三星 SF2Z（2027）跟进——是 2nm 世代竞争的关键变量。</div>
+        <div class="note">传统芯片<b>信号线和供电线都挤在正面</b>的十几层金属里，互相抢空间、供电路径也长。<b>背面供电（BSPDN）</b>把<b>供电网络搬到晶圆背面</b>，用<b>纳米级 TSV</b> 从背面直达晶体管：正面腾出来专走信号、布线更松，供电路径更短 → <b>压降更小、性能 / 能效更好</b>。进展：<b>Intel 18A（PowerVia）已量产</b> <span style="color:#7a8aa8">[✓已核实·2026-06]</span>，<b>台积电 A16（超级电轨 SPR）2026 下半年</b>，三星 SF2Z（2027）跟进 <span style="color:#7a8aa8">[?待证·厂商路线图]</span>——是 2nm 世代竞争的关键变量。</div>
         <div class="subttl">E · 芯片是平面一层，还是多层晶体管？</div>
         <svg viewBox="0 0 620 230">
           <text x="155" y="20" font-size="11.5" fill="#9fb0cc" text-anchor="middle" font-weight="700">主流逻辑：1 层晶体管 + 多层布线</text>
@@ -1437,7 +1782,7 @@
           </g>
         </svg>
         <div class="note">多重曝光：单次分辨率不够时，把一层图形<b>拆成多块掩膜 / 多道工序</b>叠出来。图中 <b>SADP 自对准双重成形</b>——先做较稀的"芯轴"，侧壁长一圈侧墙，去掉芯轴后<b>侧墙变成两倍密的线</b>。<b>DUV(193nm) 时代正是靠它硬做到 7nm</b>；EUV 能少拆几次，但最细处仍需多重曝光。<b>每多一次 = 多一套掩膜、多一道工序 = 更贵更慢</b>，这是先进制程成本飙升的重要原因。</div>
-        <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>为什么光刻是最硬的卡脖子环节：</b>EUV 光刻机<b>全球只有 ASML 一家</b>能造，一台标准 EUV 约 2 亿美元级（现役 NXE:3800E 约 2.2–2.4 亿）、<b>High-NA（EXE:5200B）约 3.8 亿美元</b>，年产量有限。配套同样高度垄断：<b>光刻胶</b>（JSR / 东京应化 / 信越 / 住友，EUV 金属氧化物胶 Inpria）、<b>掩膜基板</b>（Hoya / AGC）、<b>防护膜 Pellicle</b>（三井）、<b>光学</b>（蔡司）。进展（2026）：<b>Intel 率先用上 High-NA</b>（EXE:5200B，175 片/小时），三星、SK 海力士跟进；<b>台积电因太贵暂缓</b>（A14 暂不用 High-NA），High-NA 量产普遍预期 2027–28。对国产替代，EUV 仍是<b>尚未突破</b>的最高壁垒。</div>
+        <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>为什么光刻是最硬的卡脖子环节：</b>EUV 光刻机<b>全球只有 ASML 一家</b>能造，一台标准 EUV 约 2 亿美元级（现役 NXE:3800E 约 2.2–2.4 亿）、<b>High-NA（EXE:5200B）约 3.8 亿美元</b>，年产量有限。配套同样高度垄断：<b>光刻胶</b>（JSR / 东京应化 / 信越 / 住友，EUV 金属氧化物胶 Inpria）、<b>掩膜基板</b>（Hoya / AGC）、<b>防护膜 Pellicle</b>（三井）、<b>光学</b>（蔡司）。进展（2026）：<b>Intel 率先用上 High-NA</b>（EXE:5200B，175 片/小时），三星、SK 海力士跟进；<b>台积电因太贵暂缓</b>（A14 暂不用 High-NA），High-NA 量产普遍预期 2027–28 <span style="color:#9a86c8">[✓已核实·2026-06；单价为 ~估算·多源，复核期 2027Q1]</span>。对国产替代，EUV 仍是<b>尚未突破</b>的最高壁垒。</div>
       </div>
 
       <!-- ===== SCENE 6: MEMORY ===== -->
@@ -1594,6 +1939,154 @@
           <text x="466" y="183" font-size="8.5" fill="#8b9bb8" text-anchor="middle">走线短、性能好、I/O 多——先进封装的基础。</text>
         </svg>
 
+        <div class="subttl">测试环节放大①：两道关卡 CP 与 FT，同一个"大脑" ATE</div>
+        <div class="cap">上面流程里出现了两次"测试"——<b>CP 在晶圆上测、FT 在成品上测</b>，一前一后各司其职。两者背后接的是同一类机器：<b>ATE（自动测试设备，俗称"测试机"）</b>负责发出测试信号、比对结果；不同的是"手"——CP 用<b>探针台＋探针卡</b>扎在晶圆焊盘上，FT 用<b>分选机＋测试插座</b>夹住封好的芯片。</div>
+        <svg viewBox="0 0 620 292" style="margin-top:6px">
+          <!-- CP station -->
+          <rect x="20" y="24" width="264" height="164" rx="10" fill="#0d1526" stroke="#23304d"/>
+          <text x="152" y="44" font-size="11" fill="#7fd0c4" text-anchor="middle" font-weight="700">CP · 晶圆测试（探针台 Prober）</text>
+          <!-- probe card -->
+          <rect x="92" y="76" width="120" height="14" rx="2" fill="#26334f" stroke="#5d6b88"/>
+          <text x="228" y="87" font-size="8" fill="#9fb0cc" text-anchor="start">探针卡</text>
+          <g stroke="#e9c84a" stroke-width="1">
+            <line x1="104" y1="90" x2="112" y2="118"/><line x1="120" y1="90" x2="126" y2="118"/>
+            <line x1="136" y1="90" x2="140" y2="118"/><line x1="152" y1="90" x2="152" y2="118"/>
+            <line x1="168" y1="90" x2="164" y2="118"/><line x1="184" y1="90" x2="178" y2="118"/>
+            <line x1="200" y1="90" x2="192" y2="118"/>
+          </g>
+          <text x="228" y="106" font-size="8" fill="#d6c98a" text-anchor="start">探针（扎在焊盘上）</text>
+          <!-- wafer on chuck -->
+          <ellipse cx="152" cy="126" rx="72" ry="12" fill="url(#gSi)" stroke="#9fc0ec" stroke-width="0.7"/>
+          <g stroke="#16243a" stroke-width="0.5" opacity="0.7"><line x1="100" y1="122" x2="204" y2="122"/><line x1="96" y1="128" x2="208" y2="128"/><line x1="120" y1="116" x2="120" y2="136"/><line x1="152" y1="114" x2="152" y2="138"/><line x1="184" y1="116" x2="184" y2="136"/></g>
+          <text x="70" y="122" font-size="8" fill="#9fb0cc" text-anchor="end">整片晶圆</text>
+          <rect x="104" y="140" width="96" height="12" rx="2" fill="#43506a"/>
+          <text x="152" y="149" font-size="7.5" fill="#c2cbdd" text-anchor="middle">载台（可加热/制冷）</text>
+          <text x="152" y="176" font-size="8.5" fill="#8b9bb8" text-anchor="middle">逐颗（或几十颗并测）通电，坏 die 记入 wafer map</text>
+          <!-- FT station -->
+          <rect x="336" y="24" width="264" height="164" rx="10" fill="#0d1526" stroke="#23304d"/>
+          <text x="468" y="44" font-size="11" fill="#f0c082" text-anchor="middle" font-weight="700">FT · 成品终测（分选机 Handler）</text>
+          <!-- plunger -->
+          <rect x="448" y="58" width="40" height="34" rx="3" fill="#43506a"/>
+          <line x1="468" y1="92" x2="468" y2="106" stroke="#9fb0cc" stroke-width="1.4" marker-end="url(#beAd)"/>
+          <text x="496" y="72" font-size="8" fill="#9fb0cc" text-anchor="start">压头（取放芯片）</text>
+          <!-- chip in socket -->
+          <rect x="440" y="110" width="56" height="16" rx="2" fill="#1a1f2b" stroke="#3a4150"/>
+          <g fill="url(#gSolder)"><circle cx="448" cy="128" r="2.6"/><circle cx="458" cy="128" r="2.6"/><circle cx="468" cy="128" r="2.6"/><circle cx="478" cy="128" r="2.6"/><circle cx="488" cy="128" r="2.6"/></g>
+          <text x="412" y="120" font-size="8" fill="#9fb0cc" text-anchor="end">封装成品</text>
+          <rect x="428" y="132" width="80" height="14" rx="2" fill="#26334f" stroke="#5d6b88"/>
+          <text x="524" y="142" font-size="8" fill="#9fb0cc" text-anchor="start">测试插座</text>
+          <text x="468" y="166" font-size="8.5" fill="#8b9bb8" text-anchor="middle">高低温、多电压全功能测试，按性能分档 binning</text>
+          <!-- ATE box -->
+          <rect x="234" y="216" width="152" height="52" rx="9" fill="#1d3552" stroke="#34d6cf" stroke-width="1.4"/>
+          <text x="310" y="238" font-size="11" fill="#cdeef0" text-anchor="middle" font-weight="700">ATE 测试机（大脑）</text>
+          <text x="310" y="254" font-size="8" fill="#8aa0c8" text-anchor="middle">发测试向量 · 比对结果 · 记录数据</text>
+          <path d="M262 216 Q220 200 190 190" fill="none" stroke="#34d6cf" stroke-width="1.4" marker-end="url(#beA)"/>
+          <path d="M358 216 Q400 200 430 190" fill="none" stroke="#34d6cf" stroke-width="1.4" marker-end="url(#beA)"/>
+          <text x="310" y="286" font-size="9" fill="#8aa0c8" text-anchor="middle">ATE 长期由 爱德万（Advantest）与 泰瑞达（Teradyne）双雄主导，合计份额约八九成 [~估算]</text>
+        </svg>
+        <div class="cap"><b>为什么要测两次？</b>各挡各的浪费：<b>CP 挡在封装前</b>——坏 die 不值得花封装的钱（先进封装里封装成本可占整颗芯片成本的两三成甚至更高 [~估算]，堆叠封装里一颗坏 die 还会报废整包好 die）；<b>FT 挡在出货前</b>——封装工序本身也会引入新缺陷（键合断线、塑封空洞、焊球虚接），CP 过了不等于成品是好的。</div>
+
+        <div class="subttl">测试环节放大②：一颗芯片的完整测试旅程</div>
+        <svg viewBox="0 0 620 216" style="margin-top:6px">
+          <g font-size="8.5" text-anchor="middle">
+            <rect x="12" y="22" width="136" height="52" rx="8" fill="#16243a" stroke="#34d6cf" stroke-opacity=".6"/>
+            <text x="80" y="40" font-size="10" fill="#e8eef9" font-weight="700">CP 常温测</text>
+            <text x="80" y="54" fill="#8b9bb8">基本功能 · 开短路</text>
+            <text x="80" y="66" fill="#8b9bb8">坏 die 记入电子 map</text>
+            <rect x="164" y="22" width="136" height="52" rx="8" fill="#16243a" stroke="#34d6cf" stroke-opacity=".6"/>
+            <text x="232" y="40" font-size="10" fill="#e8eef9" font-weight="700">CP 高/低温测（视产品）</text>
+            <text x="232" y="54" fill="#8b9bb8">载台加热/制冷</text>
+            <text x="232" y="66" fill="#8b9bb8">筛出温度敏感失效</text>
+            <rect x="316" y="22" width="136" height="52" rx="8" fill="#16243a" stroke="#5d6b88"/>
+            <text x="384" y="40" font-size="10" fill="#e8eef9" font-weight="700">减薄 · 划片</text>
+            <text x="384" y="54" fill="#8b9bb8">按 wafer map</text>
+            <text x="384" y="66" fill="#8b9bb8">只挑好 die 去封装</text>
+            <rect x="468" y="22" width="136" height="52" rx="8" fill="#16243a" stroke="#5d6b88"/>
+            <text x="536" y="40" font-size="10" fill="#e8eef9" font-weight="700">封装</text>
+            <text x="536" y="54" fill="#8b9bb8">装片 · 键合 · 塑封</text>
+            <text x="536" y="66" fill="#8b9bb8">（见上文流程）</text>
+            <path d="M148 48 L164 48" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#beA)"/>
+            <path d="M300 48 L316 48" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#beA)"/>
+            <path d="M452 48 L468 48" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#beA)"/>
+          </g>
+          <path d="M536,74 Q536,104 310,104 Q84,104 80,128" fill="none" stroke="#34d6cf" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#beAd)"/>
+          <g font-size="8.5" text-anchor="middle">
+            <rect x="12" y="132" width="136" height="52" rx="8" fill="#1d3552" stroke="#e9a04c" stroke-opacity=".75"/>
+            <text x="80" y="150" font-size="10" fill="#f3cf9c" font-weight="700">FT 高低温全测</text>
+            <text x="80" y="164" fill="#c9a86a">全功能 · 多电压</text>
+            <text x="80" y="176" fill="#c9a86a">筛掉封装引入的缺陷</text>
+            <rect x="164" y="132" width="136" height="52" rx="8" fill="#1d3552" stroke="#e9a04c" stroke-opacity=".75"/>
+            <text x="232" y="150" font-size="10" fill="#f3cf9c" font-weight="700">分档 Binning</text>
+            <text x="232" y="164" fill="#c9a86a">按跑得多快/多省电</text>
+            <text x="232" y="176" fill="#c9a86a">分成不同档位出售</text>
+            <rect x="316" y="132" width="136" height="52" rx="8" fill="#16243a" stroke="#5d6b88" stroke-dasharray="5 3"/>
+            <text x="384" y="150" font-size="10" fill="#e8eef9" font-weight="700">SLT 系统级测试（可选）</text>
+            <text x="384" y="164" fill="#8b9bb8">插进真实主板环境跑</text>
+            <text x="384" y="176" fill="#8b9bb8">高端 CPU/AI 芯片常用</text>
+            <rect x="468" y="132" width="136" height="52" rx="8" fill="#12241c" stroke="#3aa86b"/>
+            <text x="536" y="150" font-size="10" fill="#8fd6ad" font-weight="700">出货 ✓</text>
+            <text x="536" y="164" fill="#7ca88a">打标 · 编带包装</text>
+            <text x="536" y="176" fill="#7ca88a">附测试数据记录</text>
+            <path d="M148 158 L164 158" stroke="#e9a04c" stroke-width="1.6" marker-end="url(#beA)"/>
+            <path d="M300 158 L316 158" stroke="#e9a04c" stroke-width="1.6" marker-end="url(#beA)"/>
+            <path d="M452 158 L468 158" stroke="#e9a04c" stroke-width="1.6" marker-end="url(#beA)"/>
+          </g>
+          <text x="310" y="206" font-size="9" fill="#8aa0c8" text-anchor="middle">[△示意：具体道次因产品而异——手机 SoC、存储器、车规芯片的温度点与道次差别很大，车规筛选最严]</text>
+        </svg>
+        <div class="cap"><b>测试时间＝真金白银</b>：芯片在测试机上的每一秒都是成本，所以工程师拼命<b>提高并测数</b>（一次同测几十甚至上百颗）、<b>压缩测试程序</b>；先进芯片越复杂测得越久，<b>测试成本在整颗芯片成本里的占比持续上升</b>——这正是测试设备与封测厂的生意逻辑（详见第二轨）。</div>
+
+        <div class="subttl">测试环节放大③：良率数据的闭环——wafer map 是晶圆厂的"体检报告"</div>
+        <div class="cap">CP 测完，每片晶圆得到一张<b>好坏分布图（wafer map）</b>。它的价值远不止"挑次品"：<b>失效的空间图案会"指认"出问题的工序</b>，反馈回前道调整机台——这就是良率爬坡的日常工具。</div>
+        <svg viewBox="0 0 620 190" style="margin-top:6px">
+          <g>
+            <circle cx="90" cy="76" r="44" fill="#16243a" stroke="#5d6b88"/>
+            <g fill="#e0556e"><circle cx="90" cy="35" r="3.2"/><circle cx="119" cy="45" r="3.2"/><circle cx="131" cy="70" r="3.2"/><circle cx="126" cy="98" r="3.2"/><circle cx="104" cy="116" r="3.2"/><circle cx="75" cy="117" r="3.2"/><circle cx="53" cy="103" r="3.2"/><circle cx="47" cy="78" r="3.2"/><circle cx="52" cy="52" r="3.2"/><circle cx="69" cy="38" r="3.2"/></g>
+            <text x="90" y="140" font-size="9" fill="#e8eef9" text-anchor="middle" font-weight="700">边缘环状</text>
+            <text x="90" y="153" font-size="8" fill="#8b9bb8" text-anchor="middle">刻蚀/CMP/退火</text>
+            <text x="90" y="164" font-size="8" fill="#8b9bb8" text-anchor="middle">晶圆边缘不均匀</text>
+          </g>
+          <g>
+            <circle cx="236" cy="76" r="44" fill="#16243a" stroke="#5d6b88"/>
+            <g fill="#e0556e"><circle cx="236" cy="76" r="3.2"/><circle cx="228" cy="68" r="3.2"/><circle cx="245" cy="70" r="3.2"/><circle cx="230" cy="84" r="3.2"/><circle cx="243" cy="84" r="3.2"/><circle cx="236" cy="62" r="3.2"/><circle cx="222" cy="76" r="3.2"/></g>
+            <text x="236" y="140" font-size="9" fill="#e8eef9" text-anchor="middle" font-weight="700">中心聚集</text>
+            <text x="236" y="153" font-size="8" fill="#8b9bb8" text-anchor="middle">沉积/旋涂类工序</text>
+            <text x="236" y="164" font-size="8" fill="#8b9bb8" text-anchor="middle">中心异常或颗粒源</text>
+          </g>
+          <g>
+            <circle cx="382" cy="76" r="44" fill="#16243a" stroke="#5d6b88"/>
+            <g fill="#e0556e"><circle cx="362" cy="44" r="3.2"/><circle cx="372" cy="55" r="3.2"/><circle cx="382" cy="66" r="3.2"/><circle cx="392" cy="77" r="3.2"/><circle cx="402" cy="88" r="3.2"/><circle cx="412" cy="99" r="3.2"/><circle cx="370" cy="66" r="3.2"/><circle cx="380" cy="77" r="3.2"/><circle cx="390" cy="88" r="3.2"/></g>
+            <text x="382" y="140" font-size="9" fill="#e8eef9" text-anchor="middle" font-weight="700">条带/扇区</text>
+            <text x="382" y="153" font-size="8" fill="#8b9bb8" text-anchor="middle">某台设备/某个腔室</text>
+            <text x="382" y="164" font-size="8" fill="#8b9bb8" text-anchor="middle">批次性异常</text>
+          </g>
+          <g>
+            <circle cx="528" cy="76" r="44" fill="#16243a" stroke="#5d6b88"/>
+            <g fill="#e0556e"><circle cx="510" cy="55" r="3.2"/><circle cx="545" cy="48" r="3.2"/><circle cx="555" cy="90" r="3.2"/><circle cx="522" cy="104" r="3.2"/><circle cx="536" cy="72" r="3.2"/></g>
+            <text x="528" y="140" font-size="9" fill="#e8eef9" text-anchor="middle" font-weight="700">随机散点</text>
+            <text x="528" y="153" font-size="8" fill="#8b9bb8" text-anchor="middle">本底缺陷密度所致</text>
+            <text x="528" y="164" font-size="8" fill="#8b9bb8" text-anchor="middle">决定良率的"天花板"</text>
+          </g>
+          <text x="310" y="186" font-size="8.5" fill="#8b9bb8" text-anchor="middle">红点＝失效 die（示意图案 [△示意]）。图案＝"指纹"：有规律的图案指向特定工序，随机散点才是"正常损耗"。</text>
+        </svg>
+        <svg viewBox="0 0 620 96" style="margin-top:8px">
+          <g font-size="9" text-anchor="middle">
+            <rect x="30" y="26" width="150" height="40" rx="8" fill="#16243a" stroke="#7fd0c4" stroke-opacity=".7"/>
+            <text x="105" y="44" fill="#bfeee4" font-weight="700">前道 · 晶圆制造</text>
+            <text x="105" y="58" font-size="8" fill="#8b9bb8">上千道工序</text>
+            <rect x="236" y="26" width="150" height="40" rx="8" fill="#16243a" stroke="#34d6cf" stroke-opacity=".7"/>
+            <text x="311" y="44" fill="#cdeef0" font-weight="700">CP 测试 · wafer map</text>
+            <text x="311" y="58" font-size="8" fill="#8b9bb8">逐片逐颗的好坏地图</text>
+            <rect x="442" y="26" width="150" height="40" rx="8" fill="#1d3552" stroke="#e9a04c" stroke-opacity=".75"/>
+            <text x="517" y="44" fill="#f3cf9c" font-weight="700">失效分析 · 定位工序</text>
+            <text x="517" y="58" font-size="8" fill="#c9a86a">图案比对 + 切片检查</text>
+            <path d="M180 46 L236 46" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#beA)"/>
+            <path d="M386 46 L442 46" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#beA)"/>
+          </g>
+          <path d="M517,66 Q517,88 311,88 Q105,88 105,70" fill="none" stroke="#e9a04c" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#beAd)"/>
+          <text x="311" y="84" font-size="8.5" fill="#c9a86a" text-anchor="middle">调机台 · 改配方 · 换耗材 —— 良率爬坡的闭环</text>
+        </svg>
+        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">谁在做测试（接第二轨）</b>：测试机双雄<b>爱德万 / 泰瑞达</b>，探针台（东京精密、东京电子）、探针卡（FormFactor）、分选机各有专门玩家；国产<b>华峰测控、长川科技</b>从模拟/功率测试机切入。专业测试厂与封测厂的生意、格局与国产化，见第二轨「封装测试」赛道页。</div>
+
         <div class="note">封装外形也在<b>不断进化</b>：DIP → QFP → <b>QFN</b> → <b>BGA</b>（底部焊球阵列）→ 晶圆级 <b>WLP / Fan-out</b> → <b>2.5D / 3D 先进封装</b>（CoWoS / HBM / Chiplet）。摩尔定律放缓后，<b>先进封装</b>成了继续提性能的主路——详见 <b>先进封装</b>。</div>
         <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">谁在做（接第二轨）</b>：后道由<b>封测厂 OSAT</b> 承担——日月光（ASE）、安靠（Amkor）、长电科技、通富微电、华天等。它们的<b>产业格局、价值量、国产化</b>属<b>第二轨</b>的封测赛道，本页只讲"工艺怎么走"。</div>
       </div>
@@ -1718,7 +2211,7 @@
           <line x1="372" y1="252" x2="306" y2="252" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgD)"/><text x="374" y="249" font-size="8.5" fill="#bcd0f0">基底逻辑 die</text><text x="374" y="260" font-size="7.5" fill="#9fb8e0">控制器/IO/ECC/刷新/供电</text>
           <text x="216" y="288" font-size="8" fill="#8fe9e1" text-anchor="middle">↓ 整颗 HBM 再用微凸点接到硅中介层上</text>
         </svg>
-        <div class="note">HBM（高带宽存储）把<b>一颗基底逻辑 die + 上面叠 8~16 层减薄的 DRAM</b>用 <b>TSV 硅通孔</b>竖直打穿、上下直连，做成一个"存储立方体"。因为连接是<b>又宽又短的竖井</b>，带宽极高、功耗低。<b>当下主力 HBM3E</b>：8/12 层、单颗 24/36 GB、带宽约 <b>1.2 TB/s</b>（一颗 AI GPU 旁边放 6~8 颗，如 NVIDIA B200＝8 颗 ≈ 192 GB）。<b>2026 量产的 HBM4</b>：接口位宽<b>翻倍到 2048-bit</b>、带宽约 <b>2 TB/s 以上</b>、规格上限 16 层 / 48 GB（首代量产为 12 层 / 36 GB，仍用 MR-MUF/TCB；<b>混合键合</b>预计 16 层 / HBM4E 世代导入，见下）。</div>
+        <div class="note">HBM（高带宽存储）把<b>一颗基底逻辑 die + 上面叠 8~16 层减薄的 DRAM</b>用 <b>TSV 硅通孔</b>竖直打穿、上下直连，做成一个"存储立方体"。因为连接是<b>又宽又短的竖井</b>，带宽极高、功耗低。<b>当下主力 HBM3E</b>：8/12 层、单颗 24/36 GB、带宽约 <b>1.2 TB/s</b>（一颗 AI GPU 旁边放 6~8 颗，如 NVIDIA B200＝8 颗 ≈ 192 GB）。<b>2026 量产的 HBM4</b>：接口位宽<b>翻倍到 2048-bit</b>、带宽约 <b>2 TB/s 以上</b>、规格上限 16 层 / 48 GB（首代量产为 12 层 / 36 GB，仍用 MR-MUF/TCB；<b>混合键合</b>预计 16 层 / HBM4E 世代导入，见下）。<span style="color:#7a8aa8">[✓已核实·2026-06，复核期 2026Q4]</span></div>
         <div class="subttl">E · 层间互连的进化：微凸点 → 混合键合</div>
         <svg viewBox="0 0 620 200">
           <text x="150" y="15" font-size="11" fill="#9fb0cc" text-anchor="middle" font-weight="700">微凸点 Microbump（现行）</text>
@@ -1742,8 +2235,8 @@
 
         <div class="subttl">F · 产业现状：为什么先进封装＝当前 AI 算力的瓶颈</div>
         <div class="nm">
-          <div class="nmrow"><div class="co" style="color:#5eead4">2.5D 封装</div><div class="de">CoWoS 几乎由<b style="color:#e8eef9">台积电</b>独家大规模供应；2026 年 NVIDIA 一家就订走约<b style="color:#e8eef9">六成</b>产能，交期一度排到 <b>50+ 周</b>。台积电正把 CoWoS 产能向 <b>~13 万片/月</b>扩。</div></div>
-          <div class="nmrow"><div class="co" style="color:#b08bf0">HBM</div><div class="de">三家：<b style="color:#e8eef9">SK 海力士（领先）/ 三星 / 美光</b>。HBM3E 当前主力，<b style="color:#e8eef9">HBM4 于 2026 量产</b>（首代均为 12 层 36GB：SK 海力士 / 美光量产、三星 2026 初出货；SK 的 16 层 48GB 为已展示样品，对应下一代平台）。</div></div>
+          <div class="nmrow"><div class="co" style="color:#5eead4">2.5D 封装</div><div class="de">CoWoS 几乎由<b style="color:#e8eef9">台积电</b>独家大规模供应；2026 年 NVIDIA 一家就订走约<b style="color:#e8eef9">六成</b>产能，交期一度排到 <b>50+ 周</b>。台积电正把 CoWoS 产能向 <b>~13 万片/月</b>扩。<span style="color:#7a8aa8">[~估算·产业链调研口径·2026-06]</span></div></div>
+          <div class="nmrow"><div class="co" style="color:#b08bf0">HBM</div><div class="de">三家：<b style="color:#e8eef9">SK 海力士（领先）/ 三星 / 美光</b>。HBM3E 当前主力，<b style="color:#e8eef9">HBM4 于 2026 量产</b>（首代均为 12 层 36GB：SK 海力士 / 美光量产、三星 2026 初出货；SK 的 16 层 48GB 为已展示样品，对应下一代平台）。<span style="color:#7a8aa8">[✓已核实·2026-06]</span></div></div>
           <div class="nmrow"><div class="co" style="color:#e9a04c">谁在用</div><div class="de">NVIDIA <b style="color:#e8eef9">Blackwell</b>（双 GPU die＋8×HBM3E）、下一代 <b style="color:#e8eef9">Rubin</b>（HBM4＋CoWoS-L＋SoIC 3D 堆叠）；AMD <b style="color:#e8eef9">MI300/MI350</b> 系列。先进封装＋HBM 已是 AI 算力扩张最紧的两个卡点之一。</div></div>
         </div>
         <div class="note" style="border-left-color:#e9a04c;background:rgba(233,160,76,.06)">一句话收尾：当晶体管已经难再快速变小，<b>"把更多芯片更密地拼起来、叠起来、用 HBM 喂饱它们"</b>成了 AI 芯片继续变强的主战场——所以<b>先进封装(CoWoS) 与 HBM 的产能，直接决定了能造出多少 AI 算力</b>。</div>
@@ -1837,7 +2330,7 @@
         <div class="subttl">逐段拆解：投入 → 产出 → 由谁做</div>
         <div class="nm">
           <div class="nmrow"><div class="co" style="color:#bdebd0">①硅材料链</div><div class="de">石英砂 → 工业硅 → 电子级多晶硅(硅料) → 单晶硅棒(直拉法) → 切片抛光。<b style="color:#e8eef9">产出：空白晶圆</b>。由硅料厂、硅片厂做。 ↪ 详见 硅片·掩膜。</div></div>
-          <div class="nmrow"><div class="co" style="color:#c8b3ff">②芯片设计</div><div class="de">用 EDA 软件 + IP 核，把规格做成电路版图并"流片"。<b style="color:#e8eef9">产出：掩膜版</b>。由设计公司、EDA/IP 厂、掩膜厂做。 ↪ 掩膜制作详见 硅片·掩膜。</div></div>
+          <div class="nmrow"><div class="co" style="color:#c8b3ff">②芯片设计</div><div class="de">用 EDA 软件 + IP 核，把规格做成电路版图并"流片"。<b style="color:#e8eef9">产出：掩膜版</b>。由设计公司、EDA/IP 厂、掩膜厂做。 ↪ 设计流程详见 设计·EDA；掩膜制作详见 硅片·掩膜。</div></div>
           <div class="nmrow"><div class="co" style="color:#5eead4">③前段 FEOL</div><div class="de">在晶圆上造晶体管(隔离 → 栅极 → 源漏 → 接触)，<b>只做一遍</b>。<b style="color:#e8eef9">产出：带晶体管层的晶圆</b>。由晶圆代工厂 / IDM 做(设备厂、材料厂供应)。 ↪ 工序详见 制造流程。</div></div>
           <div class="nmrow"><div class="co" style="color:#5eead4">④后段 BEOL</div><div class="de">叠 10~20 层金属布线，<b>反复做</b>。<b style="color:#e8eef9">产出：布线完成的整片晶圆</b>(满是未切开的芯片)。由晶圆代工厂 / IDM 做。 ↪ 详见 制造流程。</div></div>
           <div class="nmrow"><div class="co" style="color:#34d6cf">⑤晶圆测试</div><div class="de">用探针扎每一颗芯片测好坏。<b style="color:#e8eef9">产出：标好良品的晶圆</b>(良率)。由代工厂 / 测试厂做。</div></div>
@@ -1858,7 +2351,7 @@
 
 <script>
 (function(){
-  var scenes={chain:'s-chain',basics:'s-basics',wafer:'s-wafer',tr:'s-tr',fab:'s-fab',litho:'s-litho',adv:'s-adv',advstruct:'s-advstruct',mem:'s-mem',bepkg:'s-bepkg',pkg:'s-pkg',pwr:'s-pwr',family:'s-family'};
+  var scenes={chain:'s-chain',basics:'s-basics',eda:'s-eda',wafer:'s-wafer',tr:'s-tr',fab:'s-fab',litho:'s-litho',adv:'s-adv',advstruct:'s-advstruct',mem:'s-mem',bepkg:'s-bepkg',pkg:'s-pkg',pwr:'s-pwr',family:'s-family'};
   document.querySelectorAll('.tab').forEach(function(t){
     t.addEventListener('click',function(){
       document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});
@@ -1880,6 +2373,70 @@
       if(first) first.click();
     });
   });
+
+  // ---- EDA design page: P&R stepper + generated pads/cells/wires ----
+  (function(){
+    var svgE=document.getElementById('edsvg');if(!svgE)return;
+    var svgns='http://www.w3.org/2000/svg';
+    var edSeed=42;function edRnd(){edSeed=(edSeed*1103515245+12345)%2147483648;return edSeed/2147483648;}
+    // IO pad ring (always visible)
+    var padsG=document.getElementById('ed-pads');
+    function pad(x,y){var r=document.createElementNS(svgns,'rect');r.setAttribute('x',x);r.setAttribute('y',y);r.setAttribute('width',9);r.setAttribute('height',9);r.setAttribute('rx',1);r.setAttribute('fill','#43506a');r.setAttribute('stroke','#5d6b88');r.setAttribute('stroke-width','0.5');padsG.appendChild(r);}
+    for(var px=166;px<=505;px+=16){pad(px,23);pad(px,384);}
+    for(var py=39;py<=370;py+=16){pad(155,py);pad(516,py);}
+    // standard cells in rows, skipping macro boxes
+    var macros=[[178,46,308,146],[178,142,308,210],[430,310,504,372]]; // x1,y1,x2,y2 (inflated)
+    function inMacro(x,y,w,h){for(var i=0;i<macros.length;i++){var m=macros[i];if(x<m[2]&&x+w>m[0]&&y<m[3]&&y+h>m[1])return true;}return false;}
+    var cellsG=document.getElementById('ed-cells'),cw=[8,12,6,10,14],ci=0;
+    for(var ry=52;ry<=356;ry+=12){
+      var cx=184;
+      while(cx<494){
+        var w=cw[ci%5];ci++;
+        if(cx+w>494)break;
+        if(!inMacro(cx,ry,w,8)&&edRnd()>0.18){
+          var c=document.createElementNS(svgns,'rect');c.setAttribute('x',cx);c.setAttribute('y',ry);c.setAttribute('width',w);c.setAttribute('height',8);c.setAttribute('fill',ci%2?'#3a5f8f':'#2f4d78');c.setAttribute('stroke','#16243a');c.setAttribute('stroke-width','0.4');cellsG.appendChild(c);
+        }
+        cx+=w+2;
+      }
+    }
+    // routing wires: L-shaped, two metal tones
+    var wiresG=document.getElementById('ed-wires');
+    for(var wi=0;wi<42;wi++){
+      var x1=190+edRnd()*280,y1=56+edRnd()*300,dx=30+edRnd()*120,dy=(edRnd()>0.5?1:-1)*(20+edRnd()*90);
+      if(x1+dx>500)dx=500-x1; var y2=Math.max(52,Math.min(364,y1+dy));
+      var p=document.createElementNS(svgns,'path');
+      p.setAttribute('d','M'+x1.toFixed(0)+','+y1.toFixed(0)+' H'+(x1+dx).toFixed(0)+' V'+y2.toFixed(0));
+      p.setAttribute('fill','none');p.setAttribute('stroke',wi%2?'#e9a04c':'#f3cf9c');p.setAttribute('stroke-width','1.3');p.setAttribute('opacity',wi%2?'0.7':'0.5');
+      wiresG.appendChild(p);
+    }
+    // stepper
+    var edLayers=['ed-fp','ed-fplabel','ed-pg','ed-place','ed-cts','ed-route','ed-sign'];
+    var edSteps=[
+      {n:'1 · 平面规划 Floorplan',show:['ed-fp','ed-fplabel'],cap:'先把"大家具"摆好：<b>SRAM、PLL 这类宏块</b>的位置一经确定，剩下的空地就留给上亿个标准单元。宏块摆得不好，后面布线怎么绕都堵——这是后端<b>最吃经验</b>的一步。'},
+      {n:'2 · 供电网络 Power Grid',show:['ed-fp','ed-fplabel','ed-pg'],cap:'先铺电再放逻辑：<b>电源环</b>沿核心区一圈，<b>条带</b>像输电干线扎进内部，保证每个角落的电压都不塌（防 <b>IR drop</b>）。电吃不饱，再好的逻辑也跑不到标称频率。'},
+      {n:'3 · 摆放 Placement',show:['ed-fp','ed-pg','ed-place'],cap:'工具把<b>几百万～上亿个标准单元</b>自动摆进一行行"单元行"里——目标：连线尽量短、别扎堆。右下放大镜：每个小方块都是标准单元库里<b>现成的逻辑积木</b>（与非门、触发器、反相器…），综合时已经选好。'},
+      {n:'4 · 时钟树综合 CTS',show:['ed-fp','ed-pg','ed-place','ed-cts'],cap:'时钟要<b>"同时"到达所有触发器</b>，否则数据会错拍。工具长出一棵 <b>H 形对称树</b>、沿途插缓冲器（三角形），让最远和最近的路径延迟几乎一样（<b>skew</b> 最小）。时钟网络往往是全芯片<b>最耗电的单一网络</b>。'},
+      {n:'5 · 布线 Routing',show:['ed-fp','ed-pg','ed-place','ed-cts','ed-route'],cap:'十几层金属把所有引脚接通，一颗大芯片的导线总长可达<b>数十公里</b>。下层金属走横向、上层走纵向，交替避让；拥挤处绕行会变慢——<b>布不通就得回到第 3 步重摆</b>，反复迭代直到收敛。'},
+      {n:'6 · 签核 → GDSII 出片',show:edLayers,cap:'三道大关全绿才敢流片：<b>DRC</b>（版图违反工艺规则吗）、<b>LVS</b>（版图和电路图一致吗）、<b>STA</b>（最慢路径赶得上时钟吗）。全过 → 版图按掩膜层打包成 <b>GDSII</b> 交给掩膜厂——从这里接上「<b>硅片·掩膜</b>」页。'}
+    ];
+    var edi=0,edname=document.getElementById('edname'),edcap=document.getElementById('edcap'),edots=document.getElementById('edots'),edplay=document.getElementById('edplay'),edTimer=null;
+    edSteps.forEach(function(s,i){var d=document.createElement('button');d.className='dot';d.setAttribute('aria-label','第'+(i+1)+'步');d.addEventListener('click',function(){edStop();edi=i;edRender();});edots.appendChild(d);});
+    function edRender(){var s=edSteps[edi];edLayers.forEach(function(id){document.getElementById(id).setAttribute('opacity','0')});s.show.forEach(function(id){document.getElementById(id).setAttribute('opacity','1')});edname.textContent=s.n;edcap.innerHTML=s.cap;edots.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('on',i===edi)});}
+    function edStop(){if(edTimer){clearInterval(edTimer);edTimer=null;edplay.textContent='▶ 自动播放';}}
+    document.getElementById('ednext').addEventListener('click',function(){edStop();edi=(edi+1)%edSteps.length;edRender();});
+    document.getElementById('edprev').addEventListener('click',function(){edStop();edi=(edi-1+edSteps.length)%edSteps.length;edRender();});
+    edplay.addEventListener('click',function(){if(edTimer){edStop();return;}edplay.textContent='⏸ 暂停';edTimer=setInterval(function(){edi=(edi+1)%edSteps.length;edRender();},3200);});
+    edRender();
+  })();
+
+  // ---- hash deep link: principles/#eda etc. jumps to that page ----
+  (function(){
+    var h=(location.hash||'').replace('#','');
+    if(h&&scenes[h]){
+      var tb=document.querySelector('.tab[data-s="'+h+'"]');
+      if(tb){var gb=document.querySelector('.gtab[data-g="'+tb.dataset.g+'"]');if(gb)gb.click();tb.click();}
+    }
+  })();
 
   // ---- transistor gate toggle ----
   var on=false;
