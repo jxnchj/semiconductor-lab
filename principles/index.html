@@ -2074,6 +2074,179 @@
           <text x="360" y="170" font-size="9" fill="#8aa0c8" text-anchor="start">高深宽比刻蚀是 3D NAND 的"胜负手"（对应 存储器 页）。</text>
           <text x="360" y="196" font-size="8.5" fill="#8b9bb8" text-anchor="start">极限精度另一路：ALE 原子层刻蚀——一循环只剥一层原子，自限制。</text>
         </svg>
+
+        <div class="subttl">机制加深①：高深宽比刻蚀——3D NAND 的"打井工程学"</div>
+        <div class="cap">上图三口井是"结果"，这里拆"原因"。3D NAND 把存储单元竖着叠，<b>容量＝层数</b>，而层数的第一道关卡就是<b>通道孔</b>：在氧化硅/氮化硅交替叠出的"千层饼"上，垂直打出直径 ~100nm、深好几微米的孔——<b>深宽比 60:1 以上</b> [~估算·业界通称]。更苛刻的是数量：一颗 1Tb 芯片上有<b>十亿量级</b>这样的孔要同时开挖、同时笔直到底 [~估算]。下面这口"病孔"把五种典型失效画在同一张解剖图上。</div>
+        <svg viewBox="0 0 660 316">
+          <text x="170" y="18" font-size="10.5" fill="#e8eef9" text-anchor="middle" font-weight="700">一口"病孔"的解剖：五种失效同框 [△示意·纵向压缩]</text>
+          <!-- stack: carbon mask / ON stack / substrate -->
+          <rect x="60" y="30" width="220" height="34" fill="#20262f" stroke="#4a566e" stroke-width="0.8"/>
+          <text x="68" y="50" font-size="8" fill="#8b9bb8" text-anchor="start">碳硬掩膜（几 μm 厚）</text>
+          <rect x="60" y="64" width="220" height="180" fill="url(#gOx)"/>
+          <g fill="#6f7e9c">
+            <rect x="60" y="76" width="220" height="12"/><rect x="60" y="100" width="220" height="12"/><rect x="60" y="124" width="220" height="12"/>
+            <rect x="60" y="148" width="220" height="12"/><rect x="60" y="172" width="220" height="12"/><rect x="60" y="196" width="220" height="12"/>
+            <rect x="60" y="220" width="220" height="12"/>
+          </g>
+          <rect x="60" y="244" width="220" height="28" fill="url(#gSi)"/>
+          <text x="68" y="262" font-size="8" fill="#c2cbdd" text-anchor="start">硅衬底</text>
+          <!-- the sick hole: facet mouth → neck → bow → twist → starved bottom -->
+          <path d="M152,30 L162,64 Q161,72 165,78 Q156,104 156,130 Q157,160 166,185 Q168,214 172,236 L180,236 Q178,212 176,185 Q183,158 184,130 Q184,104 175,78 Q179,72 178,64 L188,30 Z" fill="#0d1526"/>
+          <!-- zone badges -->
+          <g font-size="8" text-anchor="middle">
+            <circle cx="200" cy="44" r="7.5" fill="#16243a" stroke="#f0c082" stroke-width="1"/><text x="200" y="47" fill="#f0c082">①</text>
+            <circle cx="190" cy="80" r="7.5" fill="#16243a" stroke="#e9c84a" stroke-width="1"/><text x="190" y="83" fill="#e9c84a">②</text>
+            <circle cx="198" cy="130" r="7.5" fill="#16243a" stroke="#f0738a" stroke-width="1"/><text x="198" y="133" fill="#f0738a">③</text>
+            <circle cx="194" cy="212" r="7.5" fill="#16243a" stroke="#c8b3ff" stroke-width="1"/><text x="194" y="215" fill="#c8b3ff">④</text>
+            <circle cx="202" cy="246" r="7.5" fill="#16243a" stroke="#8fe9e1" stroke-width="1"/><text x="202" y="249" fill="#8fe9e1">⑤</text>
+          </g>
+          <g stroke="#3a4a6a" stroke-width="0.7">
+            <line x1="208" y1="44" x2="304" y2="44"/><line x1="198" y1="80" x2="304" y2="88"/><line x1="206" y1="130" x2="304" y2="132"/>
+            <line x1="202" y1="212" x2="304" y2="186"/><line x1="210" y1="246" x2="304" y2="240"/>
+          </g>
+          <!-- right: explanations -->
+          <g font-size="8.5" text-anchor="start">
+            <text x="310" y="41" fill="#f0c082" font-weight="700">① 硬掩膜被磨圆（facet）</text>
+            <text x="310" y="53" fill="#9bb0d0">打几 μm 深的仗，掩膜自己也在被消耗；口一旦磨圆走样，下面全歪——</text>
+            <text x="310" y="64" fill="#9bb0d0">所以要用几 μm 厚的碳膜死扛，还得拼"选择比"（挖叠层快、耗掩膜慢）</text>
+            <text x="310" y="85" fill="#e9c84a" font-weight="700">② 缩颈 necking</text>
+            <text x="310" y="97" fill="#9bb0d0">护壁聚合物在井口越积越厚、把口堵小，离子进不去——"护壁过头"的代价</text>
+            <text x="310" y="129" fill="#f0738a" font-weight="700">③ 弓形 bowing</text>
+            <text x="310" y="141" fill="#9bb0d0">在口部被散射的离子斜着撞中上段侧壁，鼓成酒桶；相邻孔的隔墙被掏薄</text>
+            <text x="310" y="152" fill="#9bb0d0">甚至击穿——"护壁不足"的代价，与②此消彼长</text>
+            <text x="310" y="183" fill="#c8b3ff" font-weight="700">④ 扭转 twisting</text>
+            <text x="310" y="195" fill="#9bb0d0">孔壁电荷积累不对称，电场把离子束推歪，孔底"跑偏"错位——</text>
+            <text x="310" y="206" fill="#9bb0d0">十亿口井里只要少数扭了，整颗芯片就废（机制见下图）</text>
+            <text x="310" y="237" fill="#8fe9e1" font-weight="700">⑤ 深度失速 ARDE</text>
+            <text x="310" y="249" fill="#9bb0d0">越深离子越稀、副产物越难排，速率一路衰减，最深处可能"停刻"；</text>
+            <text x="310" y="260" fill="#9bb0d0">可十亿口井还必须同时到底（机制见下图）</text>
+          </g>
+          <text x="330" y="292" font-size="8.5" fill="#8b9bb8" text-anchor="middle">口径 ~100nm · 深 6–10μm · 深宽比 60:1 以上 [~估算·业界通称]——相当于从 40 层楼顶垂直往下钻一根铅笔粗的井，还要求笔直、同时完工</text>
+          <text x="330" y="306" font-size="8.5" fill="#8b9bb8" text-anchor="middle">图中把 100+ 层交替叠膜（<tspan fill="#f2d35a">黄=氧化硅</tspan> / <tspan fill="#9fb0cc">灰=氮化硅</tspan>，之后氮化硅还要抽换成钨字线，见「存储器」页）压缩画成 15 层；五种失效实为此消彼长的取舍</text>
+        </svg>
+
+        <div class="cap">五种失效背后其实是<b>两个物理死结</b>：井会带电，井会断粮。</div>
+        <svg viewBox="0 0 660 274">
+          <!-- left: charging -->
+          <text x="170" y="20" font-size="10.5" fill="#c8b3ff" text-anchor="middle" font-weight="700">死结一：充电效应——井自己变成"反着装的电池"</text>
+          <ellipse cx="170" cy="50" rx="112" ry="18" fill="url(#gPlasma)" opacity="0.8"/>
+          <text x="170" y="42" font-size="8" fill="#e6dcff" text-anchor="middle">等离子体</text>
+          <rect x="100" y="76" width="140" height="164" fill="url(#gILD)" opacity="0.5"/>
+          <rect x="158" y="76" width="24" height="156" fill="#0d1526"/>
+          <!-- electrons scatter at mouth -->
+          <g fill="#c9b3f5"><circle cx="130" cy="66" r="2"/><circle cx="148" cy="60" r="2"/><circle cx="196" cy="62" r="2"/><circle cx="214" cy="68" r="2"/><circle cx="152" cy="70" r="2"/></g>
+          <g font-size="9" fill="#c9b3f5" font-weight="700" text-anchor="middle"><text x="152" y="88">−</text><text x="188" y="88">−</text><text x="150" y="102">−</text><text x="190" y="102">−</text></g>
+          <!-- ions straight down -->
+          <g stroke="#8fe9e1" stroke-width="1.1" opacity="0.9">
+            <line x1="164" y1="46" x2="164" y2="68" marker-end="url(#etAd)"/><line x1="176" y1="46" x2="176" y2="68" marker-end="url(#etAd)"/>
+            <line x1="170" y1="90" x2="170" y2="146" marker-end="url(#etAd)"/>
+          </g>
+          <g font-size="9" fill="#8fe9e1" font-weight="700" text-anchor="middle"><text x="164" y="226">+</text><text x="176" y="226">+</text><text x="170" y="214">+</text></g>
+          <!-- internal field arrows (bottom + → top −) -->
+          <g stroke="#e9c84a" stroke-width="0.9" stroke-dasharray="3 2" opacity="0.85"><line x1="161" y1="206" x2="161" y2="112"/><line x1="179" y1="206" x2="179" y2="112"/></g>
+          <path d="M158,112 L164,112 L161,105 Z" fill="#e9c84a"/><path d="M176,112 L182,112 L179,105 Z" fill="#e9c84a"/>
+          <text x="146" y="130" font-size="7.5" fill="#e9c84a" text-anchor="end">内建电场</text>
+          <!-- deflected ion -->
+          <path d="M170,96 Q172,150 180,184" fill="none" stroke="#f0738a" stroke-width="1.4"/>
+          <path d="M176,180 L184,186 L176,190 Z" fill="#f0738a"/>
+          <line x1="184" y1="186" x2="248" y2="176" stroke="#5d6b88" stroke-width="0.7"/>
+          <text x="251" y="179" font-size="8" fill="#f0738a" text-anchor="start">后来的离子被</text>
+          <text x="251" y="190" font-size="8" fill="#f0738a" text-anchor="start">减速、推歪</text>
+          <text x="170" y="254" font-size="8.5" fill="#9bb0d0" text-anchor="middle">电子四面乱撞、只糊在井口（−）；离子被电场直吹井底（+）</text>
+          <text x="170" y="266" font-size="8.5" fill="#9bb0d0" text-anchor="middle">→ <tspan fill="#e8eef9" font-weight="700">口负底正</tspan>：井越深电池越强，离子越难走直 → 扭转/停刻</text>
+          <line x1="330" y1="14" x2="330" y2="264" stroke="#23304d" stroke-width="1"/>
+          <!-- right: transport -->
+          <text x="495" y="20" font-size="10.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">死结二：输运困境——进不去，也出不来</text>
+          <rect x="420" y="60" width="140" height="180" fill="url(#gILD)" opacity="0.5"/>
+          <rect x="478" y="60" width="24" height="172" fill="#0d1526"/>
+          <!-- reactant down, thinning -->
+          <g stroke="#7fd0c4">
+            <line x1="486" y1="40" x2="486" y2="54" stroke-width="1.4" marker-end="url(#etAd)"/>
+            <line x1="486" y1="70" x2="486" y2="88" stroke-width="1.2" opacity="0.85" marker-end="url(#etAd)"/>
+            <line x1="486" y1="110" x2="486" y2="126" stroke-width="1" opacity="0.6" marker-end="url(#etAd)"/>
+            <line x1="486" y1="150" x2="486" y2="162" stroke-width="0.9" opacity="0.4" marker-end="url(#etAd)"/>
+            <line x1="486" y1="186" x2="486" y2="194" stroke-width="0.8" opacity="0.25" marker-end="url(#etAd)"/>
+          </g>
+          <!-- byproduct up, crowding -->
+          <g stroke="#9fb0cc">
+            <line x1="494" y1="212" x2="494" y2="198" stroke-width="0.8" opacity="0.35" marker-end="url(#etAd)"/>
+            <line x1="494" y1="172" x2="494" y2="154" stroke-width="0.9" opacity="0.55" marker-end="url(#etAd)"/>
+            <line x1="494" y1="122" x2="494" y2="102" stroke-width="1" opacity="0.75" marker-end="url(#etAd)"/>
+            <line x1="494" y1="72" x2="494" y2="48" stroke-width="1.2" opacity="0.95" marker-end="url(#etAd)"/>
+          </g>
+          <text x="472" y="46" font-size="8" fill="#7fd0c4" text-anchor="end">反应物往下：越深越稀</text>
+          <text x="508" y="46" font-size="8" fill="#9fb0cc" text-anchor="start">副产物往上：排队堵井</text>
+          <!-- mini ARDE curve -->
+          <g stroke="#3a4a6a" stroke-width="0.9"><line x1="575" y1="210" x2="575" y2="104"/><line x1="575" y1="210" x2="650" y2="210"/></g>
+          <text x="575" y="96" font-size="7.5" fill="#9fb0cc" text-anchor="middle">刻蚀速率</text>
+          <text x="650" y="222" font-size="7.5" fill="#9fb0cc" text-anchor="end">深度 →</text>
+          <path d="M578,116 Q604,126 622,158 Q636,184 646,200" fill="none" stroke="#8fe9e1" stroke-width="1.4"/>
+          <text x="612" y="142" font-size="7.5" fill="#8fe9e1" text-anchor="start">ARDE：</text>
+          <text x="612" y="153" font-size="7.5" fill="#8fe9e1" text-anchor="start">越深越慢</text>
+          <text x="495" y="254" font-size="8.5" fill="#9bb0d0" text-anchor="middle">深孔里气体靠"挤"进去、副产物憋在井里排不出——</text>
+          <text x="495" y="266" font-size="8.5" fill="#9bb0d0" text-anchor="middle"><tspan fill="#e8eef9" font-weight="700">深宽比本身就是一笔速率税</tspan>（ARDE / RIE lag）[✓机制·教科书级]</text>
+        </svg>
+
+        <div class="cap">解开死结的<b>平衡术三招</b>——每一代 3D NAND 都在把这三招推向更极限：</div>
+        <svg viewBox="0 0 660 262">
+          <!-- card 1: passivation -->
+          <rect x="10" y="16" width="204" height="234" rx="9" fill="#16243a" stroke="#8fd6ad" stroke-opacity="0.6"/>
+          <text x="112" y="38" font-size="10.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">招①：边挖边"衬砌"</text>
+          <rect x="52" y="56" width="120" height="68" fill="url(#gILD)" opacity="0.5"/>
+          <rect x="96" y="56" width="32" height="60" fill="#0d1526"/>
+          <g stroke="#9fe0b8" stroke-width="3" opacity="0.9"><line x1="98" y1="56" x2="98" y2="112"/><line x1="126" y1="56" x2="126" y2="112"/></g>
+          <line x1="112" y1="40" x2="112" y2="104" stroke="#8fe9e1" stroke-width="1.2" marker-end="url(#etAd)"/>
+          <g stroke="#f0738a" stroke-width="1"><line x1="107" y1="111" x2="117" y2="121"/><line x1="117" y1="111" x2="107" y2="121"/></g>
+          <line x1="96" y1="62" x2="60" y2="50" stroke="#5d6b88" stroke-width="0.7"/>
+          <text x="58" y="48" font-size="7.5" fill="#9fe0b8" text-anchor="end">聚合物护壁</text>
+          <text x="130" y="130" font-size="7.5" fill="#8fe9e1" text-anchor="start">离子只砸开井底</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="112" y="152">刻蚀气体（C₄F₆/C₄F₈+O₂…）一身两职：</text>
+            <text x="112" y="166">自由基负责挖，聚合物负责砌砖护壁；</text>
+            <text x="112" y="180">离子把井底护层砸开——侧壁受保护、</text>
+            <text x="112" y="194">只往下走。<tspan fill="#e8eef9" font-weight="700">C/F 比＝"挖/护"旋钮</tspan>：</text>
+            <text x="112" y="208">护多→缩颈②，护少→弓形③</text>
+            <text x="112" y="228" fill="#8b9bb8">每代配方都在重调这只旋钮 [✓机制]</text>
+          </g>
+          <!-- card 2: pulsed high energy -->
+          <rect x="228" y="16" width="204" height="234" rx="9" fill="#16243a" stroke="#c8b3ff" stroke-opacity="0.6"/>
+          <text x="330" y="38" font-size="10.5" fill="#c8b3ff" text-anchor="middle" font-weight="700">招②：高能 + 脉冲</text>
+          <path d="M252,104 h20 v-30 h24 v30 h24 v-30 h24 v30 h24 v-30 h20" fill="none" stroke="#c8b3ff" stroke-width="1.4"/>
+          <line x1="244" y1="104" x2="412" y2="104" stroke="#3a4a6a" stroke-width="0.8"/>
+          <text x="284" y="66" font-size="7.5" fill="#c8b3ff" text-anchor="middle">开火</text>
+          <text x="308" y="118" font-size="7.5" fill="#8b9bb8" text-anchor="middle">停火</text>
+          <text x="330" y="132" font-size="7.5" fill="#9fb0cc" text-anchor="middle">偏压脉冲波形（kHz 级通断）</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="330" y="152">偏压拉到数千伏，离子像"穿甲弹"</text>
+            <text x="330" y="166">直达井底 [~估算·业界量级]；但一直开火</text>
+            <text x="330" y="180">＝井壁充电、越打越歪——所以做成脉冲：</text>
+            <text x="330" y="194"><tspan fill="#e8eef9" font-weight="700">开火-停火交替</tspan>，停火窗口里电荷中和、</text>
+            <text x="330" y="208">副产物逃逸（正对死结一、二）</text>
+            <text x="330" y="228" fill="#8b9bb8">能量与损伤的平衡全押在波形上 [✓机制]</text>
+          </g>
+          <!-- card 3: cryo -->
+          <rect x="446" y="16" width="204" height="234" rx="9" fill="#1d3552" stroke="#8fe9e1" stroke-width="1.2"/>
+          <text x="548" y="38" font-size="10.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">招③：低温刻蚀 ★新主流</text>
+          <line x1="478" y1="56" x2="478" y2="112" stroke="#8fe9e1" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="478" cy="122" r="8" fill="#8fe9e1"/>
+          <text x="478" y="140" font-size="8" fill="#8fe9e1" text-anchor="middle">-70°C</text>
+          <rect x="520" y="56" width="100" height="68" fill="url(#gILD)" opacity="0.5"/>
+          <rect x="556" y="56" width="26" height="60" fill="#0d1526"/>
+          <g stroke="#8fe9e1" stroke-width="1.6" stroke-dasharray="2 3" opacity="0.9"><line x1="558" y1="56" x2="558" y2="114"/><line x1="580" y1="56" x2="580" y2="114"/><line x1="558" y1="114" x2="580" y2="114"/></g>
+          <line x1="582" y1="70" x2="630" y2="58" stroke="#5d6b88" stroke-width="0.7"/>
+          <text x="600" y="52" font-size="7.5" fill="#8fe9e1" text-anchor="middle">反应气"结霜"吸满井壁</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="548" y="152">晶圆冷到约 -70°C，HF 系气体像结霜一样</text>
+            <text x="548" y="166">吸附满整个井壁——<tspan fill="#e8eef9" font-weight="700">最深处不再断粮</tspan>，</text>
+            <text x="548" y="180">离子到哪、哪里反应：又快又直。</text>
+            <text x="548" y="196" fill="#8b9bb8">TEL：10μm 深孔 33 分钟、约 3 倍速</text>
+            <text x="548" y="208" fill="#8b9bb8">[叙事·TEL 2023-06]</text>
+            <text x="548" y="220" fill="#8b9bb8">Lam Cryo 3.0 量产验证：顶底 CD 差 &lt;0.1%、</text>
+            <text x="548" y="232" fill="#8b9bb8">速率 2.5×、能耗 -40% [叙事·Lam 2024-07]</text>
+            <text x="548" y="244" fill="#8b9bb8">SK/三星在评估 TEL 低温机台 [✓媒体 2024]</text>
+          </g>
+        </svg>
+        <div class="cap"><b>这场军备竞赛的记分牌（2026-07 快照）</b>：SK 海力士 321 层量产 · 长江存储 X4 294 层出货 · 铠侠/闪迪 BiCS10 332 层送样（2026-07）· 三星 V10 400+ 层（业界称 ~430 层）瞄准 2026 下半年量产 [✓已核实·TrendForce/媒体 2026-06/07]。另一半真相：<b>没有谁"一次打穿三四百层"</b>——主流是 <b>string stacking：分 2–3 段打、段段对齐</b>（如 SK 321 层为三段 [✓媒体]），每段仍是百余层的极限深井，而段与段的套准又成了新难题（呼应「清洗·量测」页的 overlay）。国产一句：中微 Primo UD-RIE ≥60:1 已进存储产线量产，并预研 ≥90:1 与超低温刻蚀 [✓年报2024/研报2025]——设备格局与国产化详见第二轨「设备」赛道。</div>
         <div class="note"><b>这道工艺用什么机器</b>：等离子体刻蚀机（介质刻蚀 / 硅刻蚀 / 金属刻蚀各有专机）。国际：泛林（Lam）、应用材料（AMAT）、东京电子（TEL）；国产：中微公司（介质刻蚀已进台积电先进产线）、北方华创（硅刻蚀）——设备格局与国产化详见第二轨「设备」赛道。</div>
 
         <div class="subttl">三、沉积：怎么"长"出一层又薄又匀的膜</div>
@@ -2151,6 +2324,251 @@
           </g>
         </svg>
         <div class="cap"><b>ALD 一个循环四步</b>：① 通入前驱体 A → 表面<b>吸附满一层就自动停</b>（自限制）；② 惰性气体吹扫掉多余的 A；③ 通入反应物 B → 只和吸附的那层 A 反应，生成一层薄膜；④ 再吹扫。<b>每循环恰好一个原子层（~0.1nm）</b>，重复 N 次＝精确 N 层。代价是慢——所以只用在最关键的膜上：高K栅介质、GAA 纳米片四面包裹的栅极、高深宽比结构的衬里。<b>结构越立体（FinFET→GAA→3D NAND），ALD 越不可替代</b>。</div>
+
+        <div class="subttl">机制加深②：ALD——把"长膜"变成"数原子"（点「下一步 ›」看一个循环）</div>
+        <div class="cap">上面的台阶覆盖对比给了结论，这里拆机制：ALD 为什么能做到"再深的孔每处一样厚"？答案是把一次成膜拆成<b>两个"见好就收"的半反应</b>——以最经典的 Al₂O₃（TMA + 水）为例。左图盯宏观深槽，右图放大看表面上的化学。</div>
+        <div class="step-nav" style="margin-bottom:10px">
+          <button class="btn" id="aldprev">‹ 上一步</button>
+          <button class="btn acc" id="aldplay">▶ 自动播放</button>
+          <button class="btn" id="aldnext">下一步 ›</button>
+          <div class="step-dots" id="aldots"></div>
+        </div>
+        <div class="stepname" id="aldname"></div>
+        <svg viewBox="0 0 660 344" style="margin-top:8px" id="aldsvg">
+          <!-- base: macro trench -->
+          <path d="M30,48 L118,48 L118,262 L150,262 L150,48 L250,48 L250,300 L30,300 Z" fill="url(#gSi)"/>
+          <text x="140" y="318" font-size="8" fill="#8b9bb8" text-anchor="middle">深槽（示意压缩：实际可达 60:1）</text>
+          <!-- zoom link -->
+          <circle cx="150" cy="230" r="10" fill="none" stroke="#34d6cf" stroke-width="1" stroke-dasharray="3 2"/>
+          <g stroke="#34d6cf" stroke-width="0.7" stroke-dasharray="3 3" opacity="0.6"><line x1="158" y1="224" x2="300" y2="52"/><line x1="158" y1="236" x2="300" y2="296"/></g>
+          <text x="222" y="150" font-size="7.5" fill="#34d6cf" text-anchor="middle" transform="rotate(-49 222 150)">放大：表面任意一点</text>
+          <!-- zoom panel frame + surface -->
+          <rect x="300" y="44" width="348" height="258" rx="8" fill="#0d1526" stroke="#23304d"/>
+          <rect x="316" y="252" width="316" height="18" fill="#43506a"/>
+          <text x="474" y="284" font-size="8" fill="#8b9bb8" text-anchor="middle">表面任意一点——孔口、侧壁、孔底，待遇完全相同</text>
+          <!-- legend -->
+          <g font-size="8" fill="#8b9bb8" text-anchor="start">
+            <circle cx="40" cy="334" r="4" fill="#c9b3f5"/><text x="48" y="337">前驱体 A（TMA）</text>
+            <circle cx="148" cy="334" r="4" fill="#7fb8cc"/><text x="156" y="337">反应物 B（水）</text>
+            <circle cx="244" cy="334" r="4" fill="#7a8aa8"/><text x="252" y="337">副产物 CH₄</text>
+            <circle cx="336" cy="334" r="4" fill="#8fd6ad"/><text x="344" y="337">表面 –OH 挂钩</text>
+            <rect x="446" y="330" width="10" height="7" fill="#5eead4"/><text x="460" y="337">长出的 Al₂O₃（1 循环 ≈ 0.1nm）</text>
+          </g>
+          <!-- z-oh: hooks -->
+          <g id="ald-z-oh" opacity="0">
+            <g stroke="#8fd6ad" stroke-width="1.2">
+              <line x1="336" y1="252" x2="336" y2="243"/><line x1="380" y1="252" x2="380" y2="243"/><line x1="424" y1="252" x2="424" y2="243"/>
+              <line x1="468" y1="252" x2="468" y2="243"/><line x1="512" y1="252" x2="512" y2="243"/><line x1="556" y1="252" x2="556" y2="243"/><line x1="600" y1="252" x2="600" y2="243"/>
+            </g>
+            <g fill="#8fd6ad">
+              <circle cx="336" cy="240" r="3.5"/><circle cx="380" cy="240" r="3.5"/><circle cx="424" cy="240" r="3.5"/>
+              <circle cx="468" cy="240" r="3.5"/><circle cx="512" cy="240" r="3.5"/><circle cx="556" cy="240" r="3.5"/><circle cx="600" cy="240" r="3.5"/>
+            </g>
+            <line x1="336" y1="234" x2="322" y2="212" stroke="#5d6b88" stroke-width="0.7"/>
+            <text x="320" y="206" font-size="8" fill="#8fd6ad" text-anchor="start">–OH 挂钩（化学吸附锚点）</text>
+          </g>
+          <!-- z-tmagas: TMA arriving, 3 attached -->
+          <g id="ald-z-tmagas" opacity="0">
+            <g>
+              <circle cx="420" cy="110" r="6" fill="#c9b3f5"/><circle cx="412" cy="103" r="2.5" fill="#7a8aa8"/><circle cx="428" cy="103" r="2.5" fill="#7a8aa8"/><circle cx="420" cy="119" r="2.5" fill="#7a8aa8"/>
+              <circle cx="520" cy="90" r="6" fill="#c9b3f5"/><circle cx="512" cy="83" r="2.5" fill="#7a8aa8"/><circle cx="528" cy="83" r="2.5" fill="#7a8aa8"/><circle cx="520" cy="99" r="2.5" fill="#7a8aa8"/>
+              <circle cx="590" cy="130" r="6" fill="#c9b3f5"/><circle cx="582" cy="123" r="2.5" fill="#7a8aa8"/><circle cx="598" cy="123" r="2.5" fill="#7a8aa8"/><circle cx="590" cy="139" r="2.5" fill="#7a8aa8"/>
+            </g>
+            <text x="446" y="106" font-size="8" fill="#c9b3f5" text-anchor="start">TMA：Al 拎着三个甲基</text>
+            <g stroke="#c9b3f5" stroke-width="0.9" opacity="0.8"><line x1="420" y1="130" x2="420" y2="150" marker-end="url(#etAd)"/><line x1="520" y1="110" x2="520" y2="130" marker-end="url(#etAd)"/></g>
+            <g><circle cx="336" cy="230" r="5.5" fill="#c9b3f5"/><circle cx="380" cy="230" r="5.5" fill="#c9b3f5"/><circle cx="424" cy="230" r="5.5" fill="#c9b3f5"/></g>
+            <text x="352" y="216" font-size="8" fill="#e8eef9" text-anchor="start">抓住挂钩，Al 被"焊"上</text>
+            <g><circle cx="366" cy="168" r="3.5" fill="#7a8aa8"/><circle cx="450" cy="150" r="3.5" fill="#7a8aa8"/></g>
+            <g stroke="#7a8aa8" stroke-width="0.9" opacity="0.8"><line x1="366" y1="160" x2="366" y2="140" marker-end="url(#etAd)"/><line x1="450" y1="142" x2="450" y2="122" marker-end="url(#etAd)"/></g>
+            <text x="376" y="146" font-size="8" fill="#7a8aa8" text-anchor="start">CH₄ ↑</text>
+          </g>
+          <!-- z-mono: saturated monolayer (O anchors + Al) -->
+          <g id="ald-z-mono" opacity="0">
+            <g stroke="#8fd6ad" stroke-width="1.2">
+              <line x1="336" y1="252" x2="336" y2="243"/><line x1="380" y1="252" x2="380" y2="243"/><line x1="424" y1="252" x2="424" y2="243"/>
+              <line x1="468" y1="252" x2="468" y2="243"/><line x1="512" y1="252" x2="512" y2="243"/><line x1="556" y1="252" x2="556" y2="243"/><line x1="600" y1="252" x2="600" y2="243"/>
+            </g>
+            <g fill="#8fd6ad">
+              <circle cx="336" cy="240" r="3.5"/><circle cx="380" cy="240" r="3.5"/><circle cx="424" cy="240" r="3.5"/>
+              <circle cx="468" cy="240" r="3.5"/><circle cx="512" cy="240" r="3.5"/><circle cx="556" cy="240" r="3.5"/><circle cx="600" cy="240" r="3.5"/>
+            </g>
+            <g fill="#c9b3f5">
+              <circle cx="336" cy="230" r="5.5"/><circle cx="380" cy="230" r="5.5"/><circle cx="424" cy="230" r="5.5"/>
+              <circle cx="468" cy="230" r="5.5"/><circle cx="512" cy="230" r="5.5"/><circle cx="556" cy="230" r="5.5"/><circle cx="600" cy="230" r="5.5"/>
+            </g>
+          </g>
+          <!-- z-sat: saturation badge + bouncing extra -->
+          <g id="ald-z-sat" opacity="0">
+            <rect x="418" y="60" width="196" height="22" rx="6" fill="#16243a" stroke="#34d6cf" stroke-width="1"/>
+            <text x="516" y="75" font-size="9.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">挂钩用完 → 反应自动停（自限制）</text>
+            <circle cx="380" cy="120" r="6" fill="#c9b3f5"/><circle cx="372" cy="113" r="2.5" fill="#7a8aa8"/><circle cx="388" cy="113" r="2.5" fill="#7a8aa8"/><circle cx="380" cy="129" r="2.5" fill="#7a8aa8"/>
+            <path d="M380,136 Q380,196 350,208 Q330,214 322,196" fill="none" stroke="#c9b3f5" stroke-width="1" stroke-dasharray="4 3"/>
+            <path d="M320,204 L320,192 L330,198 Z" fill="#c9b3f5"/>
+            <text x="398" y="176" font-size="8" fill="#9fb0cc" text-anchor="start">多余的 TMA 找不到挂钩，</text>
+            <text x="398" y="188" font-size="8" fill="#9fb0cc" text-anchor="start">只能弹走——多通 10 倍也不多长</text>
+          </g>
+          <!-- z-purge: purge sweep -->
+          <g id="ald-z-purge" opacity="0">
+            <g stroke="#9fb0cc" stroke-width="1" opacity="0.85">
+              <line x1="330" y1="100" x2="612" y2="100" marker-end="url(#etAd)"/><line x1="330" y1="140" x2="612" y2="140" marker-end="url(#etAd)"/><line x1="330" y1="180" x2="612" y2="180" marker-end="url(#etAd)"/>
+            </g>
+            <text x="352" y="92" font-size="8.5" fill="#9fb0cc" text-anchor="start">N₂ 吹扫：把多余的 A 和副产物全部清场</text>
+            <circle cx="592" cy="128" r="5" fill="#c9b3f5" opacity="0.5"/><circle cx="604" cy="172" r="3.5" fill="#7a8aa8" opacity="0.5"/>
+          </g>
+          <!-- z-h2o: water pulse -->
+          <g id="ald-z-h2o" opacity="0">
+            <g fill="#7fb8cc"><circle cx="400" cy="110" r="5"/><circle cx="490" cy="92" r="5"/><circle cx="570" cy="122" r="5"/></g>
+            <text x="412" y="106" font-size="8" fill="#7fb8cc" text-anchor="start">H₂O</text>
+            <g stroke="#7fb8cc" stroke-width="0.9" opacity="0.8"><line x1="400" y1="120" x2="400" y2="140" marker-end="url(#etAd)"/><line x1="490" y1="102" x2="490" y2="122" marker-end="url(#etAd)"/></g>
+            <g><circle cx="430" cy="170" r="3.5" fill="#7a8aa8"/></g>
+            <g stroke="#7a8aa8" stroke-width="0.9" opacity="0.8"><line x1="430" y1="162" x2="430" y2="142" marker-end="url(#etAd)"/></g>
+            <text x="440" y="150" font-size="8" fill="#7a8aa8" text-anchor="start">CH₄ ↑</text>
+            <text x="330" y="190" font-size="8" fill="#9bb0d0" text-anchor="start">水只和表面挂着的甲基反应：Al–CH₃ + H₂O → Al–O–H + CH₄↑</text>
+          </g>
+          <!-- z-new: new oxide layer + fresh hooks -->
+          <g id="ald-z-new" opacity="0">
+            <rect x="316" y="242" width="316" height="10" fill="#5eead4" opacity="0.85"/>
+            <g fill="#8fd6ad">
+              <circle cx="336" cy="238.5" r="3.5"/><circle cx="380" cy="238.5" r="3.5"/><circle cx="424" cy="238.5" r="3.5"/>
+              <circle cx="468" cy="238.5" r="3.5"/><circle cx="512" cy="238.5" r="3.5"/><circle cx="556" cy="238.5" r="3.5"/><circle cx="600" cy="238.5" r="3.5"/>
+            </g>
+            <line x1="612" y1="236" x2="630" y2="220" stroke="#5d6b88" stroke-width="0.7"/>
+            <text x="634" y="216" font-size="8" fill="#8fd6ad" text-anchor="end">新 –OH</text>
+          </g>
+          <!-- z-done: ruler + reset -->
+          <g id="ald-z-done" opacity="0">
+            <g stroke="#8fe9e1" stroke-width="1"><line x1="640" y1="242" x2="640" y2="252"/><line x1="636" y1="242" x2="644" y2="242"/><line x1="636" y1="252" x2="644" y2="252"/></g>
+            <text x="648" y="232" font-size="8" fill="#8fe9e1" text-anchor="end">1 循环 ≈ 0.1nm</text>
+            <text x="330" y="120" font-size="9" fill="#e8eef9" text-anchor="start" font-weight="700">表面回到 –OH 起点 → 直接开始下一循环</text>
+            <text x="330" y="136" font-size="8.5" fill="#9bb0d0" text-anchor="start">要 10nm？跑 100 循环。厚度不是"控制"出来的，是数出来的。</text>
+          </g>
+          <!-- macro overlays -->
+          <g id="ald-m1" opacity="0">
+            <g fill="#c9b3f5"><circle cx="70" cy="34" r="2.5"/><circle cx="180" cy="28" r="2.5"/><circle cx="230" cy="38" r="2.5"/><circle cx="134" cy="80" r="2.5"/><circle cx="126" cy="130" r="2.5"/><circle cx="142" cy="180" r="2.5"/><circle cx="130" cy="230" r="2.5"/><circle cx="138" cy="255" r="2.5"/></g>
+            <line x1="134" y1="58" x2="134" y2="72" stroke="#c9b3f5" stroke-width="0.9" opacity="0.8" marker-end="url(#etAd)"/>
+            <text x="140" y="24" font-size="8" fill="#c9b3f5" text-anchor="middle">气体自己钻进深孔</text>
+          </g>
+          <g id="ald-m3" opacity="0">
+            <g stroke="#9fb0cc" stroke-width="0.9" opacity="0.85">
+              <line x1="134" y1="240" x2="134" y2="204" marker-end="url(#etAd)"/><line x1="134" y1="150" x2="134" y2="114" marker-end="url(#etAd)"/>
+              <line x1="60" y1="36" x2="106" y2="36" marker-end="url(#etAd)"/><line x1="170" y1="36" x2="216" y2="36" marker-end="url(#etAd)"/>
+            </g>
+            <text x="140" y="24" font-size="8" fill="#9fb0cc" text-anchor="middle">吹扫也要吹净深孔</text>
+          </g>
+          <g id="ald-m4" opacity="0">
+            <path d="M30,48 L118,48 L118,262 L150,262 L150,48 L250,48" fill="none" stroke="#5eead4" stroke-width="2.5" opacity="0.9"/>
+            <g fill="#7fb8cc"><circle cx="90" cy="34" r="2.5"/><circle cx="134" cy="100" r="2.5"/><circle cx="140" cy="200" r="2.5"/><circle cx="128" cy="250" r="2.5"/></g>
+          </g>
+          <g id="ald-m5" opacity="0">
+            <path d="M30,48 L118,48 L118,262 L150,262 L150,48 L250,48" fill="none" stroke="#5eead4" stroke-width="5" opacity="0.45"/>
+            <text x="140" y="24" font-size="8.5" fill="#5eead4" text-anchor="middle" font-weight="700">循环 ×N：孔口=侧壁=孔底</text>
+            <text x="140" y="36" font-size="8" fill="#8fd6ad" text-anchor="middle">×100 ≈ 10nm，处处一样厚</text>
+          </g>
+        </svg>
+        <div class="cap" id="aldcap" style="min-height:56px"></div>
+
+        <svg viewBox="0 0 660 200">
+          <text x="330" y="18" font-size="10.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">ALD 的"工作区间"：温度窗口</text>
+          <g stroke="#3a4a6a" stroke-width="0.9"><line x1="70" y1="160" x2="620" y2="160"/><line x1="70" y1="160" x2="70" y2="40"/></g>
+          <text x="66" y="34" font-size="7.5" fill="#9fb0cc" text-anchor="end">每循环生长量 GPC</text>
+          <text x="620" y="174" font-size="7.5" fill="#9fb0cc" text-anchor="end">温度 →</text>
+          <rect x="230" y="40" width="220" height="120" fill="#34d6cf" opacity="0.06"/>
+          <g stroke="#23304d" stroke-width="0.8" stroke-dasharray="4 3"><line x1="230" y1="40" x2="230" y2="160"/><line x1="450" y1="40" x2="450" y2="160"/></g>
+          <line x1="230" y1="95" x2="450" y2="95" stroke="#5eead4" stroke-width="2.5"/>
+          <text x="340" y="84" font-size="9" fill="#8fe9e1" text-anchor="middle" font-weight="700">ALD 窗口：GPC 恒定（每循环恰好一层）</text>
+          <path d="M230,95 Q160,88 110,52" fill="none" stroke="#e9c84a" stroke-width="1.2" stroke-dasharray="4 3"/>
+          <text x="76" y="42" font-size="8" fill="#e9c84a" text-anchor="start">冷凝：太冷，前驱体直接凝结——膜脏失控</text>
+          <path d="M230,95 Q170,102 115,140" fill="none" stroke="#f0738a" stroke-width="1.2" stroke-dasharray="4 3"/>
+          <text x="76" y="152" font-size="8" fill="#f0738a" text-anchor="start">反应不完全：太冷，挂不上钩</text>
+          <path d="M450,95 Q510,84 560,48" fill="none" stroke="#e9c84a" stroke-width="1.2" stroke-dasharray="4 3"/>
+          <text x="612" y="40" font-size="8" fill="#e9c84a" text-anchor="end">热分解：前驱体自裂解 → 退化成 CVD</text>
+          <path d="M450,95 Q515,104 565,138" fill="none" stroke="#f0738a" stroke-width="1.2" stroke-dasharray="4 3"/>
+          <text x="612" y="150" font-size="8" fill="#f0738a" text-anchor="end">脱附：刚吸上又被"烤"跑</text>
+          <text x="330" y="190" font-size="8.5" fill="#8b9bb8" text-anchor="middle">在窗口内温度漂几度，厚度纹丝不动——批量炉管一次上百片也能片片一致 [✓机制·教科书级]</text>
+        </svg>
+        <div class="cap"><b>PEALD（等离子体增强 ALD）</b>：用等离子体自由基当反应物 B，把窗口拓到<b>低温</b>（150°C 以下也能长）——光刻胶、有机膜上也能沉积，SADP 侧墙正需要这个；代价是自由基在超深孔里会"半路复合"，共形性略逊热 ALD。<b>"慢"的账</b>：0.1nm/循环意味着一层膜动辄几百上千个循环，产线的解法是<b>批量炉管 ALD</b>（一炉上百片、以并行换吞吐）与<b>空间 ALD</b>（晶圆在不同气区间穿梭，用"位置切换"代替"时间切换"）。材料端一句：<b>前驱体</b>＝把金属"装进"挥发性分子里运进腔室（TMA、HfCl₄、TDMAH、TiCl₄…），纯度与配套供给见第二轨「材料」赛道。</div>
+
+        <div class="subttl">ALD 的五个"非它不可"——卡点长在哪里</div>
+        <svg viewBox="0 0 660 252">
+          <!-- card 1: HKMG -->
+          <rect x="6" y="16" width="124" height="212" rx="8" fill="#16243a" stroke="#23304d"/>
+          <text x="68" y="36" font-size="9.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">① 高K栅介质</text>
+          <rect x="44" y="104" width="48" height="16" fill="url(#gSi)"/>
+          <rect x="44" y="99" width="48" height="5" fill="#5eead4"/>
+          <rect x="44" y="84" width="48" height="15" fill="url(#gCu)"/>
+          <text x="98" y="92" font-size="7" fill="#f0c082" text-anchor="start">金属栅</text>
+          <text x="98" y="104" font-size="7" fill="#5eead4" text-anchor="start">HfO₂</text>
+          <text x="98" y="116" font-size="7" fill="#9fc0ec" text-anchor="start">硅</text>
+          <g font-size="7.8" fill="#9bb0d0" text-anchor="middle">
+            <text x="68" y="140">栅漏电逼出的换代：</text>
+            <text x="68" y="154">SiO₂→HfO₂ 只有 1–2nm，</text>
+            <text x="68" y="168">差 0.1nm 阈值就漂 [~]</text>
+            <text x="68" y="182">45nm 起全行业标配</text>
+            <text x="68" y="204" fill="#7a8aa8">接「先进结构演进」</text>
+          </g>
+          <!-- card 2: GAA -->
+          <rect x="136" y="16" width="124" height="212" rx="8" fill="#16243a" stroke="#23304d"/>
+          <text x="198" y="36" font-size="9.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">② GAA 四面包栅</text>
+          <rect x="172" y="78" width="52" height="52" fill="#6f7e9c" opacity="0.35"/>
+          <g fill="url(#gSi)" stroke="#5eead4" stroke-width="1.6">
+            <rect x="178" y="84" width="40" height="8" rx="2"/><rect x="178" y="100" width="40" height="8" rx="2"/><rect x="178" y="116" width="40" height="8" rx="2"/>
+          </g>
+          <g font-size="7.8" fill="#9bb0d0" text-anchor="middle">
+            <text x="198" y="146">纳米片之间只有几 nm 缝，</text>
+            <text x="198" y="160">栅介质+功函数金属都要</text>
+            <text x="198" y="174">钻进去、四面包裹——</text>
+            <text x="198" y="188">只有气相自吸附做得到</text>
+            <text x="198" y="204" fill="#7a8aa8">接「先进结构演进」</text>
+          </g>
+          <!-- card 3: SADP spacer -->
+          <rect x="266" y="16" width="124" height="212" rx="8" fill="#16243a" stroke="#23304d"/>
+          <text x="328" y="36" font-size="9.5" fill="#e0556e" text-anchor="middle" font-weight="700">③ SADP 侧墙</text>
+          <rect x="300" y="86" width="12" height="36" fill="#5eead4"/>
+          <rect x="312" y="86" width="28" height="36" fill="#e0556e" opacity="0.8"/>
+          <rect x="340" y="86" width="12" height="36" fill="#5eead4"/>
+          <rect x="292" y="122" width="72" height="8" fill="url(#gSi)"/>
+          <g stroke="#8fe9e1" stroke-width="0.8"><line x1="300" y1="134" x2="300" y2="142"/><line x1="312" y1="134" x2="312" y2="142"/><line x1="300" y1="138" x2="312" y2="138"/></g>
+          <text x="330" y="142" font-size="7" fill="#8fe9e1" text-anchor="start">侧墙厚=线宽</text>
+          <g font-size="7.8" fill="#9bb0d0" text-anchor="middle">
+            <text x="328" y="160">在牺牲芯两侧长侧墙，</text>
+            <text x="328" y="174">侧墙厚度＝最终线宽——</text>
+            <text x="328" y="188">沉积精度直接变图形精度</text>
+            <text x="328" y="204" fill="#7a8aa8">接「光刻」多重图形化</text>
+          </g>
+          <!-- card 4: DRAM cap -->
+          <rect x="396" y="16" width="124" height="212" rx="8" fill="#16243a" stroke="#23304d"/>
+          <text x="458" y="36" font-size="9.5" fill="#f0c082" text-anchor="middle" font-weight="700">④ DRAM 电容</text>
+          <g fill="none" stroke="#6f7e9c" stroke-width="3"><path d="M432,80 L432,124 L444,124 L444,80"/><path d="M472,80 L472,124 L484,124 L484,80"/></g>
+          <g fill="none" stroke="#5eead4" stroke-width="1.2"><path d="M435,80 L435,121 L441,121 L441,80"/><path d="M475,80 L475,121 L481,121 L481,80"/></g>
+          <g font-size="7.8" fill="#9bb0d0" text-anchor="middle">
+            <text x="458" y="146">电容越缩越高：</text>
+            <text x="458" y="160">几十:1 的深筒里，</text>
+            <text x="458" y="174">ZrO₂ 系高K层层铺到底</text>
+            <text x="458" y="188">漏一点电数据就丢 [~]</text>
+            <text x="458" y="204" fill="#7a8aa8">接「存储器」</text>
+          </g>
+          <!-- card 5: 3D NAND liner -->
+          <rect x="526" y="16" width="124" height="212" rx="8" fill="#16243a" stroke="#23304d"/>
+          <text x="588" y="36" font-size="9.5" fill="#c8b3ff" text-anchor="middle" font-weight="700">⑤ 3D NAND 井壁</text>
+          <rect x="558" y="72" width="60" height="60" fill="url(#gILD)" opacity="0.5"/>
+          <rect x="578" y="72" width="20" height="56" fill="#0d1526"/>
+          <g stroke-width="1.4" fill="none">
+            <path d="M580,72 L580,126 L596,126 L596,72" stroke="#f2d35a"/>
+            <path d="M583,72 L583,123 L593,123 L593,72" stroke="#9fb0cc"/>
+            <path d="M586,72 L586,120 L590,120 L590,72" stroke="#5eead4"/>
+          </g>
+          <g font-size="7.8" fill="#9bb0d0" text-anchor="middle">
+            <text x="588" y="146">上一节打好的井，</text>
+            <text x="588" y="160">井壁铺 O-N-O"存储</text>
+            <text x="588" y="174">三明治"再灌多晶硅沟道</text>
+            <text x="588" y="188">——矛与盾在此会师</text>
+            <text x="588" y="204" fill="#7a8aa8">接「存储器」</text>
+          </g>
+          <text x="330" y="244" font-size="8.5" fill="#8b9bb8" text-anchor="middle">共同点：结构越立体、膜越薄、位置越刁钻，越是只有"吸满即停"做得到——没有一处能退回 CVD/PVD 凑合</text>
+        </svg>
+        <div class="cap"><b>"卡点"的确切含义</b>：不是所有膜都用 ALD（太慢太贵），而是<b>最关键的那几层膜非它不可</b>——而这几层恰好都长在制程演进的咽喉上（栅介质、四面栅、多重图形化、存储电容、通道孔衬里）。把同一"自限制"哲学用在减法上＝ALE 原子层刻蚀（见上文刻蚀节）。设备端一句：ALD 领头羊 ASM International，国产拓荆科技在追——格局见第二轨「设备」赛道。</div>
+
+        <div class="note" style="border-left-color:#8fe9e1;background:rgba(143,233,225,.06)"><b style="color:#8fe9e1">矛与盾（两个"机制加深"合起来看）</b>：高深宽比刻蚀是<b>极限减法</b>，ALD 是<b>极限加法</b>——3D NAND 通道孔＝刻蚀打一口 60:1 的井，再用 ALD/CVD 往井壁铺电荷俘获三明治和多晶硅沟道；DRAM 电容＝刻蚀挖深筒 + ALD 铺高K。结构每立体一步（FinFET→GAA→3D 堆叠），这对矛与盾就同时升级一档——先进产线里<b>刻蚀与薄膜设备价值量占比持续膨胀</b>的机制根源就在这里（格局见第二轨「设备」赛道）。</div>
         <div class="note"><b>这道工艺用什么机器</b>：CVD/ALD 设备（应用材料、泛林、TEL、ASM International——ALD 领头羊）；PVD（应用材料近乎垄断）；电镀（应用材料、ACM/盛美）。国产：北方华创（CVD/PVD/炉管）、拓荆科技（PECVD/ALD）、盛美上海（电镀/清洗）——一句列示，格局详见第二轨「设备」赛道。</div>
         <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">串起来看（回链）</b>：一层铜互连＝<b>刻蚀</b>挖出沟槽 → <b>PVD</b> 铺阻挡层+种子层 → <b>电镀</b>填铜 → <b>CMP</b> 磨平——这正是「前道·制造流程」第 14–26 步大马士革循环的机制拆解。材料端：靶材、前驱体、电镀液的产业与国产化见第二轨「材料」赛道。</div>
       </div>
@@ -2971,6 +3389,27 @@
     document.getElementById('edprev').addEventListener('click',function(){edStop();edi=(edi-1+edSteps.length)%edSteps.length;edRender();});
     edplay.addEventListener('click',function(){if(edTimer){edStop();return;}edplay.textContent='⏸ 暂停';edTimer=setInterval(function(){edi=(edi+1)%edSteps.length;edRender();},3200);});
     edRender();
+  })();
+
+  // ---- ALD cycle stepper (etch/depo page) ----
+  (function(){
+    var aldLayers=['ald-z-oh','ald-z-tmagas','ald-z-mono','ald-z-sat','ald-z-purge','ald-z-h2o','ald-z-new','ald-z-done','ald-m1','ald-m3','ald-m4','ald-m5'];
+    var aldSteps=[
+      {n:'0 · 起点：把表面挂满"挂钩"',show:['ald-z-oh'],cap:'预处理让整个表面挂满 <b>–OH 羟基"挂钩"</b>——后面所有化学反应的锚点。左图是一条深沟槽：<b>盯住孔口和孔底</b>，接下来每一步，两处发生的事完全相同。'},
+      {n:'1 · 脉冲 A：TMA 抢挂钩',show:['ald-z-oh','ald-z-tmagas','ald-m1'],cap:'通入<b>前驱体 A（TMA，三甲基铝）</b>：每个 –OH 挂钩抓住一个 TMA，Al 被化学键"焊"在表面、甩出甲烷——是<b>键合</b>，不是靠"喷得匀"。气体自己扩散进深孔，孔底同样挂满。'},
+      {n:'2 · 自限制：吸满即停 ★核心',show:['ald-z-mono','ald-z-sat'],cap:'<b>自限制——ALD 的灵魂</b>：挂钩用完，反应自动停。多余的 TMA 只会弹走：多通 10 倍时间、10 倍剂量，还是这一层。深孔底部气体到得慢？不怕——<b>等它到、吸满、自动停</b>，快慢不影响结果。完美共形的根源就在这。'},
+      {n:'3 · 吹扫：清场，A/B 不见面',show:['ald-z-mono','ald-z-purge','ald-m3'],cap:'惰性气体<b>吹扫</b>：把多余的 A 和副产物全部清走。<b>A 与 B 绝不能在气相相遇</b>——否则在空中就反应、到处乱长，退化成普通 CVD。吹扫时间也是 ALD"慢"的主要来源之一。'},
+      {n:'4 · 脉冲 B：水来"封顶"，长出一层',show:['ald-z-h2o','ald-z-new','ald-m4'],cap:'通入<b>反应物 B（水）</b>：只和表面挂着的甲基反应，生成一层 <b>Al₂O₃</b>，同时表面重新挂满 –OH——<b>回到第 0 步的状态</b>。同样自限制：反应完即停。'},
+      {n:'5 · 再吹扫 → 一循环 ≈ 0.1nm',show:['ald-z-new','ald-z-done','ald-m4','ald-m5'],cap:'再吹扫，一个循环结束：<b>恰好长约一个原子层</b>。左图：孔口、侧壁、孔底，<b>每一处都恰好 N 层</b>——厚度不是"控"出来的，是<b>数</b>出来的。[✓机制·教科书级；Al₂O₃ 每循环 ~0.09–0.11nm]'}
+    ];
+    var ai=0,aldname=document.getElementById('aldname'),aldcap=document.getElementById('aldcap'),aldots=document.getElementById('aldots'),aldplay=document.getElementById('aldplay'),aldTimer=null;
+    aldSteps.forEach(function(s,i){var d=document.createElement('button');d.className='dot';d.setAttribute('aria-label','第'+(i+1)+'步');d.addEventListener('click',function(){aldStop();ai=i;aldRender();});aldots.appendChild(d);});
+    function aldRender(){var s=aldSteps[ai];aldLayers.forEach(function(id){document.getElementById(id).setAttribute('opacity','0')});s.show.forEach(function(id){document.getElementById(id).setAttribute('opacity','1')});aldname.textContent=s.n;aldcap.innerHTML=s.cap;aldots.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('on',i===ai)});}
+    function aldStop(){if(aldTimer){clearInterval(aldTimer);aldTimer=null;aldplay.textContent='▶ 自动播放';}}
+    document.getElementById('aldnext').addEventListener('click',function(){aldStop();ai=(ai+1)%aldSteps.length;aldRender();});
+    document.getElementById('aldprev').addEventListener('click',function(){aldStop();ai=(ai-1+aldSteps.length)%aldSteps.length;aldRender();});
+    aldplay.addEventListener('click',function(){if(aldTimer){aldStop();return;}aldplay.textContent='⏸ 暂停';aldTimer=setInterval(function(){ai=(ai+1)%aldSteps.length;aldRender();},3600);});
+    aldRender();
   })();
 
   // ---- hash deep link: principles/#eda etc. jumps to that page ----
