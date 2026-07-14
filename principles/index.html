@@ -168,6 +168,7 @@
       <button class="tab" data-g="C" data-s="fab" hidden>前道·制造流程</button>
       <button class="tab" data-g="C" data-s="litho" hidden>光刻</button>
       <button class="tab" data-g="C" data-s="etch" hidden>刻蚀·沉积</button>
+      <button class="tab" data-g="C" data-s="clean" hidden>清洗·量测</button>
       <button class="tab" data-g="C" data-s="adv" hidden>制程节点与经济</button>
       <button class="tab" data-g="C" data-s="bepkg" hidden>后道·封装测试</button>
       <button class="tab" data-g="C" data-s="pkg" hidden>先进封装</button>
@@ -2019,6 +2020,181 @@
         <div class="note"><b>这道工艺用什么机器</b>：CVD/ALD 设备（应用材料、泛林、TEL、ASM International——ALD 领头羊）；PVD（应用材料近乎垄断）；电镀（应用材料、ACM/盛美）。国产：北方华创（CVD/PVD/炉管）、拓荆科技（PECVD/ALD）、盛美上海（电镀/清洗）——一句列示，格局详见第二轨「设备」赛道。</div>
         <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">串起来看（回链）</b>：一层铜互连＝<b>刻蚀</b>挖出沟槽 → <b>PVD</b> 铺阻挡层+种子层 → <b>电镀</b>填铜 → <b>CMP</b> 磨平——这正是「前道·制造流程」第 14–26 步大马士革循环的机制拆解。材料端：靶材、前驱体、电镀液的产业与国产化见第二轨「材料」赛道。</div>
       </div>
+      <!-- ===== SCENE: CLEAN & METROLOGY ===== -->
+      <div class="scene" id="s-clean" hidden>
+        <svg width="0" height="0" style="position:absolute"><defs>
+          <marker id="clA" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker>
+          <marker id="clAd" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#9fb0cc"/></marker>
+          <marker id="clAo" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e9a04c"/></marker>
+        </defs></svg>
+
+        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">芯片制造里<b style="color:#e8eef9">最没存在感、却无处不在</b>的两类工艺：<b style="color:#7fd0c4">清洗</b>——占全部工序步数约五分之一 <span style="color:#7a8aa8">[~估算·业界通行说法]</span>，几乎每道关键工序前后都要洗；<b style="color:#c8b3ff">量测与检测</b>——每造一层都要"体检"。它们不"造"任何结构，却直接决定良率的生死。接「<b>前道·制造流程</b>」与「<b>刻蚀·沉积</b>」；量测闭环与「<b>后道·封装测试</b>」的良率闭环首尾呼应。</div>
+
+        <div class="subttl">一、先认识敌人：三类污染怎么"杀死"晶体管</div>
+        <svg viewBox="0 0 660 240">
+          <!-- particle -->
+          <g>
+            <text x="115" y="22" font-size="10.5" fill="#f0738a" text-anchor="middle" font-weight="700">① 颗粒 Particle</text>
+            <rect x="30" y="110" width="170" height="30" fill="url(#gSi)"/>
+            <g fill="url(#gCu)"><rect x="46" y="86" width="26" height="24"/><rect x="104" y="86" width="26" height="24"/><rect x="162" y="86" width="26" height="24"/></g>
+            <circle cx="88" cy="92" r="11" fill="#8a93a8" stroke="#c2cbdd" stroke-width="0.8"/>
+            <path d="M72,95 L104,95" stroke="#f0738a" stroke-width="1.4" stroke-dasharray="3 2"/>
+            <line x1="112" y1="52" x2="92" y2="82" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="114" y="48" font-size="8" fill="#f0738a" text-anchor="start">一颗尘埃桥在两条线之间</text>
+            <text x="115" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">→ 短路 / 断路 / 图形缺陷。</text>
+            <text x="115" y="181" font-size="8.5" fill="#8b9bb8" text-anchor="middle">先进节点上几纳米的颗粒</text>
+            <text x="115" y="194" font-size="8.5" fill="#8b9bb8" text-anchor="middle">就足以杀死一个晶体管 [~估算]</text>
+          </g>
+          <!-- metal -->
+          <g>
+            <text x="335" y="22" font-size="10.5" fill="#e9c84a" text-anchor="middle" font-weight="700">② 金属离子污染</text>
+            <rect x="250" y="110" width="170" height="30" fill="url(#gSi)"/>
+            <rect x="290" y="102" width="90" height="8" fill="url(#gOx)"/>
+            <rect x="298" y="80" width="74" height="22" fill="#d68c3e" opacity="0.92"/>
+            <g fill="#e9c84a"><circle cx="310" cy="106" r="2.6"/><circle cx="336" cy="106" r="2.6"/><circle cx="360" cy="106" r="2.6"/></g>
+            <line x1="416" y1="72" x2="364" y2="102" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="418" y="70" font-size="8" fill="#e9c84a" text-anchor="start">Na⁺/Fe/Cu 离子</text>
+            <text x="418" y="81" font-size="8" fill="#9fb0cc" text-anchor="start">钻进栅氧化层</text>
+            <text x="335" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">→ 阈值电压漂移、漏电、可靠性劣化。</text>
+            <text x="335" y="181" font-size="8.5" fill="#8b9bb8" text-anchor="middle">看不见摸不着，但整批报废——</text>
+            <text x="335" y="194" font-size="8.5" fill="#8b9bb8" text-anchor="middle">历史上"钠污染"曾困扰早期 MOS 多年</text>
+          </g>
+          <!-- organic -->
+          <g>
+            <text x="555" y="22" font-size="10.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">③ 有机残留 / 自然氧化层</text>
+            <rect x="470" y="110" width="170" height="30" fill="url(#gSi)"/>
+            <g fill="#e0556e" opacity="0.55"><path d="M492,110 Q500,100 510,110 Z"/><path d="M560,110 Q570,98 582,110 Z"/></g>
+            <rect x="470" y="107" width="170" height="3" fill="url(#gOx)" opacity="0.8"/>
+            <line x1="500" y1="66" x2="502" y2="102" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="502" y="62" font-size="8" fill="#e0556e" text-anchor="start">去胶后的残胶</text>
+            <line x1="600" y1="80 " x2="612" y2="104" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="598" y="76" font-size="8" fill="#f2d35a" text-anchor="end">空气一碰就长的自然氧化膜</text>
+            <text x="555" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">→ 接触电阻变大、外延长不好、</text>
+            <text x="555" y="181" font-size="8.5" fill="#8b9bb8" text-anchor="middle">键合不牢。所以关键工序前</text>
+            <text x="555" y="194" font-size="8.5" fill="#8b9bb8" text-anchor="middle">都要"现洗现用"</text>
+          </g>
+          <text x="330" y="226" font-size="9" fill="#8aa0c8" text-anchor="middle">洁净室、FOUP 密闭晶圆盒、全套无尘服——都是在防这三类敌人；而<tspan fill="#e8eef9" font-weight="700">人是洁净室里最大的污染源</tspan>。</text>
+        </svg>
+
+        <div class="subttl">二、怎么洗：RCA 三板斧 + 现代单片清洗</div>
+        <div class="cap">洗晶圆不能用"肥皂水"——要用<b>超高纯化学液按顺序分工</b>，每一步"打"一类敌人。1970 年代 RCA 公司定下的三板斧沿用至今，是所有清洗配方的祖师爷：</div>
+        <svg viewBox="0 0 660 150">
+          <g font-size="8.5" text-anchor="middle">
+            <rect x="16" y="24" width="190" height="74" rx="9" fill="#16243a" stroke="#7fd0c4" stroke-opacity=".7"/>
+            <text x="111" y="44" font-size="10.5" fill="#8fd6ad" font-weight="700">SC-1（碱性）</text>
+            <text x="111" y="60" fill="#9fb0cc">氨水 + 双氧水</text>
+            <text x="111" y="74" fill="#8b9bb8">轻微氧化+微蚀表面，把颗粒"抬"下来</text>
+            <text x="111" y="88" fill="#7fd0c4">打：颗粒 · 有机物</text>
+            <rect x="234" y="24" width="190" height="74" rx="9" fill="#16243a" stroke="#e9c84a" stroke-opacity=".7"/>
+            <text x="329" y="44" font-size="10.5" fill="#e9c84a" font-weight="700">DHF（稀氢氟酸）</text>
+            <text x="329" y="60" fill="#9fb0cc">HF : H₂O 稀释液</text>
+            <text x="329" y="74" fill="#8b9bb8">剥掉表面氧化膜，连带膜里的杂质</text>
+            <text x="329" y="88" fill="#e9c84a">打：氧化层 · 附着金属</text>
+            <rect x="452" y="24" width="190" height="74" rx="9" fill="#16243a" stroke="#f0738a" stroke-opacity=".7"/>
+            <text x="547" y="44" font-size="10.5" fill="#f0738a" font-weight="700">SC-2（酸性）</text>
+            <text x="547" y="60" fill="#9fb0cc">盐酸 + 双氧水</text>
+            <text x="547" y="74" fill="#8b9bb8">把金属离子"络合"进溶液带走</text>
+            <text x="547" y="88" fill="#f0738a">打：金属离子</text>
+            <path d="M206 61 L234 61" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#clA)"/>
+            <path d="M424 61 L452 61" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#clA)"/>
+          </g>
+          <text x="330" y="122" font-size="9" fill="#8aa0c8" text-anchor="middle">每步之间用<tspan fill="#e8eef9" font-weight="700">超纯水</tspan>冲洗；另有硫酸+双氧水（食人鱼液）专烧顽固有机物/残胶。</text>
+          <text x="330" y="138" font-size="8.5" fill="#8b9bb8" text-anchor="middle">这些化学品纯度要求 ppt 级（万亿分之一）——洗澡水比芯片还脏，等于白洗；湿电子化学品的产业见第二轨「材料」。</text>
+        </svg>
+        <svg viewBox="0 0 660 216" style="margin-top:8px">
+          <!-- batch -->
+          <text x="165" y="20" font-size="11" fill="#9fb0cc" text-anchor="middle" font-weight="700">批式：湿法槽（几十片一起泡）</text>
+          <rect x="80" y="42" width="170" height="90" rx="6" fill="#16324a" stroke="#7fb8cc" stroke-width="1.2" opacity="0.9"/>
+          <path d="M84,58 Q165,48 246,58 L246,128 L84,128 Z" fill="#2a5a74" opacity="0.55"/>
+          <g stroke="#9fc0ec" stroke-width="2"><line x1="110" y1="60" x2="110" y2="120"/><line x1="130" y1="60" x2="130" y2="120"/><line x1="150" y1="60" x2="150" y2="120"/><line x1="170" y1="60" x2="170" y2="120"/><line x1="190" y1="60" x2="190" y2="120"/><line x1="210" y1="60" x2="210" y2="120"/></g>
+          <text x="272" y="70" font-size="8" fill="#9fb0cc" text-anchor="start">整盒晶圆竖着</text>
+          <text x="272" y="81" font-size="8" fill="#9fb0cc" text-anchor="start">浸进化学槽</text>
+          <line x1="270" y1="72" x2="214" y2="80" stroke="#5d6b88" stroke-width="0.7"/>
+          <text x="165" y="158" font-size="8.5" fill="#8b9bb8" text-anchor="middle">产量大、成本低；但一片脏可能污染整槽，</text>
+          <text x="165" y="171" font-size="8.5" fill="#8b9bb8" text-anchor="middle">精细控制难 → 逐渐让位给单片清洗</text>
+          <line x1="330" y1="14" x2="330" y2="200" stroke="#23304d" stroke-width="1"/>
+          <!-- single wafer -->
+          <text x="495" y="20" font-size="11" fill="#8fe9e1" text-anchor="middle" font-weight="700">单片式：旋转喷淋（先进制程主流）</text>
+          <ellipse cx="470" cy="110" rx="66" ry="10" fill="url(#gSi)" stroke="#9fc0ec" stroke-width="0.7"/>
+          <rect x="452" y="120" width="36" height="12" rx="2" fill="#43506a"/>
+          <path d="M470,142 A10,4 0 0 0 500,142" fill="none" stroke="#8b9bb8" stroke-width="0.9" marker-end="url(#clAd)"/>
+          <text x="512" y="146" font-size="7.5" fill="#8b9bb8" text-anchor="start">高速旋转</text>
+          <rect x="462" y="46" width="16" height="26" rx="3" fill="#43506a"/>
+          <g stroke="#7fd0c4" stroke-width="1"><line x1="470" y1="74" x2="470" y2="96" marker-end="url(#clAd)"/></g>
+          <text x="488" y="58" font-size="8" fill="#7fd0c4" text-anchor="start">喷嘴：化学液→超纯水→</text>
+          <text x="488" y="69" font-size="8" fill="#7fd0c4" text-anchor="start">IPA 干燥，兆声波助洗</text>
+          <text x="495" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">一次洗一片、每片参数独立可控；越先进的图形越"脆"，</text>
+          <text x="495" y="181" font-size="8.5" fill="#8b9bb8" text-anchor="middle">水的表面张力都能把纳米线"拍倒"（pattern collapse）——</text>
+          <text x="495" y="194" font-size="8.5" fill="#8b9bb8" text-anchor="middle">所以干燥比清洗更讲究（IPA 置换、超临界 CO₂）</text>
+        </svg>
+        <div class="note"><b>配套的"隐形巨人"——超纯水 UPW</b>：晶圆每次化学处理后都用超纯水冲，一座大型 fab 一天耗水可达数万吨级 [~估算]，纯度要求电阻率 18.2 MΩ·cm（理论纯水极限）、颗粒和有机物近乎为零——水系统是 fab 造价里不小的一块。<b>这道工艺用什么机器</b>：清洗机（迪恩士 SCREEN、东京电子；国产盛美上海——单片兆声清洗见长、北方华创）——一句列示，格局详见第二轨「设备」赛道。</div>
+
+        <div class="subttl">三、量测与检测：没有测量就没有制造</div>
+        <div class="cap">上千道工序、每道都有公差，<b>不能等两三个月后电测才发现错</b>——每造一层就要"体检"。两类活分工明确：<b>量测（Metrology）</b>回答"尺寸对不对"（量一个连续值），<b>缺陷检测（Inspection）</b>回答"有没有异常"（找出坏点）。</div>
+        <svg viewBox="0 0 660 244">
+          <!-- CD -->
+          <g>
+            <text x="115" y="22" font-size="10.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">CD 线宽量测</text>
+            <g fill="#d68c3e" opacity="0.92"><rect x="52" y="52" width="18" height="70"/><rect x="96" y="52" width="18" height="70"/><rect x="140" y="52" width="18" height="70"/></g>
+            <line x1="70" y1="40" x2="96" y2="40" stroke="#34d6cf" stroke-width="1.2" marker-start="url(#clA)" marker-end="url(#clA)"/>
+            <text x="83" y="34" font-size="8" fill="#7fd0c4" text-anchor="middle">线宽/间距</text>
+            <text x="115" y="150" font-size="8.5" fill="#8b9bb8" text-anchor="middle">CD-SEM 电子显微镜逐点量，</text>
+            <text x="115" y="163" font-size="8.5" fill="#8b9bb8" text-anchor="middle">OCD 光学散射快速全片量——</text>
+            <text x="115" y="176" font-size="8.5" fill="#8b9bb8" text-anchor="middle">线刻宽了细了都不行</text>
+          </g>
+          <!-- overlay -->
+          <g>
+            <text x="335" y="22" font-size="10.5" fill="#c8b3ff" text-anchor="middle" font-weight="700">套刻精度 Overlay</text>
+            <g stroke="#8f7be0" stroke-width="7" fill="none"><path d="M300,60 L300,105 M278,82 L322,82"/></g>
+            <g stroke="#34d6cf" stroke-width="3.5" fill="none"><path d="M306,66 L306,111 M284,88 L328,88"/></g>
+            <text x="368" y="70" font-size="8" fill="#8f7be0" text-anchor="start">下层标记</text>
+            <text x="368" y="84" font-size="8" fill="#34d6cf" text-anchor="start">本层标记</text>
+            <text x="368" y="100" font-size="8" fill="#f0738a" text-anchor="start">偏了几纳米 → 层间接不上</text>
+            <text x="335" y="150" font-size="8.5" fill="#8b9bb8" text-anchor="middle">上下两层图形必须对准，容差仅</text>
+            <text x="335" y="163" font-size="8.5" fill="#8b9bb8" text-anchor="middle">约 2–3nm [~估算]——多重曝光时代</text>
+            <text x="335" y="176" font-size="8.5" fill="#8b9bb8" text-anchor="middle">一层拆几次印，overlay 就是生死线</text>
+          </g>
+          <!-- film -->
+          <g>
+            <text x="555" y="22" font-size="10.5" fill="#f2d35a" text-anchor="middle" font-weight="700">膜厚量测</text>
+            <rect x="490" y="96" width="130" height="26" fill="url(#gSi)"/>
+            <rect x="490" y="84" width="130" height="12" fill="url(#gOx)"/>
+            <g stroke="#f2d35a" stroke-width="1.1"><line x1="516" y1="52" x2="546" y2="84"/><line x1="546" y1="84" x2="576" y2="52" marker-end="url(#clAd)"/></g>
+            <text x="608" y="56" font-size="8" fill="#f2d35a" text-anchor="end">光打上去看反射</text>
+            <text x="555" y="150" font-size="8.5" fill="#8b9bb8" text-anchor="middle">椭偏仪/反射谱：几埃的膜厚差</text>
+            <text x="555" y="163" font-size="8.5" fill="#8b9bb8" text-anchor="middle">都量得出来——栅氧、高K、</text>
+            <text x="555" y="176" font-size="8.5" fill="#8b9bb8" text-anchor="middle">ALD 膜全靠它把关</text>
+          </g>
+          <text x="330" y="204" font-size="9.5" fill="#9bb0d0" text-anchor="middle"><tspan fill="#e8eef9" font-weight="700">缺陷检测</tspan>：明场/暗场光学快速扫全片"找可疑点" → 电子束复检 SEM 放大看"是什么" → 自动分类统计——</text>
+          <text x="330" y="219" font-size="9.5" fill="#9bb0d0" text-anchor="middle">产出的是<tspan fill="#e8eef9" font-weight="700">物理缺陷地图</tspan>（过程中的"体检单"），与「后道·封装测试」页 CP 电测的 wafer map（最终"成绩单"）互为表里。</text>
+          <text x="330" y="238" font-size="8.5" fill="#8b9bb8" text-anchor="middle">[△示意：三个面板均为教学简化图]</text>
+        </svg>
+
+        <div class="subttl">量测数据的闭环：SPC / APC——工厂的"自动驾驶"</div>
+        <svg viewBox="0 0 660 120">
+          <g font-size="9" text-anchor="middle">
+            <rect x="20" y="26" width="136" height="44" rx="8" fill="#16243a" stroke="#7fd0c4" stroke-opacity=".7"/>
+            <text x="88" y="45" fill="#bfeee4" font-weight="700">工序加工</text>
+            <text x="88" y="60" font-size="8" fill="#8b9bb8">刻蚀/沉积/光刻…</text>
+            <rect x="186" y="26" width="136" height="44" rx="8" fill="#16243a" stroke="#34d6cf" stroke-opacity=".7"/>
+            <text x="254" y="45" fill="#cdeef0" font-weight="700">inline 量测</text>
+            <text x="254" y="60" font-size="8" fill="#8b9bb8">CD/overlay/膜厚/缺陷</text>
+            <rect x="352" y="26" width="136" height="44" rx="8" fill="#16243a" stroke="#e9c84a" stroke-opacity=".7"/>
+            <text x="420" y="45" fill="#e9c84a" font-weight="700">SPC 在控吗？</text>
+            <text x="420" y="60" font-size="8" fill="#8b9bb8">统计过程控制·超限报警</text>
+            <rect x="518" y="26" width="122" height="44" rx="8" fill="#1d3552" stroke="#e9a04c" stroke-opacity=".75"/>
+            <text x="579" y="45" fill="#f3cf9c" font-weight="700">APC 自动调参</text>
+            <text x="579" y="60" font-size="8" fill="#c9a86a">下一批配方微调</text>
+            <path d="M156 48 L186 48" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#clA)"/>
+            <path d="M322 48 L352 48" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#clA)"/>
+            <path d="M488 48 L518 48" stroke="#e9a04c" stroke-width="1.6" marker-end="url(#clAo)"/>
+          </g>
+          <path d="M579,70 Q579,102 330,102 Q88,102 88,74" fill="none" stroke="#e9a04c" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#clAd)"/>
+          <text x="330" y="97" font-size="8.5" fill="#c9a86a" text-anchor="middle">参数回补机台——上千道工序能"不跑偏"，靠的就是这套每层都在转的小闭环</text>
+        </svg>
+        <div class="note"><b>这道工艺用什么机器</b>：缺陷检测近乎被 <b>KLA</b> 主导（明场/暗场/电子束复检），CD-SEM（日立高新）、OCD/膜厚（Nova、Onto）、套刻（KLA、ASML）；国产：中科飞测、精测电子、睿励精仪——量测检测是国产化最薄弱的设备环节之一 [~估算·多方研究口径]，格局详见第二轨「设备」赛道。</div>
+        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">全流程至此补齐（接第二轨）</b>：光刻（印）、刻蚀（挖）、沉积（长）、掺杂（注）、CMP（磨）、清洗（洗）、量测（量）——八大工艺在轨1 已各有其位。湿电子化学品、超纯水系统的产业与国产化见第二轨「材料」；清洗机、量测检测设备见第二轨「设备」。</div>
+      </div>
       <div class="scene" id="s-mem" hidden>
         <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">芯片分两大类：<b style="color:#e8eef9">逻辑</b>(负责运算)和<b style="color:#e8eef9">存储</b>(负责记忆)。存储又分<b style="color:#e8eef9">易失</b>(断电就丢：SRAM / DRAM)和<b style="color:#e8eef9">非易失</b>(断电仍在：NAND / NOR 闪存)。存储是<b style="color:#e8eef9">强周期、寡头</b>的大产业，也是 AI 最关键的"喂数据"瓶颈。</div>
 
@@ -2584,7 +2760,7 @@
 
 <script>
 (function(){
-  var scenes={chain:'s-chain',basics:'s-basics',eda:'s-eda',wafer:'s-wafer',tr:'s-tr',fab:'s-fab',litho:'s-litho',etch:'s-etch',adv:'s-adv',advstruct:'s-advstruct',mem:'s-mem',bepkg:'s-bepkg',pkg:'s-pkg',pwr:'s-pwr',family:'s-family'};
+  var scenes={chain:'s-chain',basics:'s-basics',eda:'s-eda',wafer:'s-wafer',tr:'s-tr',fab:'s-fab',litho:'s-litho',etch:'s-etch',clean:'s-clean',adv:'s-adv',advstruct:'s-advstruct',mem:'s-mem',bepkg:'s-bepkg',pkg:'s-pkg',pwr:'s-pwr',family:'s-family'};
   document.querySelectorAll('.tab').forEach(function(t){
     t.addEventListener('click',function(){
       document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});
