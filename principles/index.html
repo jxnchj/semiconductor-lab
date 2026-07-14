@@ -167,6 +167,7 @@
       <button class="tab" data-g="C" data-s="wafer" hidden>硅片·掩膜</button>
       <button class="tab" data-g="C" data-s="fab" hidden>前道·制造流程</button>
       <button class="tab" data-g="C" data-s="litho" hidden>光刻</button>
+      <button class="tab" data-g="C" data-s="etch" hidden>刻蚀·沉积</button>
       <button class="tab" data-g="C" data-s="adv" hidden>制程节点与经济</button>
       <button class="tab" data-g="C" data-s="bepkg" hidden>后道·封装测试</button>
       <button class="tab" data-g="C" data-s="pkg" hidden>先进封装</button>
@@ -1637,7 +1638,7 @@
         <div class="subttl">光刻：芯片制造的"画笔",也是最大的卡脖子环节</div>
         <div class="cap">光刻 = 用光透过<b>掩膜（光罩）</b>把电路图案印到涂了<b>光刻胶</b>的硅片上（这套动作就是下面这套"图案转印"）。能画多细由<b>瑞利公式</b>决定：<b>分辨率 ≈ k₁ · λ / NA</b>——<b>波长 λ 越短、镜头数值孔径 NA 越大，线就越细</b>。于是先进制程把光源从 <b>DUV（193nm）</b>一路推到 <b>EUV（13.5nm）</b>，并不断加大 NA。</div>
 
-        <div class="subttl">这套动作叫「图案转印」：涂胶 → 曝光 → 显影 → 刻蚀 → 去胶，制造里每做一层新图形就重复一次</div>
+        <div class="subttl">这套动作叫「图案转印」：涂胶 → 曝光 → 显影 → 刻蚀 → 去胶，制造里每做一层新图形就重复一次（刻蚀怎么"挖"、膜怎么"长"，详见 刻蚀·沉积）</div>
         <svg viewBox="0 0 620 146">
           <defs><marker id="luv" markerWidth="7" markerHeight="7" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#c8b3ff"/></marker></defs>
           <g><text x="55" y="14" font-size="10" fill="#9fb0cc" text-anchor="middle">①涂胶</text><text x="55" y="25" font-size="7" fill="#7f8ca6" text-anchor="middle">底材+薄膜+胶</text><rect x="14" y="84" width="82" height="16" fill="#3a4870"/><rect x="14" y="77" width="82" height="7" fill="#f2d35a"/><rect x="14" y="66" width="82" height="11" fill="#e0556e"/></g>
@@ -1786,6 +1787,238 @@
       </div>
 
       <!-- ===== SCENE 6: MEMORY ===== -->
+      <!-- ===== SCENE: ETCH & DEPOSITION ===== -->
+      <div class="scene" id="s-etch" hidden>
+        <svg width="0" height="0" style="position:absolute"><defs>
+          <marker id="etA" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker>
+          <marker id="etAd" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#9fb0cc"/></marker>
+          <radialGradient id="gPlasma" cx="0.5" cy="0.5" r="0.7"><stop offset="0" stop-color="#c9b3f5" stop-opacity="0.85"/><stop offset="0.6" stop-color="#8f7be0" stop-opacity="0.5"/><stop offset="1" stop-color="#5b48a8" stop-opacity="0.15"/></radialGradient>
+        </defs></svg>
+
+        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px"><b style="color:#e8eef9">光刻只是把图形印在光刻胶上</b>——胶本身不是芯片。真正把图形变成材料结构的，是一对互补的工艺：<b style="color:#f0738a">刻蚀（减法：挖掉）</b>和<b style="color:#7fd0c4">沉积（加法：长上）</b>。一颗芯片就是几十层「<b>沉积 → 光刻 → 刻蚀</b>」循环叠出来的。本页接「<b>光刻</b>」，对应「<b>前道·制造流程</b>」里反复出现的那两个动作。</div>
+
+        <div class="subttl">一、先看全局：造一层图形 ＝ 一轮"加法 → 印刷 → 减法"</div>
+        <svg viewBox="0 0 660 240">
+          <!-- panel 1: deposit -->
+          <g>
+            <text x="88" y="22" font-size="10.5" fill="#7fd0c4" text-anchor="middle" font-weight="700">① 沉积（加法）</text>
+            <rect x="28" y="120" width="120" height="34" fill="url(#gSi)"/>
+            <rect x="28" y="98" width="120" height="22" fill="url(#gOx)"/>
+            <g stroke="#7fd0c4" stroke-width="1" opacity="0.8">
+              <line x1="48" y1="66" x2="48" y2="90" marker-end="url(#etAd)"/><line x1="78" y1="66" x2="78" y2="90" marker-end="url(#etAd)"/>
+              <line x1="108" y1="66" x2="108" y2="90" marker-end="url(#etAd)"/><line x1="132" y1="66" x2="132" y2="90" marker-end="url(#etAd)"/>
+            </g>
+            <text x="88" y="178" font-size="8.5" fill="#8b9bb8" text-anchor="middle">整面长一层新材料</text>
+            <text x="88" y="190" font-size="8.5" fill="#8b9bb8" text-anchor="middle">（此处以氧化硅为例）</text>
+          </g>
+          <text x="168" y="120" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
+          <!-- panel 2: litho -->
+          <g>
+            <text x="252" y="22" font-size="10.5" fill="#e0556e" text-anchor="middle" font-weight="700">② 光刻（印刷）</text>
+            <rect x="192" y="120" width="120" height="34" fill="url(#gSi)"/>
+            <rect x="192" y="98" width="120" height="22" fill="url(#gOx)"/>
+            <g fill="#e0556e"><rect x="192" y="84" width="34" height="14" rx="1"/><rect x="248" y="84" width="30" height="14" rx="1"/><rect x="292" y="84" width="20" height="14" rx="1"/></g>
+            <text x="252" y="178" font-size="8.5" fill="#8b9bb8" text-anchor="middle">涂胶·曝光·显影，</text>
+            <text x="252" y="190" font-size="8.5" fill="#8b9bb8" text-anchor="middle">胶变成"想留哪里"的模板</text>
+          </g>
+          <text x="332" y="120" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
+          <!-- panel 3: etch -->
+          <g>
+            <text x="416" y="22" font-size="10.5" fill="#f0738a" text-anchor="middle" font-weight="700">③ 刻蚀（减法）</text>
+            <rect x="356" y="120" width="120" height="34" fill="url(#gSi)"/>
+            <g fill="url(#gOx)"><rect x="356" y="98" width="34" height="22"/><rect x="412" y="98" width="30" height="22"/><rect x="456" y="98" width="20" height="22"/></g>
+            <g fill="#e0556e"><rect x="356" y="84" width="34" height="14" rx="1"/><rect x="412" y="84" width="30" height="14" rx="1"/><rect x="456" y="84" width="20" height="14" rx="1"/></g>
+            <g stroke="#f0738a" stroke-width="1" opacity="0.8">
+              <line x1="400" y1="56" x2="400" y2="80" marker-end="url(#etAd)"/><line x1="448" y1="56" x2="448" y2="80" marker-end="url(#etAd)"/>
+            </g>
+            <text x="416" y="178" font-size="8.5" fill="#8b9bb8" text-anchor="middle">没被胶保护的部分被挖掉，</text>
+            <text x="416" y="190" font-size="8.5" fill="#8b9bb8" text-anchor="middle">图形从胶"转移"进材料</text>
+          </g>
+          <text x="496" y="120" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
+          <!-- panel 4: strip -->
+          <g>
+            <text x="580" y="22" font-size="10.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">④ 去胶·清洗</text>
+            <rect x="520" y="120" width="120" height="34" fill="url(#gSi)"/>
+            <g fill="url(#gOx)"><rect x="520" y="98" width="34" height="22"/><rect x="576" y="98" width="30" height="22"/><rect x="620" y="98" width="20" height="22"/></g>
+            <text x="580" y="178" font-size="8.5" fill="#8b9bb8" text-anchor="middle">胶完成使命被剥掉，</text>
+            <text x="580" y="190" font-size="8.5" fill="#8b9bb8" text-anchor="middle">留下一层"图形化的材料"</text>
+          </g>
+          <path d="M580,206 Q580,228 330,228 Q88,228 88,210" fill="none" stroke="#34d6cf" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#etAd)"/>
+          <text x="330" y="222" font-size="9" fill="#8aa0c8" text-anchor="middle">回到①，叠下一层——先进芯片要这样循环几十次（详见 前道·制造流程 / 清洗步见 清洗·量测）</text>
+        </svg>
+
+        <div class="subttl">二、刻蚀：怎么"挖"才又准又直</div>
+        <div class="cap">刻蚀的难点一句话：<b>既要挖得快，又要挖得直、停得住</b>。两大路线——<b>湿法</b>（泡药水）便宜但"往四面八方啃"；<b>干法（等离子体）</b>能挖出垂直的墙，是先进制程的主力。</div>
+        <svg viewBox="0 0 660 210">
+          <!-- wet etch -->
+          <text x="165" y="20" font-size="11" fill="#e9c84a" text-anchor="middle" font-weight="700">湿法刻蚀（各向同性）</text>
+          <rect x="60" y="120" width="210" height="40" fill="url(#gSi)"/>
+          <g fill="url(#gOx)"><path d="M60,96 L118,96 L118,120 L60,120 Z"/><path d="M212,96 L270,96 L270,120 L212,120 Z"/></g>
+          <!-- isotropic undercut: bowl-shaped cavity under resist edges -->
+          <path d="M118,96 Q126,120 165,120 Q204,120 212,96" fill="#0d1526"/>
+          <g fill="#e0556e"><rect x="60" y="82" width="66" height="14" rx="1"/><rect x="204" y="82" width="66" height="14" rx="1"/></g>
+          <path d="M126,96 Q133,114 165,114 Q197,114 204,96" fill="none" stroke="#7fb8cc" stroke-width="1.2" stroke-dasharray="3 2"/>
+          <line x1="122" y1="70" x2="130" y2="94" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="120" y="66" font-size="8" fill="#9fb0cc" text-anchor="end">钻蚀 undercut：药水啃进胶底下</text>
+          <text x="165" y="178" font-size="8.5" fill="#8b9bb8" text-anchor="middle">液体向所有方向均匀腐蚀 → 侧壁是圆弧、图形会变胖变糊</text>
+          <text x="165" y="191" font-size="8.5" fill="#8b9bb8" text-anchor="middle">便宜、选择比高 → 适合大面积去膜、清洗类步骤</text>
+          <line x1="330" y1="14" x2="330" y2="196" stroke="#23304d" stroke-width="1"/>
+          <!-- dry etch -->
+          <text x="495" y="20" font-size="11" fill="#8fe9e1" text-anchor="middle" font-weight="700">干法刻蚀（各向异性）</text>
+          <rect x="390" y="120" width="210" height="40" fill="url(#gSi)"/>
+          <g fill="url(#gOx)"><rect x="390" y="96" width="58" height="24"/><rect x="542" y="96" width="58" height="24"/></g>
+          <rect x="448" y="96" width="94" height="24" fill="#0d1526"/>
+          <g fill="#e0556e"><rect x="390" y="82" width="58" height="14" rx="1"/><rect x="542" y="82" width="58" height="14" rx="1"/></g>
+          <g stroke="#8fe9e1" stroke-width="1.1" opacity="0.85">
+            <line x1="462" y1="46" x2="462" y2="76" marker-end="url(#etAd)"/><line x1="482" y1="46" x2="482" y2="76" marker-end="url(#etAd)"/>
+            <line x1="502" y1="46" x2="502" y2="76" marker-end="url(#etAd)"/><line x1="522" y1="46" x2="522" y2="76" marker-end="url(#etAd)"/>
+          </g>
+          <line x1="546" y1="60" x2="524" y2="60" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="549" y="63" font-size="8" fill="#9fb0cc" text-anchor="start">离子只往下打</text>
+          <text x="495" y="178" font-size="8.5" fill="#8b9bb8" text-anchor="middle">等离子体里的离子被电场加速、垂直轰击 → 侧壁笔直</text>
+          <text x="495" y="191" font-size="8.5" fill="#8b9bb8" text-anchor="middle">纳米级图形唯一的选择——现代 fab 的刻蚀主力</text>
+        </svg>
+
+        <div class="subttl">干法刻蚀的心脏：RIE 反应离子刻蚀（物理 + 化学的协同）</div>
+        <svg viewBox="0 0 660 260">
+          <!-- chamber -->
+          <rect x="150" y="24" width="360" height="204" rx="10" fill="#0d1526" stroke="#3a4a6a" stroke-width="1.4"/>
+          <rect x="210" y="38" width="240" height="14" rx="3" fill="#43506a"/>
+          <text x="330" y="30" font-size="8.5" fill="#9fb0cc" text-anchor="middle">上电极 / 气体喷淋头</text>
+          <g stroke="#7fd0c4" stroke-width="1" opacity="0.7">
+            <line x1="240" y1="52" x2="240" y2="66"/><line x1="285" y1="52" x2="285" y2="66"/><line x1="330" y1="52" x2="330" y2="66"/><line x1="375" y1="52" x2="375" y2="66"/><line x1="420" y1="52" x2="420" y2="66"/>
+          </g>
+          <text x="140" y="46" font-size="8.5" fill="#7fd0c4" text-anchor="end">刻蚀气体进入</text>
+          <line x1="142" y1="43" x2="208" y2="43" stroke="#7fd0c4" stroke-width="0.8" opacity="0.6"/>
+          <!-- plasma glow -->
+          <ellipse cx="330" cy="105" rx="150" ry="38" fill="url(#gPlasma)"/>
+          <text x="330" y="100" font-size="10" fill="#e6dcff" text-anchor="middle" font-weight="700">等离子体（辉光）</text>
+          <text x="330" y="114" font-size="8" fill="#c9b3f5" text-anchor="middle">射频电场把气体"打碎"成 离子⁺ + 自由基 + 电子</text>
+          <!-- ions to wafer -->
+          <g stroke="#8fe9e1" stroke-width="1.2" opacity="0.9">
+            <line x1="280" y1="148" x2="280" y2="172" marker-end="url(#etAd)"/><line x1="330" y1="148" x2="330" y2="172" marker-end="url(#etAd)"/><line x1="380" y1="148" x2="380" y2="172" marker-end="url(#etAd)"/>
+          </g>
+          <g fill="#a8f7ee" opacity="0.85"><circle cx="305" cy="160" r="2.5"/><circle cx="355" cy="156" r="2.5"/></g>
+          <text x="466" y="160" font-size="8" fill="#8fe9e1" text-anchor="start">离子⁺ 垂直轰击（物理）</text>
+          <line x1="464" y1="157" x2="384" y2="158" stroke="#5d6b88" stroke-width="0.7"/>
+          <text x="466" y="176" font-size="8" fill="#9fe0b8" text-anchor="start">自由基 化学反应（化学）</text>
+          <line x1="464" y1="173" x2="360" y2="164" stroke="#5d6b88" stroke-width="0.7"/>
+          <!-- wafer + chuck -->
+          <ellipse cx="330" cy="182" rx="90" ry="8" fill="url(#gSi)" stroke="#9fc0ec" stroke-width="0.7"/>
+          <rect x="252" y="188" width="156" height="14" rx="3" fill="#43506a"/>
+          <text x="330" y="199" font-size="7.5" fill="#c2cbdd" text-anchor="middle">下电极（晶圆吸在上面，接射频偏压）</text>
+          <!-- byproduct out -->
+          <line x1="510" y1="210 " x2="560" y2="210" stroke="#9fb0cc" stroke-width="0.9" opacity="0.7" marker-end="url(#etA)"/>
+          <text x="562" y="213" font-size="8" fill="#9fb0cc" text-anchor="start">挥发性副产物</text>
+          <text x="562" y="224" font-size="8" fill="#9fb0cc" text-anchor="start">被真空泵抽走</text>
+          <text x="330" y="248" font-size="9" fill="#8aa0c8" text-anchor="middle">纯物理轰击：直但慢、还误伤；纯化学反应：快但四面啃。<tspan fill="#e8eef9" font-weight="700">RIE 两者协同</tspan>：离子把表面"砸松"，自由基趁机反应——又快又直。</text>
+        </svg>
+        <div class="cap"><b>四个关键指标</b>（刻蚀工程师每天盯的）：<b>① 各向异性度</b>——侧壁够不够直；<b>② 选择比</b>——只挖目标材料，对胶和下面的"停止层"几乎不动（挖过头＝报废）；<b>③ 均匀性</b>——整片 300mm 晶圆上每个角落挖得一样深；<b>④ 速率</b>——直接决定机台产能。四者互相牵制，工艺配方就是在其间找平衡。刻蚀用的气体（CF₄、Cl₂、HBr…）见「前道·制造流程」的电子特气一节。</div>
+        <svg viewBox="0 0 660 216">
+          <text x="180" y="20" font-size="11" fill="#e8eef9" text-anchor="middle" font-weight="700">极限挑战：高深宽比刻蚀（3D NAND 通道孔）</text>
+          <!-- HAR hole -->
+          <rect x="60" y="34" width="240" height="130" fill="url(#gILD)" opacity="0.55"/>
+          <g fill="#0d1526">
+            <path d="M120,34 L134,34 L132,164 L122,164 Z"/>
+            <path d="M170,34 L184,34 L183,100 Q186,132 179,164 L172,164 Q167,132 171,100 Z"/>
+            <path d="M226,34 L240,34 L236,90 L242,130 L234,164 L228,164 L232,120 L226,80 Z"/>
+          </g>
+          <text x="127" y="180" font-size="8" fill="#8fd6ad" text-anchor="middle">理想：直</text>
+          <text x="178" y="180" font-size="8" fill="#e9c84a" text-anchor="middle">弯曲</text>
+          <text x="234" y="180" font-size="8" fill="#f0738a" text-anchor="middle">扭转</text>
+          <text x="180" y="196" font-size="8.5" fill="#8b9bb8" text-anchor="middle">一次打穿一百多层叠膜、深宽比 ~60:1 [~估算]</text>
+          <text x="180" y="209" font-size="8.5" fill="#8b9bb8" text-anchor="middle">——相当于挖一口"直径 1 米、深 60 米"的井</text>
+          <text x="480" y="20" font-size="11" fill="#e8eef9" text-anchor="middle" font-weight="700">为什么越深越难</text>
+          <g font-size="9" fill="#9bb0d0" text-anchor="start">
+            <text x="360" y="52">· 离子飞到孔底越来越少 → 越挖越慢（甚至停住）</text>
+            <text x="360" y="76">· 反应副产物从深孔里排不出去 → 堵住反应</text>
+            <text x="360" y="100">· 电荷在孔壁积累 → 把离子路径"推歪" → 孔弯/扭</text>
+            <text x="360" y="124">· 掩膜先被磨光 → 上面破了下面还没挖完</text>
+          </g>
+          <text x="360" y="156" font-size="9" fill="#8aa0c8" text-anchor="start">应对：更高能离子、低温刻蚀、脉冲等离子体、更硬的掩膜——</text>
+          <text x="360" y="170" font-size="9" fill="#8aa0c8" text-anchor="start">高深宽比刻蚀是 3D NAND 的"胜负手"（对应 存储器 页）。</text>
+          <text x="360" y="196" font-size="8.5" fill="#8b9bb8" text-anchor="start">极限精度另一路：ALE 原子层刻蚀——一循环只剥一层原子，自限制。</text>
+        </svg>
+        <div class="note"><b>这道工艺用什么机器</b>：等离子体刻蚀机（介质刻蚀 / 硅刻蚀 / 金属刻蚀各有专机）。国际：泛林（Lam）、应用材料（AMAT）、东京电子（TEL）；国产：中微公司（介质刻蚀已进台积电先进产线）、北方华创（硅刻蚀）——设备格局与国产化详见第二轨「设备」赛道。</div>
+
+        <div class="subttl">三、沉积：怎么"长"出一层又薄又匀的膜</div>
+        <div class="cap">芯片里每一层材料——绝缘的氧化硅、导电的金属、晶体管的高K栅介质——都要"长"上去。四大方法各有分工，核心差别一句话：<b>膜是"气体反应出来的"还是"原子砸出来的"，决定了它能不能均匀地铺进沟槽和深孔</b>。</div>
+        <svg viewBox="0 0 660 232">
+          <g font-size="8.5" text-anchor="middle">
+            <rect x="10" y="24" width="152" height="130" rx="9" fill="#16243a" stroke="#3aa86b" stroke-opacity=".6"/>
+            <text x="86" y="44" font-size="10.5" fill="#8fd6ad" font-weight="700">CVD 化学气相沉积</text>
+            <text x="86" y="62" fill="#9fb0cc">通入气体，在晶圆表面</text>
+            <text x="86" y="74" fill="#9fb0cc">发生化学反应长出膜</text>
+            <text x="86" y="94" fill="#8b9bb8">LPCVD：低压高温、较共形</text>
+            <text x="86" y="106" fill="#8b9bb8">PECVD：等离子体助攻、低温</text>
+            <text x="86" y="126" fill="#7fd0c4">主力：介质层、多晶硅、氮化硅</text>
+            <text x="86" y="142" fill="#7a8aa8">材料：前驱体气体</text>
+            <rect x="172" y="24" width="152" height="130" rx="9" fill="#16243a" stroke="#e9a04c" stroke-opacity=".6"/>
+            <text x="248" y="44" font-size="10.5" fill="#f0c082" font-weight="700">PVD 物理气相沉积</text>
+            <text x="248" y="62" fill="#9fb0cc">氩离子轰击"靶材"，</text>
+            <text x="248" y="74" fill="#9fb0cc">砸出的原子飞到晶圆上</text>
+            <text x="248" y="94" fill="#8b9bb8">溅射：纯物理、无需高温</text>
+            <text x="248" y="106" fill="#8b9bb8">直线飞行 → 深孔侧壁铺不匀</text>
+            <text x="248" y="126" fill="#7fd0c4">主力：金属层、阻挡层种子层</text>
+            <text x="248" y="142" fill="#7a8aa8">材料：高纯靶材（铜/钛/钽…）</text>
+            <rect x="334" y="24" width="152" height="130" rx="9" fill="#1d3552" stroke="#34d6cf" stroke-width="1.2"/>
+            <text x="410" y="44" font-size="10.5" fill="#8fe9e1" font-weight="700">ALD 原子层沉积 ★</text>
+            <text x="410" y="62" fill="#9fb0cc">前驱体 A、B 交替通入，</text>
+            <text x="410" y="74" fill="#9fb0cc">每循环只长一层原子</text>
+            <text x="410" y="94" fill="#8b9bb8">自限制：表面吸满即停</text>
+            <text x="410" y="106" fill="#8b9bb8">慢，但厚度可"数着层"控制</text>
+            <text x="410" y="126" fill="#7fd0c4">主力：高K栅介质、GAA 四面栅</text>
+            <text x="410" y="142" fill="#7a8aa8">材料：高纯前驱体（液态源）</text>
+            <rect x="496" y="24" width="152" height="130" rx="9" fill="#16243a" stroke="#8f7be0" stroke-opacity=".6"/>
+            <text x="572" y="44" font-size="10.5" fill="#c8b3ff" font-weight="700">ECD 电镀</text>
+            <text x="572" y="62" fill="#9fb0cc">晶圆泡进电镀液，</text>
+            <text x="572" y="74" fill="#9fb0cc">通电让铜长满沟槽</text>
+            <text x="572" y="94" fill="#8b9bb8">自下而上填充、快且便宜</text>
+            <text x="572" y="106" fill="#8b9bb8">需要 PVD 先铺种子层</text>
+            <text x="572" y="126" fill="#7fd0c4">主力：铜互连（大马士革）</text>
+            <text x="572" y="142" fill="#7a8aa8">材料：电镀液+添加剂</text>
+          </g>
+          <text x="330" y="180" font-size="9.5" fill="#9bb0d0" text-anchor="middle">还有一位"编外成员"：<tspan fill="#f2d35a" font-weight="700">热氧化</tspan>——不是把材料"放上去"，而是高温下<tspan fill="#e8eef9" font-weight="700">消耗硅本身长出 SiO₂</tspan>，</text>
+          <text x="330" y="196" font-size="9.5" fill="#9bb0d0" text-anchor="middle">界面质量最好（这正是"硅统治半导体"的原因之一）；经典栅氧用它，先进制程栅介质已换成 ALD 长的高K（见 先进结构演进）。</text>
+          <text x="330" y="218" font-size="8.5" fill="#8b9bb8" text-anchor="middle">干氧：慢而致密（长薄的关键膜）｜湿氧：快而疏松（长厚的隔离膜）——炉管批量处理；快速热处理 RTP 用于秒级退火。</text>
+        </svg>
+
+        <div class="subttl">核心对比：台阶覆盖性——为什么先进制程离不开 ALD</div>
+        <svg viewBox="0 0 660 216">
+          <!-- PVD panel -->
+          <g>
+            <text x="120" y="20" font-size="10.5" fill="#f0c082" text-anchor="middle" font-weight="700">PVD：顶部堆积</text>
+            <path d="M40,60 L92,60 L92,130 L148,130 L148,60 L200,60 L200,170 L40,170 Z" fill="url(#gSi)"/>
+            <path d="M40,60 L92,60 L92,72 L40,72 Z M148,60 L200,60 L200,72 L148,72 Z" fill="url(#gCu)"/>
+            <path d="M84,60 Q92,64 94,78 L92,86 L90,78 Q88,66 84,64 Z" fill="url(#gCu)"/>
+            <path d="M156,60 Q148,64 146,78 L148,86 L150,78 Q152,66 156,64 Z" fill="url(#gCu)"/>
+            <path d="M92,126 L148,126 L148,130 L92,130 Z" fill="url(#gCu)" opacity="0.8"/>
+            <line x1="72" y1="46" x2="90" y2="62" stroke="#5d6b88" stroke-width="0.8"/>
+            <text x="36" y="42" font-size="8" fill="#f0c082" text-anchor="start">突出物 overhang，快把口封死</text>
+            <text x="120" y="190" font-size="8.5" fill="#8b9bb8" text-anchor="middle">原子直线飞来 → 顶上厚、侧壁薄</text>
+            <text x="120" y="203" font-size="8.5" fill="#8b9bb8" text-anchor="middle">孔口会"封盖"留下空洞</text>
+          </g>
+          <!-- CVD panel -->
+          <g>
+            <text x="340" y="20" font-size="10.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">CVD：较共形</text>
+            <path d="M260,60 L312,60 L312,130 L368,130 L368,60 L420,60 L420,170 L260,170 Z" fill="url(#gSi)"/>
+            <path d="M260,60 L312,60 L312,130 L368,130 L368,60 L420,60 L420,74 L382,74 L382,144 L298,144 L298,74 L260,74 Z" fill="url(#gSD)" opacity="0.9"/>
+            <text x="340" y="190" font-size="8.5" fill="#8b9bb8" text-anchor="middle">气体能扩散进孔里反应</text>
+            <text x="340" y="203" font-size="8.5" fill="#8b9bb8" text-anchor="middle">侧壁能铺上，但深孔仍上厚下薄</text>
+          </g>
+          <!-- ALD panel -->
+          <g>
+            <text x="560" y="20" font-size="10.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">ALD：完美共形 ★</text>
+            <path d="M480,60 L532,60 L532,130 L588,130 L588,60 L640,60 L640,170 L480,170 Z" fill="url(#gSi)"/>
+            <path d="M480,60 L532,60 L532,130 L588,130 L588,60 L640,60 L640,70 L598,70 L598,140 L522,140 L522,70 L480,70 Z" fill="#5eead4" opacity="0.85"/>
+            <text x="560" y="190" font-size="8.5" fill="#8b9bb8" text-anchor="middle">吸满即停、一层层长 →</text>
+            <text x="560" y="203" font-size="8.5" fill="#8b9bb8" text-anchor="middle">再深的孔、再绕的面都一样厚</text>
+          </g>
+        </svg>
+        <div class="cap"><b>ALD 一个循环四步</b>：① 通入前驱体 A → 表面<b>吸附满一层就自动停</b>（自限制）；② 惰性气体吹扫掉多余的 A；③ 通入反应物 B → 只和吸附的那层 A 反应，生成一层薄膜；④ 再吹扫。<b>每循环恰好一个原子层（~0.1nm）</b>，重复 N 次＝精确 N 层。代价是慢——所以只用在最关键的膜上：高K栅介质、GAA 纳米片四面包裹的栅极、高深宽比结构的衬里。<b>结构越立体（FinFET→GAA→3D NAND），ALD 越不可替代</b>。</div>
+        <div class="note"><b>这道工艺用什么机器</b>：CVD/ALD 设备（应用材料、泛林、TEL、ASM International——ALD 领头羊）；PVD（应用材料近乎垄断）；电镀（应用材料、ACM/盛美）。国产：北方华创（CVD/PVD/炉管）、拓荆科技（PECVD/ALD）、盛美上海（电镀/清洗）——一句列示，格局详见第二轨「设备」赛道。</div>
+        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">串起来看（回链）</b>：一层铜互连＝<b>刻蚀</b>挖出沟槽 → <b>PVD</b> 铺阻挡层+种子层 → <b>电镀</b>填铜 → <b>CMP</b> 磨平——这正是「前道·制造流程」第 14–26 步大马士革循环的机制拆解。材料端：靶材、前驱体、电镀液的产业与国产化见第二轨「材料」赛道。</div>
+      </div>
       <div class="scene" id="s-mem" hidden>
         <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">芯片分两大类：<b style="color:#e8eef9">逻辑</b>(负责运算)和<b style="color:#e8eef9">存储</b>(负责记忆)。存储又分<b style="color:#e8eef9">易失</b>(断电就丢：SRAM / DRAM)和<b style="color:#e8eef9">非易失</b>(断电仍在：NAND / NOR 闪存)。存储是<b style="color:#e8eef9">强周期、寡头</b>的大产业，也是 AI 最关键的"喂数据"瓶颈。</div>
 
@@ -2351,7 +2584,7 @@
 
 <script>
 (function(){
-  var scenes={chain:'s-chain',basics:'s-basics',eda:'s-eda',wafer:'s-wafer',tr:'s-tr',fab:'s-fab',litho:'s-litho',adv:'s-adv',advstruct:'s-advstruct',mem:'s-mem',bepkg:'s-bepkg',pkg:'s-pkg',pwr:'s-pwr',family:'s-family'};
+  var scenes={chain:'s-chain',basics:'s-basics',eda:'s-eda',wafer:'s-wafer',tr:'s-tr',fab:'s-fab',litho:'s-litho',etch:'s-etch',adv:'s-adv',advstruct:'s-advstruct',mem:'s-mem',bepkg:'s-bepkg',pkg:'s-pkg',pwr:'s-pwr',family:'s-family'};
   document.querySelectorAll('.tab').forEach(function(t){
     t.addEventListener('click',function(){
       document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});
