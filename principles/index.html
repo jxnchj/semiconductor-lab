@@ -921,6 +921,42 @@
         </svg>
         <div class="note">关键事实：掩膜是 <b>4× 放大版</b>（投影时缩小 4 倍，缓解掩膜制造精度压力）｜ 一套先进芯片要 <b>几十~上百张</b>掩膜（每层一张）｜ 一张高端 <b>EUV 掩膜可达数百万美元</b> ｜ 表面贴 <b>pellicle 薄膜</b>挡灰（落在掩膜上的尘点会被一并印到每颗芯片上）。掩膜用在光刻——详见 光刻。</div>
 
+        <div class="subttl">掩膜是怎么"写"出来的：从 GDSII 到一块能用的掩膜</div>
+        <div class="cap">设计交来的 GDSII<b>不能直接印到掩膜上</b>——图形已经小到和光的波长同量级，<b>衍射会把印出来的图形"磨圆、缩短"</b>。所以先要"以歪治歪"，再用电子束一笔一笔写出来：</div>
+        <svg viewBox="0 0 660 236">
+          <!-- panel 1: intent -->
+          <text x="115" y="22" font-size="10.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">① 设计想要的图形</text>
+          <g fill="none" stroke="#5eead4" stroke-width="2.4">
+            <path d="M60,60 L60,140 L100,140 L100,100 L170,100 L170,60 Z"/>
+          </g>
+          <text x="115" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">棱角分明的 L 形线条</text>
+          <text x="200" y="105" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
+          <!-- panel 2: printed without OPC -->
+          <text x="330" y="22" font-size="10.5" fill="#f0738a" text-anchor="middle" font-weight="700">② 直接印出来（走样）</text>
+          <path d="M282,72 Q276,64 288,62 L370,62 Q382,64 380,74 Q378,86 368,88 L330,92 Q318,96 320,110 L322,128 Q322,142 308,142 L294,142 Q280,142 280,128 Z" fill="#3a2030" stroke="#f0738a" stroke-width="1.6"/>
+          <path d="M60,60 L60,140 L100,140 L100,100 L170,100 L170,60 Z" fill="none" stroke="#5eead4" stroke-width="1" stroke-dasharray="3 3" transform="translate(222,2)"/>
+          <line x1="392" y1="70" x2="378" y2="70" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="394" y="73" font-size="8" fill="#f0738a" text-anchor="start">角被磨圆</text>
+          <line x1="392" y1="136" x2="316" y2="136" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="394" y="139" font-size="8" fill="#f0738a" text-anchor="start">线端缩短</text>
+          <text x="330" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">虚线＝设计意图；衍射让"所见非所印"</text>
+          <text x="440" y="105" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
+          <!-- panel 3: OPC mask -->
+          <text x="555" y="22" font-size="10.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">③ OPC：掩膜上"故意画歪"</text>
+          <g fill="none" stroke="#8fd6ad" stroke-width="2.2">
+            <path d="M500,60 L494,60 L494,54 L516,54 L516,60 L500,60 L500,146 L494,146 L494,152 L546,152 L546,146 L540,146 L540,100 L604,100 L604,106 L616,106 L616,54 L594,54 L594,60 L610,60 L610,100"/>
+          </g>
+          <g fill="#8fd6ad" opacity="0.55"><rect x="484" y="70" width="5" height="60"/><rect x="622" y="62" width="5" height="32"/></g>
+          <line x1="486" y1="50" x2="496" y2="56" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="484" y="46" font-size="8" fill="#8fd6ad" text-anchor="start">角上加"衬线"、线端加"锤头"</text>
+          <line x1="476" y1="140" x2="486" y2="128" stroke="#5d6b88" stroke-width="0.8"/>
+          <text x="474" y="146" font-size="8" fill="#8fd6ad" text-anchor="end">SRAF 辅助条</text>
+          <text x="555" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">预先反向变形＋加不成像的辅助图形</text>
+          <text x="555" y="181" font-size="8.5" fill="#8b9bb8" text-anchor="middle">→ 印出来反而接近①的设计意图</text>
+          <text x="330" y="206" font-size="9" fill="#9bb0d0" text-anchor="middle">这一步叫 <tspan fill="#e8eef9" font-weight="700">OPC（光学邻近校正）</tspan>：给全芯片上亿图形逐个"整形"，要在超算集群上跑数小时到数天 [~估算]——</text>
+          <text x="330" y="220" font-size="9" fill="#9bb0d0" text-anchor="middle">与光源-掩膜协同优化等合称<tspan fill="#e8eef9" font-weight="700">计算光刻</tspan>（Synopsys/ASML/西门子 Calibre 的重要生意，接 设计·EDA / 光刻）。</text>
+        </svg>
+        <div class="note"><b>然后才是"写版"</b>：OPC 后的版图交给<b>电子束写版机</b>，在涂了胶的铬层/吸收层上<b>逐点逐线"画"出图形</b>（电子束波长极短、精度极高，但一张先进掩膜要写十几小时甚至更久 [~估算]）→ 显影刻蚀成形 → <b>全面检测</b>：掩膜上任何一粒缺陷都会被复印到每一颗芯片上，所以要逐点检查、能修则修（聚焦离子束修补）→ 合格后贴 pellicle 防尘膜出厂。写版机（NuFlare、Mycronic 等）与掩膜检测设备（KLA、Lasertec——EUV 掩膜检测近乎独家）是掩膜厂的核心装备——一句列示，生意见第二轨「材料」（掩膜版）与「设备」。</div>
         <div class="note" style="border-left-color:#5eead4;background:rgba(94,234,212,.07)">备齐这两样上游产物——<b>空白晶圆（画布）</b> + <b>掩膜版（底片）</b>——就送进晶圆厂：先在晶圆上<b>造出晶体管层（前段）</b>、再<b>叠几十层金属布线（后段）</b>。怎么造，见 制造流程；怎么把掩膜图形印上去，见 光刻。</div>
       </div>
       <!-- ===== SCENE 2: TRANSISTOR ===== -->
@@ -2540,7 +2576,7 @@
           </g>
           <text x="310" y="206" font-size="9" fill="#8aa0c8" text-anchor="middle">[△示意：具体道次因产品而异——手机 SoC、存储器、车规芯片的温度点与道次差别很大，车规筛选最严]</text>
         </svg>
-        <div class="cap"><b>测试时间＝真金白银</b>：芯片在测试机上的每一秒都是成本，所以工程师拼命<b>提高并测数</b>（一次同测几十甚至上百颗）、<b>压缩测试程序</b>；先进芯片越复杂测得越久，<b>测试成本在整颗芯片成本里的占比持续上升</b>——这正是测试设备与封测厂的生意逻辑（详见第二轨）。</div>
+        <div class="cap"><b>测试时间＝真金白银</b>：芯片在测试机上的每一秒都是成本，所以工程师拼命<b>提高并测数</b>（一次同测几十甚至上百颗）、<b>压缩测试程序</b>；高可靠场景（车规/工业/航天）还会加一道 <b>burn-in 老化筛选</b>——高温高电压先"折磨"数小时，把会早夭的个体筛掉再出货；先进芯片越复杂测得越久，<b>测试成本在整颗芯片成本里的占比持续上升</b>——这正是测试设备与封测厂的生意逻辑（详见第二轨）。</div>
 
         <div class="subttl">测试环节放大③：良率数据的闭环——wafer map 是晶圆厂的"体检报告"</div>
         <div class="cap">CP 测完，每片晶圆得到一张<b>好坏分布图（wafer map）</b>。它的价值远不止"挑次品"：<b>失效的空间图案会"指认"出问题的工序</b>，反馈回前道调整机台——这就是良率爬坡的日常工具。</div>
