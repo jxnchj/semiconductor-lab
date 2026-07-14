@@ -1427,7 +1427,105 @@
           <line x1="356" y1="208" x2="356" y2="118" stroke="#5d6b88" stroke-width="0.8"/><text x="356" y="112" font-size="9.5" fill="#c47e34" text-anchor="middle">通孔 via</text>
           <line x1="470" y1="155" x2="500" y2="118" stroke="#5d6b88" stroke-width="0.8"/><text x="503" y="114" font-size="9.5" fill="#b9a3e8">介质(绝缘)</text>
         </svg>
-        <div class="note">最底下仍只有 <b>1 层晶体管</b>，上面是十几层<b>金属布线（铜，越往上越粗越稀）</b>，靠竖直的<b>通孔(via)</b>层层相连，缝隙全由<b>绝缘介质</b>填满。<b>金属线和通孔是同一种金属——铜，只是横竖朝向不同。</b></div>
+        <div class="note">最底下仍只有 <b>1 层晶体管</b>，上面是十几层<b>金属布线（铜，越往上越粗越稀）</b>，靠竖直的<b>通孔(via)</b>层层相连，缝隙全由<b>绝缘介质</b>填满。<b>金属线和通孔是同一种金属——铜，只是横竖朝向不同。</b> 晶体管与最下层金属 M1 之间靠<b>接触孔（钨塞）</b>衔接——业界把这一层叫<b>中段 MOL</b>：前段 FEOL 造晶体管、中段 MOL 接上来、后段 BEOL 织布线。</div>
+
+        <svg width="0" height="0" style="position:absolute"><defs>
+          <marker id="faA" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker>
+          <marker id="faAd" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#9fb0cc"/></marker>
+        </defs></svg>
+
+        <div class="subttl">机制加深①：热工艺——芯片制造的"火候"</div>
+        <div class="cap">上面 26 步里反复出现"长氧化层""退火"，背后是两类加热方式的分工：<b>炉管</b>（一炉几十上百片、小时级，管"慢工出细活"）和 <b>RTP 快速热处理</b>（单片、秒级到毫秒级，管"快进快出"）。</div>
+        <svg viewBox="0 0 660 216">
+          <!-- furnace -->
+          <text x="165" y="20" font-size="11" fill="#f0c082" text-anchor="middle" font-weight="700">炉管（批式 · 小时级）</text>
+          <rect x="40" y="52" width="250" height="76" rx="38" fill="#1a2438" stroke="#e9a04c" stroke-width="1.4"/>
+          <g stroke="#e9563e" stroke-width="2.4" opacity="0.75">
+            <path d="M56,52 q6,-10 12,0" fill="none"/><path d="M92,52 q6,-10 12,0" fill="none"/><path d="M128,52 q6,-10 12,0" fill="none"/><path d="M164,52 q6,-10 12,0" fill="none"/><path d="M200,52 q6,-10 12,0" fill="none"/><path d="M236,52 q6,-10 12,0" fill="none"/>
+            <path d="M56,128 q6,10 12,0" fill="none"/><path d="M92,128 q6,10 12,0" fill="none"/><path d="M128,128 q6,10 12,0" fill="none"/><path d="M164,128 q6,10 12,0" fill="none"/><path d="M200,128 q6,10 12,0" fill="none"/><path d="M236,128 q6,10 12,0" fill="none"/>
+          </g>
+          <text x="36" y="44" font-size="8" fill="#e9563e" text-anchor="start">加热线圈</text>
+          <g stroke="#9fc0ec" stroke-width="2.4"><line x1="80" y1="66" x2="80" y2="114"/><line x1="104" y1="66" x2="104" y2="114"/><line x1="128" y1="66" x2="128" y2="114"/><line x1="152" y1="66" x2="152" y2="114"/><line x1="176" y1="66" x2="176" y2="114"/><line x1="200" y1="66" x2="200" y2="114"/><line x1="224" y1="66" x2="224" y2="114"/><line x1="248" y1="66" x2="248" y2="114"/></g>
+          <rect x="70" y="112" width="188" height="6" rx="2" fill="#43506a"/>
+          <text x="164" y="146" font-size="8" fill="#9fb0cc" text-anchor="middle">一"舟"晶圆竖插，整批同时受热（800–1200℃）</text>
+          <text x="165" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">用途：热氧化、掺杂驱入、LPCVD、合金退火</text>
+          <text x="165" y="181" font-size="8.5" fill="#8b9bb8" text-anchor="middle">产量大、温度极均匀；但升降温以小时计</text>
+          <line x1="330" y1="14" x2="330" y2="196" stroke="#23304d" stroke-width="1"/>
+          <!-- RTP -->
+          <text x="495" y="20" font-size="11" fill="#8fe9e1" text-anchor="middle" font-weight="700">RTP 快速热处理（单片 · 秒级/毫秒级）</text>
+          <g fill="#ffd9a0"><circle cx="420" cy="62" r="7"/><circle cx="450" cy="62" r="7"/><circle cx="480" cy="62" r="7"/><circle cx="510" cy="62" r="7"/><circle cx="540" cy="62" r="7"/><circle cx="570" cy="62" r="7"/></g>
+          <g stroke="#ffd9a0" stroke-width="0.9" opacity="0.7">
+            <line x1="420" y1="72" x2="420" y2="94"/><line x1="450" y1="72" x2="450" y2="94"/><line x1="480" y1="72" x2="480" y2="94"/><line x1="510" y1="72" x2="510" y2="94"/><line x1="540" y1="72" x2="540" y2="94"/><line x1="570" y1="72" x2="570" y2="94"/>
+          </g>
+          <text x="600" y="58" font-size="8" fill="#ffd9a0" text-anchor="start">卤钨灯阵</text>
+          <ellipse cx="495" cy="104" rx="86" ry="9" fill="url(#gSi)" stroke="#9fc0ec" stroke-width="0.7"/>
+          <text x="495" y="146" font-size="8" fill="#9fb0cc" text-anchor="middle">灯一亮，单片晶圆几秒冲到千度、瞬间回落</text>
+          <text x="495" y="168" font-size="8.5" fill="#8b9bb8" text-anchor="middle">用途：注入后激活退火（RTA）、尖峰/激光退火（毫秒级）</text>
+          <text x="495" y="181" font-size="8.5" fill="#8b9bb8" text-anchor="middle">升降温极快 → 杂质来不及乱跑</text>
+          <text x="330" y="208" font-size="9" fill="#8aa0c8" text-anchor="middle">同为长氧化层：<tspan fill="#f2d35a" font-weight="700">干氧</tspan>（纯 O₂）慢而致密、界面完美——长最关键的薄膜；<tspan fill="#7fb8cc" font-weight="700">湿氧</tspan>（含水汽）快而疏松——长厚的隔离层。</text>
+        </svg>
+        <div class="note"><b>热预算（Thermal Budget）——先进制程为什么"怕热"</b>：晶圆经历的所有"温度 × 时间"要记总账。已经埋好的纳米级掺杂剖面，会被后续每一次高温<b>扩散抹开</b>——结越浅、越怕热。所以工艺越先进，越把长时间炉管换成<b>秒级 RTA、毫秒级尖峰/激光退火</b>："温度够高把杂质激活，时间够短不让它乱跑"。另一件事也和热有关：<b>SiO₂/Si 界面天生近乎完美</b>（缺陷极少），这是硅能统治半导体的根本原因之一——换任何别的半导体，先得解决"长不出这么好的氧化层"。</div>
+
+        <div class="subttl">机制加深②：离子注入——用"离子炮"把杂质精准埋进硅里</div>
+        <div class="cap">26 步里的"阱注入、LDD、源漏注入"用的都是同一台机器：<b>离子注入机</b>。它把掺杂原子电离成离子、加速成一束"炮弹"，打进硅晶格的指定深度——现代掺杂全靠它，因为<b>深度和浓度都是可精确设定的"数字旋钮"</b>：</div>
+        <svg viewBox="0 0 660 232">
+          <g font-size="8.5" text-anchor="middle">
+            <rect x="16" y="60" width="92" height="52" rx="8" fill="#16243a" stroke="#e0556e"/>
+            <text x="62" y="82" font-size="9.5" fill="#e8eef9" font-weight="700">① 离子源</text>
+            <text x="62" y="98" fill="#8b9bb8">把掺杂气体电离</text>
+            <text x="62" y="128" font-size="7.5" fill="#7a8aa8">B / P / As（来自特气）</text>
+            <path d="M108 86 L134 86" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#faA)"/>
+            <rect x="136" y="48" width="110" height="76" rx="10" fill="#16243a" stroke="#8f7be0"/>
+            <text x="191" y="72" font-size="9.5" fill="#e8eef9" font-weight="700">② 质量分析磁铁</text>
+            <path d="M154,108 Q191,84 228,108" fill="none" stroke="#c8b3ff" stroke-width="1.6" marker-end="url(#faAd)"/>
+            <path d="M154,108 Q186,96 200,116" fill="none" stroke="#5d6b88" stroke-width="1" stroke-dasharray="3 2"/>
+            <text x="191" y="118" fill="#8b9bb8" font-size="7.5">磁场弯道：只有目标离子拐得过去</text>
+            <path d="M246 86 L272 86" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#faA)"/>
+            <rect x="274" y="60" width="100" height="52" rx="8" fill="#16243a" stroke="#e9a04c"/>
+            <text x="324" y="82" font-size="9.5" fill="#e8eef9" font-weight="700">③ 加速管</text>
+            <text x="324" y="98" fill="#8b9bb8">电压越高打得越深</text>
+            <text x="324" y="128" font-size="7.5" fill="#7a8aa8">keV～MeV 级</text>
+            <path d="M374 86 L400 86" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#faA)"/>
+            <rect x="402" y="60" width="92" height="52" rx="8" fill="#16243a" stroke="#7fd0c4"/>
+            <text x="448" y="82" font-size="9.5" fill="#e8eef9" font-weight="700">④ 扫描偏转</text>
+            <text x="448" y="98" fill="#8b9bb8">束流扫遍整片晶圆</text>
+            <path d="M494 86 L520 86" stroke="#34d6cf" stroke-width="1.6" marker-end="url(#faA)"/>
+            <g transform="rotate(-7 574 118)"><ellipse cx="574" cy="118" rx="12" ry="46" fill="url(#gSi)" stroke="#9fc0ec" stroke-width="0.8"/></g>
+            <text x="574" y="30" font-size="9" fill="#e8eef9" font-weight="700">⑤ 晶圆</text>
+            <text x="574" y="43" font-size="7.5" fill="#8b9bb8">故意斜放 ~7°</text>
+          </g>
+          <g font-size="9" fill="#9bb0d0" text-anchor="start">
+            <text x="30" y="160">两个"数字旋钮"：<tspan fill="#e8eef9" font-weight="700">能量 → 深度</tspan>（打多深）；<tspan fill="#e8eef9" font-weight="700">剂量 → 浓度</tspan>（打多少个）。</text>
+            <text x="30" y="180">为什么斜 7°？硅晶格里有笔直的"巷道"——正着打离子会顺巷道<tspan fill="#e8eef9" font-weight="700">溜得过深（沟道效应）</tspan>，斜一点就撞上原子、按设定深度停下。</text>
+            <text x="30" y="200">代价：高能离子把晶格<tspan fill="#e8eef9" font-weight="700">砸得千疮百孔</tspan>，且杂质没坐进晶格位（不导电）——所以注入后必须 <tspan fill="#e8eef9" font-weight="700">RTA 退火</tspan>：修复损伤＋激活杂质（第 10 步）。</text>
+            <text x="30" y="222" font-size="8.5" fill="#8b9bb8">这道工艺用什么机器：离子注入机（应用材料、Axcelis；国产凯世通/万业、中科信）——一句列示，格局详见第二轨「设备」赛道。[△示意：束线为教学简化]</text>
+          </g>
+        </svg>
+
+        <div class="subttl">工厂视角：一颗芯片的"马拉松"（数字与后勤）</div>
+        <svg viewBox="0 0 660 190">
+          <!-- AMHS rail -->
+          <line x1="30" y1="30" x2="630" y2="30" stroke="#5d6b88" stroke-width="3"/>
+          <g>
+            <rect x="120" y="34" width="8" height="14" fill="#8b9bb8"/>
+            <rect x="104" y="48" width="40" height="30" rx="4" fill="#2a3752" stroke="#7fb8cc" stroke-width="1.2"/>
+            <g stroke="#9fc0ec" stroke-width="1.6"><line x1="112" y1="54" x2="112" y2="72"/><line x1="119" y1="54" x2="119" y2="72"/><line x1="126" y1="54" x2="126" y2="72"/><line x1="133" y1="54" x2="133" y2="72"/></g>
+          </g>
+          <text x="170" y="44" font-size="8.5" fill="#9fb0cc" text-anchor="start">AMHS 天车：抓着 FOUP 晶圆盒在厂房顶上飞驰</text>
+          <text x="170" y="57" font-size="8" fill="#7a8aa8" text-anchor="start">FOUP＝密闭盒，一盒一批（lot，通常 25 片）</text>
+          <!-- tools -->
+          <g font-size="8" text-anchor="middle">
+            <rect x="60" y="112" width="90" height="46" rx="6" fill="#16243a" stroke="#3aa86b" stroke-opacity=".6"/><text x="105" y="132" fill="#8fd6ad" font-weight="700">光刻区</text><text x="105" y="146" fill="#8b9bb8">黄光区（防感光）</text>
+            <rect x="170" y="112" width="90" height="46" rx="6" fill="#16243a" stroke="#f0738a" stroke-opacity=".6"/><text x="215" y="132" fill="#f0738a" font-weight="700">刻蚀区</text><text x="215" y="146" fill="#8b9bb8">等离子体机台群</text>
+            <rect x="280" y="112" width="90" height="46" rx="6" fill="#16243a" stroke="#7fd0c4" stroke-opacity=".6"/><text x="325" y="132" fill="#7fd0c4" font-weight="700">薄膜区</text><text x="325" y="146" fill="#8b9bb8">CVD/ALD/PVD</text>
+            <rect x="390" y="112" width="90" height="46" rx="6" fill="#16243a" stroke="#e9c84a" stroke-opacity=".6"/><text x="435" y="132" fill="#e9c84a" font-weight="700">注入/热区</text><text x="435" y="146" fill="#8b9bb8">注入机·炉管·RTP</text>
+            <rect x="500" y="112" width="90" height="46" rx="6" fill="#16243a" stroke="#c8b3ff" stroke-opacity=".6"/><text x="545" y="132" fill="#c8b3ff" font-weight="700">CMP/清洗/量测</text><text x="545" y="146" fill="#8b9bb8">每层的"收尾三件套"</text>
+          </g>
+          <path d="M105,108 Q160,88 215,108 Q270,88 325,108 Q380,88 435,108 Q490,88 545,108" fill="none" stroke="#34d6cf" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#faAd)"/>
+          <text x="330" y="86" font-size="8.5" fill="#8aa0c8" text-anchor="middle">同一批晶圆在各区之间来回穿梭几百次——不是流水线，是"迷宫里跑圈"</text>
+          <text x="330" y="180" font-size="9" fill="#9bb0d0" text-anchor="middle">先进逻辑全流程约 <tspan fill="#e8eef9" font-weight="700">600–1000+ 道工序</tspan>、耗时 <tspan fill="#e8eef9" font-weight="700">2–3 个月</tspan> [~估算]；fab <tspan fill="#e8eef9" font-weight="700">24×7 全年不停</tspan>——停机重启要数周、损失以亿计。</text>
+        </svg>
+        <div class="note"><b>洁净室</b>：比手术室洁净几个数量级（按每立方米颗粒数分级），空气每分钟整体换过滤数次；晶圆全程躲在 FOUP 密闭盒里，由天车自动搬运，尽量不见"人间空气"；人穿全套无尘服仍是最大污染源（呼应「清洗·量测」页）——这套后勤系统本身就是 fab 造价高昂的一部分。</div>
       </div>
 
       <!-- ===== SCENE 5: ADVANCED ===== -->
@@ -2710,6 +2808,7 @@
         </div>
 
         <div class="note">读这张图的方法：<b>逻辑＋存储</b>就占了全球约六成，是大盘的"两根顶梁柱"；<b>模拟/功率/射频/光电传感</b>虽然单块小，但<b>不追先进制程、生命周期长、车规/工业刚需</b>，是另一类"闷声赚钱"的生意。本图解（晶体管→CMOS→制造→先进制程）讲的是<b>逻辑</b>这条主线；<b>存储</b>见「存储器」，<b>功率/化合物</b>见「功率/化合物」。</div>
+        <div class="note"><b>各家族怎么造（制造特点一句话列示）</b>：<b>逻辑</b>——最先进 CMOS 制程（FinFET/GAA）、层数最多；<b>存储</b>——DRAM 拼电容工艺、3D NAND 拼超高深宽比刻蚀与沉积（见 刻蚀·沉积），成本导向、工艺高度特化；<b>模拟</b>——成熟制程（180nm~28nm）＋BCD 等特色工艺，赢在器件匹配与经验而非线宽；<b>功率</b>——纵向器件（电流上下穿透晶圆）、厚外延、衬底减薄，SiC/GaN 用特殊衬底（见 功率/化合物）；<b>射频</b>——GaAs/SOI/SiGe 特色衬底与工艺；<b>光电传感</b>——CIS 背照式两片键合堆栈、MEMS 要"释放"可动微结构的特殊刻蚀。</div>
         <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">接第二轨</b>：这张"按家族"的地图，正是<b>第二轨产业链/赛道研究</b>的入口——每个家族（尤其模拟、射频、光电传感这些本页只概览的）都可以展开成独立赛道，看它的<b>玩家格局、价值量、国产化</b>。</div>
       </div>
       <div class="scene" id="s-chain">
