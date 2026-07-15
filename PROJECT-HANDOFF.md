@@ -63,7 +63,7 @@ JS：`var scenes={chain:'s-chain',basics:'s-basics',eda:'s-eda',wafer:'s-wafer',
 
 **设计系统**（一种材料=一种颜色，别引入新色）：硅 `#3a4870`(gSi) · 源漏绿 `#3aa86b`(gSD) · SiO₂黄 `#f2d35a`(gOx) · ILD紫 `#9b7be0`(gILD) · 铜 `#e9a04c`(gCu/gCuV) · 光刻胶红 `#e0556e` · 氮化硅/侧墙灰 `#6f7e9c` · 沟道导通青 `#5eead4`；UI 强调 teal `#34d6cf`（仅 UI）。全局渐变在 `<body>` 后隐藏 `<svg><defs>`（含封装页 gSub/gSolder）。刻意平涂不加渐变的：密度网格、EUV/DUV 波长示意、流程框。
 
-**校验基线（2026-07-15"做深②③④"后，principles/index.html ≈505KB）**：div 470/470 · svg 150/150 · g 482/482 · marker 38/38 · linearGradient 12/12 · radialGradient 3/3 · pattern 1/1 · clipPath 3/3 · 16 scenes/16 tabs · 无重名 id · `node --check` 通过 · Chrome 注入法真机渲染逐帧核对通过。近三批内容：fab 页机制加深（commit 42a96c2）；**「刻蚀·沉积」页"做深①"ALD+高深宽比刻蚀**（commit 71f28de，同批 8 文档+push.command 首次入仓）；**"做深②③④"＝量测检测机制（清洗·量测页）+ 3D NAND 工艺专线（存储器页，含字线抽换 5 步 stepper `nf` 前缀）+ HKMG 变革史（先进结构演进页）**（2026-07-15 本批，内容清单见 COVERAGE-AUDIT §七 行 2–4，快变声明登记 FACT-REVIEW #15–18）。
+**校验基线（2026-07-15"做深⑤⑥⑦⑧"后，principles/index.html ≈549KB）**：div 486/486 · svg 160/160 · g 525/525 · marker 38/38 · linearGradient 12/12 · radialGradient 3/3 · pattern 1/1 · clipPath 3/3 · 16 scenes/16 tabs · 无重名 id · `node --check` 通过 · Chrome 注入法真机渲染逐帧核对通过。近期批次：做深①ALD+高深宽比刻蚀（刻蚀·沉积页，commit 71f28de）；做深②③④＝量测检测/3D NAND 专线（nf stepper）/HKMG（commit 99eb477）；**做深⑤⑥⑦⑧＝先进封装工艺线（先进封装页：TSV 五步/CoWoS 流水线/混合键合四步）+ DRAM 工艺专线（存储器页，与 NAND 成对）+ 互连 RC 与新金属（fab 页机制加深③）+ 光刻机整机解剖（光刻页运动系统视角）**（2026-07-15 本批，全静态图无新增 JS；内容清单见 COVERAGE-AUDIT §七 行 5–8，快变声明登记 FACT-REVIEW #19–21）。
 
 ## 5. 第二轨 · 产业链价值（atlas.html）现状
 
@@ -132,7 +132,7 @@ with sync_playwright() as p:
 3. ✅ 轨1 测试环节加厚：CP/FT/ATE 图解+测试旅程流程图+wafer map 良率闭环三个"放大"小节。
 4. ✅ 全程校验+真机渲染逐帧核对+发布。渲染方法注意：Cowork 沙箱无 Playwright 且装不了（PyPI/npm 全被代理挡），改用 **Chrome file_upload 注入法**——在 example.com 上造 `<input type=file>`，file_upload 灌入 HTML，JS 读 `files[0].text()` 后 `document.write` 渲染，再逐帧截图核对（本地文件 file:// 被扩展禁止，此法绕过；对单页可先做"仅该 scene+CSS+defs+JS"的小预览再整页验证）。
 
-**A2 · "做深"阶段（2026-07-14 启动，进度见 COVERAGE-AUDIT §七）**：①ALD/高深宽比刻蚀 ✅ 07-14 · ②量测检测机制 ✅ 07-15 · ③3D NAND 工艺专线 ✅ 07-15 · ④HKMG 变革史 ✅ 07-15——**首批四个深挖主题全部完成**。下一步候选：继续深挖（可议方向：先进封装工艺线 CoWoS/混合键合机制、DRAM 工艺专线、互连 RC 与新金属、光刻机内部构造）；FACT-REVIEW 到期复核（下批 2026Q4）；TRACK1-BACKFILL 队列（当前空）；§B 搁置项经确认后启动。
+**A2 · "做深"阶段（2026-07-14 启动，进度见 COVERAGE-AUDIT §七）**：①ALD/高深宽比刻蚀 · ②量测检测 · ③3D NAND 专线 · ④HKMG · ⑤先进封装工艺线 · ⑥DRAM 专线 · ⑦互连 RC 与新金属 · ⑧光刻机整机——**两批八个深挖主题全部完成（07-14/15）**。轨1 机制层可深挖的主要缺口已基本收敛；下一步候选：FACT-REVIEW 到期复核（下批 2026Q4）；速查表市值/PE 月度刷新；轨2 做深（公司基本面深挖、赛道竞争格局机制化）；或 §B 搁置项经确认后启动。
 
 **B · 已搁置（用户明确暂不做，记录备查，后续可能加入）**：
 - 周期仪表盘（SIA 3MMA/设备出货/存储价格/稼动率等择时指标+定期刷新）
