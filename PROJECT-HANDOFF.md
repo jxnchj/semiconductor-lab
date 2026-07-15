@@ -59,11 +59,11 @@ JS：`var scenes={chain:'s-chain',basics:'s-basics',eda:'s-eda',wafer:'s-wafer',
 
 **设计·EDA 页内容**（2026-07-13）：①设计全流程（前端逻辑/后端物理 8 站）②同一电路三副面孔（RTL→门级→CMOS NAND 版图）③布局布线 6 步 stepper（Floorplan→电源→摆放→CTS→布线→签核，id 前缀 ed-，JS 生成 IO 焊盘/标准单元/布线）④验证工作量+bug 代价 ⑤EDA 三大件环节矩阵+三道护城河（工具链耦合/PDK 绑定/人才生态）。**后道·封装测试页测试加厚**（同日）：CP vs FT+ATE 图解、完整测试旅程流程图、wafer map 四种失效图案+良率闭环（在"键合两条路线"之后）。
 
-**主要交互资产**（改动时务必保全）：晶体管页 canvas-3D 引擎（平面/FinFET/GAA 三模式、反型层/耗尽区、自动旋转）、2D 剖面随结构切换、反型层 5 步 stepper + 连续动画、制造流程 26 步剖面 stepper（CMP 四处：先凹凸再磨平）、制程节点密度网格（28/14/7nm 切换）、CMOS 反相器、良率/功耗墙图、EUV 深度三连、光刻胶感光机制、电子特气、外延片、CoWoS/HBM 精细剖面、**ALD 循环 6 步 stepper**（刻蚀·沉积页，id 前缀 ald，宏观深槽+表面化学双视图）。
+**主要交互资产**（改动时务必保全）：晶体管页 canvas-3D 引擎（平面/FinFET/GAA 三模式、反型层/耗尽区、自动旋转）、2D 剖面随结构切换、反型层 5 步 stepper + 连续动画、制造流程 26 步剖面 stepper（CMP 四处：先凹凸再磨平）、制程节点密度网格（28/14/7nm 切换）、CMOS 反相器、良率/功耗墙图、EUV 深度三连、光刻胶感光机制、电子特气、外延片、CoWoS/HBM 精细剖面、**ALD 循环 6 步 stepper**（刻蚀·沉积页，id 前缀 ald，宏观深槽+表面化学双视图）、**3D NAND 字线抽换 5 步 stepper**（存储器页，id 前缀 nf，含 nf-lab-n 标签随步切换）。
 
 **设计系统**（一种材料=一种颜色，别引入新色）：硅 `#3a4870`(gSi) · 源漏绿 `#3aa86b`(gSD) · SiO₂黄 `#f2d35a`(gOx) · ILD紫 `#9b7be0`(gILD) · 铜 `#e9a04c`(gCu/gCuV) · 光刻胶红 `#e0556e` · 氮化硅/侧墙灰 `#6f7e9c` · 沟道导通青 `#5eead4`；UI 强调 teal `#34d6cf`（仅 UI）。全局渐变在 `<body>` 后隐藏 `<svg><defs>`（含封装页 gSub/gSolder）。刻意平涂不加渐变的：密度网格、EUV/DUV 波长示意、流程框。
 
-**校验基线（2026-07-14"做深①"后，principles/index.html ≈455KB）**：div 451/451 · svg 141/141 · g 423/423 · marker 38/38 · linearGradient 12/12 · radialGradient 3/3 · pattern 1/1 · clipPath 3/3 · 16 scenes/16 tabs · 无重名 id · `node --check` 通过 · Chrome 注入法真机渲染逐帧核对通过。近两批内容：fab 页机制加深①热工艺/②离子注入/工厂视角（commit 42a96c2）；**「刻蚀·沉积」页"做深①"＝ALD 与高深宽比刻蚀两个机制加深块**（2026-07-14 本批，内容清单见 COVERAGE-AUDIT §七，快变声明登记 FACT-REVIEW #15–17）。
+**校验基线（2026-07-15"做深②③④"后，principles/index.html ≈505KB）**：div 470/470 · svg 150/150 · g 482/482 · marker 38/38 · linearGradient 12/12 · radialGradient 3/3 · pattern 1/1 · clipPath 3/3 · 16 scenes/16 tabs · 无重名 id · `node --check` 通过 · Chrome 注入法真机渲染逐帧核对通过。近三批内容：fab 页机制加深（commit 42a96c2）；**「刻蚀·沉积」页"做深①"ALD+高深宽比刻蚀**（commit 71f28de，同批 8 文档+push.command 首次入仓）；**"做深②③④"＝量测检测机制（清洗·量测页）+ 3D NAND 工艺专线（存储器页，含字线抽换 5 步 stepper `nf` 前缀）+ HKMG 变革史（先进结构演进页）**（2026-07-15 本批，内容清单见 COVERAGE-AUDIT §七 行 2–4，快变声明登记 FACT-REVIEW #15–18）。
 
 ## 5. 第二轨 · 产业链价值（atlas.html）现状
 
@@ -132,7 +132,7 @@ with sync_playwright() as p:
 3. ✅ 轨1 测试环节加厚：CP/FT/ATE 图解+测试旅程流程图+wafer map 良率闭环三个"放大"小节。
 4. ✅ 全程校验+真机渲染逐帧核对+发布。渲染方法注意：Cowork 沙箱无 Playwright 且装不了（PyPI/npm 全被代理挡），改用 **Chrome file_upload 注入法**——在 example.com 上造 `<input type=file>`，file_upload 灌入 HTML，JS 读 `files[0].text()` 后 `document.write` 渲染，再逐帧截图核对（本地文件 file:// 被扩展禁止，此法绕过；对单页可先做"仅该 scene+CSS+defs+JS"的小预览再整页验证）。
 
-**A2 · "做深"阶段（2026-07-14 启动，进度见 COVERAGE-AUDIT §七）**：①ALD/高深宽比刻蚀 ✅ 2026-07-14；剩余候选＝量测机制 / 3D NAND 工艺专线（重点转向字线抽换、阶梯等未覆盖环节）/ HKMG 变革史，待用户选。其他常规候选：FACT-REVIEW 到期复核（下批 2026Q4）；TRACK1-BACKFILL 队列（当前空）；§B 搁置项经确认后启动。
+**A2 · "做深"阶段（2026-07-14 启动，进度见 COVERAGE-AUDIT §七）**：①ALD/高深宽比刻蚀 ✅ 07-14 · ②量测检测机制 ✅ 07-15 · ③3D NAND 工艺专线 ✅ 07-15 · ④HKMG 变革史 ✅ 07-15——**首批四个深挖主题全部完成**。下一步候选：继续深挖（可议方向：先进封装工艺线 CoWoS/混合键合机制、DRAM 工艺专线、互连 RC 与新金属、光刻机内部构造）；FACT-REVIEW 到期复核（下批 2026Q4）；TRACK1-BACKFILL 队列（当前空）；§B 搁置项经确认后启动。
 
 **B · 已搁置（用户明确暂不做，记录备查，后续可能加入）**：
 - 周期仪表盘（SIA 3MMA/设备出货/存储价格/稼动率等择时指标+定期刷新）

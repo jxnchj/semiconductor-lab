@@ -1704,6 +1704,128 @@
         </div>
         <div class="note">三种结构里<b>栅氧化层从未消失</b>——它始终是栅极与沟道之间那层薄绝缘膜，只是从"盖一面"变成"包三面""绕四面"。电流都一样：<b>沿沟道从源极流到漏极</b>，由栅极在中间隔空开关。</div>
 
+        <div class="subttl">机制加深：HKMG——"栅氧化层"的一次生死危机（45nm 世代的换心手术）</div>
+        <div class="cap">上面刚说"栅氧化层从未消失"——但它其实<b>换过一次心</b>：2000 年代中期，SiO₂ 栅氧被缩到 ~1.2nm、只剩约 <b>5 个原子层</b>，量子隧穿让"绝缘层"漏成了筛子。这场危机的解法牵动<b>材料-器件-工艺</b>整条链，是理解"换一个材料＝重构一条工艺链"的最佳案例。</div>
+        <svg viewBox="0 0 620 244">
+          <!-- left: tunneling crisis -->
+          <text x="150" y="20" font-size="10.5" fill="#f0738a" text-anchor="middle" font-weight="700">危机：5 层原子的墙，挡不住电子</text>
+          <rect x="60" y="40" width="120" height="22" fill="url(#gCu)"/>
+          <text x="120" y="55" font-size="8" fill="#3a2206" text-anchor="middle" font-weight="700">栅极</text>
+          <rect x="60" y="62" width="120" height="5" fill="url(#gOx)"/>
+          <rect x="60" y="67" width="120" height="30" fill="url(#gSi)"/>
+          <text x="188" y="66" font-size="7.5" fill="#f2d35a" text-anchor="start">SiO₂ 仅 ~1.2nm</text>
+          <path d="M96,52 Q99,58 96,64 Q93,68 96,74 Q99,78 96,84" fill="none" stroke="#f0738a" stroke-width="1.4"/>
+          <path d="M93,82 L99,82 L96,89 Z" fill="#f0738a"/>
+          <text x="90" y="112" font-size="8" fill="#f0738a" text-anchor="middle">电子直接"穿墙"（量子隧穿）</text>
+          <g stroke="#3a4a6a" stroke-width="0.9"><line x1="210" y1="150" x2="210" y2="56"/><line x1="210" y1="150" x2="292" y2="150"/></g>
+          <text x="210" y="48" font-size="7.5" fill="#9fb0cc" text-anchor="middle">栅漏电(对数)</text>
+          <text x="292" y="162" font-size="7.5" fill="#9fb0cc" text-anchor="end">厚度 越来越薄 →</text>
+          <path d="M214,142 Q244,134 262,106 Q276,82 286,62" fill="none" stroke="#f0738a" stroke-width="1.4"/>
+          <text x="252" y="186" font-size="8.5" fill="#9bb0d0" text-anchor="middle" > </text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="150" y="196">每薄 ~0.2nm，隧穿漏电 ~×10 [~量级]；</text>
+            <text x="150" y="209">90/65nm 两代被迫卡死在 ~1.2nm——</text>
+            <text x="150" y="222">栅漏电逼近开关电流本身，功耗失控 [✓史实]</text>
+          </g>
+          <line x1="310" y1="14" x2="310" y2="230" stroke="#2a3550" stroke-width="1"/>
+          <!-- right: EOT -->
+          <text x="465" y="20" font-size="10.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">解法：换材料，用"厚"换"漏"（EOT）</text>
+          <rect x="346" y="70" width="90" height="18" fill="url(#gCu)"/>
+          <rect x="346" y="88" width="90" height="3" fill="url(#gOx)"/>
+          <rect x="346" y="91" width="90" height="24" fill="url(#gSi)"/>
+          <text x="391" y="130" font-size="8" fill="#9fb0cc" text-anchor="middle">SiO₂ ~1nm：漏</text>
+          <rect x="486" y="58" width="90" height="18" fill="url(#gCu)"/>
+          <rect x="486" y="76" width="90" height="12" fill="#5eead4"/>
+          <rect x="486" y="88" width="90" height="3" fill="url(#gOx)"/>
+          <rect x="486" y="91" width="90" height="24" fill="url(#gSi)"/>
+          <text x="531" y="130" font-size="8" fill="#8fe9e1" text-anchor="middle">HfO₂ ~5nm＋界面层：不漏</text>
+          <text x="466" y="82" font-size="8" fill="#8fe9e1" text-anchor="middle">≙</text>
+          <text x="466" y="94" font-size="7" fill="#8b9bb8" text-anchor="middle">电学等厚</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="465" y="158">EOT ＝ t(高K) × 3.9 ⁄ k —— HfO₂ 的 k≈20：</text>
+            <text x="465" y="171">物理厚 5 倍、电容不变，隧穿被指数级压制 [✓教科书]</text>
+            <text x="465" y="188">代价：高K不能直接贴硅（界面态毁迁移率），</text>
+            <text x="465" y="201">还得垫 ~0.5–1nm SiO₂ 界面层——"高K三明治"；</text>
+            <text x="465" y="214">这几层膜的厚度全靠 ALD 数原子层长出 [✓机制]</text>
+          </g>
+        </svg>
+
+        <svg viewBox="0 0 620 152">
+          <text x="150" y="20" font-size="10.5" fill="#e9c84a" text-anchor="middle" font-weight="700">连锁反应①：多晶硅栅也保不住了</text>
+          <rect x="60" y="42" width="100" height="20" fill="#8a93a8"/>
+          <text x="110" y="56" font-size="8" fill="#1a2233" text-anchor="middle" font-weight="700">多晶硅栅</text>
+          <rect x="60" y="62" width="100" height="10" fill="#5eead4"/>
+          <rect x="60" y="72" width="100" height="22" fill="url(#gSi)"/>
+          <path d="M76,84 q6,-6 12,0 q6,6 12,0 q6,-6 12,0 q6,6 12,0" fill="none" stroke="#f0738a" stroke-width="1.1"/>
+          <text x="216" y="52" font-size="8" fill="#f0738a" text-anchor="start">费米能级"钉"死 →</text>
+          <text x="216" y="64" font-size="8" fill="#f0738a" text-anchor="start">阈值电压定不准</text>
+          <text x="216" y="82" font-size="8" fill="#e9c84a" text-anchor="start">远程声子散射 →</text>
+          <text x="216" y="94" font-size="8" fill="#e9c84a" text-anchor="start">沟道迁移率掉</text>
+          <text x="150" y="122" font-size="8.5" fill="#9bb0d0" text-anchor="middle">high-k 与用了 40 年的多晶硅"八字不合" [✓机制·点名]</text>
+          <line x1="310" y1="14" x2="310" y2="138" stroke="#2a3550" stroke-width="1"/>
+          <text x="465" y="20" font-size="10.5" fill="#f0c082" text-anchor="middle" font-weight="700">连锁反应②：金属栅救场，还得一人一款</text>
+          <rect x="360" y="42" width="80" height="20" fill="url(#gCu)"/><text x="400" y="56" font-size="7.5" fill="#3a2206" text-anchor="middle" font-weight="700">TiAl 系(低功函数)</text>
+          <rect x="360" y="62" width="80" height="8" fill="#5eead4"/><rect x="360" y="70" width="80" height="18" fill="url(#gSi)"/>
+          <text x="400" y="102" font-size="8" fill="#9fc0ec" text-anchor="middle">NMOS 用</text>
+          <rect x="490" y="42" width="80" height="20" fill="#6f7e9c"/><text x="530" y="56" font-size="7.5" fill="#e8eef9" text-anchor="middle" font-weight="700">TiN 系(高功函数)</text>
+          <rect x="490" y="62" width="80" height="8" fill="#5eead4"/><rect x="490" y="70" width="80" height="18" fill="url(#gSi)"/>
+          <text x="530" y="102" font-size="8" fill="#9fc0ec" text-anchor="middle">PMOS 用</text>
+          <text x="465" y="122" font-size="8.5" fill="#9bb0d0" text-anchor="middle">功函数＝"内建的阈值旋钮"，N/P 各配一种金属叠层 [✓机制]</text>
+        </svg>
+
+        <div class="subttl">工艺怎么落地：替换金属栅 RMG——"先立假栅，再换真身"</div>
+        <svg viewBox="0 0 620 264">
+          <!-- 5 frames -->
+          <g font-size="8" text-anchor="middle">
+            <text x="66" y="24" fill="#e8eef9" font-weight="700">① 立假栅</text>
+            <rect x="20" y="76" width="92" height="18" fill="url(#gSi)"/>
+            <rect x="52" y="72" width="28" height="4" fill="url(#gOx)"/>
+            <rect x="52" y="46" width="28" height="26" fill="#8a93a8"/>
+            <path d="M52,50 L52,72 L44,72 Q50,60 52,50 Z" fill="#6f7e9c"/><path d="M80,50 L80,72 L88,72 Q82,60 80,50 Z" fill="#6f7e9c"/>
+            <text x="66" y="110" fill="#9bb0d0">多晶硅假栅+侧墙</text>
+            <text x="190" y="24" fill="#e8eef9" font-weight="700">② 高温洗礼</text>
+            <rect x="144" y="76" width="92" height="18" fill="url(#gSi)"/>
+            <path d="M144,76 L172,76 L172,84 Q158,88 144,84 Z" fill="url(#gSD)"/><path d="M208,76 L236,76 L236,84 Q222,88 208,84 Z" fill="url(#gSD)"/>
+            <rect x="176" y="72" width="28" height="4" fill="url(#gOx)"/>
+            <rect x="176" y="46" width="28" height="26" fill="#8a93a8"/>
+            <path d="M176,50 L176,72 L168,72 Q174,60 176,50 Z" fill="#6f7e9c"/><path d="M204,50 L204,72 L212,72 Q206,60 204,50 Z" fill="#6f7e9c"/>
+            <path d="M186,38 Q190,30 190,24 Q194,32 198,26 Q198,36 192,42 Q188,44 186,38 Z" fill="#f2d35a" opacity="0.9"/>
+            <text x="190" y="110" fill="#9bb0d0">源漏注入+千℃退火</text>
+            <text x="314" y="24" fill="#e8eef9" font-weight="700">③ 埋起来磨平</text>
+            <rect x="268" y="76" width="92" height="18" fill="url(#gSi)"/>
+            <rect x="268" y="46" width="92" height="30" fill="url(#gILD)" opacity="0.75"/>
+            <rect x="300" y="46" width="28" height="26" fill="#8a93a8"/>
+            <line x1="268" y1="46" x2="360" y2="46" stroke="#e8eef9" stroke-width="1"/>
+            <text x="314" y="110" fill="#9bb0d0">ILD+CMP 磨到露头</text>
+            <text x="438" y="24" fill="#e8eef9" font-weight="700">④ 拔掉假栅</text>
+            <rect x="392" y="76" width="92" height="18" fill="url(#gSi)"/>
+            <rect x="392" y="46" width="92" height="30" fill="url(#gILD)" opacity="0.75"/>
+            <rect x="424" y="46" width="28" height="26" fill="#0d1526"/>
+            <rect x="424" y="72" width="28" height="4" fill="url(#gOx)"/>
+            <text x="438" y="110" fill="#9bb0d0">选择性刻蚀挖空</text>
+            <text x="562" y="24" fill="#e8eef9" font-weight="700">⑤ 换上真身</text>
+            <rect x="516" y="76" width="92" height="18" fill="url(#gSi)"/>
+            <rect x="516" y="46" width="92" height="30" fill="url(#gILD)" opacity="0.75"/>
+            <path d="M548,46 L548,72 L576,72 L576,46 L572,46 L572,68 L552,68 L552,46 Z" fill="#5eead4"/>
+            <rect x="552" y="50" width="20" height="18" fill="url(#gCu)"/>
+            <text x="562" y="110" fill="#9bb0d0">ALD高K+金属低温填</text>
+          </g>
+          <g stroke="#34d6cf" stroke-width="1.4">
+            <line x1="116" y1="70" x2="140" y2="70" marker-end="url(#a2)"/><line x1="240" y1="70" x2="264" y2="70" marker-end="url(#a2)"/>
+            <line x1="364" y1="70" x2="388" y2="70" marker-end="url(#a2)"/><line x1="488" y1="70" x2="512" y2="70" marker-end="url(#a2)"/>
+          </g>
+          <text x="310" y="132" font-size="8" fill="#8b9bb8" text-anchor="middle">[△示意：画的是"高K后长"变体；英特尔初代为"高K先长+金属后换"，占位-替换的原理相同]</text>
+          <g font-size="9" fill="#9bb0d0" text-anchor="start">
+            <text x="30" y="158">为什么绕这么大圈？<tspan fill="#e8eef9" font-weight="700">高K/金属栅经不起源漏退火的千℃高温</tspan>——让耐烤的多晶硅假栅先顶着，</text>
+            <text x="30" y="174">高温工序全走完，再挖掉换真身（全程低温 ALD）。这就是<tspan fill="#8fe9e1" font-weight="700">牺牲层哲学</tspan>：先立假的占位，结构成型后替换。</text>
+            <text x="30" y="198"><tspan fill="#f0c082" font-weight="700">路线之争（史实）</tspan>：gate-first（先装真栅硬扛退火）省工序，三星/GF 联盟押注，阈值控制失守，28/32nm 后放弃；</text>
+            <text x="30" y="214">Intel 2007 年 45nm（Penryn）率先量产铪基 HKMG＋替换栅，摩尔称之为"晶体管 40 年来最大变革"；台积电 28nm 起</text>
+            <text x="30" y="230">gate-last 跟进——之争以 gate-last 全胜收场，沿用至今天的 FinFET/GAA [✓史实]</text>
+          </g>
+          <text x="310" y="254" font-size="8.5" fill="#8aa0c8" text-anchor="middle">注意第⑤帧的青色薄层：这 1–2nm 的 HfO₂ 就是「刻蚀·沉积」页 ALD 五个"非它不可"之首的本尊。</text>
+        </svg>
+        <div class="note" style="border-left-color:#8fe9e1;background:rgba(143,233,225,.06)"><b style="color:#8fe9e1">这场手术留下的三条"基因"</b>：① <b>ALD 从此上位</b>——高K/功函数金属都要在原子尺度数层数，没有 ALD 就没有 HKMG（呼应「刻蚀·沉积」机制加深②）；② <b>牺牲层哲学成为通用武器</b>——逻辑芯片换栅、3D NAND 换字线（见「存储器」机制加深），一个思想两处开花；③ <b>"新材料进场"成为节点推进的常规动作</b>——应变硅→HKMG→FinFET→GAA→背面供电（本页 B/C/D 一脉相承），每次都是"材料-器件-工艺"三层联动。材料端：铪前驱体、功函数金属的供给格局见第二轨「材料」赛道。</div>
+
         
 
         
@@ -2722,6 +2844,164 @@
           <text x="330" y="238" font-size="8.5" fill="#8b9bb8" text-anchor="middle">[△示意：三个面板均为教学简化图]</text>
         </svg>
 
+        <div class="subttl">机制加深：三把"尺子"的原理——纳米世界怎么"看见"</div>
+        <div class="cap">上面三个面板讲了"量什么"，这里拆"怎么量得到"。共同困境：<b>要量的东西比可见光波长小一两个量级，"直接看"根本不存在</b>——每把尺子都是"物理信号 + 数学反演"的组合，这正是量测壁垒的根。</div>
+        <svg viewBox="0 0 660 262">
+          <!-- panel 1: CD-SEM -->
+          <text x="114" y="20" font-size="10.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">① CD-SEM：电子束"摸"边</text>
+          <rect x="104" y="30" width="20" height="14" rx="2" fill="#43506a"/>
+          <path d="M108,44 L120,44 L114,52 Z" fill="#43506a"/>
+          <line x1="114" y1="52" x2="114" y2="84" stroke="#8fe9e1" stroke-width="1"/>
+          <path d="M111,84 L117,84 L114,90 Z" fill="#8fe9e1"/>
+          <rect x="54" y="118" width="130" height="8" fill="url(#gSi)"/>
+          <g fill="#d68c3e" opacity="0.92"><rect x="64" y="88" width="22" height="30"/><rect x="104" y="88" width="22" height="30"/><rect x="144" y="88" width="22" height="30"/></g>
+          <g fill="#8fe9e1"><circle cx="102" cy="85" r="1.8"/><circle cx="128" cy="85" r="1.8"/></g>
+          <g stroke="#8fe9e1" stroke-width="0.7" opacity="0.8"><line x1="100" y1="83" x2="94" y2="76"/><line x1="130" y1="83" x2="136" y2="76"/></g>
+          <text x="188" y="80" font-size="7.5" fill="#8fe9e1" text-anchor="end">边缘处二次电子最多</text>
+          <line x1="54" y1="170" x2="184" y2="170" stroke="#3a4a6a" stroke-width="0.8"/>
+          <path d="M54,164 L62,164 Q64,144 66,164 L84,164 Q86,144 88,164 L102,164 Q104,144 106,164 L124,164 Q126,144 128,164 L142,164 Q144,144 146,164 L164,164 Q166,144 168,164 L184,164" fill="none" stroke="#8fe9e1" stroke-width="1.1"/>
+          <text x="114" y="184" font-size="8" fill="#9fb0cc" text-anchor="middle">信号双峰，峰距＝线宽</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="114" y="204">电子束逐点扫过线条，"摸"出轮廓；</text>
+            <text x="114" y="217">nm 级、眼见为实，但一次一小块（抽样）</text>
+            <text x="114" y="230">且高能束会伤胶、积碳 [✓机制]</text>
+          </g>
+          <!-- panel 2: OCD -->
+          <text x="330" y="20" font-size="10.5" fill="#f2d35a" text-anchor="middle" font-weight="700">② OCD 散射量测：靠"指纹"反推</text>
+          <rect x="262" y="96" width="120" height="8" fill="url(#gSi)"/>
+          <g fill="#d68c3e" opacity="0.92"><rect x="270" y="70" width="14" height="26"/><rect x="294" y="70" width="14" height="26"/><rect x="318" y="70" width="14" height="26"/><rect x="342" y="70" width="14" height="26"/><rect x="366" y="70" width="14" height="26"/></g>
+          <path d="M246,36 L316,68 L322,58 Z" fill="#f2d35a" opacity="0.45"/>
+          <text x="252" y="30" font-size="7.5" fill="#f2d35a" text-anchor="start">宽谱偏振光</text>
+          <g stroke="#f2d35a" stroke-width="0.9" opacity="0.8"><line x1="330" y1="66" x2="362" y2="38"/><line x1="334" y1="68" x2="376" y2="48"/><line x1="338" y1="70" x2="386" y2="60"/></g>
+          <text x="392" y="42" font-size="7.5" fill="#f2d35a" text-anchor="start">衍射光谱</text>
+          <line x1="250" y1="150" x2="250" y2="116" stroke="#3a4a6a" stroke-width="0.8"/><line x1="250" y1="150" x2="316" y2="150" stroke="#3a4a6a" stroke-width="0.8"/>
+          <path d="M252,136 Q262,120 272,134 Q282,146 292,128 Q302,116 314,132" fill="none" stroke="#f2d35a" stroke-width="1.1"/>
+          <text x="283" y="162" font-size="7.5" fill="#9fb0cc" text-anchor="middle">光谱"指纹"</text>
+          <line x1="320" y1="140" x2="338" y2="140" stroke="#34d6cf" stroke-width="1.2" marker-end="url(#clA)"/>
+          <rect x="342" y="118" width="72" height="38" rx="6" fill="#16243a" stroke="#23304d"/>
+          <g fill="none" stroke="#9fb0cc" stroke-width="1"><path d="M350,148 L354,132 L362,132 L366,148 Z"/><path d="M372,148 L378,134 L384,134 L390,148 Z"/><path d="M394,148 L397,130 L403,130 L406,148 Z"/></g>
+          <text x="378" y="128" font-size="7.5" fill="#9fb0cc" text-anchor="middle">仿真库/AI 反演</text>
+          <text x="330" y="176" font-size="8" fill="#f2d35a" text-anchor="middle">匹配出 CD·高度·侧壁角（全轮廓）</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="330" y="204">光谱和几何一一对应，反演出整个轮廓；</text>
+            <text x="330" y="217">快、无损、全片多点——先进节点主力；</text>
+            <text x="330" y="230">但"量到的是模型"：库不准＝白量 [✓机制]</text>
+          </g>
+          <!-- panel 3: ellipsometry -->
+          <text x="546" y="20" font-size="10.5" fill="#7fb8cc" text-anchor="middle" font-weight="700">③ 椭偏仪：偏振的"变形记"</text>
+          <rect x="482" y="100" width="130" height="14" fill="url(#gSi)"/>
+          <rect x="482" y="90" width="130" height="10" fill="url(#gOx)"/>
+          <line x1="494" y1="52" x2="540" y2="90" stroke="#7fb8cc" stroke-width="1.1"/>
+          <ellipse cx="498" cy="54" rx="6" ry="2.5" fill="none" stroke="#7fb8cc" stroke-width="1" transform="rotate(-40 498 54)"/>
+          <text x="486" y="42" font-size="7.5" fill="#7fb8cc" text-anchor="start">入射：圆偏振</text>
+          <line x1="552" y1="90" x2="598" y2="52" stroke="#7fb8cc" stroke-width="1.1"/>
+          <path d="M595,55 L601,49 L603,57 Z" fill="#7fb8cc"/>
+          <ellipse cx="594" cy="54" rx="7" ry="3.5" fill="none" stroke="#8fe9e1" stroke-width="1.2" transform="rotate(35 594 54)"/>
+          <text x="614" y="42" font-size="7.5" fill="#8fe9e1" text-anchor="end">反射：椭圆变形</text>
+          <text x="546" y="134" font-size="8" fill="#9fb0cc" text-anchor="middle">振幅比 Ψ · 相位差 Δ 变了多少，</text>
+          <text x="546" y="146" font-size="8" fill="#9fb0cc" text-anchor="middle">由膜厚 + 折射率唯一决定</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="546" y="204">解出的膜厚可到亚埃级（&lt;0.1个原子层）；</text>
+            <text x="546" y="217">ALD"数原子"的复核官、高K/栅氧把关人；</text>
+            <text x="546" y="230">反演同样吃光学模型 [✓机制]</text>
+          </g>
+          <text x="330" y="254" font-size="9" fill="#8aa0c8" text-anchor="middle">三把尺子的共同点：<tspan fill="#e8eef9" font-weight="700">都不是"直接看"，而是物理信号＋数学反演</tspan>——精度＝光学硬件×物理建模×数据库，三样都要几十年积累。</text>
+        </svg>
+
+        <div class="subttl">套刻的放大镜：Overlay 怎么量、EPE 才是终点</div>
+        <svg viewBox="0 0 660 240">
+          <!-- left: overlay measurement -->
+          <text x="165" y="20" font-size="10.5" fill="#c8b3ff" text-anchor="middle" font-weight="700">套刻怎么量：看标记，或看衍射</text>
+          <rect x="56" y="42" width="56" height="44" fill="none" stroke="#8f7be0" stroke-width="3"/>
+          <rect x="76" y="58" width="26" height="20" fill="none" stroke="#34d6cf" stroke-width="2.5"/>
+          <circle cx="84" cy="64" r="1.5" fill="#f0738a"/><circle cx="89" cy="68" r="1.5" fill="#8fe9e1"/>
+          <text x="84" y="102" font-size="8" fill="#9fb0cc" text-anchor="middle">影像法：框套框，</text>
+          <text x="84" y="113" font-size="8" fill="#9fb0cc" text-anchor="middle">量两框中心差</text>
+          <g fill="#8f7be0"><rect x="170" y="58" width="10" height="20"/><rect x="188" y="58" width="10" height="20"/><rect x="206" y="58" width="10" height="20"/><rect x="224" y="58" width="10" height="20"/></g>
+          <g fill="#34d6cf" opacity="0.9"><rect x="174" y="40" width="10" height="18"/><rect x="192" y="40" width="10" height="18"/><rect x="210" y="40" width="10" height="18"/><rect x="228" y="40" width="10" height="18"/></g>
+          <line x1="186" y1="34" x2="164" y2="20" stroke="#c8b3ff" stroke-width="2.2"/>
+          <line x1="222" y1="34" x2="240" y2="22" stroke="#c8b3ff" stroke-width="1"/>
+          <text x="204" y="102" font-size="8" fill="#9fb0cc" text-anchor="middle">衍射法 DBO：两层光栅错位</text>
+          <text x="204" y="113" font-size="8" fill="#9fb0cc" text-anchor="middle">→ ±1 级衍射强度不对称</text>
+          <text x="252" y="30" font-size="7.5" fill="#c8b3ff" text-anchor="start">I₊₁ ≠ I₋₁</text>
+          <text x="165" y="136" font-size="8.5" fill="#8b9bb8" text-anchor="middle">标记放在划片槽和图形区角落，每层全片量几十上百点 [△示意]</text>
+          <text x="165" y="152" font-size="8.5" fill="#8b9bb8" text-anchor="middle">量出的偏差实时回补光刻机（呼应 SPC/APC 闭环）</text>
+          <line x1="330" y1="14" x2="330" y2="226" stroke="#23304d" stroke-width="1"/>
+          <!-- right: EPE -->
+          <text x="495" y="20" font-size="10.5" fill="#f0738a" text-anchor="middle" font-weight="700">真正要守住的：EPE 边缘落点误差</text>
+          <g fill="#d68c3e" opacity="0.85"><rect x="400" y="44" width="14" height="96"/><rect x="444" y="44" width="14" height="96"/><rect x="488" y="44" width="14" height="96"/></g>
+          <rect x="436" y="80" width="30" height="22" rx="3" fill="none" stroke="#8fd6ad" stroke-width="1.2" stroke-dasharray="4 3"/>
+          <rect x="444" y="86" width="30" height="22" rx="3" fill="#e0556e" opacity="0.72"/>
+          <line x1="466" y1="80" x2="474" y2="86" stroke="#f0738a" stroke-width="0.8"/>
+          <text x="524" y="76" font-size="8" fill="#8fd6ad" text-anchor="start">虚线＝理想落点</text>
+          <text x="524" y="90" font-size="8" fill="#e0556e" text-anchor="start">实块＝实际落点：</text>
+          <text x="524" y="102" font-size="8" fill="#e0556e" text-anchor="start">套刻偏了＋尺寸胖了</text>
+          <text x="495" y="162" font-size="8.5" fill="#9bb0d0" text-anchor="middle">EPE ≈ 套刻误差 ⊕ CD 误差/2 ⊕ 线边粗糙——</text>
+          <text x="495" y="175" font-size="8.5" fill="#9bb0d0" text-anchor="middle">切口/通孔必须精准落在线上，预算 ~2nm 级 [~估算]</text>
+          <text x="330" y="200" font-size="9" fill="#8aa0c8" text-anchor="middle">多重图形化时代：SADP 侧墙定了线宽（见 刻蚀·沉积），切口靠光刻落位（见 光刻）——<tspan fill="#e8eef9" font-weight="700">EPE 把量测推成"每层必修课"</tspan>，</text>
+          <text x="330" y="215" font-size="9" fill="#8aa0c8" text-anchor="middle">这也是过程控制强度（量测支出/总投资）随节点一路上行的机制原因 [~估算·业界共识]。</text>
+        </svg>
+
+        <div class="subttl">缺陷检测：在整个北京城里找一枚硬币</div>
+        <svg viewBox="0 0 660 262">
+          <!-- left: BF/DF -->
+          <text x="115" y="20" font-size="10.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">光学初筛：明场 / 暗场</text>
+          <rect x="40" y="76" width="150" height="8" fill="url(#gSi)"/>
+          <circle cx="115" cy="72" r="4" fill="#8a93a8"/>
+          <rect x="96" y="30" width="38" height="12" rx="2" fill="#43506a"/><text x="115" y="26" font-size="7" fill="#9fb0cc" text-anchor="middle">探测器</text>
+          <g stroke="#f2d35a" stroke-width="1"><line x1="106" y1="44" x2="106" y2="70"/><line x1="124" y1="70" x2="124" y2="46"/></g>
+          <path d="M121,49 L127,49 L124,43 Z" fill="#f2d35a"/>
+          <text x="34" y="60" font-size="7.5" fill="#9fb0cc" text-anchor="start">明场：垂直照，</text>
+          <text x="34" y="71" font-size="7.5" fill="#9fb0cc" text-anchor="start">看反射率反差</text>
+          <rect x="40" y="160" width="150" height="8" fill="url(#gSi)"/>
+          <circle cx="115" cy="156" r="4" fill="#8a93a8"/>
+          <line x1="52" y1="126" x2="110" y2="154" stroke="#f2d35a" stroke-width="1"/>
+          <g stroke="#8fe9e1" stroke-width="0.9" opacity="0.9"><line x1="118" y1="150" x2="140" y2="122"/><line x1="120" y1="152" x2="152" y2="134"/></g>
+          <rect x="146" y="108" width="34" height="12" rx="2" fill="#43506a"/><text x="163" y="104" font-size="7" fill="#8fe9e1" text-anchor="middle">侧收散射</text>
+          <text x="34" y="140" font-size="7.5" fill="#9fb0cc" text-anchor="start">暗场：斜着照，</text>
+          <text x="34" y="151" font-size="7.5" fill="#9fb0cc" text-anchor="start">只有颗粒会"发亮"</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="115" y="192">整片 300mm 分钟级扫完，</text>
+            <text x="115" y="205">吐出"嫌疑点坐标清单"</text>
+          </g>
+          <!-- middle: physics wall -->
+          <text x="335" y="20" font-size="10.5" fill="#f0738a" text-anchor="middle" font-weight="700">物理墙：分辨率 × 速度不可兼得</text>
+          <g stroke="#3a4a6a" stroke-width="0.9"><line x1="250" y1="196" x2="250" y2="44"/><line x1="250" y1="196" x2="424" y2="196"/></g>
+          <text x="250" y="36" font-size="7.5" fill="#9fb0cc" text-anchor="middle">扫描速度</text>
+          <text x="424" y="208" font-size="7.5" fill="#9fb0cc" text-anchor="end">能检出的最小缺陷 →</text>
+          <rect x="250" y="44" width="60" height="152" fill="#f0738a" opacity="0.08"/>
+          <line x1="310" y1="44" x2="310" y2="196" stroke="#f0738a" stroke-width="0.9" stroke-dasharray="4 3"/>
+          <circle cx="392" cy="66" r="5" fill="#f2d35a"/><text x="392" y="54" font-size="7.5" fill="#f2d35a" text-anchor="middle">光学：快，但 ~20nm 撞墙</text>
+          <circle cx="286" cy="170" r="5" fill="#8fe9e1"/><text x="300" y="184" font-size="7.5" fill="#8fe9e1" text-anchor="start">电子束：看得细，慢百倍</text>
+          <text x="282" y="98" font-size="7.5" fill="#f0a0ae" text-anchor="middle" transform="rotate(-90 282 98)">光学看不见区</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="335" y="222">缺陷远小于波长 → 散射信号按 d⁶ 崩塌（瑞利）[✓机制]</text>
+            <text x="335" y="235">→ 先进节点靠深紫外/多波长光学+电子束抽检补位</text>
+          </g>
+          <!-- right: loop -->
+          <text x="550" y="20" font-size="10.5" fill="#e9a04c" text-anchor="middle" font-weight="700">三步闭环：筛→看→分</text>
+          <rect x="470" y="34" width="160" height="30" rx="7" fill="#16243a" stroke="#f2d35a" stroke-opacity="0.6"/>
+          <text x="550" y="47" font-size="8.5" fill="#f2d35a" text-anchor="middle">① 光学全片扫</text>
+          <text x="550" y="58" font-size="7.5" fill="#8b9bb8" text-anchor="middle">产出：嫌疑点坐标</text>
+          <line x1="550" y1="64" x2="550" y2="78" stroke="#9fb0cc" stroke-width="1" marker-end="url(#clAd)"/>
+          <rect x="470" y="80" width="160" height="30" rx="7" fill="#16243a" stroke="#8fe9e1" stroke-opacity="0.6"/>
+          <text x="550" y="93" font-size="8.5" fill="#8fe9e1" text-anchor="middle">② 复检 SEM 逐点放大</text>
+          <text x="550" y="104" font-size="7.5" fill="#8b9bb8" text-anchor="middle">定性：这是什么缺陷</text>
+          <line x1="550" y1="110" x2="550" y2="124" stroke="#9fb0cc" stroke-width="1" marker-end="url(#clAd)"/>
+          <rect x="470" y="126" width="160" height="30" rx="7" fill="#16243a" stroke="#e9a04c" stroke-opacity="0.6"/>
+          <text x="550" y="139" font-size="8.5" fill="#e9a04c" text-anchor="middle">③ ADC 自动分类</text>
+          <text x="550" y="150" font-size="7.5" fill="#8b9bb8" text-anchor="middle">真缺陷 / 误报 nuisance</text>
+          <path d="M470,141 Q446,141 446,90 Q446,49 468,49" fill="none" stroke="#e9a04c" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#clAd)"/>
+          <text x="440" y="96" font-size="7" fill="#c9a86a" text-anchor="end" transform="rotate(-90 440 96)">灵敏度回调</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="550" y="178">检测的经济学三角：抓准率、</text>
+            <text x="550" y="191">速度、误报率——三者互相牵制；</text>
+            <text x="550" y="204">灵敏度开太高＝误报淹死工程师</text>
+          </g>
+          <text x="330" y="254" font-size="9" fill="#8aa0c8" text-anchor="middle">数字感：在一片 300mm 晶圆上找一颗 20nm 颗粒，面积比相当于<tspan fill="#e8eef9" font-weight="700">在整个北京市找一枚一元硬币</tspan> [△量级类比]——而且每小时要"翻找"几十片。</text>
+        </svg>
+        <div class="note" style="border-left-color:#c8b3ff;background:rgba(200,179,255,.06)"><b style="color:#c8b3ff">为什么这是国产化最薄弱的设备环节</b>：量测检测＝精密光学＋纳米级运动平台＋物理建模＋<b>缺陷/量测数据库</b>四重积累，而数据库随装机量滚雪球（装得越多、认得越准）→ 强者恒强。过程控制市场 KLA 一家约 <b>56%</b>、光学晶圆检测超 <b>85%</b> [~估算·2025 市场研究口径]，第二名应用材料仅约 10%；国产中科飞测（缺陷检测/膜厚）、精测电子（膜厚/OCD）、睿励精仪（膜厚）在单点突破，整体自给率仍为个位数 [~估算·研报口径]。过程控制占晶圆厂设备投资约 11–13% 且随节点上行 [~估算]——机制根源正是上文的"每层必修课"。格局与公司详见第二轨「设备」赛道。</div>
+
         <div class="subttl">量测数据的闭环：SPC / APC——工厂的"自动驾驶"</div>
         <svg viewBox="0 0 660 120">
           <g font-size="9" text-anchor="middle">
@@ -2819,6 +3099,177 @@
           <line x1="474" y1="170" x2="372" y2="170" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#nandA)"/><text x="478" y="173" font-size="8.5" fill="#9fb0cc">一根柱 = 一串 NAND（串联）</text>
         </svg>
         <div class="note">NAND 闪存把电荷存在每个单元的<b>电荷俘获层</b>里（断电也不丢 = 非易失）。平面 NAND 缩到极限后，改走 <b>3D：把上百层"字线 / 控制栅"竖着叠起来</b>，再用一道刻蚀打出<b>垂直沟道孔</b>穿过所有层——<b>每个"字线 × 沟道"的交点就是一个存储单元</b>，一根柱子上的单元串成一串(NAND string)。妙处是<b>靠"加层数"而不是"缩尺寸"来降低每比特成本</b>，所以层数竞赛(200→300→400+)成了主线。玩家：<b>三星 / SK 海力士(含 Solidigm) / 美光 / 铠侠·闪迪</b>，国产 <b>长江存储 YMTC</b>——也是国产存储突破最快的方向。</div>
+
+        <div class="subttl">机制加深：3D NAND 是怎么"盖"起来的——刻蚀与沉积的极限接力</div>
+        <div class="cap">上图 D 是"竣工照"，这里看"施工过程"。3D NAND 的制造哲学与逻辑芯片完全不同：<b>不靠先进光刻</b>（成熟 DUV 就够用），靠<b>叠层沉积＋极限刻蚀＋牺牲层替换</b>——正是「刻蚀·沉积」页两个机制加深的实战合体。先看六步总览：</div>
+        <svg viewBox="0 0 620 312">
+          <!-- P1 stack -->
+          <text x="106" y="30" font-size="9.5" fill="#8fd6ad" text-anchor="middle" font-weight="700">① 叠"千层饼"</text>
+          <rect x="36" y="92" width="140" height="8" fill="url(#gSi)"/>
+          <rect x="36" y="52" width="140" height="40" fill="url(#gOx)"/>
+          <g fill="#6f7e9c"><rect x="36" y="57" width="140" height="5"/><rect x="36" y="67" width="140" height="5"/><rect x="36" y="77" width="140" height="5"/><rect x="36" y="87" width="140" height="5"/></g>
+          <text x="106" y="116" font-size="8" fill="#9bb0d0" text-anchor="middle">CVD 交替沉积氧化硅/氮化硅 ×100+</text>
+          <text x="106" y="128" font-size="8" fill="#8b9bb8" text-anchor="middle">应力管不住，整片晶圆翘成薯片 [△示意]</text>
+          <!-- P2 staircase -->
+          <text x="310" y="30" font-size="9.5" fill="#e9c84a" text-anchor="middle" font-weight="700">② 修台阶 staircase</text>
+          <rect x="240" y="92" width="140" height="8" fill="url(#gSi)"/>
+          <rect x="240" y="82" width="140" height="10" fill="url(#gOx)"/>
+          <rect x="240" y="72" width="120" height="10" fill="#6f7e9c"/>
+          <rect x="240" y="62" width="100" height="10" fill="url(#gOx)"/>
+          <rect x="240" y="52" width="80" height="10" fill="#6f7e9c"/>
+          <rect x="240" y="40" width="64" height="12" rx="1" fill="#e0556e" opacity="0.8"/>
+          <line x1="316" y1="46" x2="304" y2="46" stroke="#e0556e" stroke-width="1" marker-end="url(#nandA)"/>
+          <text x="322" y="49" font-size="7" fill="#e0556e" text-anchor="start">胶修一圈→刻一级</text>
+          <text x="310" y="116" font-size="8" fill="#9bb0d0" text-anchor="middle">一张掩膜刻出几十级台阶（trim-etch 循环）</text>
+          <text x="310" y="128" font-size="8" fill="#8b9bb8" text-anchor="middle">每层字线由此伸出"接线端子"</text>
+          <!-- P3 channel holes -->
+          <text x="514" y="30" font-size="9.5" fill="#f0738a" text-anchor="middle" font-weight="700">③ 打深井（通道孔）</text>
+          <rect x="444" y="92" width="140" height="8" fill="url(#gSi)"/>
+          <rect x="444" y="52" width="140" height="40" fill="url(#gOx)"/>
+          <g fill="#6f7e9c"><rect x="444" y="57" width="140" height="5"/><rect x="444" y="67" width="140" height="5"/><rect x="444" y="77" width="140" height="5"/><rect x="444" y="87" width="140" height="5"/></g>
+          <g fill="#0d1526"><rect x="470" y="52" width="9" height="40"/><rect x="506" y="52" width="9" height="40"/><rect x="542" y="52" width="9" height="40"/></g>
+          <text x="514" y="116" font-size="8" fill="#9bb0d0" text-anchor="middle">百余层一次打穿、深宽比 60:1+、十亿口井</text>
+          <text x="514" y="128" font-size="8" fill="#8b9bb8" text-anchor="middle">机制详见「刻蚀·沉积」机制加深①</text>
+          <!-- P4 liner -->
+          <text x="106" y="178" font-size="9.5" fill="#c8b3ff" text-anchor="middle" font-weight="700">④ 井壁"精装修"</text>
+          <rect x="36" y="240" width="140" height="8" fill="url(#gSi)"/>
+          <rect x="36" y="200" width="140" height="40" fill="url(#gOx)"/>
+          <g fill="#6f7e9c"><rect x="36" y="205" width="140" height="5"/><rect x="36" y="215" width="140" height="5"/><rect x="36" y="225" width="140" height="5"/><rect x="36" y="235" width="140" height="5"/></g>
+          <g><rect x="62" y="200" width="11" height="40" fill="#7b5ea8"/><rect x="65" y="200" width="5" height="40" fill="url(#gSi)"/></g>
+          <g><rect x="98" y="200" width="11" height="40" fill="#7b5ea8"/><rect x="101" y="200" width="5" height="40" fill="url(#gSi)"/></g>
+          <g><rect x="134" y="200" width="11" height="40" fill="#7b5ea8"/><rect x="137" y="200" width="5" height="40" fill="url(#gSi)"/></g>
+          <text x="106" y="264" font-size="8" fill="#9bb0d0" text-anchor="middle">井壁铺 ONO 存储三明治＋灌多晶硅沟道</text>
+          <text x="106" y="276" font-size="8" fill="#8b9bb8" text-anchor="middle">ALD/CVD 共形沉积——机制加深②的实战</text>
+          <!-- P5 slit + strip -->
+          <text x="310" y="178" font-size="9.5" fill="#8fe9e1" text-anchor="middle" font-weight="700">⑤ 开缝、抽掉假字线</text>
+          <rect x="240" y="240" width="140" height="8" fill="url(#gSi)"/>
+          <rect x="240" y="200" width="140" height="40" fill="url(#gOx)"/>
+          <g fill="#0d1526"><rect x="240" y="205" width="140" height="5"/><rect x="240" y="215" width="140" height="5"/><rect x="240" y="225" width="140" height="5"/><rect x="240" y="235" width="140" height="5"/></g>
+          <g><rect x="262" y="200" width="11" height="40" fill="#7b5ea8"/><rect x="265" y="200" width="5" height="40" fill="url(#gSi)"/></g>
+          <g><rect x="342" y="200" width="11" height="40" fill="#7b5ea8"/><rect x="345" y="200" width="5" height="40" fill="url(#gSi)"/></g>
+          <rect x="304" y="200" width="10" height="40" fill="#0d1526"/>
+          <line x1="309" y1="186" x2="309" y2="198" stroke="#8fd6ad" stroke-width="1" marker-end="url(#nandA)"/>
+          <text x="318" y="192" font-size="7" fill="#8fd6ad" text-anchor="start">热磷酸渗入</text>
+          <text x="310" y="264" font-size="8" fill="#9bb0d0" text-anchor="middle">磷酸只溶氮化硅（选择比化学）[✓机制]</text>
+          <text x="310" y="276" font-size="8" fill="#8b9bb8" text-anchor="middle">"空中楼阁"全靠通道柱和氧化硅撑住</text>
+          <!-- P6 W fill -->
+          <text x="514" y="178" font-size="9.5" fill="#e0c98a" text-anchor="middle" font-weight="700">⑥ 灌钨，字线归位</text>
+          <rect x="444" y="240" width="140" height="8" fill="url(#gSi)"/>
+          <rect x="444" y="200" width="140" height="40" fill="url(#gOx)"/>
+          <g fill="#c9a86a"><rect x="444" y="205" width="140" height="5"/><rect x="444" y="215" width="140" height="5"/><rect x="444" y="225" width="140" height="5"/><rect x="444" y="235" width="140" height="5"/></g>
+          <g><rect x="470" y="200" width="11" height="40" fill="#7b5ea8"/><rect x="473" y="200" width="5" height="40" fill="url(#gSi)"/></g>
+          <g><rect x="550" y="200" width="11" height="40" fill="#7b5ea8"/><rect x="553" y="200" width="5" height="40" fill="url(#gSi)"/></g>
+          <rect x="512" y="200" width="10" height="40" fill="#6f7e9c"/>
+          <text x="514" y="264" font-size="8" fill="#9bb0d0" text-anchor="middle">ALD TiN 衬垫＋钨填满每层空腔</text>
+          <text x="514" y="276" font-size="8" fill="#8b9bb8" text-anchor="middle">灰饼变金饼——对照上图 D 的竣工色</text>
+          <text x="310" y="302" font-size="8.5" fill="#8aa0c8" text-anchor="middle">之后：台阶上打接触孔、多层布线、（部分路线）与外围电路晶圆键合——见下两图。[△全流程为教学简化，实际数百道工序]</text>
+        </svg>
+
+        <div class="subttl">放大看第⑤⑥步：字线抽换 gate replacement（点「下一步 ›」）</div>
+        <div class="cap">这是 3D NAND 最精妙的一招：<b>为什么叠的时候不直接叠金属？</b>因为金属既刻不动 60:1 的深孔、又扛不住中途的高温工序。答案＝<b>牺牲层哲学</b>：先用"能被选择性抽掉的假材料"占位，结构全部成型后再换真身。</div>
+        <div class="step-nav" style="margin-bottom:10px">
+          <button class="btn" id="nfprev">‹ 上一步</button>
+          <button class="btn acc" id="nfplay">▶ 自动播放</button>
+          <button class="btn" id="nfnext">下一步 ›</button>
+          <div class="step-dots" id="nfdots"></div>
+        </div>
+        <div class="stepname" id="nfname"></div>
+        <svg viewBox="0 0 620 300" style="margin-top:8px" id="nfsvg">
+          <!-- base: substrate + ON stack + 2 pillars -->
+          <rect x="100" y="240" width="420" height="18" fill="url(#gSi)"/>
+          <text x="530" y="253" font-size="8" fill="#9bb0d0" text-anchor="start">衬底</text>
+          <rect x="100" y="80" width="420" height="160" fill="url(#gOx)"/>
+          <g fill="#6f7e9c" id="nf-nbands"><rect x="100" y="100" width="420" height="20"/><rect x="100" y="140" width="420" height="20"/><rect x="100" y="180" width="420" height="20"/><rect x="100" y="220" width="420" height="20"/></g>
+          <g><rect x="176" y="80" width="24" height="160" fill="#7b5ea8"/><rect x="183" y="80" width="10" height="160" fill="url(#gSi)"/></g>
+          <g><rect x="392" y="80" width="24" height="160" fill="#7b5ea8"/><rect x="399" y="80" width="10" height="160" fill="url(#gSi)"/></g>
+          <text x="188" y="70" font-size="8" fill="#c8b3ff" text-anchor="middle">通道柱（已完工）</text>
+          <text x="76" y="92" font-size="8" fill="#f2d35a" text-anchor="end">氧化硅</text>
+          <g id="nf-lab-n"><text x="76" y="114" font-size="8" fill="#9fb0cc" text-anchor="end">氮化硅</text></g>
+          <!-- s1: slit -->
+          <g id="nf-s1" opacity="0">
+            <rect x="292" y="80" width="16" height="160" fill="#0d1526"/>
+            <line x1="300" y1="52" x2="300" y2="76" stroke="#f0738a" stroke-width="1.1" marker-end="url(#nandA)"/>
+            <text x="300" y="46" font-size="8.5" fill="#f0738a" text-anchor="middle">slit 隔缝刻蚀：直达底部</text>
+          </g>
+          <!-- s2: voids -->
+          <g id="nf-s2" opacity="0">
+            <g fill="#0d1526"><rect x="100" y="100" width="420" height="20"/><rect x="100" y="140" width="420" height="20"/><rect x="100" y="180" width="420" height="20"/><rect x="100" y="220" width="420" height="20"/></g>
+            <g><rect x="176" y="80" width="24" height="160" fill="#7b5ea8"/><rect x="183" y="80" width="10" height="160" fill="url(#gSi)"/></g>
+            <g><rect x="392" y="80" width="24" height="160" fill="#7b5ea8"/><rect x="399" y="80" width="10" height="160" fill="url(#gSi)"/></g>
+            <rect x="292" y="80" width="16" height="160" fill="#0d1526"/>
+            <g stroke="#8fd6ad" stroke-width="1" opacity="0.85">
+              <line x1="300" y1="56" x2="300" y2="76" marker-end="url(#nandA)"/>
+              <line x1="294" y1="110" x2="260" y2="110" marker-end="url(#nandA)"/><line x1="306" y1="110" x2="340" y2="110" marker-end="url(#nandA)"/>
+              <line x1="294" y1="190" x2="260" y2="190" marker-end="url(#nandA)"/><line x1="306" y1="190" x2="340" y2="190" marker-end="url(#nandA)"/>
+            </g>
+            <text x="300" y="48" font-size="8.5" fill="#8fd6ad" text-anchor="middle">热磷酸从缝渗入每一层，只溶氮化硅</text>
+          </g>
+          <!-- s3: ALD W fill -->
+          <g id="nf-s3" opacity="0">
+            <g fill="#c9a86a" stroke="#5eead4" stroke-width="1"><rect x="100" y="100" width="420" height="20"/><rect x="100" y="140" width="420" height="20"/><rect x="100" y="180" width="420" height="20"/><rect x="100" y="220" width="420" height="20"/></g>
+            <g><rect x="176" y="80" width="24" height="160" fill="#7b5ea8"/><rect x="183" y="80" width="10" height="160" fill="url(#gSi)"/></g>
+            <g><rect x="392" y="80" width="24" height="160" fill="#7b5ea8"/><rect x="399" y="80" width="10" height="160" fill="url(#gSi)"/></g>
+            <rect x="292" y="80" width="16" height="160" fill="#0d1526"/>
+            <g fill="#c9b3f5"><circle cx="300" cy="96" r="2.2"/><circle cx="300" cy="150" r="2.2"/><circle cx="300" cy="206" r="2.2"/></g>
+            <text x="300" y="48" font-size="8.5" fill="#e0c98a" text-anchor="middle">ALD 从缝钻进每层横向空腔：TiN 衬垫（青边）＋钨填满</text>
+          </g>
+          <!-- s4: done -->
+          <g id="nf-s4" opacity="0">
+            <g fill="#c9a86a"><rect x="100" y="100" width="420" height="20"/><rect x="100" y="140" width="420" height="20"/><rect x="100" y="180" width="420" height="20"/><rect x="100" y="220" width="420" height="20"/></g>
+            <g><rect x="176" y="80" width="24" height="160" fill="#7b5ea8"/><rect x="183" y="80" width="10" height="160" fill="url(#gSi)"/></g>
+            <g><rect x="392" y="80" width="24" height="160" fill="#7b5ea8"/><rect x="399" y="80" width="10" height="160" fill="url(#gSi)"/></g>
+            <rect x="292" y="80" width="16" height="160" fill="#6f7e9c"/>
+            <text x="300" y="48" font-size="8.5" fill="#e0c98a" text-anchor="middle" font-weight="700">灰饼变金饼：字线归位，slit 填绝缘并兼作共源线</text>
+            <text x="76" y="114" font-size="8" fill="#e0c98a" text-anchor="end" font-weight="700">钨字线</text>
+          </g>
+          <text x="310" y="282" font-size="8.5" fill="#8aa0c8" text-anchor="middle">[△示意：层数压缩、比例夸大；实际每层空腔仅几十 nm 高、横向要灌几百 nm 深]</text>
+        </svg>
+        <div class="cap" id="nfcap" style="min-height:52px"></div>
+
+        <div class="subttl">收尾两难题：深浅不一的接触孔 + 外围电路放哪</div>
+        <svg viewBox="0 0 620 252">
+          <!-- left: staircase contacts -->
+          <text x="150" y="20" font-size="10.5" fill="#e9c84a" text-anchor="middle" font-weight="700">台阶上的接触孔：深浅差十倍</text>
+          <rect x="40" y="176" width="220" height="10" fill="url(#gSi)"/>
+          <rect x="40" y="160" width="220" height="16" fill="#c9a86a"/>
+          <rect x="40" y="144" width="176" height="16" fill="#b3945c"/>
+          <rect x="40" y="128" width="132" height="16" fill="#c9a86a"/>
+          <rect x="40" y="112" width="88" height="16" fill="#b3945c"/>
+          <rect x="40" y="52" width="220" height="8" fill="#16243a"/>
+          <g fill="url(#gCuV)"><rect x="102" y="60" width="9" height="52"/><rect x="146" y="60" width="9" height="68"/><rect x="190" y="60" width="9" height="84"/><rect x="234" y="60" width="9" height="100"/></g>
+          <text x="150" y="46" font-size="8" fill="#9fb0cc" text-anchor="middle">上方金属布线层</text>
+          <text x="150" y="204" font-size="8.5" fill="#9bb0d0" text-anchor="middle">几十种深度的孔一次刻完：深的要到底、</text>
+          <text x="150" y="217" font-size="8.5" fill="#9bb0d0" text-anchor="middle">浅的不能穿——全靠停止层＋高选择比 [✓机制]</text>
+          <line x1="310" y1="14" x2="310" y2="238" stroke="#23304d" stroke-width="1"/>
+          <!-- right: periphery -->
+          <text x="465" y="20" font-size="10.5" fill="#c8b3ff" text-anchor="middle" font-weight="700">外围 CMOS 放哪：三代答案</text>
+          <rect x="330" y="56" width="56" height="40" rx="3" fill="#1a2740" stroke="#5b86c9" stroke-opacity="0.6"/>
+          <text x="358" y="79" font-size="7.5" fill="#9fc0ec" text-anchor="middle">存储阵列</text>
+          <rect x="390" y="76" width="28" height="20" rx="3" fill="#16243a" stroke="#e9a04c" stroke-opacity="0.6"/>
+          <text x="404" y="89" font-size="6.5" fill="#f0c082" text-anchor="middle">外围</text>
+          <text x="374" y="112" font-size="8" fill="#9bb0d0" text-anchor="middle">并排：浪费地</text>
+          <rect x="446" y="56" width="60" height="26" rx="3" fill="#1a2740" stroke="#5b86c9" stroke-opacity="0.6"/>
+          <text x="476" y="72" font-size="7.5" fill="#9fc0ec" text-anchor="middle">存储阵列</text>
+          <rect x="446" y="84" width="60" height="14" rx="3" fill="#16243a" stroke="#e9a04c" stroke-opacity="0.6"/>
+          <text x="476" y="94" font-size="6.5" fill="#f0c082" text-anchor="middle">外围·先造在下</text>
+          <text x="476" y="112" font-size="8" fill="#9bb0d0" text-anchor="middle">CuA/PUC：盖楼</text>
+          <rect x="530" y="52" width="60" height="20" rx="3" fill="#1a2740" stroke="#5b86c9" stroke-opacity="0.6"/>
+          <text x="560" y="65" font-size="7.5" fill="#9fc0ec" text-anchor="middle">存储晶圆</text>
+          <g fill="#f2d35a"><circle cx="544" cy="76" r="1.8"/><circle cx="560" cy="76" r="1.8"/><circle cx="576" cy="76" r="1.8"/></g>
+          <rect x="530" y="80" width="60" height="20" rx="3" fill="#16243a" stroke="#e9a04c" stroke-opacity="0.6"/>
+          <text x="560" y="93" font-size="6.5" fill="#f0c082" text-anchor="middle">逻辑晶圆</text>
+          <text x="560" y="112" font-size="8" fill="#9bb0d0" text-anchor="middle">Xtacking：键合</text>
+          <g font-size="8.5" fill="#9bb0d0" text-anchor="middle">
+            <text x="465" y="140">CuA/PUC（美光/SK）：先造外围再往上叠——</text>
+            <text x="465" y="153">之后所有工序都受热预算约束 [✓机制]；</text>
+            <text x="465" y="168">长存 Xtacking：两片晶圆各用最优工艺分别造，</text>
+            <text x="465" y="181">再面对面混合键合（见「先进封装」）——</text>
+            <text x="465" y="194">以架构巧劲换密度与 IO 速度 [✓公开架构]</text>
+          </g>
+          <text x="465" y="220" font-size="8" fill="#8b9bb8" text-anchor="middle">三星 COP / SK 海力士 PUC / 美光 CuA / 长存 Xtacking——</text>
+          <text x="465" y="232" font-size="8" fill="#8b9bb8" text-anchor="middle">名字不同，方向一致：别让外围占存储的地</text>
+        </svg>
+        <div class="note" style="border-left-color:#e0c98a;background:rgba(224,201,138,.07)"><b style="color:#e0c98a">设备视角收尾</b>：3D NAND 产线＝刻蚀机＋炉管/ALD 的"森林"——刻蚀与薄膜设备在 NAND 资本开支中的占比为全行业最高 [~估算·业界共识]，光刻反而是配角（无需 EUV）。这正是轨2「设备」赛道"存储扩产利好刻蚀/薄膜设备"的机制根源。层数竞赛记分牌与低温刻蚀进展维护在「刻蚀·沉积」页机制加深①（单一事实源，此处不重复）；牺牲层哲学的另一半——逻辑芯片的假栅替换，见「先进结构演进」页 HKMG 机制加深。</div>
 
         <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>从研究角度记住三点：</b>① 存储是典型的<b>强周期、寡头</b>生意——产品高度标准化(近似大宗商品)，供需错配→价格大起大落，<b>景气周期</b>对相关公司业绩与股价影响极大。② 格局：<b>DRAM</b> ≈ 三星 / SK 海力士 / 美光(+长鑫)，<b>NAND</b> ≈ 三星 / SK 海力士 / 美光 / 铠侠·闪迪(+长江存储)。③ <b>HBM 改变了游戏</b>：它把本属周期品的 DRAM 变成<b>绑定 AI、供不应求的高毛利产品</b>(见 先进封装)，是当前存储里最贵、最紧的细分。</div>
         <!-- mem-end -->
@@ -3410,6 +3861,26 @@
     document.getElementById('aldprev').addEventListener('click',function(){aldStop();ai=(ai-1+aldSteps.length)%aldSteps.length;aldRender();});
     aldplay.addEventListener('click',function(){if(aldTimer){aldStop();return;}aldplay.textContent='⏸ 暂停';aldTimer=setInterval(function(){ai=(ai+1)%aldSteps.length;aldRender();},3600);});
     aldRender();
+  })();
+
+  // ---- 3D NAND gate replacement stepper (mem page) ----
+  (function(){
+    var nfLayers=['nf-s1','nf-s2','nf-s3','nf-s4','nf-lab-n'];
+    var nfSteps=[
+      {n:'0 · 起点：假字线就位',show:['nf-lab-n'],cap:'叠层里的灰色氮化硅从一开始就是<b>"占位演员"</b>：耐高温、好刻蚀，最关键的是——<b>能被选择性抽掉</b>。此时通道柱已经完工（上一图第④步），像一排打进千层饼的"承重桩"。'},
+      {n:'1 · 开一条"施工通道"（slit）',show:['nf-s1','nf-lab-n'],cap:'在柱子之间刻一条窄缝直达底部——又是一次高深宽比刻蚀（呼应「刻蚀·沉积」机制加深①），而且必须<b>停得准</b>：打穿底部就报废。'},
+      {n:'2 · 热磷酸"抽芯"',show:['nf-s2'],cap:'热磷酸从缝里渗进每一层，<b>只溶氮化硅、不动氧化硅和通道柱</b>（选择比化学）[✓机制]。千层饼瞬间变"空中楼阁"——全靠通道柱和氧化硅层撑住不塌。'},
+      {n:'3 · ALD 钻缝灌钨',show:['nf-s3'],cap:'气体从缝钻进每层只有<b>几十 nm 高、几百 nm 深</b>的横向空腔：先 ALD 一层 TiN 衬垫（图中青边），再钨填满——比通道孔更刁钻的共形沉积，ALD"非它不可"的第六个现场（呼应机制加深②）。'},
+      {n:'4 · 灰饼变金饼：字线归位',show:['nf-s4'],cap:'每层氮化硅<b>原位换成了钨字线</b>；slit 填绝缘并兼作共源线。对照上图 D 竣工照的金色——来历就在这。<b>牺牲层哲学</b>：先用假材料占位、结构成型后换真身——与逻辑芯片 HKMG 的假栅替换（见「先进结构演进」机制加深）同一招。'}
+    ];
+    var ni=0,nfname=document.getElementById('nfname'),nfcap=document.getElementById('nfcap'),nfdots=document.getElementById('nfdots'),nfplay=document.getElementById('nfplay'),nfTimer=null;
+    nfSteps.forEach(function(s,i){var d=document.createElement('button');d.className='dot';d.setAttribute('aria-label','第'+(i+1)+'步');d.addEventListener('click',function(){nfStop();ni=i;nfRender();});nfdots.appendChild(d);});
+    function nfRender(){var s=nfSteps[ni];nfLayers.forEach(function(id){document.getElementById(id).setAttribute('opacity','0')});s.show.forEach(function(id){document.getElementById(id).setAttribute('opacity','1')});nfname.textContent=s.n;nfcap.innerHTML=s.cap;nfdots.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('on',i===ni)});}
+    function nfStop(){if(nfTimer){clearInterval(nfTimer);nfTimer=null;nfplay.textContent='▶ 自动播放';}}
+    document.getElementById('nfnext').addEventListener('click',function(){nfStop();ni=(ni+1)%nfSteps.length;nfRender();});
+    document.getElementById('nfprev').addEventListener('click',function(){nfStop();ni=(ni-1+nfSteps.length)%nfSteps.length;nfRender();});
+    nfplay.addEventListener('click',function(){if(nfTimer){nfStop();return;}nfplay.textContent='⏸ 暂停';nfTimer=setInterval(function(){ni=(ni+1)%nfSteps.length;nfRender();},3600);});
+    nfRender();
   })();
 
   // ---- hash deep link: principles/#eda etc. jumps to that page ----
