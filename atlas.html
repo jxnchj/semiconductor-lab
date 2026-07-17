@@ -42,6 +42,35 @@
   .cap{font-size:13.5px;line-height:1.65;color:var(--mut);margin-top:12px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:11px}
   .cap b{color:var(--txt)}
   .note{font-size:12.5px;line-height:1.6;color:var(--mut);margin-top:12px;padding:10px 12px;border-left:3px solid var(--cu);background:rgba(233,160,76,.07);border-radius:0 9px 9px 0}
+.mchain{margin-top:14px;border:1px solid rgba(94,234,212,.24);border-radius:13px;background:rgba(94,234,212,.04);padding:12px 16px 14px}
+.mchain .mtt{font-size:13px;font-weight:700;color:var(--cy2);margin-bottom:2px}
+.mchain .mtt small{font-weight:400;color:var(--mut);font-size:11.5px;margin-left:8px}
+.mchain .mrow{display:grid;grid-template-columns:minmax(220px,42%) 24px 1fr;gap:10px;align-items:start;padding:10px 0;border-bottom:1px dashed rgba(94,234,212,.14)}
+.mchain .mrow:last-child{border-bottom:none;padding-bottom:3px}
+.mchain .mfact,.mchain .mcons{font-size:12.5px;line-height:1.62}
+.mchain .mfact{color:var(--txt)}
+.mchain .mcons{color:var(--mut)}
+.mchain .mcons b{color:var(--txt)}
+.mchain .marr{color:var(--cy2);font-weight:700;text-align:center;padding-top:1px}
+.mgo{display:inline-block;margin-top:4px;font-size:11px;font-weight:600;color:var(--cy2);text-decoration:none;border:1px solid rgba(94,234,212,.32);border-radius:7px;padding:2px 9px;background:rgba(94,234,212,.07);white-space:nowrap}
+.mgo:hover{border-color:var(--cy);box-shadow:0 0 10px rgba(52,214,207,.15)}
+@media(max-width:760px){.mchain .mrow{grid-template-columns:1fr}.mchain .marr{display:none}}
+.dcard{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:16px 18px;margin-top:14px}
+.dcard .dchd{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.dcard .dcnm{font-size:15.5px;font-weight:800;color:var(--txt)}
+.dcard .dccode{font-size:11.5px;color:var(--dim)}
+.dcard .dctag{font-size:11px;font-weight:700;color:#f3b86a;border:1px solid rgba(233,160,76,.35);border-radius:7px;padding:2px 9px;background:rgba(233,160,76,.06)}
+.dcard .dckpi{font-size:11px;color:var(--mut);border:1px solid var(--line);border-radius:7px;padding:2px 9px;background:rgba(255,255,255,.02)}
+.dcard .dckpi b{color:var(--txt)}
+.dcard .dcpos{font-size:12.5px;color:var(--mut);line-height:1.62;margin:8px 0 2px}
+.dcard .dcsec{font-size:12px;font-weight:800;color:var(--cy2);margin:14px 0 6px;letter-spacing:.05em}
+.dcard .tbl{min-width:520px}
+.dcard .tbl th{color:var(--mut);font-weight:600;white-space:nowrap}
+.dcard .tbl td{white-space:nowrap}
+.dcard .dnote{font-size:12px;color:var(--mut);line-height:1.62;margin-top:8px}
+.dcard .dnote b{color:var(--txt)}
+.fill.gn{background:linear-gradient(90deg,#5d6b88,#8b9bb8)}
+.dcard .pct{flex-basis:170px}
   .note b{color:#f0c082}
   .note.cy{border-left-color:var(--cy);background:rgba(52,214,207,.06)}.note.cy b{color:var(--cy2)}
   .note.red{border-left-color:var(--red);background:rgba(240,115,138,.07)}.note.red b{color:#f593a6}
@@ -569,6 +598,29 @@
           <div class="evocard"><h4><span>🏭</span>规模 / 服务</h4><p>气体讲究<b>现场制气(on-site)</b>与本地化稳定供应，靶材要<b>回收</b>闭环。规模、物流半径、服务网络本身就是壁垒。</p></div>
           <div class="evocard"><h4><span>🛡️</span>资质 + 安全冗余</h4><p>晶圆厂为保供常做<b>双源认证</b>，但份额向先入者倾斜。新进入者即便过认证，也多从"第二供应商"小份额起步。</p></div>
         </div>
+        <div class="mchain">
+          <div class="mtt">机制 → 壁垒 · 证据链<small>六张卡是"结论"，这里补"物理原因"——每条机制在第一轨都有完整图解，点「看机制 ↗」直达对应小节</small></div>
+          <div class="mrow">
+            <div class="mfact"><b>ALD 自限制反应</b>对前驱体近乎苛刻：要挥发得起来、恰好只反应一层、残基还得"走得干净"——差一点就是膜里的杂质。 <a class="mgo" href="principles/#etch:mk-ald">看机制：ALD ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">前驱体卖的不是化学品，是<b>分子设计 + ppb 级纯化 + 稳定供应</b>——"配方/IP 黑箱"卡的物理来历；且每代节点都新增材料品类（HKMG 的铪源、新互连金属的 Ru/Mo 源），材料池结构性扩容。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">高深宽比刻蚀靠 <b>C/F 比"护壁化学"</b>在深孔里边刻边护——刻蚀气体的配比与纯度本身就是工艺窗口。 <a class="mgo" href="principles/#etch:mk-har">看机制：高深宽比刻蚀 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">特气的壁垒不在"造出气"，在<b>批间一致性 + ppb/ppt 级杂质控制</b>：一罐气的波动＝上亿个深孔同时长歪——"纯度墙 + 认证周期"两张卡在刻蚀现场的具体形态。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">化学放大胶靠 <b>PAG 光酸"一变多"</b>放大微弱曝光信号；EUV 光子数少，更依赖这套链式化学——组分平衡极难。 <a class="mgo" href="principles/#litho">看机制：光刻胶感光 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">感光体系＝几十种组分的<b>配方黑箱</b>，且要与光源/掩膜/工艺联合调试——EUV 胶三家 &gt;90%（份额见「玩家格局」②）的机制解释：不在协同开发圈里，连试错数据都拿不到。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">清洗贯穿全程、每隔几道工序就要洗一次，且要"洗干净但不伤 nm 级结构"——RCA/DHF 配方 + ppt 级超纯水是底线。 <a class="mgo" href="principles/#clean">看机制：清洗 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">湿电子化学品的胜负在<b>纯化-包装-运输全链"零沾污"</b>，不在合成路线；叠加本地化供应半径——"规模/服务"卡同源。</div>
+          </div>
+        </div>
       </section>
       <section class="sub" id="m-players">        <div class="subttl">玩家格局 · 四大深挖品类</div>
         <div class="cap" style="margin-bottom:6px"><span style="color:var(--si)">■ 蓝 = 国际龙头</span> &nbsp; <span style="color:var(--cy2)">■ 青 = 国产玩家</span>；份额为约数，已标年份与来源。</div>
@@ -618,6 +670,66 @@
           <div class="shrow"><span class="co">安集科技 <small>CN</small></span><div class="track"><div class="fill gc" style="width:7%"></div></div><span class="pct">~7%</span></div>
         </div>
         <div class="note"><b>抛光垫</b>是另一座山：陶氏(Dow) 长期一家独大（~80%+）。<b>国产看点</b>：安集科技抛光液国内龙头、全球 ~7%；鼎龙股份率先打破抛光垫海外垄断（国产破零），抛光液、清洗液同步起量<sup class="s">9</sup>。<b>事实 vs 叙事</b>：抛光材料整体国产化仍 <b>&lt;15%</b>，垫的高端料与一致性是难点。</div>
+        <div id="m-deepcards">
+        <div class="subttl" style="margin-top:28px">龙头深度卡片 · 材料赛道（沪硅产业 / 安集科技 × 国际锚）</div>
+        <div class="cap">模板第二站。材料赛道内部是<b>两种截然不同的生意</b>：硅片＝重资产周期样本，CMP 液＝轻资产配方样本——两张卡对照着读。财务＝年报/一季报实绩 [✓已核实·tushare/公司财报]；市值/PE＝<b>2026-07-16 收盘快照</b>。</div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">国际锚 · 材料的两种报表长相</span><span class="dctag">FY2025 对照</span></div>
+          <div class="dcpos">硅片锚＝SUMCO（纯硅片二哥，自然年）；平台锚＝Entegris（过滤/纯化/CMP/前驱体材料平台）。信越是全球硅片一哥但为综合化工集团，分部口径不可比、不入表（份额见上方①）。</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>公司</th><th>FY2025 营收</th><th>毛利率</th><th>净利/归母</th><th>市值（07-16）</th><th>PE-TTM</th></tr>
+            <tr><td><b>SUMCO</b> <small>硅片</small></td><td>¥4,097 亿日元 ≈$27 亿</td><td>13.3%</td><td>−¥118 亿日元（亏损）</td><td>¥1.61 万亿日元 ≈$108 亿</td><td>—（亏损）</td></tr>
+            <tr><td><b>Entegris</b> <small>材料平台</small></td><td>$32.0 亿</td><td>44.4%</td><td>$2.4 亿*</td><td>$205 亿</td><td>77.8*</td></tr>
+            <tr><td><b>沪硅产业</b> <small>硅片</small></td><td>¥37.2 亿 ≈$5.2 亿</td><td>−17.1%</td><td>−¥15.1 亿（亏损）</td><td>¥955 亿 ≈$135 亿</td><td>—（亏损）· PB 5.7</td></tr>
+            <tr><td><b>安集科技</b> <small>CMP液+湿化学</small></td><td>¥25.0 亿 ≈$3.5 亿</td><td>56.7%</td><td>¥7.8 亿</td><td>¥584 亿 ≈$82 亿</td><td>71.0</td></tr>
+          </table></div>
+          <div class="dnote"><b>坐标系三个读数</b>：① <b>周期位置</b>——SUMCO 与沪硅双双亏损：硅片的亏是行业周期不是个体失误；SUMCO 年折旧 ¥1,157 亿日元≈收入的 28%，硅片本质是"重资产折旧游戏"，稼动率与价格决定盈亏。② <b>生意分层</b>——同一赛道两种报表：硅片看 PB/产能/涨价传导，配方材料看毛利率稳定性/品类扩张。③ <b>估值</b>——沪硅市值（$135 亿）已超 SUMCO（$108 亿）而收入只有其 1/5：国产替代+周期反转预期计价充分。*Entegris GAAP 净利含约 $4.8 亿一次性费用，GAAP PE 被推高（前瞻口径 ~29 [~估算·yfinance]）。汇率 ¥7.1、JPY150 折美元 [~估算]。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">沪硅产业</span><span class="dccode">688126.SH</span><span class="dctag">硅片 · 周期底部样本</span><span class="dckpi">市值 <b>¥955 亿</b></span><span class="dckpi">PE <b>—（亏损）</b>· PB <b>5.67</b></span><span class="dckpi">收盘 <b>28.90</b>（07-16）</span></div>
+          <div class="dcpos">国内大硅片龙头（子公司新昇担纲 300mm）：300mm 年出货已破 500 万片、产能约 65 万片/月（口径见上方①注）；对标 SUMCO 的纯硅片模式，正处<b>"新产能爬坡 × 行业周期底部"</b>的双重叠加点——判断它的关键不是当期盈亏，是涨价传导与折旧摊薄的赛跑。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">300mm 硅片</span><div class="track"><div class="fill gc" style="width:66%"></div></div><span class="pct">¥24.4 亿 · 65.6% · 毛利率 −15.0%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">≤200mm 硅片</span><div class="track"><div class="fill gc" style="width:30%"></div></div><span class="pct">¥11.3 亿 · 30.3% · 毛利率 −23.4%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">受托加工+其他</span><div class="track"><div class="fill gn" style="width:4%"></div></div><span class="pct">¥1.5 亿 · 4.1%</span></div>
+          <div class="dnote">两条产品线毛利率均为负——<b>不是卖不掉（量在涨），是价在周期底 + 新产能折旧前置</b>。300mm 是主力与希望所在：占比 65.6%，且亏得比小尺寸少。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>工艺壁垒在拉晶与切磨抛</b>：缺陷密度/翘曲/平整度直接决定下游良率，是"良率入场券"生意——机制见轨1「硅片·掩膜」页。<b>商业壁垒在认证</b>：导入验证 1–3 年+双源格局，换供应商极慢；涨价周期里先入者吃满弹性（证据链见本赛道「护城河」页）。<b>卡点</b>：12″ 国产化仍 ~10%，高端正片/外延片一致性待验证（见上方①事实 vs 叙事）。 <a class="mgo" href="principles/#wafer">看机制：硅片是怎么造的 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>扣非</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>31.9</td><td>−11.4%</td><td>+16.5%</td><td>+1.9</td><td>−1.7</td><td>7.0%</td></tr>
+            <tr><td>2024</td><td>33.9</td><td>+6.2%</td><td>−9.0%</td><td>−9.7</td><td>−12.4</td><td>7.9%</td></tr>
+            <tr><td>2025</td><td>37.2</td><td>+9.7%</td><td>−17.1%</td><td>−15.1</td><td>−17.7</td><td>9.5%</td></tr>
+            <tr><td>2026Q1</td><td>10.8</td><td>+35.2%</td><td>−11.8%</td><td>−4.8</td><td>−5.2</td><td>13.2%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 毛利率 +16.5%→−17.1% 的坠落＝价格下行+新厂折旧上账的叠加；<b>26Q1 收入 +35.2%、毛利率修复至 −11.8%</b>——涨价开始传导但尚未回正 [✓报表]；② <b>重资产本色</b>：固定资产 ¥140.7 亿+在建 ¥53.3 亿 ≈ 5.2 倍年收入（FY2025），对照 SUMCO"折旧≈收入 28%"——盈亏由稼动率与价格决定；③ 扣非亏损（17.7 亿）大于归母（15.1 亿）＝补助与非经常项托底；这个阶段的周期股<b>看 PB 与涨价落地节奏，不看 PE</b>；④ 利润修复要连过三道坎：毛利回正 → 折旧摊薄 → 利润释放，Q1 亏损同比仍在扩大（−4.8 vs 上年 −2.1），修复在半途。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">安集科技</span><span class="dccode">688019.SH</span><span class="dctag">CMP 液龙头 · 配方成长样本</span><span class="dckpi">市值 <b>¥584 亿</b></span><span class="dckpi">PE-TTM <b>71.0</b></span><span class="dckpi">收盘 <b>256.53</b>（07-16）</span></div>
+          <div class="dcpos">抛光液国内绝对龙头（全球 ~7%，见上方④），品类正从抛光液扩向功能性湿电子化学品（清洗液等）——<b>Entegris 式"材料平台"路径的早期版本</b>：用一个配方黑箱的现金流，养下一个配方黑箱。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">CMP 抛光液</span><div class="track"><div class="fill gc" style="width:82%"></div></div><span class="pct">¥20.4 亿 · 81.5% · 毛利率 58.3%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">功能性湿化学品</span><div class="track"><div class="fill gc" style="width:18%"></div></div><span class="pct">¥4.5 亿 · 18.1% · 毛利率 50.0%</span></div>
+          <div class="dnote">两条线毛利率都在 50% 以上——配方生意定价权的直接形态；第二品类占比已升至 18.1%，平台化不是叙事、在报表里兑现中。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>抛光液＝纳米磨粒+化学体系的配方黑箱</b>：与抛光垫/设备/工艺窗口联调（轨1 CMP"先凹凸再磨平"的耗材端），dishing/erosion 的控制一半在浆料里。<b>认证后与产线良率深度耦合</b>＝极高粘性——本赛道护城河页"配方/IP 黑箱""认证周期=客户绑定"两张卡的标的样本。<b>卡点</b>：高端垫（陶氏 ~80%+）与部分磨粒原料仍在海外手里。 <a class="mgo" href="principles/#fab">看机制：CMP ↗</a> <a class="mgo" href="principles/#clean">清洗化学 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>YoY</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>12.4</td><td>+15.0%</td><td>55.8%</td><td>4.0</td><td>+33.6%</td><td>19.1%</td></tr>
+            <tr><td>2024</td><td>18.4</td><td>+48.2%</td><td>58.5%</td><td>5.3</td><td>+32.5%</td><td>18.1%</td></tr>
+            <tr><td>2025</td><td>25.0</td><td>+36.5%</td><td>56.7%</td><td>7.8</td><td>+46.9%</td><td>17.8%</td></tr>
+            <tr><td>2026Q1</td><td>7.2</td><td>+32.8%</td><td>55.5%</td><td>2.1</td><td>+23.0%</td><td>16.4%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① <b>毛利率 55–58% 四期高位稳定</b>——配方定价权最硬的证据；净利率 ~31%（2025）；② 研发费率 17–19% 与高毛利并存＝典型"配方平台早期"：研发是拓品类（抛光液→清洗液→电镀液等）的成长投入而非防守成本；③ 增长质量干净：扣非 7.0 亿与归母 7.8 亿差异小 [✓报表]；④ 对照 Entegris（GM 44.4%/研发 10.3%/收入 $32 亿）——平台成熟态的模样；安集体量仅其 ~1/9，品类扩张空间即成长空间，PE 71 对 35%+ 的复合增速，估值贵不贵取决于平台化能走多远。</div>
+        </div>
+
+        <div class="snote" style="margin-top:12px">深度卡片口径同设备赛道（FACT-REVIEW #22）：A 股＝tushare income/fina_indicator/balancesheet/fina_mainbz + daily_basic（2026-07-16）；SUMCO/Entegris＝公司财报（yfinance 整理），SUMCO 为自然年、Entegris GAAP 净利含约 $4.8 亿一次性费用；汇率 ¥7.1、JPY150 折美元 [~估算]。</div>
+        </div>
         <div class="snote">份额为约数、2023–24 口径 · <span class="k">2</span> 硅片市场报告/年报 · <span class="k">3</span> 光刻胶行业研究 · <span class="k">4</span> 电子特气市场报告 · <span class="k">5</span> CMP 抛光液市场报告 · <span class="k">9</span> 公司公告/财经报道 · <span class="k">10</span> 国产光刻胶进展（2024–25）。完整清单见「重点个股」页。</div>
       </section>
       <section class="sub" id="m-dr">        <div class="subttl">驱动与催化 · 需求贝塔 + 国产阿尔法</div>
@@ -787,11 +899,34 @@
         <div class="cap" style="margin-bottom:12px">设备的壁垒比材料更"硬"——很多是<b>物理 + 工程 + 供应链</b>三重锁死，钱多也未必短期突破。</div>
         <div class="evo">
           <div class="evocard"><h4><span>🔬</span>物理代差（EUV）</h4><p>13.5nm EUV 光源、近乎完美的反射式光学、双工件台——<b>全球只有 ASML 能造</b>，背后还有蔡司光学、Cymer 光源等独家供应链。这是钱也买不来的物理门槛。</p></div>
-          <div class="evocard"><h4><span>📐</span>精度即良率</h4><p>刻蚀做到<b>亚埃级</b>、套刻/量测到纳米级，一台设备的稳定性直接决定晶圆良率。性能差一点，整线良率就塌。</p></div>
+          <div class="evocard"><h4><span>📐</span>精度即良率</h4><p>刻蚀做到<b>原子层级（ALE 逐层去除）</b>、套刻/量测到纳米级，一台设备的稳定性直接决定晶圆良率。性能差一点，整线良率就塌。</p></div>
           <div class="evocard"><h4><span>⏳</span>验证绑定</h4><p>设备要与晶圆厂<b>联合开发、逐道工艺调试</b>，装机后深度绑定某产线；切换要冒良率与停产风险，客户极度黏性。</p></div>
           <div class="evocard"><h4><span>🛠️</span>装机量 = 服务护城河</h4><p>龙头靠庞大<b>装机基数</b>吃备件、升级、服务的长期现金流，也借此拿到下一代联合开发的入场券。后来者没有装机量就没有数据闭环。</p></div>
           <div class="evocard"><h4><span>🔗</span>上游零部件卡位</h4><p>设备本身也被<b>核心零部件</b>卡：光学镜头、激光器、精密阀件、射频电源、机械手……国产设备的"卡脖子"往往在零部件。</p></div>
           <div class="evocard"><h4><span>💰</span>资本 + 人才</h4><p>单台研发投入巨大、迭代周期长；顶尖光学 / 等离子体 / 精密机械人才稀缺。这是一场<b>长期、烧钱、靠人</b>的马拉松。</p></div>
+        </div>
+        <div class="mchain">
+          <div class="mtt">机制 → 壁垒 · 证据链<small>六张卡是"结论"，这里补"物理原因"——每条机制在第一轨都有完整图解，点「看机制 ↗」直达对应小节</small></div>
+          <div class="mrow">
+            <div class="mfact">高深宽比刻蚀有两个物理死结：<b>充电效应</b>（孔底像"反着装的电池"推开后来的离子）与<b>输运困境</b>（越深进料越难、ARDE 越刻越慢）；解法是护壁化学、高能脉冲、低温刻蚀的"平衡术"。 <a class="mgo" href="principles/#etch:mk-har">看机制：高深宽比刻蚀 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">刻蚀机的核心资产是<b>腔体工程 + 配方库</b>：同一台机器、配方不同，良率天差地别——"装机量＝服务护城河"卡的机制底座：装机越多，"孔型-参数"数据回流越多；没有装机就没有数据闭环。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">ALD 一个循环只长 <b>~0.1nm</b>，慢是物理属性；产能要靠批量炉管 / 空间 ALD 的工程化"抢时间"。 <a class="mgo" href="principles/#etch:mk-ald">看机制：ALD ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">ALD 设备拼的是<b>"快而不失共形"</b>的工程 know-how；结构越立体（GAA / 3D NAND / DRAM 电容），ALD 步骤越多——先进产线里刻蚀＋薄膜设备价值量占比持续膨胀的机制根源。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">量测的共同困境：要量的东西比光波长小一两个量级，<b>"直接看"物理上不存在</b>——每把尺子都是"物理信号 + 数学反演"，反演靠库；缺陷检测还撞<b>瑞利 d⁶</b> 信号墙。 <a class="mgo" href="principles/#clean:mk-metro">看机制：三把尺子 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">量测/检测的壁垒＝<b>光学+传感+算法+工艺理解四重积累 × 数据库雪球</b>（越用越准）——KLA 独大、国产自给率个位数的机制解释（份额见「玩家格局」④）。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">光刻机一半的钱在"运动与测量"：<b>双工件台</b>测曝并行、磁悬浮 nm 级定位、掩膜台 4 倍速反向同步——&gt;200 wph 意味着每片 &lt;18 秒完成调平+对准+曝光。 <a class="mgo" href="principles/#litho:mk-scanner">看机制：光刻机整机 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"物理代差"卡的完整版：<b>光学（蔡司）＋光源（Cymer）＋运动测量（系统工程）</b>三座山要同时翻——EUV 无平替、国产光刻机路最远的机制根源。</div>
+          </div>
         </div>
       </section>
       <section class="sub" id="e-players">        <div class="subttl">玩家格局 · 四大深挖品类</div>
@@ -837,6 +972,68 @@
           <div class="shrow"><span class="co">中科飞测+精测 <small>CN</small></span><div class="track"><div class="fill gc" style="width:4%"></div></div><span class="pct">低</span></div>
         </div>
         <div class="note"><b>KLA 一家独大</b>：过程控制 ~56%，光学晶圆检测更超 <b>85%</b><sup class="s">5</sup>——这是仅次于光刻的"隐形垄断"。<b>国产看点</b>：中科飞测、精测电子、上海睿励在起步，量检测是国产化率最低的环节之一。</div>
+
+        <div id="e-deepcards">
+        <div class="subttl" style="margin-top:28px">龙头深度卡片 · 设备赛道试点（北方华创 / 中微 × 国际锚）</div>
+        <div class="cap">三段式模板：<b>① 业务拆分</b>（钱从哪来）→ <b>② 护城河 · 机制</b>（为什么守得住，链第一轨）→ <b>③ 财务特征</b>（设备公司的报表长相）。财务数据＝年报/一季报实绩 [✓已核实·tushare/公司财报]；市值与 PE＝<b>2026-07-16 收盘快照</b>。跑通后此模板横推其余五赛道。</div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">国际锚 · 体量与盈利基准</span><span class="dctag">FY2025 对照</span></div>
+          <div class="dcpos">先立坐标系再看个体：全球前道设备三巨头 vs A 股两家试点公司。注意财年口径：AMAT 止 2025-10、Lam 止 2025-06、ASML 与 A 股为自然年。</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>公司</th><th>FY2025 营收</th><th>毛利率</th><th>研发强度</th><th>净利/归母</th><th>市值（07-16）</th><th>PE-TTM</th></tr>
+            <tr><td><b>ASML</b> <small>光刻</small></td><td>€326.7 亿</td><td>52.8%</td><td>14.4%</td><td>€96.1 亿</td><td>$6,856 亿</td><td>56.8</td></tr>
+            <tr><td><b>应用材料 AMAT</b> <small>平台</small></td><td>$283.7 亿</td><td>48.7%</td><td>12.6%</td><td>$70.0 亿</td><td>$4,454 亿</td><td>52.9</td></tr>
+            <tr><td><b>Lam Research</b> <small>刻蚀/沉积</small></td><td>$184.4 亿</td><td>48.7%</td><td>11.4%</td><td>$53.6 亿</td><td>$4,014 亿</td><td>60.6</td></tr>
+            <tr><td><b>北方华创</b> <small>平台</small></td><td>¥393.5 亿 ≈$55 亿</td><td>40.1%</td><td>13.8%</td><td>¥55.2 亿</td><td>¥5,100 亿 ≈$718 亿</td><td>91.5</td></tr>
+            <tr><td><b>中微公司</b> <small>刻蚀→平台</small></td><td>¥123.8 亿 ≈$17 亿</td><td>39.2%</td><td>20.0%</td><td>¥21.1 亿</td><td>¥3,462 亿 ≈$488 亿</td><td>126.9</td></tr>
+          </table></div>
+          <div class="dnote"><b>坐标系三个读数</b>：① 收入体量——北方华创≈AMAT 的 1/5、中微≈Lam 的 1/10；② 盈利质感——国际锚毛利率稳在 48–53%，A 股两家 ~40%（高端占比与定价权的差距）；③ 估值——A 股 PE 约为国际锚两倍，定价里含"国产替代+高增长"预期，阿尔法与估值风险同源。研发强度口径＝费用化研发费用/营收；汇率换算 ¥7.1、€/$ 1.09 [~估算]。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">北方华创</span><span class="dccode">002371.SZ</span><span class="dctag">平台型旗舰</span><span class="dckpi">市值 <b>¥5,100 亿</b></span><span class="dckpi">PE-TTM <b>91.5</b></span><span class="dckpi">收盘 <b>702.76</b>（07-16）</span></div>
+          <div class="dcpos">国产设备"平台化"路线的旗舰：刻蚀、薄膜（PVD/CVD/ALD）、炉管热处理、清洗、离子注入多线并进；<b>2025 年内完成控股芯源微（涂胶显影）并并表</b> [✓公告]——补上光刻工序配套一环后，是国内覆盖前道品类最全的设备平台，对标 AMAT 的"多品类平台+服务"模式。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">电子工艺装备</span><div class="track"><div class="fill gc" style="width:93%"></div></div><span class="pct" style="flex-basis:150px">¥367.3 亿 · 93.3% · 毛利率 39.2%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">精密电子元件</span><div class="track"><div class="fill gn" style="width:7%"></div></div><span class="pct">¥25.8 亿 · 6.6% · 毛利率 53.0%</span></div>
+          <div class="dnote">装备内部＝刻蚀/薄膜/炉管/清洗/注入等多品类，公司未披露分项收入；2025 收入增量含芯源微并表贡献（并表时点起），同比数据与往年口径不完全可比 [✓公告·并表事实]。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>平台广度＝装机量入口</b>：多品类→同一座 fab 内多点装机→备件服务与工艺数据的双闭环，正是护城河页"装机量＝服务护城河"的量产样本。<b>绑定国内扩产周期</b>：与中芯/长存/长鑫等联合开发、逐道验证，切换成本极高。<b>卡点也要看清</b>：最先进工艺窗口与核心零部件（射频电源/静电卡盘等，见「细分总表」零部件表）仍部分受制于人。 <a class="mgo" href="principles/#etch:mk-har">看机制：刻蚀 ↗</a> <a class="mgo" href="principles/#etch:mk-ald">ALD ↗</a> <a class="mgo" href="principles/#fab:mk-thermal">炉管热工艺 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>YoY</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>220.8</td><td>+50.3%</td><td>41.1%</td><td>39.0</td><td>+65.7%</td><td>11.2%</td></tr>
+            <tr><td>2024</td><td>298.4</td><td>+35.1%</td><td>42.9%</td><td>56.2</td><td>+44.2%</td><td>12.3%</td></tr>
+            <tr><td>2025</td><td>393.5</td><td>+31.9%</td><td>40.1%</td><td>55.2</td><td>−1.8%</td><td>13.8%</td></tr>
+            <tr><td>2026Q1</td><td>103.2</td><td>+25.8%</td><td>40.8%</td><td>16.3</td><td>+3.4%</td><td>13.6%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 收入连续三年 30%+ 高增，但 2025 <b>增收不增利</b>——毛利率回落 2.8pct、研发费用 +48%（36.7→54.4 亿）是账面上看得到的两个原因；26Q1 扣非 16.3 亿与归母基本一致，经营干净。② <b>存货 ¥286 亿</b>（≈0.73 倍年收入）——设备公司"发货→装机→验收"确认节奏的正常形态，含已发未验收机台；③ <b>合同负债 ¥42.9 亿，较 2024 末 62.1 亿回落</b>——预收类先行指标降温，值得逐季跟踪 [✓报表·2026Q1]。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">中微公司</span><span class="dccode">688012.SH</span><span class="dctag">刻蚀专精 → 双引擎</span><span class="dckpi">市值 <b>¥3,462 亿</b></span><span class="dckpi">PE-TTM <b>126.9</b></span><span class="dckpi">收盘 <b>361.42</b>（07-16）</span></div>
+          <div class="dcpos">国产刻蚀最强：CCP+ICP 双线布局，高深宽比刻蚀已进存储产线（量产 ≥60:1，口径见轨1 记分牌）；正从单品类专精走向<b>"刻蚀＋薄膜"双引擎</b>，路线对标 Lam/TEL 的专精模式。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（年报披露口径）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">刻蚀设备</span><div class="track"><div class="fill gc" style="width:79%"></div></div><span class="pct" style="flex-basis:150px">¥98.3 亿 · 79.4% · +35.1%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">LPCVD/ALD 薄膜</span><div class="track"><div class="fill gc" style="width:4%"></div></div><span class="pct" style="flex-basis:150px">¥5.1 亿 · 4.1% · +224%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">备件与服务等</span><div class="track"><div class="fill gn" style="width:17%"></div></div><span class="pct">≈¥20.5 亿 · 16.5% [~估算·倒算]</span></div>
+          <div class="dnote">薄膜是低基数爆发：LPCVD 累计出货破 <b>300 个反应台</b>，钨系列/ALD 多款进入重复订单阶段 [✓已核实·年报及业绩交流，2026-01/04]——第二曲线从 0→1 已验证，看 1→10。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>刻蚀专精＝配方深度</b>：高深宽比刻蚀的护壁化学/脉冲偏压/低温平衡术，全靠装机数据与配方实验堆出来——护城河页"配方库"逻辑的国产样本，双反应台 Twin-Star 再叠一层产能经济学。<b>薄膜第二曲线同源</b>：LPCVD→ALD 复用等离子体与腔体 know-how，自限制反应的工艺理解与刻蚀共享。<b>卡点</b>：全球口径份额仍为个位数，最尖端逻辑刻蚀与 Lam/TEL 尚有代差。 <a class="mgo" href="principles/#etch:mk-har">看机制：高深宽比刻蚀 ↗</a> <a class="mgo" href="principles/#etch:mk-ald">ALD ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>YoY</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>62.6</td><td>+32.1%</td><td>45.8%</td><td>17.9</td><td>+52.7%</td><td>13.0%</td></tr>
+            <tr><td>2024</td><td>90.7</td><td>+44.7%</td><td>41.1%</td><td>16.2</td><td>−9.5%</td><td>15.6%</td></tr>
+            <tr><td>2025</td><td>123.8</td><td>+36.6%</td><td>39.2%</td><td>21.1</td><td>+30.7%</td><td>20.0%</td></tr>
+            <tr><td>2026Q1</td><td>29.1</td><td>+34.1%</td><td>39.9%</td><td>9.3</td><td>+197%</td><td>18.0%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 毛利率三年 45.8%→39.2% 一路下行——新品爬坡+竞争定价的组合，换来的是收入与份额；② 研发费率升到 <b>20%</b>（费用化口径），含资本化的总研发投入占比公司口径超 30% [~估算·公司口径]——典型的<b>"以当期利润换长期卡位"</b>阶段；③ <b>26Q1 归母 9.3 亿 vs 扣非 4.8 亿</b>：差额主要是非经常性损益，看经营质量应以扣非为准 [✓报表]；④ 存货 ¥72.6 亿 + 合同负债 ¥28.5 亿稳步抬升，在手订单有支撑。</div>
+        </div>
+
+        <div class="snote">深度卡片口径：A 股财务＝tushare income / fina_indicator / balancesheet / fina_mainbz（年报与一季报实绩）；中微分项＝2025 年报披露（刻蚀 98.32 亿 / LPCVD+ALD 5.06 亿）；国际锚＝公司财报（yfinance 整理），注意 AMAT 财年止 10 月、Lam 止 6 月、ASML 为欧元；市值/PE-TTM＝2026-07-16 收盘（A 股 tushare daily_basic · 美股 yfinance），刷新制度与「上市公司速查」表联动；汇率 ¥7.1 / €×1.09 折美元 [~估算]。登记 FACT-REVIEW #22。</div>
+        </div>
       </section>
       <section class="sub" id="e-dr">        <div class="subttl">驱动与催化 · 需求贝塔 + 国产阿尔法</div>
         <div class="flow">
@@ -975,6 +1172,29 @@
           <div class="evocard"><h4><span>🌏</span>地缘与产能</h4><p>先进产能集中台湾（"硅盾"）；美日欧补贴本土建厂分散风险；<b>出口管制锁死中国先进</b>——产能地图本身就是壁垒与博弈。</p></div>
           <div class="evocard"><h4><span>⚙️</span>设备 / 材料协同</h4><p>拿不到 <b>EUV / High-NA</b> 就做不了尖端；与上游设备材料的协同开发，决定能不能上下一代节点。</p></div>
         </div>
+        <div class="mchain">
+          <div class="mtt">机制 → 壁垒 · 证据链<small>六张卡是"结论"，这里补"物理原因"——每条机制在第一轨都有完整图解，点「看机制 ↗」直达对应小节</small></div>
+          <div class="mrow">
+            <div class="mfact">HKMG"换心手术"：栅氧漏电危机 → 换 HfO₂ 引发<b>费米钉扎 / 声子散射连锁反应</b> → 逼出双功函数金属 + RMG 假栅替换——换一个材料＝重构一条工艺链。 <a class="mgo" href="principles/#advstruct:mk-hkmg">看机制：HKMG ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"技术代差"卡的经典样本：gate-first / gate-last 一步押错，格局重写（Intel 2007 率先、对手多年追赶）——集成 know-how 在<b>"组合"</b>里，买设备、买专利都买不来。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">互连"中年危机"：导线越细电阻暴涨（尺寸效应＋阻挡层挤占），<b>门延迟 vs 互连延迟已反超</b>——要在换金属 / 低k 极限 / 架构绕道三条路里持续做平衡。 <a class="mgo" href="principles/#fab:mk-rc">看机制：互连 RC ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">先进节点的难度从"画得细"扩展到<b>"连得起"</b>：光刻达标只是入场券，BEOL 集成良率还要重爬一条学习曲线——追赶者的第二座山。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">千道工序，每道都挂着<b>量测-SPC-APC 闭环</b>；多重图形化时代，套刻 / EPE 是生死线。 <a class="mgo" href="principles/#clean:mk-metro">看机制：量测闭环 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"良率 × 规模正循环"卡的实体形态：良率领先的本质是<b>海量过程数据 + 控制参数库</b>——最难被复制的资产：挖得走人，挖不走整个数据库。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">EUV 单台两亿美元级（口径见轨1 光刻页）、&gt;200 wph 的产能数学——折旧摊到每一片晶圆上，稼动率与良率直接写进成本曲线。 <a class="mgo" href="principles/#litho:mk-scanner">看机制：产能数学 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"资本壁垒"卡的另一半：不只"买得起"，还要<b>"转得满"</b>——先进产能的经济学只属于订单密度足够的赢家，这是"赢家通吃"的物理-财务闭环。</div>
+          </div>
+        </div>
       </section>
 
       <section class="sub" id="f-players">
@@ -1003,6 +1223,66 @@
         </table>
         </div>
         <div class="note"><b>国产看点</b>：中芯国际全球第 3（~5.3%），成熟制程为主、7nm 以 DUV 多重曝光跑通；华虹、晶合、芯联在成熟与特色工艺扩产。<b>事实 vs 叙事</b>：国产 7nm "突破"是 DUV 多重曝光实现（实验 / 小批量），但<b>成本高、良率低、不经济</b>；缺 EUV 下，真实国产先进天花板卡在 7nm 且<b>难以规模盈利</b>——区分"做得出"与"做得划算"。</div>
+        <div id="f-deepcards">
+        <div class="subttl" style="margin-top:28px">龙头深度卡片 · 晶圆制造（中芯国际 / 华虹 × 国际锚）</div>
+        <div class="cap">模板第三站。看点一个词：<b>断层</b>——毛利率的断层就是制程代差的财务形态；以及 A 股给"战略资产"的定价与当期盈利的脱钩。财务＝年报/一季报实绩 [✓已核实·tushare/公司财报]；市值/PE＝<b>2026-07-16 收盘快照</b>。</div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">国际锚 · 毛利率断层＝代差的财务形态</span><span class="dctag">FY2025 对照</span></div>
+          <div class="dcpos">先进锚＝台积电（新台币口径）；成熟锚＝GlobalFoundries（美国成熟制程纯代工，TTM 口径）。联电/三星代工见上方份额表。</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>公司</th><th>营收</th><th>毛利率</th><th>净利/归母</th><th>市值（07-16）</th><th>PE-TTM</th></tr>
+            <tr><td><b>台积电</b> <small>先进+成熟</small></td><td>NT$3.81 万亿 ≈$1,229 亿</td><td>59.9%</td><td>≈$548 亿</td><td>$2.13 万亿</td><td>~39（FY2025 静态）</td></tr>
+            <tr><td><b>GlobalFoundries</b> <small>成熟·TTM</small></td><td>$68.4 亿</td><td>26.1%</td><td>$7.8 亿</td><td>$320 亿</td><td>44.1</td></tr>
+            <tr><td><b>中芯国际</b> <small>成熟为主</small></td><td>¥673.2 亿 ≈$94.8 亿</td><td>21.6%</td><td>¥50.4 亿</td><td>¥1.30 万亿 ≈$1,830 亿</td><td>257.6</td></tr>
+            <tr><td><b>华虹公司</b> <small>特色工艺</small></td><td>¥172.9 亿 ≈$24.4 亿</td><td>18.7%</td><td>¥3.8 亿</td><td>¥5,697 亿 ≈$802 亿</td><td>1,154.6</td></tr>
+          </table></div>
+          <div class="dnote"><b>坐标系三个读数</b>：① <b>毛利率断层</b>——59.9% vs 26.1% vs 21.6% vs 18.7%：先进制程（定价权+满稼动）才有超额利润，成熟代工是"重资产+竞争定价"生意；台积电年折旧≈收入 18%，赢家通吃卡的另一面是"输家通折旧"。② <b>体量</b>——中芯收入≈台积电 1/13，华虹≈1/50。③ <b>估值脱钩</b>——中芯 A 股市值≈GFS 的 5.7 倍（收入 1.4 倍）、PE 258；华虹 PE 破千：A 股定价的是"战略稀缺性+产能重估"而非当期盈利——这既是国产替代溢价，也是本赛道最直观的估值风险。GFS 为 TTM 口径；汇率 ¥7.1、NT$31 折美元 [~估算]。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">中芯国际</span><span class="dccode">688981.SH</span><span class="dctag">大陆代工旗舰 · 成熟扩产主力</span><span class="dckpi">市值 <b>¥1.30 万亿</b></span><span class="dckpi">PE-TTM <b>257.6</b> · PB <b>8.67</b></span><span class="dckpi">收盘 <b>151.80</b>（07-16）</span></div>
+          <div class="dcpos">中国大陆代工旗舰：成熟制程（28nm 及以上为主）扩产的产能承接方，先进制程被出口管制封顶（拿不到 EUV，见「驱动与风险」）。<b>中国区收入占 85.8%</b>——国产替代大盘的直接受益人，也是"去美化"供应链的核心枢纽。</div>
+          <div class="dcsec">① 收入结构 · FY2025（按地区，tushare fina_mainbz；代工业务单一故看地区更有信息量）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">中国（含香港）</span><div class="track"><div class="fill gc" style="width:86%"></div></div><span class="pct">¥577.6 亿 · 85.8%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">美国</span><div class="track"><div class="fill gn" style="width:11%"></div></div><span class="pct">¥77.0 亿 · 11.4%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">欧洲及亚洲</span><div class="track"><div class="fill gn" style="width:3%"></div></div><span class="pct">¥18.6 亿 · 2.8%</span></div>
+          <div class="dnote">中国区占比 85.8% 且逐年抬升——订单本地化是基本盘；美国区 11.4% 为存量设计客户，是地缘博弈中的变量。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>集成 know-how＝千道工序×量测数据闭环</b>：成熟制程拼的不是"画得细"而是良率与成本的组合优化——护城河页"良率×规模正循环"证据链的国产主语。<b>天花板也要看清</b>：无 EUV，DUV 多重曝光逼近先进节点＝掩膜与工序数暴涨、成本曲线陡峭（机制见轨1 制程经济与多重曝光），这是管制给的"硬顶"。 <a class="mgo" href="principles/#adv">看机制：制程节点与经济 ↗</a> <a class="mgo" href="principles/#clean:mk-metro">量测闭环 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>扣非</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>452.5</td><td>−8.6%</td><td>21.9%</td><td>48.2</td><td>32.7</td><td>11.0%</td></tr>
+            <tr><td>2024</td><td>578.0</td><td>+27.7%</td><td>18.6%</td><td>37.0</td><td>26.5</td><td>9.4%</td></tr>
+            <tr><td>2025</td><td>673.2</td><td>+16.5%</td><td>21.6%</td><td>50.4</td><td>41.2</td><td>8.2%</td></tr>
+            <tr><td>2026Q1</td><td>176.2</td><td>+8.1%</td><td>21.5%</td><td>13.6</td><td>12.3</td><td>7.4%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 毛利率 18.6%→21.6% 回升＝稼动率与产品结构修复，但与台积电 59.9% 的<b>断层是结构性的</b>——先进制程缺席的代价，不是周期能弥合的；② <b>扩产强度肉眼可见</b>：固定资产 ¥1,362.5 亿＋在建工程 ¥926.2 亿（在建≈固定资产的 68%），合计≈3.4 倍年收入——未来数年折旧仍将压制利润率；③ <b>合资厂结构</b>：少数股东分走 ¥21.7 亿（2025）——中芯北方/南方等合资产能的利润不全归上市公司股东；④ PE 258 的定价逻辑不在当期利润而在战略稀缺性，跟踪它更有效的标尺是 <b>PB（8.67）、产能投放与稼动率</b>，以及毛利率能否站稳 20%+ [✓报表+快照]。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">华虹公司</span><span class="dccode">688347.SH</span><span class="dctag">特色工艺 · 爬坡样本</span><span class="dckpi">市值 <b>¥5,697 亿</b></span><span class="dckpi">PE-TTM <b>1,154.6</b> · PB <b>12.59</b></span><span class="dckpi">收盘 <b>327.85</b>（07-16）</span></div>
+          <div class="dcpos">"不追先进制程"的另一条路：<b>特色工艺平台</b>（功率器件 IGBT/超级结、嵌入式存储、模拟与电源管理、射频），8″+12″ 并举，无锡 12″ 产线处爬坡期——拼的是器件平台深度×成本，不是线宽。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">晶圆代工</span><div class="track"><div class="fill gc" style="width:95%"></div></div><span class="pct">¥164.3 亿 · 95.0% · 毛利率 17.9%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">其他+租赁</span><div class="track"><div class="fill gn" style="width:5%"></div></div><span class="pct">¥8.7 亿 · 5.0%</span></div>
+          <div class="dnote">代工单一主业；特色工艺的品类结构（功率/嵌存/模拟射频）公司按平台披露于年报经营讨论，未入主营构成表。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>特色工艺壁垒＝器件物理＋平台积累</b>：IGBT/超级结/BCD 这类产品，竞争力在器件结构设计与工艺窗口的多年打磨，与逻辑微缩是两条赛道——机制见轨1「功率/化合物」页。<b>粘性来源</b>：模拟/功率客户换代工要重新流片验证且产品生命周期长——"生态绑定"卡在特色工艺上的变体。 <a class="mgo" href="principles/#pwr">看机制：功率器件 ↗</a> <a class="mgo" href="principles/#adv">制程经济 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>少数股东损益</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>162.3</td><td>−3.3%</td><td>27.1%</td><td>19.4</td><td>−10.9</td><td>9.0%</td></tr>
+            <tr><td>2024</td><td>143.9</td><td>−11.4%</td><td>17.4%</td><td>3.8</td><td>−14.1</td><td>11.3%</td></tr>
+            <tr><td>2025</td><td>172.9</td><td>+20.2%</td><td>18.7%</td><td>3.8</td><td>−11.8</td><td>11.4%</td></tr>
+            <tr><td>2026Q1</td><td>46.3</td><td>+18.2%</td><td>17.6%</td><td>1.4</td><td>−2.7</td><td>9.3%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 毛利率 27.1%→17.4% 的断崖＝行业下行＋无锡新厂折旧上账的双击，2025 收入修复 +20% 但利润率仍在爬坑；② <b>最要紧的一列是少数股东损益</b>：2025 年 −¥11.8 亿——归母 3.8 亿为正、<b>合并整体净利实为约 −8.1 亿</b>，新厂亏损大头由合资少数股东承担。看华虹要看整体盈利能力与爬坡进度，只看归母会系统性高估 [✓报表]；③ 扣非仅 ¥2.3 亿，利润基数极低——PE-TTM 破千是"市值与当期盈利脱钩"的极端样本，有效标尺是 <b>PB（12.6）、无锡产线稼动率与毛利率爬坡斜率</b>；④ 研发费率 11%+ 高于台积电（6.5%）——小体量维持多平台的代价。</div>
+        </div>
+
+        <div class="snote" style="margin-top:12px">深度卡片口径同前两站（FACT-REVIEW #22）：A 股＝tushare income/fina_indicator/balancesheet/fina_mainbz + daily_basic（2026-07-16）；台积电＝FY2025 财报（yfinance，NT$ 口径，折旧≈收入 18.1%、研发费率 6.5%）；GFS＝TTM（2026Q1 止）；中芯扣非/少数股东、华虹少数股东损益均为报表实绩；汇率 ¥7.1、NT$31 折美元 [~估算]。</div>
+        </div>
         <div class="snote"><span class="k">1</span> TrendForce 份额 · 节点能力为公开技术状态汇总（台积电/三星/Intel/中芯财报与报道）。完整来源见「重点个股」。</div>
       </section>
 
@@ -1146,6 +1426,24 @@
           <div class="evocard"><h4><span>🧪</span>测试 know-how</h4><p>测试机 + <b>测试程序</b> + 良率分析是另一道壁垒；第三方测试（利扬 / 伟测）在国产化起步。</p></div>
           <div class="evocard"><h4><span>📦</span>产能 = 稀缺资源</h4><p>CoWoS 产能售罄、英伟达锁定——<b>先进封装产能本身就是护城河</b>，谁有产能谁接得到 AI 大单。</p></div>
         </div>
+        <div class="mchain">
+          <div class="mtt">机制 → 壁垒 · 证据链<small>六张卡是"结论"，这里补"物理原因"——每条机制在第一轨都有完整图解，点「看机制 ↗」直达对应小节</small></div>
+          <div class="mrow">
+            <div class="mfact">CoWoS 的中介层是一块<b>"没有晶体管的芯片"</b>：TSV 五步（博世刻蚀 / 电镀 / CMP / 临时键合减薄）全是前道功夫，Cu pumping 等工艺禁区一个不能踩。 <a class="mgo" href="principles/#pkg:mk-advpkg">看机制：TSV 与 CoWoS ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"先进封装技术"卡的物理内核：尖端封装＝<b>前道工艺能力</b>——这正是 foundry 主导 CoWoS、传统 OSAT 难接最尖端单的机制原因。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">混合键合四步：<b>dishing 纳米级精控 → 等离子活化 → 室温介质预键合 → 退火铜胀顶死</b>；颗粒零容忍、CMP 窗口极窄。 <a class="mgo" href="principles/#pkg:mk-advpkg">看机制：混合键合 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"与 foundry 协同"卡的机制解释：越往混合键合走，封测越<b>"前道化"</b>——洁净室等级、CMP/清洗设备投资是国产封测切入尖端的真实门槛，也是"设备/材料"卡的落点。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">测试是"用有限引脚、在有限时间里证明上亿晶体管都对"：CP / FT 分工 + wafer map 失效图案回溯前道。 <a class="mgo" href="principles/#bepkg">看机制：测试旅程 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"测试 know-how"卡：<b>测试程序＋失效数据库</b>是纯软资产、越滚越厚——ATE 双雄格局与第三方测试价值量的机制来历。</div>
+          </div>
+        </div>
       </section>
 
       <section class="sub" id="p-players">
@@ -1173,6 +1471,65 @@
         </table>
         </div>
         <div class="note"><b>国产看点</b>：封测是中国半导体最强环节——长电全球第 3、通富第 4、华天前十，三巨头从"跟随者"变"主力"；长电 HBM 封装推进（具体良率/客户为市场传闻级，无公司披露）、通富是 AMD 的 Chiplet 主力<sup class="s">4</sup>。<b>事实 vs 叙事</b>：国产封测"全球前列"是真的（传统 + 中端先进），但<b>最尖端的 CoWoS 级大规模 2.5D 仍 TSMC 主导</b>——国产在规模与最尖端节点上仍在追赶。</div>
+        <div id="p-deepcards">
+        <div class="subttl" style="margin-top:28px">龙头深度卡片 · 封装测试（长电科技 / 通富微电 × 国际锚）</div>
+        <div class="cap">模板收官站。封测是六赛道里<b>国产与国际差距最小</b>的环节——这句判断可以直接用毛利率表验证：全球一哥与国产前二挤在同一条 13–18% 的窄带里。财务＝年报/一季报实绩 [✓已核实·tushare/公司财报]；市值/PE＝<b>2026-07-16 收盘快照</b>。</div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">国际锚 · 全行业共享一个毛利率天花板</span><span class="dctag">FY2025 / TTM 对照</span></div>
+          <div class="dcpos">锚＝日月光 ASE（全球一哥，TTM，新台币，含 EMS 电子代工拉低毛利）与 Amkor（全球第二，TTM）。份额格局见上方 OSAT 表。</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>公司</th><th>营收</th><th>毛利率</th><th>净利/归母</th><th>市值（07-16）</th><th>PE-TTM</th></tr>
+            <tr><td><b>日月光 ASE</b> <small>全球一哥·TTM·含EMS</small></td><td>NT$6,709 亿 ≈$216 亿</td><td>18.5%</td><td>≈$15.2 亿</td><td>$867 亿</td><td>63.7</td></tr>
+            <tr><td><b>Amkor</b> <small>全球第二·TTM</small></td><td>$70.7 亿</td><td>14.4%</td><td>$4.4 亿</td><td>$156 亿</td><td>38.9</td></tr>
+            <tr><td><b>长电科技</b> <small>全球第三</small></td><td>¥388.7 亿 ≈$54.7 亿</td><td>14.1%</td><td>¥15.7 亿</td><td>¥1,489 亿 ≈$210 亿</td><td>90.1</td></tr>
+            <tr><td><b>通富微电</b> <small>全球第四·AMD 绑定</small></td><td>¥279.2 亿 ≈$39.3 亿</td><td>14.6%</td><td>¥12.2 亿</td><td>¥1,153 亿 ≈$162 亿</td><td>79.7</td></tr>
+          </table></div>
+          <div class="dnote"><b>坐标系三个读数</b>：① <b>毛利率窄带</b>——18.5%（含 EMS）/14.4%/14.1%/14.6%：与代工的 59.9% vs 21.6% 断层完全相反，封测国际国产挤在同一条带里——"国产已攻入、技术代差小"的报表证据，代价是全行业都没有暴利；② <b>体量最接近</b>——长电收入≈Amkor 的 77%，封测前十中国占三席，是六赛道国产份额最高的环节；③ <b>估值</b>——长电 PE 90/通富 80 vs ASE 64/Amkor 39，A 股溢价存在但倍差为六赛道最小之一；ASE/Amkor 过去一年 +273%/+191% [✓快照]——先进封装重估是全球共振，不只是 A 股叙事。汇率 ¥7.1、NT$31 折美元 [~估算]。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">长电科技</span><span class="dccode">600584.SH</span><span class="dctag">全球第三 OSAT · 平台样本</span><span class="dckpi">市值 <b>¥1,489 亿</b></span><span class="dckpi">PE-TTM <b>90.1</b> · PB <b>5.18</b></span><span class="dckpi">收盘 <b>83.21</b>（07-16）</span></div>
+          <div class="dcpos">全球第三大 OSAT（中国厂商最高位）。<b>2024 年华润 117 亿元入主</b>（磐石润企持 22.53%，实控人＝中国华润 [✓公告]）——进入"央企资本+市场化运营"新阶段；技术上以 XDFOI 系 chiplet/2.5D 先进封装对接国产 AI 算力封装需求。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">芯片封测</span><div class="track"><div class="fill gc" style="width:96%"></div></div><span class="pct">¥387.1 亿 · 99.6% · 毛利率 13.9%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">其他</span><div class="track"><div class="fill gn" style="width:4%"></div></div><span class="pct">¥1.6 亿 · 0.4%</span></div>
+          <div class="dnote">单一封测主业；真正的结构看点（先进封装收入占比）公司未单列披露——跟踪要靠业绩会口径与 capex 投向。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>传统盘＝规模/成本/客户绑定</b>（护城河页第一张卡的国产代表作）；<b>第二曲线＝封装前道化</b>：2.5D/3D 与混合键合要求 CMP/清洗/洁净室级别的前道能力——投资强度与技术门槛同时抬升，这正是护城河页证据链讲的"越尖端越前道"。 <a class="mgo" href="principles/#pkg:mk-advpkg">看机制：TSV 与混合键合 ↗</a> <a class="mgo" href="principles/#bepkg">测试旅程 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>扣非</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>296.6</td><td>−12.1%</td><td>13.7%</td><td>14.7</td><td>13.2</td><td>4.9%</td></tr>
+            <tr><td>2024</td><td>359.6</td><td>+21.2%</td><td>13.1%</td><td>16.1</td><td>15.5</td><td>4.8%</td></tr>
+            <tr><td>2025</td><td>388.7</td><td>+8.1%</td><td>14.1%</td><td>15.7</td><td>13.7</td><td>5.4%</td></tr>
+            <tr><td>2026Q1</td><td>91.7</td><td>−1.8%</td><td>14.5%</td><td>2.9</td><td>2.6</td><td>5.5%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 毛利率 13–14.5% 窄带与锚定表全行业一致——封测的行业属性：重资产、竞争定价、规模生意；② <b>2022 年高点归母 32.3 亿至今未收复</b>（近三年徘徊 15–16 亿）——上行周期有弹性、但天花板压得低，这是与设计/设备公司最大的不同；③ 研发费率 ~5%（设计公司 15–20%）＝制造服务业属性，竞争力在产线与良率而非纸面研发；④ 26Q1 收入 −1.8%、弱于通富（+22.8%）——客户结构差异（消费/通讯 vs AI 算力）的直接体现；PE 90 计价的是先进封装第二曲线，跟踪 XDFOI 产能与订单落地节奏。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">通富微电</span><span class="dccode">002156.SZ</span><span class="dctag">AMD 深绑定 · 大客户样本</span><span class="dckpi">市值 <b>¥1,153 亿</b></span><span class="dckpi">PE-TTM <b>79.7</b> · PB <b>7.36</b></span><span class="dckpi">收盘 <b>75.95</b>（07-16）</span></div>
+          <div class="dcpos">全球第四大 OSAT，核心特征一句话：<b>半家公司是给 AMD 干活的</b>——FY2025 AMD 贡献 ¥146 亿＝收入的 <b>52.3%</b>，承接其超 80% 封测订单（苏州/槟城"产品+股权"双绑定合资厂）[✓已核实·年报及财经媒体交叉·2026-04]——AMD AI 算力（MI 系列/EPYC chiplet）放量的直接封测受益人，大客户模式的弹性与风险同源。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">集成电路封测</span><div class="track"><div class="fill gc" style="width:98%"></div></div><span class="pct">¥272.5 亿 · 97.6% · 毛利率 14.4%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">模具及材料</span><div class="track"><div class="fill gn" style="width:2%"></div></div><span class="pct">¥6.7 亿 · 2.4%</span></div>
+          <div class="dnote">按客户看比按产品看更真实：第一大客户（AMD）占比 52.3%——业务拆分的"隐藏主轴"。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>Chiplet 封测＝先进封装能力绑定</b>：AMD 是 chiplet 路线先锋，多芯粒 2.5D 封装的良率与产能就是通富的护城河（机制见轨1 先进封装工艺线）；<b>"产品+股权"双绑定</b>＝合资厂结构让客户切换成本极高——"与 foundry/大客户协同"卡的通富版本。<b>风险同源</b>：客户集中度 52.3%，AMD 的周期与份额得失即通富的贝塔。 <a class="mgo" href="principles/#pkg:mk-advpkg">看机制：CoWoS 与 chiplet ↗</a> <a class="mgo" href="principles/#bepkg">测试旅程 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>扣非</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>222.7</td><td>+3.9%</td><td>11.7%</td><td>1.7</td><td>0.6</td><td>5.2%</td></tr>
+            <tr><td>2024</td><td>238.8</td><td>+7.2%</td><td>14.8%</td><td>6.8</td><td>6.2</td><td>6.4%</td></tr>
+            <tr><td>2025</td><td>279.2</td><td>+16.9%</td><td>14.6%</td><td>12.2</td><td>8.4</td><td>5.7%</td></tr>
+            <tr><td>2026Q1</td><td>74.8</td><td>+22.8%</td><td>13.3%</td><td>3.3</td><td>1.7</td><td>5.2%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 归母 1.7→6.8→12.2 亿，<b>三年 7 倍</b>＝AMD AI 放量的利润弹性——低毛利行业里"稼动率杠杆"的力量：收入 +17% 撬动利润 +80%；② 但毛利率 14.6% 与同行无异——<b>放量不提价</b>，封测的宿命：吃的是量的贝塔不是价的阿尔法；③ 扣非 8.4 亿 vs 归母 12.2 亿——非经常项（补助等）占约 1/3，看经营质量用扣非 [✓报表]；④ 26Q1 +22.8% 延续放量；估值 PE 80 本质是在给"AMD 在 AI 算力的份额曲线"定价——研究通富先研究 AMD。</div>
+        </div>
+
+        <div class="snote" style="margin-top:12px">深度卡片口径同前四站（FACT-REVIEW #22）：A 股＝tushare income/fina_indicator/fina_mainbz + daily_basic（2026-07-16）；ASE/Amkor＝TTM（yfinance，2026Q1 止；ASE 为新台币、含 EMS 业务）；通富 AMD 占比 52.3%（¥146 亿）＝2025 年报口径 [✓媒体交叉]；长电华润入主＝2024 公告事实；汇率 ¥7.1、NT$31 折美元 [~估算]。</div>
+        </div>
         <div class="snote"><span class="k">1</span> TrendForce OSAT 2024 · <span class="k">4</span> 公司财报与报道。完整来源见「重点个股」。</div>
       </section>
 
@@ -1302,6 +1659,24 @@
           <div class="evocard"><h4><span>🏰</span>并购整合生态</h4><p>三巨头数十年并购数百家点工具公司，形成全栈 + 数据 + 客户飞轮；新思并 Ansys 再扩到系统仿真。</p></div>
           <div class="evocard"><h4><span>🧠</span>算法 + 人才</h4><p>EDA 是数学/算法密集型，顶尖人才稀缺、积累周期长——钱砸不出快速追平。</p></div>
         </div>
+        <div class="mchain">
+          <div class="mtt">机制 → 壁垒 · 证据链<small>六张卡是"结论"，这里补"物理原因"——每条机制在第一轨都有完整图解，点「看机制 ↗」直达对应小节</small></div>
+          <div class="mrow">
+            <div class="mfact">图形小到与波长同量级，衍射会把印出的图形"磨圆、缩短"——<b>OPC / 计算光刻</b>要给全芯片上亿图形逐个"以歪治歪"，在超算集群上跑数小时到数天。 <a class="mgo" href="principles/#wafer:mk-opc">看机制：OPC 与写版 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">设计与工艺在掩膜环节<b>焊死</b>：计算光刻既是 EDA 的算力生意，也是"进不了 foundry 协同圈就做不了先进设计"的技术形态——"与先进工艺协同"卡的机制内核。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">多重图形化时代，<b>EPE（边缘落点误差）</b>＝光刻＋套刻＋刻蚀误差的总和，设计规则必须为工艺让路（DTCO）。 <a class="mgo" href="principles/#clean:mk-metro">看机制：EPE ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">先进节点<b>设计规则爆炸</b>：点工具单打独斗跑不通全流程，必须全家桶 + PDK 深度认证——"全流程工具链"卡为什么成立、国产点工具为什么难切先进数字。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">布局布线＝在十几层金属里对<b>上亿单元</b>做组合优化，时序 / 功耗 / DRC 多重签核关卡。 <a class="mgo" href="principles/#eda">看机制：布局布线六步 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons"><b>工具算法的代差直接变成芯片 PPA 的代差</b>；流程、脚本、人才全绑定工具链——"客户绑定/迁移成本"卡：换链＝重训人＋重验证＋赌良率。</div>
+          </div>
+        </div>
       </section>
 
       <section class="sub" id="d-players">
@@ -1317,6 +1692,68 @@
         </div>
         <div class="note"><b>IP</b>：ARM ~40%（指令集生态），其后新思、楷登、Imagination、Rambus；国产<b>芯原</b>（一站式 IP + 设计服务）、锐成。RISC-V 是国产 IP 的机会窗口。<br><b>设计/Fabless</b>：全球前列英伟达（AI 暴涨）、高通、博通、AMD、联发科；国产<b>海思</b>（受限重启）、韦尔（CIS）、兆易、汇顶、卓胜微、晶晨、瑞芯微等繁荣。</div>
         <div class="note"><b>国产看点</b>：华大九天（模拟全流程，工艺覆盖 &gt;80%）、概伦电子（器件建模 + 收购锐成 IP）、广立微（良率）、芯华章（验证）；华为已完成 14nm 以上 EDA 工具国产化<sup class="s">3</sup>。<b>事实 vs 叙事</b>：国产 EDA 的"突破"多在<b>模拟 / 点工具</b>；先进数字全流程仍 &lt;15%、最尖端近乎空白——看国产 EDA 盯"<b>全流程覆盖 + 先进节点支持 + 客户量产采用</b>"，别只看"某点工具突破"。</div>
+        <div id="d-deepcards">
+        <div class="subttl" style="margin-top:28px">龙头深度卡片 · EDA·设计（华大九天 / 概伦电子 × 国际锚）</div>
+        <div class="cap">第六站，六赛道齐。EDA 是六赛道里<b>体量差距最大、但毛利率没有差距</b>的环节——软件生意的毛利率没有国界，缺的是生态位。主题：<b>生态卡位 vs 商业化</b>。财务＝年报/一季报实绩 [✓已核实·tushare/公司财报]；市值/PE＝<b>2026-07-16 收盘快照</b>。</div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">国际锚 · 同样的毛利率，差一个量级的生态</span><span class="dctag">TTM / FY2025 对照</span></div>
+          <div class="dcpos">锚＝Synopsys（EDA+IP，TTM 含 2025-07 完成的 Ansys 并表）与 Cadence（TTM）。三巨头合计份额 ~74% 见上方份额表。</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>公司</th><th>营收</th><th>毛利率</th><th>净利/归母</th><th>市值（07-16）</th><th>PE / PS</th></tr>
+            <tr><td><b>Synopsys</b> <small>EDA+IP·TTM·含Ansys</small></td><td>$86.8 亿</td><td>82.6%</td><td>$7.7 亿*</td><td>$799 亿</td><td>PE 97.0*（前瞻 ~24）</td></tr>
+            <tr><td><b>Cadence</b> <small>EDA·TTM</small></td><td>$55.3 亿</td><td>86.1%</td><td>$11.7 亿</td><td>$1,006 亿</td><td>PE 87.0 · PS ~18</td></tr>
+            <tr><td><b>华大九天</b> <small>模拟全流程</small></td><td>¥13.2 亿 ≈$1.9 亿</td><td>89.3%</td><td>¥0.61 亿（扣非 −0.10）</td><td>¥579 亿 ≈$82 亿</td><td>PE —（微利）· PS ~44</td></tr>
+            <tr><td><b>概伦电子</b> <small>器件建模/DTCO</small></td><td>¥4.8 亿 ≈$0.7 亿</td><td>86.9%</td><td>¥0.34 亿（扣非 −0.60）</td><td>¥190 亿 ≈$27 亿</td><td>PE 927 · PS ~39</td></tr>
+          </table></div>
+          <div class="dnote"><b>坐标系三个读数</b>：① <b>毛利率无国界</b>——82.6/86.1/89.3/86.9%：四家挤在同一条 80–90% 的带里，EDA 的差距从来不在毛利率；② <b>规模与研发的不对称</b>——华大九天收入≈Cadence 的 1/29；两巨头年研发投入均为数十亿美元级 [~估算·公司财报口径]，超过国产 EDA 全行业收入之和一个量级——"研发军备赛"才是真壁垒；③ <b>定价尺度换轨</b>——A 股两家 PE 失效（微利/927 倍），真实尺度是 PS（44×/39× vs 三巨头 9–18×）：市场给的是"必须存在的战略资产"溢价。*Synopsys GAAP 净利与 PE 被 Ansys 并购摊销压低（前瞻口径 ~24 [✓yfinance]）。汇率 ¥7.1 [~估算]。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">华大九天</span><span class="dccode">301269.SZ</span><span class="dctag">国产 EDA 一哥 · 模拟全流程</span><span class="dckpi">市值 <b>¥579 亿</b></span><span class="dckpi">PE <b>—（微利）</b>· PB <b>11.14</b></span><span class="dckpi">收盘 <b>106.21</b>（07-16）</span></div>
+          <div class="dcpos">国产 EDA 龙头（中国电子系）：<b>模拟/混合信号设计全流程国内独一份</b>，数字方向以点工具＋特色全流程（平板显示等）推进——用一家公司 13 亿的收入，对抗三巨头的一个部门。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">EDA 软件授权</span><div class="track"><div class="fill gc" style="width:81%"></div></div><span class="pct">¥10.7 亿 · 81.1%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">技术服务</span><div class="track"><div class="fill gc" style="width:15%"></div></div><span class="pct">¥2.0 亿 · 15.2%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">硬件与代理等</span><div class="track"><div class="fill gn" style="width:4%"></div></div><span class="pct">¥0.5 亿 · 3.7%</span></div>
+          <div class="dnote">软件授权为绝对主体——收入质量高（毛利率 ~90%）；看点在授权收入里"全流程客户"与"点工具客户"的比例，公司未单列。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>模拟全流程＝对标 Virtuoso 的国产路径</b>：从点工具到全流程再到工艺协同——本赛道护城河页三张卡（全流程工具链/工艺协同/迁移成本）既是三巨头的壁垒，<b>反过来也是国产获客的三道坎</b>：设计公司换工具链＝重训人＋重验证＋赌良率。国产的杠杆是"信创名单+供应链安全"把迁移成本重新定价。 <a class="mgo" href="principles/#eda">看机制：设计全流程 ↗</a> <a class="mgo" href="principles/#wafer:mk-opc">OPC 与写版 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>扣非</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>10.1</td><td>+26.6%</td><td>93.8%</td><td>2.01</td><td>+0.64</td><td>67.8%</td></tr>
+            <tr><td>2024</td><td>12.2</td><td>+21.0%</td><td>93.3%</td><td>1.09</td><td>−0.57</td><td>71.0%</td></tr>
+            <tr><td>2025</td><td>13.2</td><td>+8.4%</td><td>89.3%</td><td>0.61</td><td>−0.10</td><td>64.8%</td></tr>
+            <tr><td>2026Q1</td><td>2.6</td><td>+9.6%</td><td>78.8%</td><td>−0.73</td><td>−0.84</td><td>84.3%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 毛利率 ~90%＝软件生意成立；② 但研发费率 65–71%（26Q1 达 84%）——<b>扣非自 2024 起持续为负</b>："把全部毛利投进研发还不够"，生态追赶期的标准报表形态；归母为正主要靠补助与理财收益 [✓报表]；③ 增速降档值得盯：+26.6%→+21.0%→+8.4%——下游设计公司订单节奏与信创采购周期的波动；④ PS ~44 定价的是战略资产而非利润——跟踪指标是<b>头部客户全流程采用与数字环节突破</b>，不是季度 EPS。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">概伦电子</span><span class="dccode">688206.SH</span><span class="dctag">器件建模 DTCO · 缝隙卡位</span><span class="dckpi">市值 <b>¥190 亿</b></span><span class="dckpi">PE-TTM <b>927</b> · PB <b>9.52</b></span><span class="dckpi">收盘 <b>43.42</b>（07-16）</span></div>
+          <div class="dcpos">差异化路线：从<b>"制造与设计的接口"</b>切入——器件建模/SPICE 仿真（BSIM 工业标准体系参与者）＋良率导向 DTCO，设计类与制造类 EDA 双轮，叠加器件测试仪器（软硬结合）；国际头部制造厂商亦在其建模工具客户名单（公司披露口径）。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">设计类 EDA</span><div class="track"><div class="fill gc" style="width:40%"></div></div><span class="pct">¥1.9 亿 · 39.5%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">制造类 EDA</span><div class="track"><div class="fill gc" style="width:25%"></div></div><span class="pct">¥1.2 亿 · 25.4%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">技术开发方案</span><div class="track"><div class="fill gn" style="width:18%"></div></div><span class="pct">¥0.9 亿 · 17.7%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">器件测试仪器</span><div class="track"><div class="fill gn" style="width:16%"></div></div><span class="pct">¥0.8 亿 · 15.9% · 毛利率 71.6%</span></div>
+          <div class="dnote">设计+制造双类 EDA 占 65%——"DTCO 桥梁"定位在收入结构里成立；仪器业务是软硬结合的差异化现金流。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>器件建模＝制造与设计之间的"翻译官"</b>：把晶体管的物理测出来、写成设计工具读得懂的模型——EPE/DTCO 时代（见本赛道护城河证据链第二行）这个接口的价值持续上升。<b>标准卡位</b>是小公司撬动大生态的支点：进了工业标准体系，就进了所有人的工具链。 <a class="mgo" href="principles/#eda">看机制：设计全流程 ↗</a> <a class="mgo" href="principles/#clean:mk-metro">EPE 与量测 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>扣非</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>3.3</td><td>+18.1%</td><td>82.5%</td><td>−0.56</td><td>−0.67</td><td>71.1%</td></tr>
+            <tr><td>2024</td><td>4.2</td><td>+27.4%</td><td>86.2%</td><td>−0.96</td><td>−0.89</td><td>64.8%</td></tr>
+            <tr><td>2025</td><td>4.8</td><td>+15.4%</td><td>86.9%</td><td>+0.34</td><td>−0.60</td><td>63.6%</td></tr>
+            <tr><td>2026Q1</td><td>1.0</td><td>+10.1%</td><td>86.2%</td><td>−0.12</td><td>−0.17</td><td>68.5%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 与华大九天同款结构：毛利 86%＋研发费率 64–71%＝<b>扣非持续亏损</b>——2025 归母转正 0.34 亿但扣非仍 −0.60 亿，靠非经常项 [✓报表]；② 收入 4.8 亿只是三巨头的零头，但 +15~27% 的增速稳定——细分卡位有生存空间的证明；③ PE-TTM 927 无意义，PS ~39 才是真实定价尺度；④ 小体量公司做"标准+接口"生意的宿命与机会同源：吃不成大锅饭，但谁都绕不开翻译官。</div>
+        </div>
+
+        <div class="snote" style="margin-top:12px">深度卡片口径同前五站（FACT-REVIEW #22）：A 股＝tushare income/fina_indicator/fina_mainbz + daily_basic（2026-07-16）；Synopsys/Cadence＝TTM（yfinance，2026 春季止；Synopsys 含 2025-07 完成的 Ansys 并表，GAAP 净利与 PE 被并购摊销压低、前瞻 PE ~24）；两巨头年研发投入"数十亿美元级"为财报口径概数 [~估算]；汇率 ¥7.1 [~估算]。</div>
+        </div>
         <div class="snote"><span class="k">1</span> EDA 份额 · <span class="k">2</span> IP（ARM ~40%）· <span class="k">3</span> 国产 EDA 报道。完整来源见「重点个股」。</div>
       </section>
 
@@ -1439,6 +1876,24 @@
           <div class="evocard"><h4><span>📈</span>良率 + 规模</h4><p>制程微缩与堆叠层数的良率决定成本曲线；规模摊薄 + 良率领先 = 成本优势。</p></div>
           <div class="evocard"><h4><span>🤝</span>客户认证</h4><p>HBM 与 GPU 厂（英伟达）深度绑定认证；进不了认证就吃不到 AI 红利。</p></div>
         </div>
+        <div class="mchain">
+          <div class="mtt">机制 → 壁垒 · 证据链<small>六张卡是"结论"，这里补"物理原因"——每条机制在第一轨都有完整图解，点「看机制 ↗」直达对应小节</small></div>
+          <div class="mrow">
+            <div class="mfact">3D NAND＝<b>叠层沉积＋极限刻蚀＋牺牲层替换</b>的接力：60:1 通道孔、热磷酸"抽芯"、ALD 灌钨——层数是刻蚀/沉积极限的函数，不是想叠就能叠。 <a class="mgo" href="principles/#mem:mk-nand">看机制：3D NAND 施工 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"专利墙 + 良率×规模"卡的机制形态：层数竞赛拼设备＋配方＋良率学习曲线，资本开支密度全行业最高——也是"周期耐力"卡的来历：熬不过下行的玩家出局。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">DRAM 还锁在平面 pitch 里：电容要在纳米底座上立起<b>几十倍高的柱子</b>（HAR 深孔＋ALD MIM 三明治），微缩逼近极限 → 4F² / 3D DRAM 架构变革。 <a class="mgo" href="principles/#mem:mk-dram">看机制：DRAM 专线 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">微缩越难，每 GB 降本越依赖资本与新工艺——<b>寡头更寡</b>；DRAM 是光刻密集型，EUV 时代资本竞赛的主战场（三家路线分歧见轨1 时间轴）。</div>
+          </div>
+          <div class="mrow">
+            <div class="mfact">HBM＝<b>DRAM × 先进封装的乘法</b>：TSV 打穿＋薄片堆叠键合，翘曲 / 键合精度 / 散热三难同时压过来。 <a class="mgo" href="principles/#pkg:mk-advpkg">看机制：TSV 与键合 ↗</a></div>
+            <div class="marr">⇒</div>
+            <div class="mcons">"HBM"卡与"客户认证"卡的机制解释：两种工艺栈都强才有入场券；先发者的<b>键合配方＋客户认证</b>复利滚动——追赶者两条学习曲线都要爬。</div>
+          </div>
+        </div>
       </section>
 
       <section class="sub" id="r-players">
@@ -1462,6 +1917,67 @@
         </div>
         <div class="note"><b>NAND</b>：三星 ~32% / SK（+Solidigm）~20% / 铠侠 ~15% / 美光 ~12% / 西数·SanDisk ~12%，前五 &gt;80%；国产<b>长江存储</b>已出货 294 层（当时业界已出货产品最高层数）、Xtacking 5.0 向 300+ 层推进；量产 300+ 层首发为 SK 海力士 321 层<sup class="s">3,4</sup>。</div>
         <div class="note"><b>国产看点</b>：长江存储（NAND，294 层出货、Xtacking 架构向 300+ 层推进，<b>跻身第一梯队</b>）；长鑫（DRAM，DDR5/LPDDR5 爬坡、份额从 1% 向 7–9% 升，HBM2 量产、HBM3 送样但落后 ~2–3 年（SK 已进入 HBM4 世代）、良率低 20–30pct）<sup class="s">4</sup>；A 股多为利基 / 模组（兆易 NOR 全球前三、北京君正车规 SRAM 全球第一）。<b>事实 vs 叙事</b>：国产 <b>NAND（长存）真追上了</b>，但 <b>DRAM（长鑫）仍追赶、HBM 仍落后</b>；且主流颗粒龙头（长鑫/长存）<b>尚未上市</b>（IPO 中），A 股标的多是利基 / 模组 / 控制器——别用"利基弹性"代替"龙头实力"。</div>
+        <div id="r-deepcards">
+        <div class="subttl" style="margin-top:28px">龙头深度卡片 · 存储赛道（兆易创新 / 北京君正 × 美光锚）</div>
+        <div class="cap">模板第四站。存储赛道的 A 股特殊结构：<b>大宗存储的主角（长江存储/长鑫存储）未上市</b>——可投标的是"利基存储＋设计"（fabless），与 IDM 大宗存储是两种生意；但 2026 涨价周期同样传导到了利基端，26Q1 报表已经给出证据。财务＝年报/一季报实绩 [✓已核实·tushare/公司财报]；市值/PE＝<b>2026-07-16 收盘快照</b>。</div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">国际锚 · 存储周期的振幅</span><span class="dctag">FY2025 对照</span></div>
+          <div class="dcpos">锚＝美光（DRAM/NAND/HBM 三线 IDM，财年止 8 月）。三星/SK 海力士见上方份额表；长存/长鑫为一级市场，上市公司体系外。</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>公司</th><th>FY2025 营收</th><th>毛利率</th><th>净利/归母</th><th>市值（07-16）</th><th>PE-TTM</th></tr>
+            <tr><td><b>美光 MU</b> <small>IDM·FY止8月</small></td><td>$373.8 亿</td><td>39.8%</td><td>$85.4 亿</td><td>$9,636 亿</td><td>~113（FY2025 静态）</td></tr>
+            <tr><td><b>兆易创新</b> <small>NOR/利基DRAM/MCU</small></td><td>¥92.0 亿 ≈$13.0 亿</td><td>40.2%</td><td>¥16.5 亿</td><td>¥3,611 亿 ≈$509 亿</td><td>125.6</td></tr>
+            <tr><td><b>北京君正</b> <small>车规存储·fabless</small></td><td>¥47.4 亿 ≈$6.7 亿</td><td>34.1%</td><td>¥3.8 亿</td><td>¥844 亿 ≈$119 亿</td><td>135.9</td></tr>
+            <tr><td><b>长存 / 长鑫</b> <small>大宗 NAND/DRAM</small></td><td>未上市</td><td>—</td><td>—</td><td>—（一级市场）</td><td>—</td></tr>
+          </table></div>
+          <div class="dnote"><b>坐标系三个读数</b>：① <b>周期振幅</b>——美光三年：FY2023 毛利率 <b>−9.1%（毛损）</b>、净亏 $58.3 亿 → FY2025 毛利率 39.8%、净赚 $85.4 亿；折旧≈收入 22%——IDM 存储＝重资产×暴涨暴跌，"周期耐力"卡的报表版；美光股价过去一年约 <b>+7 倍</b> [✓yfinance 快照]，超级周期的定价烈度。② <b>结构错位</b>——A 股主角缺席：大宗存储在未上市的长存/长鑫手里，上市标的是 fabless 利基与设计——轻资产、无折旧包袱，涨价直接变毛利率（兆易 26Q1 单季 57.1%）。③ <b>估值</b>——兆易 PE 126 / 君正 136 vs 美光静态 ~113：都在为周期高位定价；差异在美光有 HBM 结构性叙事，A 股两家吃的是利基涨价＋国产替代。汇率 ¥7.1 [~估算]。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">兆易创新</span><span class="dccode">603986.SH</span><span class="dctag">NOR 龙头 · 利基弹性样本</span><span class="dckpi">市值 <b>¥3,611 亿</b></span><span class="dckpi">PE-TTM <b>125.6</b> · PB <b>14.29</b></span><span class="dckpi">收盘 <b>514.61</b>（07-16）</span></div>
+          <div class="dcpos">NOR Flash 全球第一梯队（与华邦/旺宏缠斗）＋利基 DRAM（与长鑫协同）＋MCU 国产龙头——fabless 模式的"利基存储中国代表"，2026 存储涨价周期里 A 股最锋利的弹性之一。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">存储芯片</span><div class="track"><div class="fill gc" style="width:71%"></div></div><span class="pct">¥65.7 亿 · 71.4% · 毛利率 42.8%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">微控制器 MCU</span><div class="track"><div class="fill gc" style="width:21%"></div></div><span class="pct">¥19.1 亿 · 20.8% · 毛利率 35.8%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">传感器+模拟</span><div class="track"><div class="fill gn" style="width:8%"></div></div><span class="pct">¥7.2 亿 · 7.8%</span></div>
+          <div class="dnote">存储是基本盘（NOR＋利基 DRAM），MCU 是第二曲线；传感器/模拟为扩品类布局——"存储现金流养平台"的 fabless 版本。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>利基的生存逻辑</b>：NOR/利基 DRAM 制程成熟（无需 EUV），壁垒不在微缩而在<b>车规工控认证＋全品类覆盖＋供应链绑定</b>——大厂退出的缝隙市场里做成头部。利基 DRAM 与长鑫的设计-代工协同是国产链条的组合打法（工艺机制见轨1 DRAM 专线）。 <a class="mgo" href="principles/#mem:mk-dram">看机制：DRAM 工艺 ↗</a> <a class="mgo" href="principles/#family">芯片品类 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>扣非</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>57.6</td><td>−29.1%</td><td>34.4%</td><td>1.6</td><td>0.3</td><td>17.2%</td></tr>
+            <tr><td>2024</td><td>73.6</td><td>+27.7%</td><td>38.0%</td><td>11.0</td><td>10.3</td><td>15.3%</td></tr>
+            <tr><td>2025</td><td>92.0</td><td>+25.1%</td><td>40.2%</td><td>16.5</td><td>14.7</td><td>12.1%</td></tr>
+            <tr><td>2026Q1</td><td>41.9</td><td>+119.4%</td><td>57.1%</td><td>14.6</td><td>14.1</td><td>8.6%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 一张表看完整周期：2023 谷底归母 1.6 亿（扣非仅 0.3 亿，贴着盈亏线）→ <b>26Q1 单季 14.6 亿≈2025 全年</b>——fabless 无折旧拖累，涨价直接写进毛利率（34.4%→57.1%）；② 26Q1 收入 +119.4%＝量价齐升，存储涨价传导到利基端的实锤 [✓报表]；③ 研发费率 12–17%，<b>周期谷底反而最高（2023 年 17.2%）</b>——不砍研发是利基玩家穿越周期的生存法则；④ PE 126 定价在周期高位利润上——高毛利率时刻的 PE 显得便宜是周期股经典陷阱，核心变量是利基涨价的持续性。</div>
+        </div>
+
+        <div class="dcard">
+          <div class="dchd"><span class="dcnm">北京君正</span><span class="dccode">300223.SZ</span><span class="dctag">车规存储 · 稳态样本</span><span class="dckpi">市值 <b>¥844 亿</b></span><span class="dckpi">PE-TTM <b>135.9</b> · PB <b>6.64</b></span><span class="dckpi">收盘 <b>174.60</b>（07-16）</span></div>
+          <div class="dcpos">收购 ISSI（北京矽成）而来的<b>车规存储全球玩家</b>（车规 SRAM/DRAM/NOR 均列全球前位）＋计算芯片（智能视频 AIoT）＋模拟互联——"车规长周期"与"消费短周期"的混合体，与兆易同赛道、不同脾气。</div>
+          <div class="dcsec">① 业务拆分 · FY2025（主营构成，tushare fina_mainbz）</div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">存储芯片</span><div class="track"><div class="fill gc" style="width:62%"></div></div><span class="pct">¥29.1 亿 · 61.5% · 毛利率 32.0%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">计算芯片</span><div class="track"><div class="fill gc" style="width:27%"></div></div><span class="pct">¥12.9 亿 · 27.3% · 毛利率 30.9%</span></div>
+          <div class="shrow"><span class="co" style="flex-basis:130px">模拟及互联</span><div class="track"><div class="fill gn" style="width:11%"></div></div><span class="pct">¥5.1 亿 · 10.7% · 毛利率 51.1%</span></div>
+          <div class="dnote">车规存储是基本盘：认证周期长、产品生命周期长、价格波动小于消费级——同叫"存储"，报表脾气与兆易完全不同。</div>
+          <div class="dcsec">② 护城河 · 机制（链第一轨）</div>
+          <div class="dnote"><b>车规认证＝时间堆出来的墙</b>：AEC-Q 认证、功能安全、十年供货承诺——换供应商的验证成本极高，是"认证周期=客户绑定"卡在存储上的变体。<b>代价是弹性</b>：价格粘性双向起作用，跌时抗跌、涨时滞后。 <a class="mgo" href="principles/#mem:mk-dram">看机制：DRAM 工艺 ↗</a> <a class="mgo" href="principles/#family">芯片品类 ↗</a></div>
+          <div class="dcsec">③ 财务特征 · 三年一期（亿元，tushare）</div>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>期间</th><th>营收</th><th>YoY</th><th>毛利率</th><th>归母净利</th><th>扣非</th><th>研发费率</th></tr>
+            <tr><td>2023</td><td>45.3</td><td>−16.3%</td><td>37.1%</td><td>5.4</td><td>4.9</td><td>15.6%</td></tr>
+            <tr><td>2024</td><td>42.1</td><td>−7.0%</td><td>36.7%</td><td>3.7</td><td>3.1</td><td>16.2%</td></tr>
+            <tr><td>2025</td><td>47.4</td><td>+12.5%</td><td>34.1%</td><td>3.8</td><td>3.1</td><td>15.0%</td></tr>
+            <tr><td>2026Q1</td><td>15.6</td><td>+47.1%</td><td>43.5%</td><td>3.2</td><td>3.1</td><td>11.0%</td></tr>
+          </table></div>
+          <div class="dnote"><b>报表怎么读</b>：① 2023–2025 收入平台期、毛利率 34–37% 窄幅波动——车规主导的"稳"，但也因此错过了 2024–25 消费级反弹的大部分；② <b>26Q1 拐点</b>：收入 +47.1%、毛利率跳至 43.5%、单季归母 3.2 亿≈2025 全年的 85%——涨价周期终于传导到车规/利基 [✓报表]；③ 与兆易同框看：同一周期，弹性差一个量级（+47% vs +119%）——车规粘性的双面性最直观的展示；④ PE 136 叠加低增长基本盘，重估靠的是 Q1 拐点——持续性看车规补库节奏与利基 DRAM 价格。</div>
+        </div>
+
+        <div class="snote" style="margin-top:12px">深度卡片口径同前三站（FACT-REVIEW #22）：A 股＝tushare income/fina_indicator/fina_mainbz + daily_basic（2026-07-16）；美光＝FY 止 8 月（yfinance），折旧≈收入 22%，"静态 PE ~113"为市值/FY2025 净利 [~估算]（TTM 口径显著更低）；美光股价一年 +7 倍＝yfinance 52 周涨幅快照；汇率 ¥7.1 [~估算]。</div>
+        </div>
         <div class="snote"><span class="k">1</span> DRAM · <span class="k">2</span> HBM · <span class="k">3</span> NAND · <span class="k">4</span> 长鑫/长存。完整来源见「重点个股」。</div>
       </section>
 

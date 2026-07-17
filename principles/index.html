@@ -47,6 +47,7 @@
   .legend span{display:inline-flex;align-items:center;gap:5px}
   .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
   .subttl{font-size:13.5px;font-weight:700;color:var(--cy2);margin:16px 0 8px}
+.subttl[id^="mk-"]{scroll-margin-top:14px}
   .subttl:first-child{margin-top:4px}
   .scale-row{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;justify-content:center}
   .zcard{flex:1 1 180px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:11px;text-align:center;min-width:150px}
@@ -921,7 +922,7 @@
         </svg>
         <div class="note">关键事实：掩膜是 <b>4× 放大版</b>（投影时缩小 4 倍，缓解掩膜制造精度压力）｜ 一套先进芯片要 <b>几十~上百张</b>掩膜（每层一张）｜ 一张高端 <b>EUV 掩膜可达数百万美元</b> ｜ 表面贴 <b>pellicle 薄膜</b>挡灰（落在掩膜上的尘点会被一并印到每颗芯片上）。掩膜用在光刻——详见 光刻。</div>
 
-        <div class="subttl">掩膜是怎么"写"出来的：从 GDSII 到一块能用的掩膜</div>
+        <div class="subttl" id="mk-opc">掩膜是怎么"写"出来的：从 GDSII 到一块能用的掩膜</div>
         <div class="cap">设计交来的 GDSII<b>不能直接印到掩膜上</b>——图形已经小到和光的波长同量级，<b>衍射会把印出来的图形"磨圆、缩短"</b>。所以先要"以歪治歪"，再用电子束一笔一笔写出来：</div>
         <svg viewBox="0 0 660 236">
           <!-- panel 1: intent -->
@@ -1470,7 +1471,7 @@
           <marker id="faAd" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#9fb0cc"/></marker>
         </defs></svg>
 
-        <div class="subttl">机制加深①：热工艺——芯片制造的"火候"</div>
+        <div class="subttl" id="mk-thermal">机制加深①：热工艺——芯片制造的"火候"</div>
         <div class="cap">上面 26 步里反复出现"长氧化层""退火"，背后是两类加热方式的分工：<b>炉管</b>（一炉几十上百片、小时级，管"慢工出细活"）和 <b>RTP 快速热处理</b>（单片、秒级到毫秒级，管"快进快出"）。</div>
         <svg viewBox="0 0 660 216">
           <!-- furnace -->
@@ -1502,7 +1503,7 @@
         </svg>
         <div class="note"><b>热预算（Thermal Budget）——先进制程为什么"怕热"</b>：晶圆经历的所有"温度 × 时间"要记总账。已经埋好的纳米级掺杂剖面，会被后续每一次高温<b>扩散抹开</b>——结越浅、越怕热。所以工艺越先进，越把长时间炉管换成<b>秒级 RTA、毫秒级尖峰/激光退火</b>："温度够高把杂质激活，时间够短不让它乱跑"。另一件事也和热有关：<b>SiO₂/Si 界面天生近乎完美</b>（缺陷极少），这是硅能统治半导体的根本原因之一——换任何别的半导体，先得解决"长不出这么好的氧化层"。</div>
 
-        <div class="subttl">机制加深②：离子注入——用"离子炮"把杂质精准埋进硅里</div>
+        <div class="subttl" id="mk-implant">机制加深②：离子注入——用"离子炮"把杂质精准埋进硅里</div>
         <div class="cap">26 步里的"阱注入、LDD、源漏注入"用的都是同一台机器：<b>离子注入机</b>。它把掺杂原子电离成离子、加速成一束"炮弹"，打进硅晶格的指定深度——现代掺杂全靠它，因为<b>深度和浓度都是可精确设定的"数字旋钮"</b>：</div>
         <svg viewBox="0 0 660 232">
           <g font-size="8.5" text-anchor="middle">
@@ -1538,7 +1539,7 @@
           </g>
         </svg>
 
-        <div class="subttl">机制加深③：铜互连的"中年危机"——RC 延迟与新金属</div>
+        <div class="subttl" id="mk-rc">机制加深③：铜互连的"中年危机"——RC 延迟与新金属</div>
         <div class="cap">26 步造完晶体管，上面还要叠 10~20 层铜布线（第 14–26 步的大马士革循环）。曾经"晶体管慢、导线快"，先进节点彻底反转：<b>晶体管越来越快，导线却越来越慢</b>——互连成了性能的新瓶颈，这就是 RC 延迟问题。</div>
         <svg viewBox="0 0 660 250">
           <!-- left: what is RC -->
@@ -1798,7 +1799,7 @@
         </div>
         <div class="note">三种结构里<b>栅氧化层从未消失</b>——它始终是栅极与沟道之间那层薄绝缘膜，只是从"盖一面"变成"包三面""绕四面"。电流都一样：<b>沿沟道从源极流到漏极</b>，由栅极在中间隔空开关。</div>
 
-        <div class="subttl">机制加深：HKMG——"栅氧化层"的一次生死危机（45nm 世代的换心手术）</div>
+        <div class="subttl" id="mk-hkmg">机制加深：HKMG——"栅氧化层"的一次生死危机（45nm 世代的换心手术）</div>
         <div class="cap">上面刚说"栅氧化层从未消失"——但它其实<b>换过一次心</b>：2000 年代中期，SiO₂ 栅氧被缩到 ~1.2nm、只剩约 <b>5 个原子层</b>，量子隧穿让"绝缘层"漏成了筛子。这场危机的解法牵动<b>材料-器件-工艺</b>整条链，是理解"换一个材料＝重构一条工艺链"的最佳案例。</div>
         <svg viewBox="0 0 620 244">
           <!-- left: tunneling crisis -->
@@ -2134,7 +2135,7 @@
           </g>
         </svg>
         <div class="note">多重曝光：单次分辨率不够时，把一层图形<b>拆成多块掩膜 / 多道工序</b>叠出来。图中 <b>SADP 自对准双重成形</b>——先做较稀的"芯轴"，侧壁长一圈侧墙，去掉芯轴后<b>侧墙变成两倍密的线</b>。<b>DUV(193nm) 时代正是靠它硬做到 7nm</b>；EUV 能少拆几次，但最细处仍需多重曝光。<b>每多一次 = 多一套掩膜、多一道工序 = 更贵更慢</b>，这是先进制程成本飙升的重要原因。</div>
-        <div class="subttl">机制加深：光刻机整机解剖——另一半的钱花在"运动"上</div>
+        <div class="subttl" id="mk-scanner">机制加深：光刻机整机解剖——另一半的钱花在"运动"上</div>
         <div class="cap">前面把"光"讲透了（光源→光路→NA），但一台 EUV 两亿多美元，<b>光学只占一半</b>；另一半在<b>运动与测量</b>：把 300mm 晶圆以赛车级加速度甩来甩去，同时把位置控制在<b>原子直径量级</b>——很多人以为光刻机＝镜头，其实它还是世界上最快最准的"运动机器"。</div>
         <svg viewBox="0 0 620 306">
           <rect x="24" y="26" width="572" height="262" rx="10" fill="none" stroke="#3a4a6a" stroke-width="1.4"/>
@@ -2371,7 +2372,7 @@
           <text x="360" y="196" font-size="8.5" fill="#8b9bb8" text-anchor="start">极限精度另一路：ALE 原子层刻蚀——一循环只剥一层原子，自限制。</text>
         </svg>
 
-        <div class="subttl">机制加深①：高深宽比刻蚀——3D NAND 的"打井工程学"</div>
+        <div class="subttl" id="mk-har">机制加深①：高深宽比刻蚀——3D NAND 的"打井工程学"</div>
         <div class="cap">上图三口井是"结果"，这里拆"原因"。3D NAND 把存储单元竖着叠，<b>容量＝层数</b>，而层数的第一道关卡就是<b>通道孔</b>：在氧化硅/氮化硅交替叠出的"千层饼"上，垂直打出直径 ~100nm、深好几微米的孔——<b>深宽比 60:1 以上</b> [~估算·业界通称]。更苛刻的是数量：一颗 1Tb 芯片上有<b>十亿量级</b>这样的孔要同时开挖、同时笔直到底 [~估算]。下面这口"病孔"把五种典型失效画在同一张解剖图上。</div>
         <svg viewBox="0 0 660 316">
           <text x="170" y="18" font-size="10.5" fill="#e8eef9" text-anchor="middle" font-weight="700">一口"病孔"的解剖：五种失效同框 [△示意·纵向压缩]</text>
@@ -2621,7 +2622,7 @@
         </svg>
         <div class="cap"><b>ALD 一个循环四步</b>：① 通入前驱体 A → 表面<b>吸附满一层就自动停</b>（自限制）；② 惰性气体吹扫掉多余的 A；③ 通入反应物 B → 只和吸附的那层 A 反应，生成一层薄膜；④ 再吹扫。<b>每循环恰好一个原子层（~0.1nm）</b>，重复 N 次＝精确 N 层。代价是慢——所以只用在最关键的膜上：高K栅介质、GAA 纳米片四面包裹的栅极、高深宽比结构的衬里。<b>结构越立体（FinFET→GAA→3D NAND），ALD 越不可替代</b>。</div>
 
-        <div class="subttl">机制加深②：ALD——把"长膜"变成"数原子"（点「下一步 ›」看一个循环）</div>
+        <div class="subttl" id="mk-ald">机制加深②：ALD——把"长膜"变成"数原子"（点「下一步 ›」看一个循环）</div>
         <div class="cap">上面的台阶覆盖对比给了结论，这里拆机制：ALD 为什么能做到"再深的孔每处一样厚"？答案是把一次成膜拆成<b>两个"见好就收"的半反应</b>——以最经典的 Al₂O₃（TMA + 水）为例。左图盯宏观深槽，右图放大看表面上的化学。</div>
         <div class="step-nav" style="margin-bottom:10px">
           <button class="btn" id="aldprev">‹ 上一步</button>
@@ -3018,7 +3019,7 @@
           <text x="330" y="238" font-size="8.5" fill="#8b9bb8" text-anchor="middle">[△示意：三个面板均为教学简化图]</text>
         </svg>
 
-        <div class="subttl">机制加深：三把"尺子"的原理——纳米世界怎么"看见"</div>
+        <div class="subttl" id="mk-metro">机制加深：三把"尺子"的原理——纳米世界怎么"看见"</div>
         <div class="cap">上面三个面板讲了"量什么"，这里拆"怎么量得到"。共同困境：<b>要量的东西比可见光波长小一两个量级，"直接看"根本不存在</b>——每把尺子都是"物理信号 + 数学反演"的组合，这正是量测壁垒的根。</div>
         <svg viewBox="0 0 660 262">
           <!-- panel 1: CD-SEM -->
@@ -3274,7 +3275,7 @@
         </svg>
         <div class="note">NAND 闪存把电荷存在每个单元的<b>电荷俘获层</b>里（断电也不丢 = 非易失）。平面 NAND 缩到极限后，改走 <b>3D：把上百层"字线 / 控制栅"竖着叠起来</b>，再用一道刻蚀打出<b>垂直沟道孔</b>穿过所有层——<b>每个"字线 × 沟道"的交点就是一个存储单元</b>，一根柱子上的单元串成一串(NAND string)。妙处是<b>靠"加层数"而不是"缩尺寸"来降低每比特成本</b>，所以层数竞赛(200→300→400+)成了主线。玩家：<b>三星 / SK 海力士(含 Solidigm) / 美光 / 铠侠·闪迪</b>，国产 <b>长江存储 YMTC</b>——也是国产存储突破最快的方向。</div>
 
-        <div class="subttl">机制加深：3D NAND 是怎么"盖"起来的——刻蚀与沉积的极限接力</div>
+        <div class="subttl" id="mk-nand">机制加深：3D NAND 是怎么"盖"起来的——刻蚀与沉积的极限接力</div>
         <div class="cap">上图 D 是"竣工照"，这里看"施工过程"。3D NAND 的制造哲学与逻辑芯片完全不同：<b>不靠先进光刻</b>（成熟 DUV 就够用），靠<b>叠层沉积＋极限刻蚀＋牺牲层替换</b>——正是「刻蚀·沉积」页两个机制加深的实战合体。先看六步总览：</div>
         <svg viewBox="0 0 620 312">
           <!-- P1 stack -->
@@ -3445,7 +3446,7 @@
         </svg>
         <div class="note" style="border-left-color:#e0c98a;background:rgba(224,201,138,.07)"><b style="color:#e0c98a">设备视角收尾</b>：3D NAND 产线＝刻蚀机＋炉管/ALD 的"森林"——刻蚀与薄膜设备在 NAND 资本开支中的占比为全行业最高 [~估算·业界共识]，光刻反而是配角（无需 EUV）。这正是轨2「设备」赛道"存储扩产利好刻蚀/薄膜设备"的机制根源。层数竞赛记分牌与低温刻蚀进展维护在「刻蚀·沉积」页机制加深①（单一事实源，此处不重复）；牺牲层哲学的另一半——逻辑芯片的假栅替换，见「先进结构演进」页 HKMG 机制加深。</div>
 
-        <div class="subttl">机制加深：DRAM 工艺专线——把电容立起来、把字线埋下去</div>
+        <div class="subttl" id="mk-dram">机制加深：DRAM 工艺专线——把电容立起来、把字线埋下去</div>
         <div class="cap">上文 B 图讲了 1T1C 原理，这里拆 DRAM 的三大工艺招式，并与 3D NAND 专线对照：<b>NAND 是刻蚀/沉积密集型（加层数逃出光刻牢笼），DRAM 是光刻密集型（还锁在平面 pitch 里）</b>——每一代都要把单元间距实打实缩小，所以 DRAM 一直是光刻机的大客户（呼应「光刻」页）。</div>
         <svg viewBox="0 0 620 250">
           <text x="310" y="16" font-size="11" fill="#f0c082" text-anchor="middle" font-weight="700">招式一：电容是"立"起来的——模具＋深井＋ALD 三明治</text>
@@ -3921,7 +3922,7 @@
         </svg>
         <div class="note"><b>为什么要换？</b>传统<b>微凸点</b>是"铜柱顶个焊料球"把上下两片芯片接起来，中间有缝、间距停在 ~10µm 量级；当堆叠层数越来越多、I/O 越来越密，焊料的<b>电阻、热阻和间距</b>都成了瓶颈。<b>混合键合</b>直接把两片芯片的<b>铜垫对铜垫压合、周围介质也键合在一起</b>，没有焊料、没有缝隙，间距能进到<b>亚微米</b>——更密、更省电、散热更好。HBM4 与台积电 SoIC（如 NVIDIA Rubin、AMD 3D V-Cache）正是这条路。</div>
 
-        <div class="subttl">机制加深：这些结构是怎么"造"出来的——TSV、CoWoS 流水线与混合键合</div>
+        <div class="subttl" id="mk-advpkg">机制加深：这些结构是怎么"造"出来的——TSV、CoWoS 流水线与混合键合</div>
         <div class="cap">上面 B–E 讲的都是"结构长什么样"，这里补"工艺怎么走"。先进封装的本质＝<b>把前道的看家本领（深孔刻蚀、电镀、CMP、键合）搬到封装尺度</b>——这也是它毛利更高、且越来越由晶圆厂主导的机制原因（产业面见轨2「封测」赛道）。</div>
         <svg viewBox="0 0 620 262">
           <text x="310" y="16" font-size="11" fill="#f0c082" text-anchor="middle" font-weight="700">TSV 硅通孔怎么造：五步（via-middle 主流）</text>
@@ -4306,12 +4307,15 @@
     nfRender();
   })();
 
-  // ---- hash deep link: principles/#eda etc. jumps to that page ----
+  // ---- hash deep link: principles/#eda 切页；principles/#etch:mk-har 切页后再滚到小节锚点（轨2 机制证据链回链用）----
   (function(){
-    var h=(location.hash||'').replace('#','');
-    if(h&&scenes[h]){
-      var tb=document.querySelector('.tab[data-s="'+h+'"]');
-      if(tb){var gb=document.querySelector('.gtab[data-g="'+tb.dataset.g+'"]');if(gb)gb.click();tb.click();}
+    var h=(location.hash||'').replace('#',''),parts=h.split(':'),pg=parts[0],anc=parts[1];
+    if(pg&&scenes[pg]){
+      var tb=document.querySelector('.tab[data-s="'+pg+'"]');
+      if(tb){
+        var gb=document.querySelector('.gtab[data-g="'+tb.dataset.g+'"]');if(gb)gb.click();tb.click();
+        if(anc){var jump=function(){var el=document.getElementById(anc);if(el)el.scrollIntoView({behavior:'auto',block:'start'});};setTimeout(jump,80);setTimeout(jump,500);}
+      }
     }
   })();
 
