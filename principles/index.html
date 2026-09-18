@@ -1,17 +1,314 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="warm-vermilion">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>芯片解剖 · 从晶圆到纳米晶体管</title>
+<title>半导体制造知识库 · 轨1 原理科普</title>
+<script>
+try{var t=localStorage.getItem('semlab-theme');
+var OK=['warm-vermilion','warm-indigo','warm-pine','warm-tea','warm-ink','cool-indigo','cool-steel','cool-teal','cool-violet','cool-navy','classic-dark'];
+if(t&&OK.indexOf(t)!==-1)document.documentElement.dataset.theme=t;}catch(e){}
+</script>
 <style>
-  :root{--bg1:#070b14;--bg2:#0b1322;--panel:#111a2e;--line:#23304d;--txt:#e8eef9;--mut:#8b9bb8;--dim:#5d6b88;--cy:#34d6cf;--cy2:#5eead4;--cu:#e9a04c;--pur:#b08bf0;--red:#f0738a;--si:#5b86c9}
+  /* ============ 自托管字体：思源黑体 Noto Sans SC（本地子集，零 CDN，离线可用） ============ */
+  @font-face{font-family:"Noto Sans SC";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/noto-sans-sc-400.woff2") format("woff2")}
+  @font-face{font-family:"Noto Sans SC";font-style:normal;font-weight:500;font-display:swap;src:url("fonts/noto-sans-sc-500.woff2") format("woff2")}
+  @font-face{font-family:"Noto Sans SC";font-style:normal;font-weight:700;font-display:swap;src:url("fonts/noto-sans-sc-700.woff2") format("woff2")}
+  /* ============ 主题变量系统（11 套：10 浅色 + 经典暗夜） ============ */
+/* ---- 经典暗夜 classic-dark（= 本站原始配色，默认值） ---- */
+:root, :root[data-theme="classic-dark"] {
+  /* 内容变量（原始值，零改动） */
+  --bg1:#070b14; --bg2:#0b1322; --panel:#111a2e; --line:#23304d;
+  --txt:#e8eef9; --mut:#8b9bb8; --dim:#5d6b88;
+  --cy:#34d6cf; --cy2:#5eead4; --cu:#e9a04c; --pur:#b08bf0; --red:#f0738a; --si:#5b86c9;
+  /* 语义扩展变量（硬编码颜色变量化后的暗夜原值） */
+  --bg-glow:#14203a; --panel-2:#0a1120;
+  --t-strong2:#cdd7e8; --t-dim2:#7a8aa8; --t-frow:#c2cde0;
+  --t-teal1:#8fe9e1; --t-teal2:#7fd0c4;
+  --t-pur:#c8b3ff; --t-amber:#f0c082; --t-amber2:#f3cf9c;
+  --t-blue:#9fc0ec; --t-blue2:#7fa6e8; --t-sky:#5ec8ea;
+  --t-green:#7fe0b0; --t-green2:#7fe0c0; --t-mint:#bdebd0;
+  --t-orange:#f0a86a; --t-gold:#e0b050; --t-red:#e0556e; --t-pink:#f3a0b0;
+  --chip-bg:#1d2c46; --chip-txt:#9fb0cc;
+  --cmp-bg:#5a4422; --cmp-txt:#f5c97a; --frow-line:#2a3550;
+  /* 外壳变量（暗夜版） */
+  --bg:#070b14; --bg-elev:#0e1626; --bg-soft:#111a2e; --bg-sunk:#0a1120;
+  --text:#e8eef9; --text-2:#9aa8c4; --muted:#5d6b88;
+  --accent:#34d6cf; --accent-deep:#5eead4;
+  --accent-soft:rgba(52,214,207,.12); --accent-softer:rgba(52,214,207,.22);
+  --border:#23304d; --border-strong:#33446b;
+  --topbar-bg:rgba(7,11,20,.85);
+  --plate:#111a2e; --plate-line:#263450;
+  --hover:rgba(232,238,249,.06);
+  --shadow-drop:0 12px 32px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+}
+:root[data-theme="warm-vermilion"] {
+  --bg:#faf8f4; --bg-elev:#fffdf8; --bg-soft:#f4f0e7; --bg-sunk:#efeadd;
+  --text:#1a1a18; --text-2:#55524a; --muted:#8d8676;
+  --accent:#c2410c; --accent-deep:#9a3412;
+  --accent-soft:rgba(194,65,12,.08); --accent-softer:rgba(194,65,12,.16);
+  --border:#e7e0d2; --border-strong:#d7cebb;
+  --topbar-bg:rgba(250,248,244,.86);
+  --plate:#111a2e; --plate-line:#263450;
+  --hover:rgba(26,26,24,.045);
+  --shadow-drop:0 12px 32px rgba(60,45,20,.14), 0 2px 6px rgba(60,45,20,.08);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#faf8f4; --bg2:#f4f0e7; --panel:#fffdf8; --line:#e7e0d2;
+  --txt:#1a1a18; --mut:#55524a; --dim:#8d8676;
+  --cy:#c2410c; --cy2:#9a3412;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#f4f0e7; --panel-2:#fffdf8;
+  --t-strong2:#1a1a18; --t-dim2:#8d8676; --t-frow:#3f4956;
+  --t-teal1:#9a3412; --t-teal2:#9a3412;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#f4f0e7; --chip-txt:#55524a;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e7e0d2;
+}
+:root[data-theme="warm-indigo"] {
+  --bg:#faf9f4; --bg-elev:#fffefa; --bg-soft:#f3f1e9; --bg-sunk:#edeade;
+  --text:#191a1c; --text-2:#4e5058; --muted:#8a887c;
+  --accent:#1d4ed8; --accent-deep:#1e40af;
+  --accent-soft:rgba(29,78,216,.07); --accent-softer:rgba(29,78,216,.15);
+  --border:#e5e1d3; --border-strong:#d4cfbd;
+  --topbar-bg:rgba(250,249,244,.86);
+  --plate:#121a30; --plate-line:#28355a;
+  --hover:rgba(25,26,28,.045);
+  --shadow-drop:0 12px 32px rgba(55,50,30,.13), 0 2px 6px rgba(55,50,30,.07);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#faf9f4; --bg2:#f3f1e9; --panel:#fffefa; --line:#e5e1d3;
+  --txt:#191a1c; --mut:#4e5058; --dim:#8a887c;
+  --cy:#1d4ed8; --cy2:#1e40af;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#f3f1e9; --panel-2:#fffefa;
+  --t-strong2:#191a1c; --t-dim2:#8a887c; --t-frow:#3f4956;
+  --t-teal1:#1e40af; --t-teal2:#1e40af;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#f3f1e9; --chip-txt:#4e5058;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e5e1d3;
+}
+:root[data-theme="warm-pine"] {
+  --bg:#faf8f1; --bg-elev:#fffdf7; --bg-soft:#f2efe4; --bg-sunk:#ece8d9;
+  --text:#1a1b18; --text-2:#4f534c; --muted:#8b897a;
+  --accent:#0f766e; --accent-deep:#115e59;
+  --accent-soft:rgba(15,118,110,.08); --accent-softer:rgba(15,118,110,.16);
+  --border:#e5e1d0; --border-strong:#d3cdb8;
+  --topbar-bg:rgba(250,248,241,.86);
+  --plate:#101c28; --plate-line:#24344a;
+  --hover:rgba(26,27,24,.045);
+  --shadow-drop:0 12px 32px rgba(45,55,35,.13), 0 2px 6px rgba(45,55,35,.07);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#faf8f1; --bg2:#f2efe4; --panel:#fffdf7; --line:#e5e1d0;
+  --txt:#1a1b18; --mut:#4f534c; --dim:#8b897a;
+  --cy:#0f766e; --cy2:#115e59;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#f2efe4; --panel-2:#fffdf7;
+  --t-strong2:#1a1b18; --t-dim2:#8b897a; --t-frow:#3f4956;
+  --t-teal1:#115e59; --t-teal2:#115e59;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#f2efe4; --chip-txt:#4f534c;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e5e1d0;
+}
+:root[data-theme="warm-tea"] {
+  --bg:#f5efe6; --bg-elev:#fcf8f0; --bg-soft:#eee6d8; --bg-sunk:#e7ddca;
+  --text:#201a13; --text-2:#5a5044; --muted:#91836e;
+  --accent:#92400e; --accent-deep:#78350f;
+  --accent-soft:rgba(146,64,14,.09); --accent-softer:rgba(146,64,14,.17);
+  --border:#e2d7c2; --border-strong:#d1c3a8;
+  --topbar-bg:rgba(245,239,230,.86);
+  --plate:#181512; --plate-line:#3a3128;
+  --hover:rgba(32,26,19,.05);
+  --shadow-drop:0 12px 32px rgba(70,50,20,.15), 0 2px 6px rgba(70,50,20,.08);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f5efe6; --bg2:#eee6d8; --panel:#fcf8f0; --line:#e2d7c2;
+  --txt:#201a13; --mut:#5a5044; --dim:#91836e;
+  --cy:#92400e; --cy2:#78350f;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#eee6d8; --panel-2:#fcf8f0;
+  --t-strong2:#201a13; --t-dim2:#91836e; --t-frow:#3f4956;
+  --t-teal1:#78350f; --t-teal2:#78350f;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#eee6d8; --chip-txt:#5a5044;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e2d7c2;
+}
+:root[data-theme="warm-ink"] {
+  --bg:#fcfbF7; --bg-elev:#ffffff; --bg-soft:#f4f2ec; --bg-sunk:#edebe3;
+  --text:#1c1917; --text-2:#57534e; --muted:#8f8a83;
+  --accent:#1c1917; --accent-deep:#000000;
+  --accent-soft:rgba(28,25,23,.06); --accent-softer:rgba(28,25,23,.13);
+  --border:#e6e3db; --border-strong:#d4d0c5;
+  --topbar-bg:rgba(252,251,247,.86);
+  --plate:#15161c; --plate-line:#2c2e3a;
+  --hover:rgba(28,25,23,.04);
+  --shadow-drop:0 12px 32px rgba(40,35,25,.13), 0 2px 6px rgba(40,35,25,.07);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#fcfbF7; --bg2:#f4f2ec; --panel:#ffffff; --line:#e6e3db;
+  --txt:#1c1917; --mut:#57534e; --dim:#8f8a83;
+  --cy:#1c1917; --cy2:#000000;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#f4f2ec; --panel-2:#ffffff;
+  --t-strong2:#1c1917; --t-dim2:#8f8a83; --t-frow:#3f4956;
+  --t-teal1:#000000; --t-teal2:#000000;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#f4f2ec; --chip-txt:#57534e;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e6e3db;
+}
+:root[data-theme="cool-indigo"] {
+  --bg:#f3f4f6; --bg-elev:#ffffff; --bg-soft:#e9ebef; --bg-sunk:#e0e3e9;
+  --text:#12151a; --text-2:#4c5563; --muted:#7d8593;
+  --accent:#4f46e5; --accent-deep:#4338ca;
+  --accent-soft:rgba(79,70,229,.08); --accent-softer:rgba(79,70,229,.16);
+  --border:#dcdfe7; --border-strong:#c8cdd9;
+  --topbar-bg:rgba(243,244,246,.86);
+  --plate:#101830; --plate-line:#243154;
+  --hover:rgba(18,21,26,.045);
+  --shadow-drop:0 12px 32px rgba(30,40,80,.13), 0 2px 6px rgba(30,40,80,.07);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f3f4f6; --bg2:#e9ebef; --panel:#ffffff; --line:#dcdfe7;
+  --txt:#12151a; --mut:#4c5563; --dim:#7d8593;
+  --cy:#4f46e5; --cy2:#4338ca;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#e9ebef; --panel-2:#ffffff;
+  --t-strong2:#12151a; --t-dim2:#7d8593; --t-frow:#3f4956;
+  --t-teal1:#4338ca; --t-teal2:#4338ca;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#e9ebef; --chip-txt:#4c5563;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#dcdfe7;
+}
+:root[data-theme="cool-steel"] {
+  --bg:#eceff3; --bg-elev:#f8fafc; --bg-soft:#e2e7ed; --bg-sunk:#d9dfe7;
+  --text:#131820; --text-2:#48525f; --muted:#76808e;
+  --accent:#2563eb; --accent-deep:#1d4ed8;
+  --accent-soft:rgba(37,99,235,.09); --accent-softer:rgba(37,99,235,.17);
+  --border:#d5dbe3; --border-strong:#c0c8d4;
+  --topbar-bg:rgba(236,239,243,.86);
+  --plate:#101a30; --plate-line:#25324e;
+  --hover:rgba(19,24,32,.05);
+  --shadow-drop:0 12px 32px rgba(30,45,75,.14), 0 2px 6px rgba(30,45,75,.08);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#eceff3; --bg2:#e2e7ed; --panel:#f8fafc; --line:#d5dbe3;
+  --txt:#131820; --mut:#48525f; --dim:#76808e;
+  --cy:#2563eb; --cy2:#1d4ed8;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#e2e7ed; --panel-2:#f8fafc;
+  --t-strong2:#131820; --t-dim2:#76808e; --t-frow:#3f4956;
+  --t-teal1:#1d4ed8; --t-teal2:#1d4ed8;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#e2e7ed; --chip-txt:#48525f;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#d5dbe3;
+}
+:root[data-theme="cool-teal"] {
+  --bg:#f1f4f3; --bg-elev:#fbfdfc; --bg-soft:#e6ebe9; --bg-sunk:#dce3e0;
+  --text:#121817; --text-2:#49554f; --muted:#7a8683;
+  --accent:#0d9488; --accent-deep:#0f766e;
+  --accent-soft:rgba(13,148,136,.08); --accent-softer:rgba(13,148,136,.16);
+  --border:#d9e0de; --border-strong:#c4cec9;
+  --topbar-bg:rgba(241,244,243,.86);
+  --plate:#0e1c26; --plate-line:#22343e;
+  --hover:rgba(18,24,23,.045);
+  --shadow-drop:0 12px 32px rgba(20,50,45,.13), 0 2px 6px rgba(20,50,45,.07);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f1f4f3; --bg2:#e6ebe9; --panel:#fbfdfc; --line:#d9e0de;
+  --txt:#121817; --mut:#49554f; --dim:#7a8683;
+  --cy:#0d9488; --cy2:#0f766e;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#e6ebe9; --panel-2:#fbfdfc;
+  --t-strong2:#121817; --t-dim2:#7a8683; --t-frow:#3f4956;
+  --t-teal1:#0f766e; --t-teal2:#0f766e;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#e6ebe9; --chip-txt:#49554f;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#d9e0de;
+}
+:root[data-theme="cool-violet"] {
+  --bg:#f4f3f6; --bg-elev:#fdfcfe; --bg-soft:#eae8ee; --bg-sunk:#e0dde5;
+  --text:#16141c; --text-2:#504b5c; --muted:#817b8c;
+  --accent:#7c3aed; --accent-deep:#6d28d9;
+  --accent-soft:rgba(124,58,237,.08); --accent-softer:rgba(124,58,237,.16);
+  --border:#dedbe4; --border-strong:#c9c5d4;
+  --topbar-bg:rgba(244,243,246,.86);
+  --plate:#141227; --plate-line:#2b2750;
+  --hover:rgba(22,20,28,.045);
+  --shadow-drop:0 12px 32px rgba(45,30,80,.13), 0 2px 6px rgba(45,30,80,.07);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f4f3f6; --bg2:#eae8ee; --panel:#fdfcfe; --line:#dedbe4;
+  --txt:#16141c; --mut:#504b5c; --dim:#817b8c;
+  --cy:#7c3aed; --cy2:#6d28d9;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#eae8ee; --panel-2:#fdfcfe;
+  --t-strong2:#16141c; --t-dim2:#817b8c; --t-frow:#3f4956;
+  --t-teal1:#6d28d9; --t-teal2:#6d28d9;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#eae8ee; --chip-txt:#504b5c;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#dedbe4;
+}
+:root[data-theme="cool-navy"] {
+  --bg:#f5f6f8; --bg-elev:#ffffff; --bg-soft:#ebeef2; --bg-sunk:#e1e5ea;
+  --text:#12161f; --text-2:#4a5260; --muted:#78808e;
+  --accent:#1e3a8a; --accent-deep:#1e40af;
+  --accent-soft:rgba(30,58,138,.08); --accent-softer:rgba(30,58,138,.15);
+  --border:#dde1e8; --border-strong:#c7cdd8;
+  --topbar-bg:rgba(245,246,248,.86);
+  --plate:#0f1830; --plate-line:#233052;
+  --hover:rgba(18,22,31,.045);
+  --shadow-drop:0 12px 32px rgba(25,35,70,.13), 0 2px 6px rgba(25,35,70,.07);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f5f6f8; --bg2:#ebeef2; --panel:#ffffff; --line:#dde1e8;
+  --txt:#12161f; --mut:#4a5260; --dim:#78808e;
+  --cy:#1e3a8a; --cy2:#1e40af;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#ebeef2; --panel-2:#ffffff;
+  --t-strong2:#12161f; --t-dim2:#78808e; --t-frow:#3f4956;
+  --t-teal1:#1e40af; --t-teal2:#1e40af;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#ebeef2; --chip-txt:#4a5260;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#dde1e8;
+}
   *{box-sizing:border-box}
-  body{margin:0;padding:28px 16px 48px;background:radial-gradient(1200px 600px at 50% -10%,#14203a 0%,var(--bg1) 60%);color:var(--txt);min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+  body{margin:0;padding:28px 16px 48px;background:radial-gradient(1200px 600px at 50% -10%,var(--bg-glow) 0%,var(--bg1) 60%);color:var(--txt);min-height:100vh;font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
   .wrap{max-width:820px;margin:0 auto}
   .pagettl{font-size:14px;letter-spacing:3px;color:var(--cy);text-transform:uppercase;text-align:center;margin-bottom:6px}
   .pagesub{text-align:center;color:var(--mut);font-size:13px;margin-bottom:22px}
-  .panel{background:linear-gradient(160deg,var(--bg2),#0a1120);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.5)}
+  .panel{background:linear-gradient(160deg,var(--bg2),var(--panel-2));border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.5)}
   .hd{padding:18px 20px 14px;border-bottom:1px solid var(--line)}
   .ttl{font-size:18px;font-weight:700;letter-spacing:.3px}
   .sub{font-size:12.5px;color:var(--mut);margin-top:4px}
@@ -32,11 +329,11 @@
   .stage{padding:16px}
   .scene{animation:fade .35s ease}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  svg{width:100%;height:auto;display:block}
+  .scene svg, .stage svg{width:100%;height:auto;display:block}
   .cap{font-size:13.5px;line-height:1.65;color:var(--mut);margin-top:12px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:11px}
   .cap b{color:var(--txt)}
   .note{font-size:12.5px;line-height:1.6;color:var(--mut);margin-top:10px;padding:10px 12px;border-left:3px solid var(--cu);background:rgba(233,160,76,.07);border-radius:0 9px 9px 0}
-  .note b{color:#f0c082}
+  .note b{color:var(--t-amber)}
   .ctrls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
   .btn{background:var(--panel);border:1px solid var(--line);color:var(--txt);font-size:13px;font-weight:600;padding:9px 14px;border-radius:10px;cursor:pointer;transition:.15s}
   .btn:hover{border-color:var(--cy)}
@@ -47,7 +344,7 @@
   .legend span{display:inline-flex;align-items:center;gap:5px}
   .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
   .subttl{font-size:13.5px;font-weight:700;color:var(--cy2);margin:16px 0 8px}
-.subttl[id^="mk-"]{scroll-margin-top:14px}
+.subttl[id^="mk-"]{scroll-margin-top:72px}
   .subttl:first-child{margin-top:4px}
   .scale-row{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;justify-content:center}
   .zcard{flex:1 1 180px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:11px;text-align:center;min-width:150px}
@@ -80,17 +377,17 @@
   .ccard svg{height:50px;width:auto;margin:0 auto 8px;display:block}
   .ccard h5{margin:0 0 5px;font-size:13px;color:var(--cy2);text-align:center}
   .ccard p{margin:0;font-size:11.8px;color:var(--mut);line-height:1.55}
-  .ccard p b{color:#cdd7e8}
+  .ccard p b{color:var(--t-strong2)}
   .foot{text-align:center;color:var(--dim);font-size:11.5px;margin-top:18px;line-height:1.6}
   @media (prefers-reduced-motion: reduce){.pulse-box,.electrons.on circle{animation:none!important}.scene{animation:none}}
   .ghead{font-weight:700;font-size:12.5px;margin:14px 0 5px;padding-left:2px}
   .flow{margin:4px 0 8px}
-  .frow{display:flex;gap:10px;align-items:flex-start;padding:6px 9px;border-left:2px solid #2a3550;font-size:12.5px;color:#c2cde0;line-height:1.55}
+  .frow{display:flex;gap:10px;align-items:flex-start;padding:6px 9px;border-left:2px solid var(--frow-line);font-size:12.5px;color:var(--t-frow);line-height:1.55}
   .frow+.frow{border-top:1px solid var(--line)}
-  .frow .fn{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:#1d2c46;color:#9fb0cc;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
-  .frow b{color:#e8eef9}
+  .frow .fn{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--chip-bg);color:var(--chip-txt);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .frow b{color:var(--txt)}
   .frow.cmp{background:rgba(240,173,85,.10);border-left-color:var(--cu)}
-  .frow.cmp .fn{background:#5a4422;color:#f5c97a}
+  .frow.cmp .fn{background:var(--cmp-bg);color:var(--cmp-txt)}
   /* inversion auto-play continuous animation */
   @keyframes ivaHoleDrift{0%,34%{transform:translateY(0)}48%,94%{transform:translateY(46px)}100%{transform:translateY(0)}}
   @keyframes ivaVp{0%,5%{opacity:0}8%,94%{opacity:1}97%,100%{opacity:0}}
@@ -130,6 +427,225 @@
   #tr2d-wrap .vp2d{opacity:0}#tr2d-wrap.pwr .vp2d{opacity:1}
   #tr2d-wrap.pwr .v02d{opacity:0}
   @media (prefers-reduced-motion:reduce){#tr2d-wrap.pwr .el2d circle{animation:none}}
+
+/* ============ 新外壳：Stripe 文档式布局 ============ */
+body { padding:0; background:var(--bg); color:var(--text); }
+a { color:var(--accent); text-decoration:none; }
+::selection { background:var(--accent-softer); }
+
+/* ---- 顶部栏 ---- */
+.topbar {
+  position:fixed; inset:0 0 auto 0; height:56px; z-index:60;
+  display:flex; align-items:center; gap:20px; padding:0 22px;
+  background:var(--topbar-bg); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.brand { display:flex; align-items:center; gap:10px; flex:none; }
+.logo-mark {
+  width:28px; height:28px; border-radius:8px; flex:none;
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent-deep) 100%);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
+}
+.brand-name { font-weight:700; font-size:15px; letter-spacing:.01em; white-space:nowrap; }
+.brand-sub { font-size:11px; color:var(--muted); margin-left:2px; white-space:nowrap; }
+.search { flex:1; max-width:520px; margin:0 auto; position:relative; }
+.search svg.sicon { position:absolute; left:11px; top:50%; transform:translateY(-50%); pointer-events:none; }
+.search input {
+  width:100%; height:36px; border-radius:9px; outline:none;
+  border:1px solid var(--border); background:var(--bg-soft);
+  color:var(--text); font-size:13px; padding:0 44px 0 34px;
+  transition:border-color .15s, background .15s, box-shadow .15s;
+}
+.search input::placeholder { color:var(--muted); }
+.search input:focus { border-color:var(--accent); background:var(--bg-elev); box-shadow:0 0 0 3px var(--accent-soft); }
+.search kbd {
+  position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  font:11px/1 "Noto Sans SC",-apple-system,sans-serif; color:var(--muted); border:1px solid var(--border-strong);
+  border-radius:5px; padding:3px 6px; background:var(--bg-elev); pointer-events:none;
+}
+.search-drop {
+  position:absolute; top:42px; left:0; right:0; z-index:70;
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:10px;
+  box-shadow:var(--shadow-drop); overflow:hidden; display:none;
+  max-height:340px; overflow-y:auto;
+}
+.search-drop.open { display:block; }
+.sd-item { display:flex; align-items:baseline; gap:10px; padding:9px 14px; cursor:pointer; border-bottom:1px solid var(--border); }
+.sd-item:last-child { border-bottom:none; }
+.sd-item:hover { background:var(--accent-soft); }
+.sd-code { font-size:12px; font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; flex:none; width:26px; }
+.sd-title { font-size:13px; font-weight:400; color:var(--text); }
+.sd-path { font-size:11px; color:var(--muted); margin-left:auto; flex:none; }
+.sd-empty { padding:14px; font-size:12.5px; color:var(--muted); text-align:center; }
+.top-right { display:flex; align-items:center; gap:18px; flex:none; }
+.top-links { display:flex; gap:16px; }
+.top-links a { font-size:13px; color:var(--text-2); }
+.top-links a:hover { color:var(--text); }
+
+/* 主题选择器 */
+.theme-picker { position:relative; }
+.tp-btn {
+  display:flex; align-items:center; gap:8px; height:34px; padding:0 12px;
+  border:1px solid var(--border); border-radius:999px; background:var(--bg-soft);
+  font-size:12.5px; font-weight:600; color:var(--text-2); white-space:nowrap; cursor:pointer;
+  transition:border-color .12s, color .12s; font-family:inherit;
+}
+.tp-btn:hover { border-color:var(--border-strong); color:var(--text); }
+.tp-dot { width:14px; height:14px; border-radius:50%; flex:none; display:inline-flex; align-items:center; justify-content:center; box-shadow:inset 0 0 0 1px rgba(0,0,0,.12); }
+.tp-dot i { width:6px; height:6px; border-radius:50%; display:block; }
+.tp-chev { font-size:9px; color:var(--muted); transition:transform .15s; }
+.theme-picker.open .tp-chev { transform:rotate(180deg); }
+.tp-panel {
+  position:absolute; top:42px; right:0; z-index:80; width:392px;
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:14px;
+  box-shadow:var(--shadow-drop); padding:14px 14px 10px; display:none;
+}
+.theme-picker.open .tp-panel { display:block; }
+.tp-cols { display:grid; grid-template-columns:1fr 1fr; gap:4px 18px; }
+.tp-gt { font-size:11px; font-weight:700; letter-spacing:.08em; color:var(--muted); padding:2px 8px 8px; }
+.tp-item {
+  display:flex; align-items:center; gap:9px; width:100%; text-align:left;
+  padding:6px 8px; border-radius:8px; font-size:12.5px; color:var(--text-2);
+  transition:background .1s, color .1s; background:none; border:none; cursor:pointer; font-family:inherit;
+}
+.tp-item:hover { background:var(--hover); color:var(--text); }
+.tp-item .tp-dot { width:16px; height:16px; }
+.tp-item.on { background:var(--accent-soft); color:var(--accent); font-weight:600; }
+.tp-item .chk { margin-left:auto; font-size:11px; color:var(--accent); opacity:0; }
+.tp-item.on .chk { opacity:1; }
+.tp-sep { grid-column:1 / -1; border-top:1px solid var(--border); margin:6px 0 2px; }
+.tp-item.tp-dark { grid-column:1 / -1; }
+
+/* ---- 三栏布局 ---- */
+.layout { display:flex; padding-top:56px; min-height:100vh; }
+.sidenav {
+  width:264px; flex:none; position:sticky; top:56px;
+  height:calc(100vh - 56px); overflow-y:auto; overscroll-behavior:contain;
+  border-right:1px solid var(--border); padding:14px 14px 60px 10px;
+  scrollbar-width:thin;
+}
+.sidenav-head { display:flex; align-items:center; justify-content:space-between; padding:2px 10px 10px; margin-bottom:12px; border-bottom:1px solid var(--border); }
+.sidenav-head .t { font-size:11.5px; font-weight:700; letter-spacing:.08em; color:var(--muted); }
+.side-fold { width:22px; height:22px; border-radius:6px; color:var(--muted); display:flex; align-items:center; justify-content:center; font-size:13px; background:none; border:none; cursor:pointer; }
+.side-fold:hover { background:var(--hover); color:var(--text); }
+.side-foot { margin-top:16px; padding-top:14px; border-top:1px solid var(--border); }
+.side-foot a {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:9px 12px; border:1px solid var(--border); border-radius:9px;
+  background:var(--bg-soft); font-size:12.5px; font-weight:500; color:var(--text-2);
+  transition:border-color .12s, color .12s;
+}
+.side-foot a:hover { border-color:var(--accent); color:var(--accent); }
+
+/* 导航树：组/页两级层级强化 */
+.nav-group { margin-bottom:4px; }
+.nav-group + .nav-group { margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+.nav-ghead {
+  width:100%; display:flex; align-items:center; gap:7px;
+  padding:5px 8px; text-align:left; border-radius:7px;
+  background:none; border:none; cursor:pointer; font-family:inherit;
+  transition:background .1s;
+}
+.nav-ghead:hover { background:var(--hover); }
+.nav-ghead .chev { font-size:9px; color:var(--muted); transition:transform .15s; display:inline-block; width:10px; flex:none; }
+.nav-group.closed .chev { transform:rotate(-90deg); }
+.nav-badge {
+  width:19px; height:19px; border-radius:6px; flex:none;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:600; color:#fff;
+}
+.nav-badge.gA { background:#d97706; }
+.nav-badge.gB { background:#7c3aed; }
+.nav-badge.gC { background:#2563eb; }
+.nav-badge.gD { background:#059669; }
+html[data-theme="classic-dark"] .nav-badge.gA { background:#f5a623; color:#241500; }
+html[data-theme="classic-dark"] .nav-badge.gB { background:#a78bfa; color:#1e1145; }
+html[data-theme="classic-dark"] .nav-badge.gC { background:#60a5fa; color:#0a1c3a; }
+html[data-theme="classic-dark"] .nav-badge.gD { background:#34d399; color:#052e1f; }
+.nav-ghead .gname { font-size:14.5px; font-weight:700; letter-spacing:.04em; color:var(--text); white-space:nowrap; }
+.nav-ghead .gcount {
+  margin-left:auto; flex:none; font-size:10.5px; font-weight:400; line-height:16px;
+  color:var(--muted); background:var(--bg-soft); border:1px solid var(--border);
+  border-radius:99px; padding:0 7px;
+}
+.nav-items { overflow:hidden; margin-left:34px; padding-left:8px; border-left:1px solid var(--border); }
+.nav-group.closed .nav-items { display:none; }
+.nav-item {
+  display:flex; align-items:baseline; gap:8px; width:100%; text-align:left;
+  padding:5px 8px 5px 10px; border-radius:7px; position:relative;
+  font-size:13px; color:var(--text-2); transition:background .1s, color .1s;
+  background:none; border:none; cursor:pointer; font-family:inherit;
+}
+.nav-item:hover { background:var(--hover); color:var(--text); }
+.nav-item .code {
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:11px; font-weight:400; letter-spacing:.02em;
+  color:var(--muted); flex:none; width:24px;
+}
+.nav-item.on { color:var(--accent); background:var(--accent-soft); }
+.nav-item .nttl { font-size:13px; font-weight:400; }
+.nav-item.on .nttl { font-weight:600; }
+.nav-item.on .code { color:var(--accent); }
+.nav-item.on::before {
+  content:""; position:absolute; left:0; top:6px; bottom:6px; width:3px;
+  border-radius:2px; background:var(--accent);
+}
+.side-rail {
+  display:none; width:44px; flex:none; position:sticky; top:56px;
+  height:calc(100vh - 56px); border-right:1px solid var(--border);
+  padding-top:16px; text-align:center;
+}
+.side-rail button { width:26px; height:26px; border-radius:7px; color:var(--muted); font-size:13px; background:none; border:none; cursor:pointer; }
+.side-rail button:hover { background:var(--hover); color:var(--text); }
+body.side-closed .sidenav { display:none; }
+body.side-closed .side-rail { display:block; }
+
+/* ---- 正文 ---- */
+.main { flex:1; min-width:0; display:flex; justify-content:center; padding:30px 44px 120px; }
+.article { width:100%; max-width:960px; }
+.article .wrap { max-width:none; margin:0; }
+.crumb { font-size:12.5px; color:var(--muted); margin-bottom:12px; display:flex; gap:8px; flex-wrap:wrap; }
+.crumb b { color:var(--text-2); font-weight:600; }
+.crumb .sep { color:var(--border-strong); }
+.pagetitle {
+  font-family:var(--font-head); font-weight:var(--head-weight); letter-spacing:var(--head-ls);
+  font-size:27px; line-height:1.3; margin:0 0 18px; color:var(--text);
+}
+.page-foot { margin-top:36px; padding-top:18px; border-top:1px solid var(--border); display:flex; justify-content:space-between; font-size:13px; }
+.page-foot button { color:var(--text-2); border:1px solid var(--border); border-radius:9px; padding:8px 16px; background:var(--bg-elev); cursor:pointer; font-family:inherit; font-size:13px; }
+.page-foot button:hover { border-color:var(--accent); color:var(--accent); }
+
+/* ---- 右侧本页目录 ---- */
+.toc {
+  width:236px; flex:none; position:sticky; top:56px;
+  height:calc(100vh - 56px); overflow-y:auto;
+  border-left:1px solid var(--border); padding:26px 18px 40px 0;
+}
+.toc .t { font-size:11.5px; font-weight:700; letter-spacing:.08em; color:var(--muted); padding:0 0 10px 16px; }
+.toc a {
+  display:block; font-size:12.5px; color:var(--text-2);
+  padding:5px 0 5px 16px; border-left:2px solid var(--border);
+  transition:color .12s, border-color .12s; line-height:1.5;
+}
+.toc a:hover { color:var(--text); }
+.toc a.on { color:var(--accent); border-left-color:var(--accent); font-weight:600; }
+.toc .meta { margin:18px 0 0 16px; padding-top:14px; border-top:1px solid var(--border); font-size:11.5px; color:var(--muted); line-height:1.9; }
+
+@media (max-width:1180px){ .toc{ display:none } }
+@media (max-width:900px){ .sidenav{ display:none } body.side-closed .side-rail{ display:none } .brand-sub{ display:none } }
+
+/* ---- 旧外壳退役（保留 DOM 供切换逻辑复用） ---- */
+.pagettl, .pagesub, .groupbar, .subwrap, .hd { display:none !important; }
+.stage { padding:16px 20px 20px; }
+.subttl, .subttl[id^="mk-"] { scroll-margin-top:72px; }
+.ghead { scroll-margin-top:72px; }
+
+/* ---- 浅色主题下：SVG / 画布保持深色底板（图版内容原样，可读性最优） ---- */
+html[data-theme]:not([data-theme="classic-dark"]) .scene svg {
+  background:var(--plate); border:1px solid var(--plate-line); border-radius:12px;
+}
+html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transparent; border:none; }
 </style>
 </head>
 <body>
@@ -143,6 +659,63 @@
 <linearGradient id="gSub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6e5c39"/><stop offset="1" stop-color="#473a23"/></linearGradient>
 <linearGradient id="gSolder" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d2d9e5"/><stop offset="0.5" stop-color="#9aa6bb"/><stop offset="1" stop-color="#6c7a8f"/></linearGradient>
 </defs></svg>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo-mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect x="2" y="2" width="12" height="12" rx="2.5" stroke="#fff" stroke-width="1.4"/>
+        <path d="M5 6h6M5 8.2h6M5 10.4h4" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <span class="brand-name">半导体制造知识库</span>
+      <span class="brand-sub">轨1 · 原理科普</span>
+    </div>
+  </div>
+
+  <div class="search">
+    <svg class="sicon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+      <circle cx="7" cy="7" r="5" stroke="var(--muted)" stroke-width="1.6"/>
+      <path d="M11 11l3.2 3.2" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="搜索 16 个页面：试试「光刻」「存储」「封装」…" autocomplete="off" aria-label="搜索页面">
+    <kbd>/</kbd>
+    <div class="search-drop" id="searchDrop"></div>
+  </div>
+
+  <div class="top-right">
+    <nav class="top-links">
+      <a href="../atlas.html">轨2 · 产业链价值 →</a>
+      <a href="#" onclick="return false">学习路线</a>
+      <a href="#" onclick="return false">更新日志</a>
+    </nav>
+    <div class="theme-picker" id="themePicker">
+      <button class="tp-btn" id="tpBtn" aria-haspopup="true" aria-label="切换主题">
+        <span class="tp-dot" id="tpDot"><i></i></span><span id="tpName">暖纸朱砂</span><span class="tp-chev">▾</span>
+      </button>
+      <div class="tp-panel" id="tpPanel" role="menu">
+        <div class="tp-cols" id="tpCols"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidenav" id="sidenav">
+    <div class="sidenav-head">
+      <span class="t">轨1 · 原理科普</span>
+      <button class="side-fold" id="sideFold" title="收起导航" aria-label="收起导航">⟨</button>
+    </div>
+    <div id="navTree"></div>
+    <div class="side-foot"><a href="../atlas.html"><span>轨2 · 产业链价值</span><span>→</span></a></div>
+  </aside>
+  <div class="side-rail"><button id="sideOpen" title="展开导航" aria-label="展开导航">⟩</button></div>
+
+  <main class="main">
+    <article class="article">
+      <nav class="crumb" id="crumb" aria-label="面包屑"></nav>
+      <h1 class="pagetitle" id="pageTitle"></h1>
+
 <div class="wrap">
   <div class="pagettl">Semiconductor 101</div>
   <div class="pagesub">从一片硅，到一颗装着几百亿个开关的芯片</div>
@@ -216,7 +789,7 @@
             <defs><marker id="bh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker></defs>
           </svg>
         </div>
-        <div class="note">一句话记住：<b>晶圆是一大片硅原料 → 切成几百颗芯片(裸晶) → 每颗芯片里又有几百亿个晶体管</b>。它们是层层包含、尺寸差着十万倍的三样东西，绝不是一回事。</div>
+        <div class="note">一句话记住：<b>晶圆是一大片硅原料 → 切成几百颗芯片(裸晶) → 每颗芯片里又有几百亿个晶体管</b>。它们是层层包含的三样东西：尺寸从晶圆的几百毫米、裸晶的约十毫米，一路缩到晶体管的十几纳米——最大相差上千万倍（头发丝直径都有栅长的几千倍），绝不是一回事。</div>
         <div class="subttl">尺度跨度：放大三级（封装 → 裸晶 → 晶体管阵列）</div>
         <div class="scale-row">
           <div class="zcard">
@@ -258,7 +831,7 @@
               <g fill="url(#gSD)"><rect x="16" y="24" width="88" height="9" rx="1.5"/><rect x="16" y="46" width="88" height="9" rx="1.5"/><rect x="16" y="68" width="88" height="9" rx="1.5"/></g>
               <g fill="url(#gCu)"><rect x="28" y="16" width="6" height="74" rx="1"/><rect x="50" y="16" width="6" height="74" rx="1"/><rect x="72" y="16" width="6" height="74" rx="1"/><rect x="94" y="16" width="6" height="74" rx="1"/></g>
               <rect x="46" y="20" width="14" height="17" fill="none" stroke="#5eead4" stroke-width="1.4" class="pulse-box"/>
-              <text x="60" y="104" font-size="6.5" fill="#8b9bb8" text-anchor="middle">青条＝源/漏，铜线＝栅极</text>
+              <text x="60" y="104" font-size="6.5" fill="#8b9bb8" text-anchor="middle">青条＝源/漏，竖条＝栅极</text>
             </svg>
             <h4>晶体管阵列</h4>
             <div class="sz">单管约 10–50 nm</div>
@@ -268,7 +841,7 @@
           <b>三张图常被误解，逐一澄清：</b><br>
           ① 左图那些<b>金色圆点是芯片封装底部的焊球（或引脚）</b>，不是硅片本身——芯片靠它们焊到电路板、与外界通电通信。<br>
           ② 中图的<b>一颗裸晶（Die）就是"一整块芯片"</b>：一片指甲盖大的硅，内部按功能划成多个区——通常有<b>好几个 CPU 核、一个 GPU、大块缓存、I/O 接口</b>等（不是只有一个核）。<br>
-          ③ 右图是放大后的<b>晶体管阵列</b>：青色横条是"有源区"（源极/漏极所在），铜色竖线是一条条"栅极"。<b>每一个铜线与青条的交叉点，就是一个晶体管</b>（颜色与 晶体管页完全对应）。整片硅上这样的交叉点有数百亿个。
+          ③ 右图是放大后的<b>晶体管阵列</b>：青色横条是"有源区"（源极/漏极所在），橙色竖线是一条条"栅极"——实际材料是<b>多晶硅 / 金属栅（HKMG）</b>，图中橙铜色只是沿用晶体管页的配色示意；<b>铜只用在上层金属互连（后段铜工艺）</b>，栅极这一层没有铜。<b>每一条栅极竖条与青条的交叉点，就是一个晶体管</b>。整片硅上这样的交叉点有数百亿个。
         </div>
       
         <div class="subttl">关键澄清：晶体管是"长"出来的，不是"装"上去的</div>
@@ -384,7 +957,7 @@
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="32" width="64" height="12" fill="url(#gSi)"/><rect x="14" y="24" width="64" height="8" fill="#e0556e"/></svg><h5>光刻胶</h5><p>涂在硅片上的<b>感光材料</b>，曝光后显影出图形；EUV 胶是高壁垒耗材。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><polyline points="8,18 18,12 28,24 38,12 48,24 58,18" fill="none" stroke="#5b7bd4" stroke-width="2"/><text x="33" y="36" font-size="6" fill="#5b7bd4" text-anchor="middle">DUV 193</text><polyline points="62,16 66,12 70,20 74,12 78,20 82,16" fill="none" stroke="#b08bf0" stroke-width="1.6"/><text x="72" y="36" font-size="6" fill="#b08bf0" text-anchor="middle">EUV 13.5</text></svg><h5>DUV / EUV</h5><p>193nm / 13.5nm 曝光光源；<b>波长越短线越细</b>。EUV 全球仅 ASML 能造。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><line x1="14" y1="42" x2="78" y2="42" stroke="#3a4870" stroke-width="3"/><polygon points="30,14 62,14 46,40" fill="#b08bf0" opacity="0.3"/><line x1="30" y1="14" x2="46" y2="40" stroke="#b08bf0" stroke-width="1"/><line x1="62" y1="14" x2="46" y2="40" stroke="#b08bf0" stroke-width="1"/></svg><h5>NA / High-NA</h5><p>镜头<b>数值孔径</b>，收光锥角越大线越细；0.33→0.55 即 High-NA EUV。</p></div>
-          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="34" width="72" height="10" fill="url(#gSi)"/><g fill="#6f7e9c"><rect x="20" y="22" width="6" height="12"/><rect x="40" y="22" width="6" height="12"/></g><text x="55" y="20" font-size="11" fill="#5eead4">⇒</text><g fill="#caa86a"><rect x="64" y="22" width="3" height="12"/><rect x="70" y="22" width="3" height="12"/><rect x="76" y="22" width="3" height="12"/></g></svg><h5>多重曝光 SADP</h5><p>一次画不够密，就用<b>侧墙自对准</b>把线翻倍——DUV 做 7nm 全靠它。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="34" width="72" height="10" fill="url(#gSi)"/><g fill="#6f7e9c"><rect x="20" y="22" width="6" height="12"/><rect x="40" y="22" width="6" height="12"/></g><text x="55" y="20" font-size="11" fill="#5eead4">⇒</text><g fill="#caa86a"><rect x="64" y="22" width="3" height="12"/><rect x="70" y="22" width="3" height="12"/><rect x="76" y="22" width="3" height="12"/></g></svg><h5>多重曝光 SADP</h5><p>一次画不够密，就用<b>侧墙自对准</b>把线翻倍——DUV 做 7nm 关键靠这类多重曝光。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><polygon points="14,30 24,24 34,30 44,23 54,29 64,24 78,30 78,40 14,40" fill="url(#gILD)"/><rect x="10" y="20" width="72" height="5" rx="2" fill="#76859e"/><line x1="14" y1="29" x2="78" y2="29" stroke="#f0738a" stroke-width="1" stroke-dasharray="3 2"/></svg><h5>CMP 抛光</h5><p><b>化学机械抛光</b>：把上一步沉积出的凹凸表面磨平，才能继续往上叠。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="32" width="72" height="12" fill="url(#gSi)"/><rect x="14" y="26" width="30" height="6" fill="url(#gILD)"/><path d="M24 24 L24 18" stroke="#8fd6ad" stroke-width="1.4" marker-end=""/><text x="24" y="16" font-size="9" fill="#8fd6ad" text-anchor="middle">↓</text><path d="M64 24 L64 30" stroke="#f0738a" stroke-width="1.4"/><text x="64" y="22" font-size="9" fill="#f0738a" text-anchor="middle">↑</text></svg><h5>沉积 / 刻蚀</h5><p><b>加料</b>（沉积一层薄膜）与<b>去料</b>（刻蚀挖掉）——制造里反复交替的两招。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="30" width="64" height="14" fill="url(#gSi)"/><g stroke="#f0a050" stroke-width="1.2" fill="none" opacity="0.8"><path d="M26 26 q6 -6 12 0 q6 6 12 0"/><path d="M52 26 q6 -6 12 0"/></g><text x="46" y="18" font-size="8" fill="#f0b070" text-anchor="middle">☀ 高温</text></svg><h5>退火</h5><p><b>高温激活</b>掺入的杂质、修复晶格损伤，让源漏真正"成形"。</p></div>
@@ -417,7 +990,7 @@
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="26" y="12" width="40" height="28" fill="url(#gSi)" opacity="0.55" stroke="#5a76b0"/><g fill="url(#gCuV)"><rect x="36" y="12" width="4" height="28"/><rect x="52" y="12" width="4" height="28"/></g><path d="M33,48 L43,48 L38,40.5 Z" fill="#34d6cf"/></svg><h5>TSV 硅通孔</h5><p>竖直穿透芯片的<b>铜柱</b>，让信号 / 电源上下直连，是 3D 堆叠的关键。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><g fill="url(#gSolder)"><circle cx="24" cy="15" r="6"/><circle cx="46" cy="15" r="6"/><circle cx="68" cy="15" r="6"/><circle cx="28" cy="29" r="4"/><circle cx="46" cy="29" r="4"/><circle cx="64" cy="29" r="4"/><circle cx="32" cy="40" r="2.4"/><circle cx="46" cy="40" r="2.4"/><circle cx="60" cy="40" r="2.4"/></g><path d="M16,36 L26,40 L16,44 Z" fill="#34d6cf"/></svg><h5>凸点 BGA/C4/微凸点</h5><p>由粗到细的三级焊点：<b>BGA</b>(接主板)→<b>C4</b>(接中介层)→<b>微凸点</b>(接芯片)。</p></div>
           <div class="ccard"><svg viewBox="0 0 92 50"><rect x="10" y="34" width="72" height="5" fill="url(#gSub)"/><g fill="url(#gSi)" stroke="#6f88c0"><rect x="16" y="18" width="16" height="16"/><rect x="38" y="18" width="16" height="16"/><rect x="60" y="18" width="16" height="16"/></g><g stroke="#34d6cf" stroke-width="1.4"><line x1="32" y1="26" x2="38" y2="26"/><line x1="54" y1="26" x2="60" y2="26"/></g></svg><h5>Chiplet</h5><p>把大芯片拆成多颗<b>小芯粒</b>分别造、再用封装拼起来（UCIe 互连）。</p></div>
-          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="13" width="64" height="11" fill="url(#gSi)"/><rect x="14" y="26" width="64" height="11" fill="url(#gSi)"/><g fill="url(#gCu)"><rect x="24" y="22" width="8" height="6"/><rect x="42" y="22" width="8" height="6"/><rect x="60" y="22" width="8" height="6"/></g></svg><h5>混合键合</h5><p>铜垫<b>直接对接</b>+介质键合，无焊料、亚微米间距，更密更省电（HBM4/3D）。</p></div>
+          <div class="ccard"><svg viewBox="0 0 92 50"><rect x="14" y="13" width="64" height="11" fill="url(#gSi)"/><rect x="14" y="26" width="64" height="11" fill="url(#gSi)"/><g fill="url(#gCu)"><rect x="24" y="22" width="8" height="6"/><rect x="42" y="22" width="8" height="6"/><rect x="60" y="22" width="8" height="6"/></g></svg><h5>混合键合</h5><p>铜垫<b>直接对接</b>+介质键合，无焊料、间距 <b>&lt;10µm</b>（量产 6~9µm），更密更省电（HBM4E/3D）。</p></div>
         </div>
         <div class="ghead">功率 / 化合物</div>
         <div class="concept-grid">
@@ -425,14 +998,14 @@
         </div>
         <div class="ghead">其它（纯概念 / 产业角色）</div>
         <div class="nm">
-          <div class="nmrow"><div class="co" style="color:#5eead4">单片集成 / 易失·非易失</div><div class="de">晶体管在硅本身"雕"出、整块不可分；断电丢(SRAM/DRAM) vs 断电留(NAND)。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">binning / Dennard 缩放</div><div class="de">按性能·缺陷分档出货（满血/屏蔽版）；缩小同时保持功耗密度（约 2005 终结）。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">EDA / IP</div><div class="de">芯片设计软件（Synopsys / Cadence / 西门子）/ 可复用电路模块（如 ARM）。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">代工 / IDM / OSAT / WFE</div><div class="de">只代工(台积电) / 设计制造一体(Intel·三星) / 封测厂(日月光·长电) / 晶圆制造设备(ASML·AMAT·Lam·TEL·KLA)。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">SoC / NPU</div><div class="de"><b>SoC</b>＝把 CPU/GPU/NPU/IO 等<b>整合进一颗芯片</b>（片上系统）；<b>NPU</b>＝专做 AI 矩阵运算的处理器。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">VDD / GND</div><div class="de">芯片的<b>电源</b>(VDD) 与<b>地</b>(GND)，是数字电路的两条供电基准。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">LPP（EUV 光源）</div><div class="de">EUV 的产光方式——<b>CO₂ 激光打锡滴</b>产生 13.5nm 光（详见 光刻）。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">IGBT</div><div class="de"><b>绝缘栅双极晶体管</b>，高压大电流的功率开关（电车/工业逆变，详见 功率/化合物）。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">单片集成 / 易失·非易失</div><div class="de">晶体管在硅本身"雕"出、整块不可分；断电丢(SRAM/DRAM) vs 断电留(NAND)。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">binning / Dennard 缩放</div><div class="de">按性能·缺陷分档出货（满血/屏蔽版）；缩小同时保持功耗密度（约 2005 终结）。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">EDA / IP</div><div class="de">芯片设计软件（Synopsys / Cadence / 西门子）/ 可复用电路模块（如 ARM）。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">代工 / IDM / OSAT / WFE</div><div class="de">只代工(台积电) / 设计制造一体(Intel·三星) / 封测厂(日月光·长电) / 晶圆制造设备(ASML·AMAT·Lam·TEL·KLA)。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">SoC / NPU</div><div class="de"><b>SoC</b>＝把 CPU/GPU/NPU/IO 等<b>整合进一颗芯片</b>（片上系统）；<b>NPU</b>＝专做 AI 矩阵运算的处理器。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">VDD / GND</div><div class="de">芯片的<b>电源</b>(VDD) 与<b>地</b>(GND)，是数字电路的两条供电基准。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">LPP（EUV 光源）</div><div class="de">EUV 的产光方式——<b>CO₂ 激光打锡滴</b>产生 13.5nm 光（详见 光刻）。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">IGBT</div><div class="de"><b>绝缘栅双极晶体管</b>，高压大电流的功率开关（电车/工业逆变，详见 功率/化合物）。</div></div>
         </div>
         <!-- gloss-end -->
       </div>
@@ -446,7 +1019,7 @@
           <marker id="edAd" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#9fb0cc"/></marker>
         </defs></svg>
 
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">后面各页讲芯片怎么<b style="color:#e8eef9">「造」</b>；这一页讲更靠前的一步——芯片怎么<b style="color:#c8b3ff">「画」</b>出来。设计的终点是一个叫 <b style="color:#8fd6ad">GDSII</b> 的版图文件，它正是「<b>硅片·掩膜</b>」页里掩膜版的来源：<b style="color:#e8eef9">设计的终点＝制造的起点</b>。全程离不开 <b style="color:#f3cf9c">EDA 软件</b>（电子设计自动化）——没有它，上亿晶体管的芯片靠人手画不出来。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">后面各页讲芯片怎么<b style="color:var(--txt)">「造」</b>；这一页讲更靠前的一步——芯片怎么<b style="color:var(--t-pur)">「画」</b>出来。设计的终点是一个叫 <b style="color:#8fd6ad">GDSII</b> 的版图文件，它正是「<b>硅片·掩膜</b>」页里掩膜版的来源：<b style="color:var(--txt)">设计的终点＝制造的起点</b>。全程离不开 <b style="color:var(--t-amber2)">EDA 软件</b>（电子设计自动化）——没有它，上亿晶体管的芯片靠人手画不出来。</div>
 
         <div class="subttl">一、从一个想法到一片版图：设计全流程</div>
         <div class="cap">整个流程是一场<b>逐级"翻译"</b>：把人类的需求一步步翻成硅片能实现的几何图形。分两大段——<b>前端（逻辑设计）</b>管"电路做什么"，<b>后端（物理设计）</b>管"电路长什么样"。</div>
@@ -732,7 +1305,7 @@
         </svg>
 
         <div class="subttl">五、EDA 三大件：谁在流程的哪一段，为什么后来者难追</div>
-        <div class="cap">上面每一步背后都是一套专业软件。全球能提供<b>全流程工具链</b>的只有三家（合计份额 ~74% <span style="color:#8b9bb8">[✓已核实·2025，详见第二轨]</span>）——各自有"事实标准"环节：</div>
+        <div class="cap">上面每一步背后都是一套专业软件。全球能提供<b>全流程工具链</b>的只有三家（合计份额 ~74% <span style="color:var(--mut)">[✓已核实·2025，详见第二轨]</span>）——各自有"事实标准"环节：</div>
         <svg viewBox="0 0 660 200" style="margin-top:6px">
           <g font-size="9" fill="#9fb0cc" text-anchor="middle" font-weight="700">
             <text x="180" y="30">仿真验证</text><text x="290" y="30">逻辑综合</text><text x="400" y="30">布局布线</text><text x="510" y="30">物理验证/签核</text><text x="610" y="30">模拟/定制设计</text>
@@ -780,7 +1353,7 @@
         <div class="note"><b>难点① 工具链耦合</b>：从仿真到签核是<b>几十种工具咬合成的流水线</b>，数据格式、时序库、流程脚本层层衔接——缺一环，整条流程就断。买家要的不是"一个好工具"，而是"一条能签核流片的完整链"，这天然偏向全家桶玩家。</div>
         <div class="note"><b>难点② 工艺绑定（PDK）</b>：<b>PDK（工艺设计套件）</b>是代工厂发给设计公司的"说明书＋积木库"——设计规则、器件模型、标准单元库都在里面，<b>设计与制造靠它握手</b>。先进节点的 PDK 是代工厂与头部 EDA <b>协同开发、相互认证</b>的：工具没被台积电/三星认证，就进不了先进制程的设计流程——后来者连"上牌桌"的资格都难拿。</div>
         <div class="note"><b>难点③ 人才与生态</b>：全球工程师在三巨头的工具上学习、工作、积累脚本和方法学，高校教学、IP 交付格式也长在这套生态上。换工具＝重训整个团队＋重建全部流程，切换成本极高——这是比技术更深的护城河。</div>
-        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">谁在做（接第二轨）</b>：三巨头的收入与份额、国产 EDA（华大九天、概伦电子、广立微…）能替代到哪一步、IP 与 Fabless 的生意模式，属第二轨「EDA·设计」赛道页——<a href="../atlas.html#eda" style="color:#8fd6ad;font-weight:700">直达第二轨 EDA·设计 →</a>。本页只讲"芯片是怎么画出来的"。</div>
+        <div class="note" style="border-left-color:var(--t-amber);background:rgba(240,192,130,.07)"><b style="color:var(--t-amber2)">谁在做（接第二轨）</b>：三巨头的收入与份额、国产 EDA（华大九天、概伦电子、广立微…）能替代到哪一步、IP 与 Fabless 的生意模式，属第二轨「EDA·设计」赛道页——<a href="../atlas.html#eda" style="color:#8fd6ad;font-weight:700">直达第二轨 EDA·设计 →</a>。本页只讲"芯片是怎么画出来的"。</div>
       </div>
       <div class="scene" id="s-wafer" hidden>
         <svg width="0" height="0" style="position:absolute"><defs>
@@ -792,7 +1365,7 @@
           <marker id="wArrL" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffd9a0"/></marker>
         </defs></svg>
 
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">🧱 <b style="color:#e8eef9">上游：原料与掩膜</b>——造芯片前要先备齐两样东西：一片完美的<b style="color:#9fc0ec">单晶硅圆片（晶圆）</b>当"画布"，一套<b style="color:#c8b3ff">掩膜版</b>当光刻的"底片/模板"。这一页讲它俩怎么来的，备齐后就送进晶圆厂（→ 制造流程 / 光刻）。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">🧱 <b style="color:var(--txt)">上游：原料与掩膜</b>——造芯片前要先备齐两样东西：一片完美的<b style="color:var(--t-blue)">单晶硅圆片（晶圆）</b>当"画布"，一套<b style="color:var(--t-pur)">掩膜版</b>当光刻的"底片/模板"。这一页讲它俩怎么来的，备齐后就送进晶圆厂（→ 制造流程 / 光刻）。</div>
 
         <div class="subttl">一、从一粒砂到一片镜面晶圆</div>
         <div class="cap">硅来自最普通的<b>石英砂</b>，但要一路提纯到"<b>11 个 9</b>"、再长成<b>完美单晶</b>、切片抛光成镜面，才配当芯片的地基。投入→产出如下：</div>
@@ -878,7 +1451,7 @@
           <line x1="322" y1="150" x2="452" y2="150" stroke="#5d6b88" stroke-width="0.8"/><text x="456" y="147" font-size="10.5" fill="#e8eef9" font-weight="700">单晶硅锭</text><text x="456" y="160" font-size="9" fill="#9fb0cc">硅原子按籽晶晶格排列<tspan x="456" dy="11">凝固→整根单晶 &lt;100&gt;</tspan></text>
           <line x1="300" y1="232" x2="150" y2="232" stroke="#5d6b88" stroke-width="0.8"/><text x="146" y="229" font-size="10.5" fill="#ffb86a" text-anchor="end">熔融硅 ≈1414℃</text><text x="146" y="242" font-size="9" fill="#c98f5a" text-anchor="end">石英坩埚盛装</text>
           <line x1="250" y1="210" x2="150" y2="200" stroke="#5d6b88" stroke-width="0.8"/><text x="146" y="198" font-size="9.5" fill="#9fb0cc" text-anchor="end">石英坩埚</text>
-          <text x="540" y="288" font-size="9.5" fill="#8b9bb8" text-anchor="end">保护气氛 Ar · 直径决定晶圆尺寸（主流 300mm）</text>
+          <text x="612" y="288" font-size="9.5" fill="#8b9bb8" text-anchor="end">保护气氛 Ar · 直径决定晶圆尺寸（主流 300mm）</text>
         </svg>
         <div class="note">关键参数：<b>纯度 11N</b>（99.999999999%）｜ <b>主流 300mm</b>（12 吋；曾用 200mm，450mm 未量产）｜ <b>晶向 &lt;100&gt;</b> ｜ 纳米级超平整、极低缺陷。另有<b>区熔法（FZ）</b>不接触坩埚、更纯，多用于<b>功率器件</b>衬底（→ 功率/化合物）。</div>
 
@@ -889,18 +1462,18 @@
           <text x="160" y="20" font-size="11.5" fill="#cfe0ff" text-anchor="middle" font-weight="700">DUV 透射式掩膜</text>
           <g stroke="#7fb6ff" stroke-width="1.6" opacity="0.85"><line x1="120" y1="34" x2="120" y2="70" marker-end="url(#wArr)"/><line x1="160" y1="34" x2="160" y2="70" marker-end="url(#wArr)"/><line x1="200" y1="34" x2="200" y2="70" marker-end="url(#wArr)"/></g>
           <text x="245" y="44" font-size="9" fill="#9fc0ec" text-anchor="start">入射 DUV 光 ↓</text>
-          <!-- pellicle -->
-          <rect x="96" y="74" width="128" height="3" fill="#8ff7ec" opacity="0.7"/><rect x="96" y="74" width="4" height="20" fill="#5a6477"/><rect x="220" y="74" width="4" height="20" fill="#5a6477"/>
-          <text x="250" y="80" font-size="8.5" fill="#7fd9cf" text-anchor="start">pellicle 保护膜（防尘）</text>
-          <!-- quartz substrate -->
-          <rect x="92" y="110" width="136" height="20" fill="url(#gQz)"/>
+          <!-- pellicle（在铬图形面一侧，朝向晶圆） -->
+          <rect x="96" y="126" width="128" height="3" fill="#8ff7ec" opacity="0.7"/><rect x="96" y="110" width="4" height="18" fill="#5a6477"/><rect x="220" y="110" width="4" height="18" fill="#5a6477"/>
+          <text x="250" y="130" font-size="8.5" fill="#7fd9cf" text-anchor="start">pellicle 保护膜（防尘）</text>
+          <!-- quartz substrate（光从石英一侧射入） -->
+          <rect x="92" y="84" width="136" height="20" fill="url(#gQz)"/>
           <!-- chrome pattern on bottom -->
-          <g fill="#2b303a"><rect x="100" y="104" width="22" height="8"/><rect x="138" y="104" width="14" height="8"/><rect x="176" y="104" width="26" height="8"/></g>
+          <g fill="#2b303a"><rect x="100" y="102" width="22" height="8"/><rect x="138" y="102" width="14" height="8"/><rect x="176" y="102" width="26" height="8"/></g>
           <!-- transmitted light through gaps -->
           <g stroke="#7fb6ff" stroke-width="1.4" opacity="0.7"><line x1="130" y1="132" x2="130" y2="158" marker-end="url(#wArr)"/><line x1="165" y1="132" x2="165" y2="158" marker-end="url(#wArr)"/><line x1="212" y1="132" x2="212" y2="158" marker-end="url(#wArr)"/></g>
           <text x="160" y="178" font-size="9.5" fill="#9bb0d0" text-anchor="middle">透过空隙的光 → 投影缩小 4× 印到晶圆</text>
-          <line x1="124" y1="108" x2="40" y2="120" stroke="#5d6b88" stroke-width="0.8"/><text x="38" y="118" font-size="9" fill="#aeb6c6" text-anchor="end">铬吸收层</text><text x="38" y="129" font-size="8" fill="#7f8ca6" text-anchor="end">（图形·挡光）</text>
-          <line x1="120" y1="120" x2="40" y2="150" stroke="#5d6b88" stroke-width="0.8"/><text x="38" y="153" font-size="9" fill="#9fd0e0" text-anchor="end">石英基板（透明）</text>
+          <line x1="124" y1="108" x2="68" y2="118" stroke="#5d6b88" stroke-width="0.8"/><text x="64" y="114" font-size="9" fill="#aeb6c6" text-anchor="end">铬吸收层</text><text x="64" y="126" font-size="8" fill="#7f8ca6" text-anchor="end">（图形·挡光）</text>
+          <line x1="120" y1="94" x2="80" y2="146" stroke="#5d6b88" stroke-width="0.8"/><text x="76" y="138" font-size="9" fill="#9fd0e0" text-anchor="end">石英基板（透明）</text><text x="76" y="150" font-size="8" fill="#7f8ca6" text-anchor="end">光由此射入 ↓</text>
           <!-- divider -->
           <line x1="312" y1="14" x2="312" y2="286" stroke="#23304d" stroke-width="1"/>
           <!-- EUV reflective mask (right) -->
@@ -918,9 +1491,9 @@
           <g fill="#101521"><rect x="384" y="100" width="26" height="9"/><rect x="430" y="100" width="16" height="9"/><rect x="474" y="100" width="30" height="9"/><rect x="524" y="100" width="20" height="9"/></g>
           <line x1="410" y1="104" x2="470" y2="170" stroke="#5d6b88" stroke-width="0.8"/><text x="474" y="170" font-size="9" fill="#aeb6c6">吸收层 TaN（图形）</text>
           <line x1="466" y1="132" x2="396" y2="186" stroke="#5d6b88" stroke-width="0.8"/><text x="392" y="189" font-size="9" fill="#b9a6e8" text-anchor="end">Mo/Si 多层反射膜（约 40 对）</text>
-          <text x="466" y="214" font-size="9.5" fill="#9bb0d0" text-anchor="middle">EUV 被所有材料吸收 → 只能靠多层镜<b>反射</b>，做不了透射式</text>
+          <text x="466" y="214" font-size="9.5" fill="#9bb0d0" text-anchor="middle">EUV 几乎被所有材料吸收 → 只能靠多层镜<tspan fill="#cfe0ff" font-weight="700">反射</tspan>，做不了透射式</text>
         </svg>
-        <div class="note">关键事实：掩膜是 <b>4× 放大版</b>（投影时缩小 4 倍，缓解掩膜制造精度压力）｜ 一套先进芯片要 <b>几十~上百张</b>掩膜（每层一张）｜ 一张高端 <b>EUV 掩膜可达数百万美元</b> ｜ 表面贴 <b>pellicle 薄膜</b>挡灰（落在掩膜上的尘点会被一并印到每颗芯片上）。掩膜用在光刻——详见 光刻。</div>
+        <div class="note">关键事实：掩膜是 <b>4× 放大版</b>（投影时缩小 4 倍，缓解掩膜制造精度压力）｜ 一套先进芯片要 <b>几十~上百张</b>掩膜（每层一张）｜ 单张 <b>EUV 掩膜约数十万美元</b>（先进层更贵；一整套先进节点掩膜几十~上百张，可达上千万美元级）｜ 表面贴 <b>pellicle 薄膜</b>挡灰（落在掩膜上的尘点会被一并印到每颗芯片上）。掩膜用在光刻——详见 光刻。</div>
 
         <div class="subttl" id="mk-opc">掩膜是怎么"写"出来的：从 GDSII 到一块能用的掩膜</div>
         <div class="cap">设计交来的 GDSII<b>不能直接印到掩膜上</b>——图形已经小到和光的波长同量级，<b>衍射会把印出来的图形"磨圆、缩短"</b>。所以先要"以歪治歪"，再用电子束一笔一笔写出来：</div>
@@ -958,7 +1531,7 @@
           <text x="330" y="220" font-size="9" fill="#9bb0d0" text-anchor="middle">与光源-掩膜协同优化等合称<tspan fill="#e8eef9" font-weight="700">计算光刻</tspan>（Synopsys/ASML/西门子 Calibre 的重要生意，接 设计·EDA / 光刻）。</text>
         </svg>
         <div class="note"><b>然后才是"写版"</b>：OPC 后的版图交给<b>电子束写版机</b>，在涂了胶的铬层/吸收层上<b>逐点逐线"画"出图形</b>（电子束波长极短、精度极高，但一张先进掩膜要写十几小时甚至更久 [~估算]）→ 显影刻蚀成形 → <b>全面检测</b>：掩膜上任何一粒缺陷都会被复印到每一颗芯片上，所以要逐点检查、能修则修（聚焦离子束修补）→ 合格后贴 pellicle 防尘膜出厂。写版机（NuFlare、Mycronic 等）与掩膜检测设备（KLA、Lasertec——EUV 掩膜检测近乎独家）是掩膜厂的核心装备——一句列示，生意见第二轨「材料」（掩膜版）与「设备」。</div>
-        <div class="note" style="border-left-color:#5eead4;background:rgba(94,234,212,.07)">备齐这两样上游产物——<b>空白晶圆（画布）</b> + <b>掩膜版（底片）</b>——就送进晶圆厂：先在晶圆上<b>造出晶体管层（前段）</b>、再<b>叠几十层金属布线（后段）</b>。怎么造，见 制造流程；怎么把掩膜图形印上去，见 光刻。</div>
+        <div class="note" style="border-left-color:var(--cy2);background:rgba(94,234,212,.07)">备齐这两样上游产物——<b>空白晶圆（画布）</b> + <b>掩膜版（底片）</b>——就送进晶圆厂：先在晶圆上<b>造出晶体管层（前段）</b>、再<b>叠几十层金属布线（后段）</b>。怎么造，见 制造流程；怎么把掩膜图形印上去，见 光刻。</div>
       </div>
       <!-- ===== SCENE 2: TRANSISTOR ===== -->
       <div class="scene" id="s-tr" hidden>
@@ -1215,7 +1788,7 @@
           <span><i class="sw" style="background:rgba(150,170,225,.55)"></i>耗尽区</span>
           <span><i class="sw" style="background:#b79bf0"></i>电场 E</span>
         </div>
-        <div class="note" style="border-left-color:#5eead4;background:rgba(94,234,212,.07)">这就是"场效应"的核心：<b>沟道不是预先埋好的导线，而是栅压用电场"现拉"出来的反型层</b>。撤掉电压它立刻消失——所以晶体管能"关断"、能当开关。决定通不通的不是"掺没掺杂"，而是<b>栅压有没有在表面拉出自由电子</b>：横向只有栅极正下方有电场，纵向电子被电场按在栅氧界面那一两纳米、下方靠耗尽区与体隔开；加上源 N⁺→体 P→漏 N⁺ 是背靠背 PN 结，<b>唯一能连续导电的通路就是这层表面反型沟道</b>。</div>
+        <div class="note" style="border-left-color:var(--cy2);background:rgba(94,234,212,.07)">这就是"场效应"的核心：<b>沟道不是预先埋好的导线，而是栅压用电场"现拉"出来的反型层</b>。撤掉电压它立刻消失——所以晶体管能"关断"、能当开关。决定通不通的不是"掺没掺杂"，而是<b>栅压有没有在表面拉出自由电子</b>：横向只有栅极正下方有电场，纵向电子被电场按在栅氧界面那一两纳米、下方靠耗尽区与体隔开；加上源 N⁺→体 P→漏 N⁺ 是背靠背 PN 结，<b>唯一能连续导电的通路就是这层表面反型沟道</b>。</div>
 
         <div class="subttl">从开关到运算：CMOS（一对互补开关）</div>
         <svg viewBox="0 0 620 208">
@@ -1255,12 +1828,12 @@
           <text x="116" y="160" font-size="10.5" fill="url(#gCu)" text-anchor="end" transform="rotate(-90 116 160)">互连层：金属布线 10~20 层</text>
         </svg>
         <div class="note">在主流逻辑芯片里，<b>晶体管只有最底下薄薄一层</b>（铺在硅表面）。它们上方再叠 <b>10~20 层金属布线</b>（称 BEOL 后段工艺），像立交桥一样把上亿个晶体管按电路连起来——所以芯片"很多层"，但<b>那些大多是"布线层"，不是"晶体管层"</b>。真正的多层晶体管堆叠（3D），见 先进结构演进（3D 那段）。</div>
-        <div class="note" style="border-left-color:#e9a04c;background:rgba(233,160,76,.06)"><b>为什么要这么多层布线？</b>单个晶体管只是一个<b>开关</b>，自己不会"算"。布线的作用是把上亿个开关<b>连成电路</b>：让一个晶体管的输出（漏极）去控制另一个的输入（栅极），再接上电源、地、时钟和对外引脚——信号（0 / 1）在这张开关网络里层层触发、流动，就是"运算"。叠这么多层，是因为<b>要连的线实在太多（布线密度）</b>：下层细而短走本地连接，上层粗而长走全局信号与供电——<b>不是"一层对应一个晶体管"</b>。</div>
+        <div class="note" style="border-left-color:var(--cu);background:rgba(233,160,76,.06)"><b>为什么要这么多层布线？</b>单个晶体管只是一个<b>开关</b>，自己不会"算"。布线的作用是把上亿个开关<b>连成电路</b>：让一个晶体管的输出（漏极）去控制另一个的输入（栅极），再接上电源、地、时钟和对外引脚——信号（0 / 1）在这张开关网络里层层触发、流动，就是"运算"。叠这么多层，是因为<b>要连的线实在太多（布线密度）</b>：下层细而短走本地连接，上层粗而长走全局信号与供电——<b>不是"一层对应一个晶体管"</b>。</div>
       </div>
 
       <!-- ===== SCENE 4: FAB ===== -->
       <div class="scene" id="s-fab" hidden>
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">整条芯片生产分<b style="color:#e8eef9">大三段</b>：<b style="color:#7fd0c4">前道（晶圆制造）</b> → <b style="color:#34d6cf">中测（CP）</b> → <b style="color:#f0c082">后道（封装测试）</b>。<b style="color:#e8eef9">这一页就是核心的「前道」</b>——在晶圆上把电路<b>一层层造出来</b>，与「<b>后道·封装测试</b>」前后对应。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">整条芯片生产分<b style="color:var(--txt)">大三段</b>：<b style="color:var(--t-teal2)">前道（晶圆制造）</b> → <b style="color:var(--cy)">中测（CP）</b> → <b style="color:var(--t-amber)">后道（封装测试）</b>。<b style="color:var(--txt)">这一页就是核心的「前道」</b>——在晶圆上把电路<b>一层层造出来</b>，与「<b>后道·封装测试</b>」前后对应。</div>
         <div class="note">本页只看"剖面形貌怎么一步步建起来"。每道工序反复用到的「<b>图案转印</b>」（涂胶→曝光→显影→刻蚀→去胶）已挪到 <b>光刻</b> 页讲。</div>
 
         <div class="subttl">制造流程：点"下一步 ›"，看剖面把 26 道工序一步步、按真实形貌建起来（每步说明在动画下方）</div>
@@ -1425,12 +1998,12 @@
         </div>
         <div class="note">💡 注意看 ▣ CMP 那几步（第 4、13、15、19）：<b>上一步沉积出来的表面是凹凸 / 隆起的（⌇），抛光头把它磨平</b>——这正是 CMP 存在的意义；虚线就是被磨掉的部分。前段 FEOL（1~15）只走一遍造出晶体管；后段 BEOL（16~19）每叠一层铜都重复一次并再做一次铜 CMP，共 10~20 层。所以一颗芯片只有一层晶体管，却有十几层布线。</div>
 
-        <div class="ghead" style="color:#7fd0c4">每步背后的耗材：电子特气在工艺里干嘛</div>
+        <div class="ghead" style="color:var(--t-teal2)">每步背后的耗材：电子特气在工艺里干嘛</div>
         <div class="cap">上面每道<b>沉积 / 刻蚀 / 掺杂 / 清洗</b>，靠的不只是设备，还有大量<b>电子特种气体</b>（纯度 6N~7N）——它们是真正的"工艺耗材"：</div>
         <div class="nm">
           <div class="nmrow"><div class="co" style="color:#9fd6c0">刻蚀气</div><div class="de"><b>含氟 / 含氯气体</b>（CF₄、SF₆、Cl₂、HBr…）：把没被胶保护的膜一层层"咬"掉，决定刻蚀形貌与选择比。</div></div>
-          <div class="nmrow"><div class="co" style="color:#c8b3ff">沉积前驱体</div><div class="de"><b>CVD/ALD 源气</b>（硅烷 SiH₄、WF₆、TEOS、各种金属有机前驱体…）：在表面反应"长"出氧化层 / 金属 / 介质薄膜。</div></div>
-          <div class="nmrow"><div class="co" style="color:#f0c082">掺杂源</div><div class="de"><b>注入 / 扩散杂质源</b>（B₂H₆、PH₃、AsH₃…）：提供硼 / 磷 / 砷，把硅变成 P 型 / N 型。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-pur)">沉积前驱体</div><div class="de"><b>CVD/ALD 源气</b>（硅烷 SiH₄、WF₆、TEOS、各种金属有机前驱体…）：在表面反应"长"出氧化层 / 金属 / 介质薄膜。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-amber)">掺杂源</div><div class="de"><b>注入 / 扩散杂质源</b>（B₂H₆、PH₃、AsH₃…）：提供硼 / 磷 / 砷，把硅变成 P 型 / N 型。</div></div>
           <div class="nmrow"><div class="co" style="color:#8fb0e0">大宗 / 清洗气</div><div class="de"><b>N₂、Ar、H₂、NF₃…</b>：吹扫、保护气氛与腔体清洗（NF₃ 清反应腔）。</div></div>
         </div>
         <div class="note">这些气体多数<b>有毒 / 易燃 / 腐蚀</b>，对纯度与供应稳定性要求极高——也是<b>第二轨「材料 · 电子特气」</b>讲的产业卡点。</div>
@@ -1465,6 +2038,277 @@
           <line x1="470" y1="155" x2="500" y2="118" stroke="#5d6b88" stroke-width="0.8"/><text x="503" y="114" font-size="9.5" fill="#b9a3e8">介质(绝缘)</text>
         </svg>
         <div class="note">最底下仍只有 <b>1 层晶体管</b>，上面是十几层<b>金属布线（铜，越往上越粗越稀）</b>，靠竖直的<b>通孔(via)</b>层层相连，缝隙全由<b>绝缘介质</b>填满。<b>金属线和通孔是同一种金属——铜，只是横竖朝向不同。</b> 晶体管与最下层金属 M1 之间靠<b>接触孔（钨塞）</b>衔接——业界把这一层叫<b>中段 MOL</b>：前段 FEOL 造晶体管、中段 MOL 接上来、后段 BEOL 织布线。</div>
+        <!-- inserted-fig3-skyscraper -->
+        <div class="subttl">把截面放大到真实结构：通孔链如何从晶体管爬到凸点</div>
+        <svg viewBox="0 0 1240 768" role="img" aria-label="FEOL 到 BEOL 全剖面图">
+    <rect x="190" y="138" width="790" height="402" fill="#1c2a34"/>
+    <rect x="190" y="540" width="790" height="100" fill="#1f3038"/>
+    <rect x="190" y="640" width="790" height="70" fill="#5b7ba6"/>
+    <rect x="190" y="640" width="790" height="6" fill="#6e90bd"/>
+    <text x="206" y="692" font-size="12" fill="#dbe6f5">硅衬底 Si</text>
+    <rect x="250" y="622" width="170" height="18" fill="#3a5a64"/>
+    <rect x="250" y="622" width="170" height="2.5" fill="#4a707c"/>
+    <rect x="640" y="622" width="150" height="18" fill="#3a5a64"/>
+    <rect x="640" y="622" width="150" height="2.5" fill="#4a707c"/>
+    <rect x="426" y="584" width="208" height="56" fill="#6d8fb9" stroke="#47648c" stroke-width="0.8"/>
+    <rect x="426" y="584" width="208" height="3" fill="#6e90bd" opacity="0.7"/>
+    <rect x="424" y="572" width="76" height="46" fill="#a3c2e4" stroke="#5a7ca8" stroke-width="0.8"/>
+    <rect x="424" y="572" width="76" height="5" fill="#cdd7e6"/>
+    <rect x="560" y="572" width="76" height="46" fill="#a3c2e4" stroke="#5a7ca8" stroke-width="0.8"/>
+    <rect x="560" y="572" width="76" height="5" fill="#cdd7e6"/>
+    <path d="M506,640 L506,556 L554,556 L554,640 L544,640 L544,586 L516,586 L516,640 Z" fill="#c9a557"/>
+    <rect x="516" y="584" width="28" height="2" fill="#e3d3a0"/>
+    <rect x="500" y="560" width="6" height="80" fill="#55677e"/>
+    <rect x="554" y="560" width="6" height="80" fill="#55677e"/>
+    <rect x="460" y="540" width="12" height="36" fill="#9aa8ba" stroke="#6b7482" stroke-width="0.8"/>
+    <rect x="524" y="540" width="12" height="16" fill="#9aa8ba" stroke="#6b7482" stroke-width="0.8"/>
+    <rect x="592" y="540" width="12" height="36" fill="#9aa8ba" stroke="#6b7482" stroke-width="0.8"/>
+    <rect x="200" y="528" width="48" height="12" fill="#d98e4a"/>
+    <rect x="200" y="528" width="48" height="1.4" fill="#eab066"/>
+    <rect x="258" y="528" width="48" height="12" fill="#d98e4a"/>
+    <rect x="258" y="528" width="48" height="1.4" fill="#eab066"/>
+    <rect x="316" y="528" width="48" height="12" fill="#d98e4a"/>
+    <rect x="316" y="528" width="48" height="1.4" fill="#eab066"/>
+    <rect x="374" y="528" width="38" height="12" fill="#d98e4a"/>
+    <rect x="374" y="528" width="38" height="1.4" fill="#eab066"/>
+    <rect x="680" y="528" width="50" height="12" fill="#d98e4a"/>
+    <rect x="680" y="528" width="50" height="1.4" fill="#eab066"/>
+    <rect x="742" y="528" width="50" height="12" fill="#d98e4a"/>
+    <rect x="742" y="528" width="50" height="1.4" fill="#eab066"/>
+    <rect x="804" y="528" width="50" height="12" fill="#d98e4a"/>
+    <rect x="804" y="528" width="50" height="1.4" fill="#eab066"/>
+    <rect x="866" y="528" width="50" height="12" fill="#d98e4a"/>
+    <rect x="866" y="528" width="50" height="1.4" fill="#eab066"/>
+    <rect x="928" y="528" width="40" height="12" fill="#d98e4a"/>
+    <rect x="928" y="528" width="40" height="1.4" fill="#eab066"/>
+    <rect x="200" y="490" width="62" height="12" fill="#d98e4a"/>
+    <rect x="200" y="490" width="62" height="1.4" fill="#eab066"/>
+    <rect x="276" y="490" width="62" height="12" fill="#d98e4a"/>
+    <rect x="276" y="490" width="62" height="1.4" fill="#eab066"/>
+    <rect x="456" y="490" width="84" height="12" fill="#d98e4a"/>
+    <rect x="456" y="490" width="84" height="1.4" fill="#eab066"/>
+    <rect x="758" y="490" width="62" height="12" fill="#d98e4a"/>
+    <rect x="758" y="490" width="62" height="1.4" fill="#eab066"/>
+    <rect x="836" y="490" width="62" height="12" fill="#d98e4a"/>
+    <rect x="836" y="490" width="62" height="1.4" fill="#eab066"/>
+    <rect x="914" y="490" width="54" height="12" fill="#d98e4a"/>
+    <rect x="914" y="490" width="54" height="1.4" fill="#eab066"/>
+    <rect x="200" y="450" width="52" height="14" fill="#d98e4a"/>
+    <rect x="200" y="450" width="52" height="1.4" fill="#eab066"/>
+    <rect x="382" y="450" width="92" height="14" fill="#d98e4a"/>
+    <rect x="382" y="450" width="92" height="1.4" fill="#eab066"/>
+    <rect x="490" y="450" width="108" height="14" fill="#d98e4a"/>
+    <rect x="490" y="450" width="108" height="1.4" fill="#eab066"/>
+    <rect x="842" y="450" width="78" height="14" fill="#d98e4a"/>
+    <rect x="842" y="450" width="78" height="1.4" fill="#eab066"/>
+    <rect x="932" y="450" width="36" height="14" fill="#d98e4a"/>
+    <rect x="932" y="450" width="36" height="1.4" fill="#eab066"/>
+    <rect x="322" y="406" width="102" height="16" fill="#d98e4a"/>
+    <rect x="322" y="406" width="102" height="1.4" fill="#eab066"/>
+    <rect x="446" y="406" width="122" height="16" fill="#d98e4a"/>
+    <rect x="446" y="406" width="122" height="1.4" fill="#eab066"/>
+    <rect x="586" y="406" width="90" height="16" fill="#d98e4a"/>
+    <rect x="586" y="406" width="90" height="1.4" fill="#eab066"/>
+    <rect x="916" y="406" width="52" height="16" fill="#d98e4a"/>
+    <rect x="916" y="406" width="52" height="1.4" fill="#eab066"/>
+    <rect x="200" y="360" width="40" height="18" fill="#d98e4a"/>
+    <rect x="200" y="360" width="40" height="1.4" fill="#eab066"/>
+    <rect x="390" y="360" width="112" height="18" fill="#d98e4a"/>
+    <rect x="390" y="360" width="112" height="1.4" fill="#eab066"/>
+    <rect x="524" y="360" width="132" height="18" fill="#d98e4a"/>
+    <rect x="524" y="360" width="132" height="1.4" fill="#eab066"/>
+    <rect x="676" y="360" width="76" height="18" fill="#d98e4a"/>
+    <rect x="676" y="360" width="76" height="1.4" fill="#eab066"/>
+    <rect x="200" y="312" width="118" height="20" fill="#d98e4a"/>
+    <rect x="200" y="312" width="118" height="1.4" fill="#eab066"/>
+    <rect x="468" y="312" width="132" height="20" fill="#d98e4a"/>
+    <rect x="468" y="312" width="132" height="1.4" fill="#eab066"/>
+    <rect x="622" y="312" width="120" height="20" fill="#d98e4a"/>
+    <rect x="622" y="312" width="120" height="1.4" fill="#eab066"/>
+    <rect x="762" y="312" width="60" height="20" fill="#d98e4a"/>
+    <rect x="762" y="312" width="60" height="1.4" fill="#eab066"/>
+    <rect x="200" y="262" width="52" height="22" fill="#d98e4a"/>
+    <rect x="200" y="262" width="52" height="1.4" fill="#eab066"/>
+    <rect x="274" y="262" width="116" height="22" fill="#d98e4a"/>
+    <rect x="274" y="262" width="116" height="1.4" fill="#eab066"/>
+    <rect x="540" y="262" width="142" height="22" fill="#d98e4a"/>
+    <rect x="540" y="262" width="142" height="1.4" fill="#eab066"/>
+    <rect x="704" y="262" width="148" height="22" fill="#d98e4a"/>
+    <rect x="704" y="262" width="148" height="1.4" fill="#eab066"/>
+    <rect x="200" y="210" width="82" height="24" fill="#d98e4a"/>
+    <rect x="200" y="210" width="82" height="1.4" fill="#eab066"/>
+    <rect x="304" y="210" width="98" height="24" fill="#d98e4a"/>
+    <rect x="304" y="210" width="98" height="1.4" fill="#eab066"/>
+    <rect x="568" y="210" width="134" height="24" fill="#d98e4a"/>
+    <rect x="568" y="210" width="134" height="1.4" fill="#eab066"/>
+    <rect x="724" y="210" width="74" height="24" fill="#d98e4a"/>
+    <rect x="724" y="210" width="74" height="1.4" fill="#eab066"/>
+    <rect x="600" y="138" width="142" height="34" fill="#d98e4a"/>
+    <rect x="600" y="138" width="142" height="1.4" fill="#eab066"/>
+    <rect x="424" y="528" width="72" height="12" fill="#d98e4a"/>
+    <rect x="424" y="528" width="72" height="1.4" fill="#eab066"/>
+    <rect x="350" y="490" width="90" height="12" fill="#d98e4a"/>
+    <rect x="350" y="490" width="90" height="1.4" fill="#eab066"/>
+    <rect x="280" y="450" width="86" height="14" fill="#d98e4a"/>
+    <rect x="280" y="450" width="86" height="1.4" fill="#eab066"/>
+    <rect x="206" y="406" width="94" height="16" fill="#d98e4a"/>
+    <rect x="206" y="406" width="94" height="1.4" fill="#eab066"/>
+    <rect x="262" y="360" width="106" height="18" fill="#d98e4a"/>
+    <rect x="262" y="360" width="106" height="1.4" fill="#eab066"/>
+    <rect x="340" y="312" width="106" height="20" fill="#d98e4a"/>
+    <rect x="340" y="312" width="106" height="1.4" fill="#eab066"/>
+    <rect x="412" y="262" width="106" height="22" fill="#d98e4a"/>
+    <rect x="412" y="262" width="106" height="1.4" fill="#eab066"/>
+    <rect x="424" y="210" width="122" height="24" fill="#d98e4a"/>
+    <rect x="424" y="210" width="122" height="1.4" fill="#eab066"/>
+    <rect x="240" y="138" width="320" height="34" fill="#d98e4a"/>
+    <rect x="240" y="138" width="320" height="1.4" fill="#eab066"/>
+    <rect x="426" y="502" width="12" height="27.5" fill="#d98e4a"/>
+    <rect x="352" y="464" width="12" height="27.5" fill="#d98e4a"/>
+    <rect x="284" y="422" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="264" y="378" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="342" y="332" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="414" y="284" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="484" y="234" width="16" height="29.5" fill="#d98e4a"/>
+    <rect x="468" y="172" width="22" height="39.5" fill="#d98e4a"/>
+    <rect x="516" y="528" width="64" height="12" fill="#d98e4a"/>
+    <rect x="516" y="528" width="64" height="1.4" fill="#eab066"/>
+    <rect x="556" y="490" width="90" height="12" fill="#d98e4a"/>
+    <rect x="556" y="490" width="90" height="1.4" fill="#eab066"/>
+    <rect x="620" y="450" width="100" height="14" fill="#d98e4a"/>
+    <rect x="620" y="450" width="100" height="1.4" fill="#eab066"/>
+    <rect x="694" y="406" width="106" height="16" fill="#d98e4a"/>
+    <rect x="694" y="406" width="106" height="1.4" fill="#eab066"/>
+    <rect x="772" y="360" width="100" height="18" fill="#d98e4a"/>
+    <rect x="772" y="360" width="100" height="1.4" fill="#eab066"/>
+    <rect x="840" y="312" width="110" height="20" fill="#d98e4a"/>
+    <rect x="840" y="312" width="110" height="1.4" fill="#eab066"/>
+    <rect x="872" y="262" width="104" height="22" fill="#d98e4a"/>
+    <rect x="872" y="262" width="104" height="1.4" fill="#eab066"/>
+    <rect x="820" y="210" width="110" height="24" fill="#d98e4a"/>
+    <rect x="820" y="210" width="110" height="1.4" fill="#eab066"/>
+    <rect x="790" y="138" width="160" height="34" fill="#d98e4a"/>
+    <rect x="790" y="138" width="160" height="1.4" fill="#eab066"/>
+    <rect x="558" y="502" width="12" height="27.5" fill="#d98e4a"/>
+    <rect x="626" y="464" width="12" height="27.5" fill="#d98e4a"/>
+    <rect x="696" y="422" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="774" y="378" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="846" y="332" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="916" y="284" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="878" y="234" width="16" height="29.5" fill="#d98e4a"/>
+    <rect x="826" y="172" width="22" height="39.5" fill="#d98e4a"/>
+    <rect x="590" y="528" width="78" height="12" fill="#d98e4a"/>
+    <rect x="590" y="528" width="78" height="1.4" fill="#eab066"/>
+    <rect x="652" y="490" width="90" height="12" fill="#d98e4a"/>
+    <rect x="652" y="490" width="90" height="1.4" fill="#eab066"/>
+    <rect x="726" y="450" width="100" height="14" fill="#d98e4a"/>
+    <rect x="726" y="450" width="100" height="1.4" fill="#eab066"/>
+    <rect x="810" y="406" width="90" height="16" fill="#d98e4a"/>
+    <rect x="810" y="406" width="90" height="1.4" fill="#eab066"/>
+    <rect x="880" y="360" width="80" height="18" fill="#d98e4a"/>
+    <rect x="880" y="360" width="80" height="1.4" fill="#eab066"/>
+    <rect x="654" y="502" width="12" height="27.5" fill="#d98e4a"/>
+    <rect x="728" y="464" width="12" height="27.5" fill="#d98e4a"/>
+    <rect x="810" y="422" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="882" y="378" width="14" height="29.5" fill="#d98e4a"/>
+    <rect x="190" y="120" width="150" height="18" fill="#5f8780"/>
+    <rect x="480" y="120" width="500" height="18" fill="#5f8780"/>
+    <rect x="190" y="120" width="150" height="2" fill="#6f9a92"/>
+    <rect x="480" y="120" width="500" height="2" fill="#6f9a92"/>
+    <rect x="340" y="128" width="140" height="10" fill="#d98e4a"/>
+    <rect x="340" y="128" width="140" height="1.4" fill="#eab066"/>
+    <path d="M352,138 C356,98 376,78 410,76 C444,78 464,98 468,138 Z" fill="#cfd6e4"/>
+    <path d="M368,96 C378,86 392,81 406,80" fill="none" stroke="#eef2f9" stroke-width="2" opacity="0.7" stroke-linecap="round"/>
+    <path d="M118,540 L110,540 L110,710 L118,710" fill="none" stroke="#7fa6e8" stroke-width="2"/>
+    <text x="100" y="618" font-size="13" font-weight="700" fill="#9fc0ec" text-anchor="end">FEOL 前道</text>
+    <text x="100" y="635" font-size="11" fill="#8b9bb8" text-anchor="end">晶体管层</text>
+    <path d="M118,120 L110,120 L110,540 L118,540" fill="none" stroke="#d98e4a" stroke-width="2"/>
+    <text x="100" y="318" font-size="13" font-weight="700" fill="#e8b074" text-anchor="end">BEOL 后道</text>
+    <text x="100" y="335" font-size="11" fill="#8b9bb8" text-anchor="end">金属互连层</text>
+    <line x1="184" y1="129" x2="190" y2="129" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="132" font-size="11" fill="#9fb0cc" text-anchor="end">钝化层</text>
+    <line x1="184" y1="155" x2="190" y2="155" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="158" font-size="11" fill="#9fb0cc" text-anchor="end">M9 顶层</text>
+    <line x1="184" y1="223.0" x2="190" y2="223.0" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="226.0" font-size="11" fill="#9fb0cc" text-anchor="end">M8</text>
+    <line x1="184" y1="274.0" x2="190" y2="274.0" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="277.0" font-size="11" fill="#9fb0cc" text-anchor="end">M7</text>
+    <line x1="184" y1="323.0" x2="190" y2="323.0" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="326.0" font-size="11" fill="#9fb0cc" text-anchor="end">M6</text>
+    <line x1="184" y1="370.0" x2="190" y2="370.0" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="373.0" font-size="11" fill="#9fb0cc" text-anchor="end">M5</text>
+    <line x1="184" y1="415.0" x2="190" y2="415.0" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="418.0" font-size="11" fill="#9fb0cc" text-anchor="end">M4</text>
+    <line x1="184" y1="458.0" x2="190" y2="458.0" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="461.0" font-size="11" fill="#9fb0cc" text-anchor="end">M3</text>
+    <line x1="184" y1="497.0" x2="190" y2="497.0" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="500.0" font-size="11" fill="#9fb0cc" text-anchor="end">M2</text>
+    <line x1="184" y1="535.0" x2="190" y2="535.0" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="538.0" font-size="11" fill="#9fb0cc" text-anchor="end">M1</text>
+    <line x1="184" y1="563" x2="190" y2="563" stroke="#3a4a6a" stroke-width="1"/>
+    <text x="180" y="566" font-size="11" fill="#9fb0cc" text-anchor="end">接触孔</text>
+    <line x1="470" y1="92" x2="995" y2="58" stroke="#3a4a6a" stroke-width="1"/>
+    <circle cx="470" cy="92" r="2" fill="#3a4a6a"/>
+    <text x="1004" y="54" font-size="13" font-weight="700" fill="#e8eef9">焊盘 / 凸点 Bump</text>
+    <text x="1004" y="70" font-size="10.5" fill="#8b9bb8">钝化层开口 · 露出顶层金属焊盘</text>
+    <line x1="952" y1="166" x2="995" y2="166" stroke="#3a4a6a" stroke-width="1"/>
+    <circle cx="952" cy="166" r="2" fill="#3a4a6a"/>
+    <text x="1004" y="162" font-size="13" font-weight="700" fill="#e8eef9">顶层厚金属 M9</text>
+    <text x="1004" y="178" font-size="10.5" fill="#8b9bb8">电源 / 时钟 · 最粗最疏</text>
+    <line x1="934" y1="344" x2="995" y2="388" stroke="#3a4a6a" stroke-width="1"/>
+    <circle cx="934" cy="344" r="2" fill="#3a4a6a"/>
+    <text x="1004" y="384" font-size="13" font-weight="700" fill="#e8eef9">通孔链 Via Chain</text>
+    <text x="1004" y="400" font-size="10.5" fill="#8b9bb8">双镶嵌：via 顶着上层线、</text>
+    <text x="1004" y="414" font-size="10.5" fill="#8b9bb8">坐在下层线上 · 一体成形</text>
+    <line x1="964" y1="428" x2="995" y2="462" stroke="#3a4a6a" stroke-width="1"/>
+    <circle cx="964" cy="428" r="2" fill="#3a4a6a"/>
+    <text x="1004" y="458" font-size="13" font-weight="700" fill="#e8eef9">中层金属</text>
+    <text x="1004" y="474" font-size="10.5" fill="#8b9bb8">线宽 / 间距逐级加大</text>
+    <line x1="974" y1="496" x2="995" y2="520" stroke="#3a4a6a" stroke-width="1"/>
+    <circle cx="974" cy="496" r="2" fill="#3a4a6a"/>
+    <text x="1004" y="516" font-size="13" font-weight="700" fill="#e8eef9">M1 / M2 最细最密</text>
+    <text x="1004" y="532" font-size="10.5" fill="#8b9bb8">直连晶体管</text>
+    <line x1="608" y1="556" x2="995" y2="568" stroke="#3a4a6a" stroke-width="1"/>
+    <circle cx="608" cy="556" r="2" fill="#3a4a6a"/>
+    <text x="1004" y="564" font-size="13" font-weight="700" fill="#e8eef9">钨塞接触孔 Contact</text>
+    <text x="1004" y="580" font-size="10.5" fill="#8b9bb8">源 / 漏 / 栅 → M1</text>
+    <line x1="638" y1="600" x2="995" y2="598" stroke="#3a4a6a" stroke-width="1"/>
+    <circle cx="638" cy="600" r="2" fill="#3a4a6a"/>
+    <text x="1004" y="596" font-size="13" font-weight="700" fill="#e8eef9">FinFET</text>
+    <text x="1004" y="612" font-size="10.5" fill="#8b9bb8">栅极环抱鳍片 · 两侧源 / 漏</text>
+    <line x1="794" y1="624" x2="995" y2="640" stroke="#3a4a6a" stroke-width="1"/>
+    <circle cx="794" cy="624" r="2" fill="#3a4a6a"/>
+    <text x="1004" y="638" font-size="13" font-weight="700" fill="#e8eef9">STI 浅沟槽隔离</text>
+    <text x="1004" y="654" font-size="10.5" fill="#8b9bb8">隔离相邻器件</text>
+    <g font-size="11">
+    <rect x="190" y="719" width="13" height="11" fill="#d98e4a"/>
+    <text x="208" y="729" fill="#8b9bb8">铜互连</text>
+    <rect x="258.5" y="719" width="13" height="11" fill="#9aa8ba"/>
+    <text x="276.5" y="729" fill="#8b9bb8">钨塞接触</text>
+    <rect x="338.5" y="719" width="13" height="11" fill="#6d8fb9"/>
+    <text x="356.5" y="729" fill="#8b9bb8">硅 · 鳍片</text>
+    <rect x="426.5" y="719" width="13" height="11" fill="#a3c2e4"/>
+    <text x="444.5" y="729" fill="#8b9bb8">源漏外延</text>
+    <rect x="506.5" y="719" width="13" height="11" fill="#cdd7e6"/>
+    <text x="524.5" y="729" fill="#8b9bb8">硅化物</text>
+    <rect x="575.0" y="719" width="13" height="11" fill="#c9a557"/>
+    <text x="593.0" y="729" fill="#8b9bb8">金属栅</text>
+    <rect x="643.5" y="719" width="13" height="11" fill="#e3d3a0"/>
+    <text x="661.5" y="729" fill="#8b9bb8">栅氧 / 高k</text>
+    <rect x="738.0" y="719" width="13" height="11" fill="#1c2a34" stroke="#3a4a6a" stroke-width="0.8"/>
+    <text x="756.0" y="729" fill="#8b9bb8">介质 ILD/IMD</text>
+    <rect x="847.0" y="719" width="13" height="11" fill="#3a5a64" stroke="#3a4a6a" stroke-width="0.8"/>
+    <text x="865.0" y="729" fill="#8b9bb8">STI 氧化</text>
+    <rect x="930.0" y="719" width="13" height="11" fill="#5f8780"/>
+    <text x="948.0" y="729" fill="#8b9bb8">钝化层</text>
+    <rect x="998.5" y="719" width="13" height="11" fill="#cfd6e4"/>
+    <text x="1016.5" y="729" fill="#8b9bb8">凸点</text>
+    </g>
+    <text x="190" y="756" font-size="11" fill="#8b9bb8">注：示意剖面 · 纵横向均不按真实比例｜M1 最细最密，向上逐级变粗变疏｜实际互连通常 10–20 层，本图示意 9 层金属</text>
+    </svg>
+        <div class="cap">上图是简化版，这一张把它放大到<b>接近真实的结构</b>：金属线不是悬浮的色块——每层铜线都<b>嵌在绝缘介质里</b>，靠<b>通孔（via）链</b>层层导通（双镶嵌：via 与上层线一体成形，顶着上层线、坐在下层线上）；晶体管的<b>源 / 栅 / 漏各由一根钨塞接触孔</b>垂直接到最下层金属 M1。跟着图中任意一条通孔链，就能从源极一路爬到顶层焊盘上的凸点——这就是信号 / 电流完整的"上班路线"。</div>
+        <!-- /inserted-fig3-skyscraper -->
+
 
         <svg width="0" height="0" style="position:absolute"><defs>
           <marker id="faA" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker>
@@ -1661,7 +2505,7 @@
 
       <!-- ===== SCENE 5: ADVANCED ===== -->
       <div class="scene" id="s-adv" hidden>
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">这一页讲"<b style="color:#e8eef9">制程节点</b>"到底是什么：先搞清"nm"这个名字今天还剩多少真实含义，再看制程推进绕不开的两道约束——为什么<b style="color:#e8eef9">越先进越贵</b>（良率与成本）、为什么<b style="color:#e8eef9">不能无限快</b>（功耗墙）。至于"<b style="color:#e8eef9">不能无限小</b>"该怎么破（改变晶体管结构），见「<b style="color:#e8eef9">先进结构演进</b>」。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">这一页讲"<b style="color:var(--txt)">制程节点</b>"到底是什么：先搞清"nm"这个名字今天还剩多少真实含义，再看制程推进绕不开的两道约束——为什么<b style="color:var(--txt)">越先进越贵</b>（良率与成本）、为什么<b style="color:var(--txt)">不能无限快</b>（功耗墙）。至于"<b style="color:var(--txt)">不能无限小</b>"该怎么破（改变晶体管结构），见「<b style="color:var(--txt)">先进结构演进</b>」。</div>
         <div class="ctrls" style="margin-top:2px">
           <div class="nodebtns">
             <button class="btn nbtn acc" data-n="28">28 nm</button>
@@ -1675,12 +2519,13 @@
           <rect x="160" y="36" width="300" height="240" rx="6" fill="#0e1726" stroke="#34d6cf" stroke-opacity=".5"/>
           <g id="ngrid"></g>
         </svg>
+        <div class="note">口径说明：上图网格是<b>相对密度示意</b>——以 28nm 为 1×、按节点名几何缩放（每次减半 → 面积 4×）的理想化倍数，<b>不代表真实密度对比</b>。业界可比口径统一为 <b>MTr/mm²（每平方毫米百万晶体管数）</b>，且厂商公布的多为<b>峰值逻辑密度</b>（标准单元极限口径）；芯片实际平均密度通常明显低于峰值，不同来源口径可差数倍——本页下文引用的均为峰值口径。按厂商公布密度，7nm 相对 28nm 的实际密度提升约 5~6×，而非名义尺寸暗示的 16×。</div>
         <div class="cap"><b>"制程节点"是什么？</b> 早期它确实指晶体管的关键尺寸（如栅极长度）：28nm 比 14nm 大一倍，线条更粗。每缩小一代，单位面积晶体管数大约翻倍多，于是更快、更省电、单颗更便宜——这就是"摩尔定律"。<b>但从约 2009 年起，"nm"这个数字就不再等于任何真实物理尺寸了</b>。今天它表示的是相对上一代的<b>密度、功耗、性能</b>，更像一个"性能档位标签"。</div>
         <div class="subttl">三大厂的命名标准（互不统一，同名≠等价）</div>
         <div class="nm">
-          <div class="nmrow"><div class="co" style="color:#5eead4">台积电 TSMC</div><div class="de">N7 → N5 → N3 → <b style="color:#e8eef9">N2</b> → A16/A14。N3 仍用 FinFET，<b style="color:#e8eef9">N2 起改用 GAA</b>。"A"=埃(0.1nm)，进入"埃米时代"。全球约九成 5nm 以下芯片由它代工。</div></div>
-          <div class="nmrow"><div class="co" style="color:#b08bf0">三星 Samsung</div><div class="de">改用 SF 体系：7LPP(首批量产 EUV) → 5LPE → 4LPE → <b style="color:#e8eef9">SF3</b>(3nm GAA 二代；业界最早量产 GAA 是其一代 3GAE/SF3E，2022，自称 MBCFET) → SF2 → SF1.4(已传推迟至 2028–29)。</div></div>
-          <div class="nmrow"><div class="co" style="color:#e9a04c">英特尔 Intel</div><div class="de">曾用"真实"nm，但其 10nm 密度≈别家 7nm，数字上显得落后。2021 改名：Intel 7 → 4 → 3 → <b style="color:#e8eef9">18A</b>（20A 于 2024 取消、未量产）。18A 首发 RibbonFET(GAA) + PowerVia(背面供电)，密度上对标台积电 N2。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">台积电 TSMC</div><div class="de">N7 → N5 → N3 → <b style="color:var(--txt)">N2</b> → A16/A14。N3 仍用 FinFET，<b style="color:var(--txt)">N2 起改用 GAA</b>。"A"=埃(0.1nm)，进入"埃米时代"。全球约九成 5nm 以下芯片由它代工。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--pur)">三星 Samsung</div><div class="de">改用 SF 体系：7LPP(首批量产 EUV) → 5LPE → 4LPE → <b style="color:var(--txt)">SF3</b>(3nm GAA 二代；业界最早量产 GAA 是其一代 3GAE/SF3E，2022，自称 MBCFET) → SF2 → SF1.4(已传推迟至 2028–29)。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cu)">英特尔 Intel</div><div class="de">曾用"真实"nm，但其 10nm 密度≈别家 7nm，数字上显得落后。2021 改名：Intel 7 → 4 → 3 → <b style="color:var(--txt)">18A</b>（20A 于 2024 取消、未量产）。18A 首发 RibbonFET(GAA) + PowerVia(背面供电)，密度上对标台积电 N2。</div></div>
         </div>
         <div class="note">没有行业统一标准，<b>真正可比的是密度</b>（每平方毫米晶体管数 MTr/mm²）、功耗与性能。举个反差例子：台积电 N3E 的<b>最小金属间距约 23nm、栅极间距（CPP）约 45–48nm</b>，密度约 <b>200–220 MTr/mm²</b>（N3≈197、N3E≈216，峰值口径）——"3nm"这个名字里，根本找不到 3nm 这个尺寸。</div>
 
@@ -1706,6 +2551,99 @@
           <text x="305" y="120" font-size="9" fill="#f0738a" text-anchor="middle">红 ✕</text><text x="305" y="132" font-size="8" fill="#c98a98" text-anchor="middle">同样的</text><text x="305" y="144" font-size="8" fill="#c98a98" text-anchor="middle">5 个缺陷</text>
         </svg>
         <div class="note">晶圆上的<b>缺陷是随机分布</b>的，一个缺陷基本会让所在的整颗 die 报废。<b>die 越大，单颗碰到缺陷的概率越高、良率越低</b>——同样 5 个缺陷，大 die 坏掉 5/16，小芯粒只坏 5/64。叠加<b>先进制程本身更贵</b>（EUV、多重曝光、更多道工序）和<b>大面积难做</b>，先进大芯片成本飙升。这正是 <b>Chiplet（把大芯片拆成小芯粒）</b>的根本经济动机；卖的时候还会按性能 / 缺陷<b>分档（binning）</b>——满血版、屏蔽版分级出货。</div>
+        <!-- inserted-fig2-costcurve -->
+        <div class="subttl">另一条成本曲线：每晶体管成本在 28nm 触底反转</div>
+        <svg viewBox="0 0 920 490" role="img" aria-label="每晶体管成本与制程节点关系折线图">
+    <!-- 网格（细淡） -->
+    <g stroke="#22304a" stroke-width="1">
+      <line x1="90" y1="357.5" x2="830" y2="357.5"/>
+      <line x1="90" y1="272.5" x2="830" y2="272.5"/>
+      <line x1="90" y1="187.5" x2="830" y2="187.5"/>
+      <line x1="90" y1="102.5" x2="830" y2="102.5"/>
+    </g>
+    <g stroke="#1a2438" stroke-width="1">
+      <line x1="110" y1="50" x2="110" y2="390"/><line x1="190" y1="50" x2="190" y2="390"/>
+      <line x1="270" y1="50" x2="270" y2="390"/><line x1="350" y1="50" x2="350" y2="390"/>
+      <line x1="430" y1="50" x2="430" y2="390"/><line x1="510" y1="50" x2="510" y2="390"/>
+      <line x1="590" y1="50" x2="590" y2="390"/><line x1="670" y1="50" x2="670" y2="390"/>
+      <line x1="750" y1="50" x2="750" y2="390"/><line x1="830" y1="50" x2="830" y2="390"/>
+    </g>
+    <!-- 坐标轴 -->
+    <line x1="90" y1="390" x2="838" y2="390" stroke="#3a4a6a" stroke-width="1.4"/>
+    <line x1="90" y1="50" x2="90" y2="390" stroke="#3a4a6a" stroke-width="1.4"/>
+    <line x1="838" y1="50" x2="838" y2="390" stroke="#3a4a6a" stroke-width="1.4"/>
+    <!-- 左轴刻度（成本） -->
+    <g font-size="11" fill="#8b9bb8" text-anchor="end">
+      <text x="80" y="394">30</text><text x="80" y="361">40</text><text x="80" y="276">60</text>
+      <text x="80" y="191">80</text><text x="80" y="106">100</text>
+    </g>
+    <text x="30" y="220" font-size="12" fill="#e8b74a" text-anchor="middle" transform="rotate(-90 30 220)">每晶体管相对成本（90nm = 100）</text>
+    <!-- 右轴刻度（密度·对数） -->
+    <g font-size="11" fill="#8b9bb8" text-anchor="start">
+      <text x="848" y="394">1</text><text x="848" y="290">10</text>
+      <text x="848" y="177">100</text><text x="848" y="64">1000</text>
+    </g>
+    <text x="892" y="220" font-size="12" fill="#8b9bb8" text-anchor="middle" transform="rotate(90 892 220)">晶体管密度 / mm²（对数 · 相对值）</text>
+    <!-- X 轴 -->
+    <g font-size="12" fill="#8b9bb8" text-anchor="middle">
+      <text x="110" y="410">90</text><text x="190" y="410">65</text><text x="270" y="410">45</text>
+      <text x="350" y="410" fill="#ffd36b" font-weight="700">28</text><text x="430" y="410">20</text>
+      <text x="510" y="410">16</text><text x="590" y="410">10</text><text x="670" y="410">7</text>
+      <text x="750" y="410">5</text><text x="830" y="410">3</text>
+    </g>
+    <text x="464" y="436" font-size="12" fill="#8b9bb8" text-anchor="middle">制程节点（nm）</text>
+
+    <!-- 密度虚线（右轴·对数） -->
+    <path d="M110,390 L190,366 L270,331.7 L350,297.6 L430,266.7 L510,236 L590,202.6 L670,173.3 L750,143.7 L830,119"
+      fill="none" stroke="#8b9bb8" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.9"/>
+    <g fill="#8b9bb8">
+      <rect x="106" y="386" width="7" height="7" transform="rotate(45 109.5 389.5)"/>
+      <rect x="346" y="293.6" width="7" height="7" transform="rotate(45 349.5 297.1)"/>
+      <rect x="586" y="198.6" width="7" height="7" transform="rotate(45 589.5 202.1)"/>
+      <rect x="826" y="115" width="7" height="7" transform="rotate(45 829.5 118.5)"/>
+    </g>
+
+    <!-- 成本曲线（左轴） -->
+    <path d="M110,102.5 C150,150 160,170 190,196 S240,258 270,285.25 S322,338 350,349
+             C380,355 408,351 430,346.9 S482,344 510,340.5 S562,330 590,323.5 S642,309 670,302.25
+             S722,286 750,276.75 S802,258 830,247"
+      fill="none" stroke="#e8b74a" stroke-width="3" stroke-linecap="round"/>
+    <!-- 数据点 -->
+    <g fill="#f2cd7e" stroke="#0d1420" stroke-width="1.5">
+      <circle cx="110" cy="102.5" r="4.5"/><circle cx="190" cy="196" r="4"/>
+      <circle cx="270" cy="285.25" r="4"/><circle cx="430" cy="346.9" r="4"/>
+      <circle cx="510" cy="340.5" r="4"/><circle cx="590" cy="323.5" r="4"/>
+      <circle cx="670" cy="302.25" r="4"/><circle cx="750" cy="276.75" r="4"/>
+      <circle cx="830" cy="247" r="4.5"/>
+    </g>
+    <!-- 关键节点数值 -->
+    <text x="126" y="99" font-size="12" font-weight="700" fill="#e8eef9" text-anchor="start">100</text>
+    <text x="830" y="233" font-size="12" font-weight="700" fill="#e8eef9" text-anchor="middle">≈66</text>
+    <!-- 28nm 谷底强调 -->
+    <circle cx="350" cy="349" r="10" fill="none" stroke="#ffd36b" stroke-width="2" opacity="0.55"/>
+    <circle cx="350" cy="349" r="5.5" fill="#ffd36b" stroke="#0d1420" stroke-width="1.5"/>
+    <text x="350" y="376" font-size="12" font-weight="700" fill="#ffd36b" text-anchor="middle">42（谷底）</text>
+    <line x1="338" y1="326" x2="347" y2="342" stroke="#ffd36b" stroke-width="1.2"/>
+    <text x="128" y="322" font-size="13" font-weight="700" fill="#ffd36b">28nm：最后一站「越微缩越便宜」</text>
+
+    <!-- 成本反转注释 -->
+    <line x1="706" y1="248" x2="744" y2="272" stroke="#e8546a" stroke-width="1.2"/>
+    <text x="560" y="228" font-size="13" font-weight="700" fill="#e8546a">FinFET / EUV 推高工序数与掩膜成本</text>
+    <text x="560" y="246" font-size="11" fill="#f2a0ae">→ 28nm 之后成本走平并回升</text>
+
+    <!-- 图例 -->
+    <g font-size="11" fill="#8b9bb8">
+      <line x1="110" y1="66" x2="140" y2="66" stroke="#e8b74a" stroke-width="3"/>
+      <text x="146" y="70">每晶体管相对成本（左轴）</text>
+      <line x1="110" y1="84" x2="140" y2="84" stroke="#8b9bb8" stroke-width="1.8" stroke-dasharray="6 4"/>
+      <text x="146" y="88">晶体管密度 / mm²（右轴 · 对数）</text>
+    </g>
+
+    <text x="90" y="470" font-size="11" fill="#8b9bb8">示意曲线｜口径：业界公开估算（IBS、台积电法说会等），仅表趋势，非精确数值</text>
+  </svg>
+        <div class="cap">良率解释了"为什么大芯片贵"，这张图解释另一半——<b>为什么换更先进的节点本身也越来越不划算</b>：每晶体管成本从 90nm 一路下降、在 <b>28nm 触底</b>，此后因 FinFET / EUV 推高工序数与掩膜成本而回升；而晶体管密度仍在上涨，形成"<b>密度涨、成本不降</b>"的张力——这是理解先进节点经济学（以及成熟节点长期保有产能价值）的起点。</div>
+        <!-- /inserted-fig2-costcurve -->
+
 
         <div class="subttl">为什么不能无限快：功耗墙</div>
         <svg viewBox="0 0 620 220">
@@ -1724,7 +2662,7 @@
 
       <!-- ===== SCENE: ADV-STRUCT (先进结构演进) ===== -->
       <div class="scene" id="s-advstruct" hidden>
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">前一页「<b style="color:#e8eef9">制程节点与经济</b>」讲了制程的"标尺"与经济 / 功耗约束。这一页讲<b style="color:#e8eef9">怎么在结构上继续推进</b>：先看为什么<b style="color:#e8eef9">不能无限缩小</b>（短沟道漏电），再看晶体管怎么把栅极<b style="color:#e8eef9">包得更紧</b>（FinFET→GAA→CFET）、把<b style="color:#e8eef9">供电搬到背面</b>，并走向 <b style="color:#e8eef9">3D 堆叠</b>。（光刻 EUV / High-NA 见独立的"光刻"页）</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">前一页「<b style="color:var(--txt)">制程节点与经济</b>」讲了制程的"标尺"与经济 / 功耗约束。这一页讲<b style="color:var(--txt)">怎么在结构上继续推进</b>：先看为什么<b style="color:var(--txt)">不能无限缩小</b>（短沟道漏电），再看晶体管怎么把栅极<b style="color:var(--txt)">包得更紧</b>（FinFET→GAA→CFET）、把<b style="color:var(--txt)">供电搬到背面</b>，并走向 <b style="color:var(--txt)">3D 堆叠</b>。（光刻 EUV / High-NA 见独立的"光刻"页）</div>
 
         <div class="subttl">A · 为什么不能无限缩小：短沟道漏电</div>
         <svg viewBox="0 0 620 340">
@@ -1753,7 +2691,7 @@
 
         <div class="subttl">B · 晶体管结构进化：把栅极包得更紧（栅氧化层始终都在）</div>
         <div class="legend" style="margin-bottom:8px">
-          <span><i class="sw" style="background:#5b86c9"></i>沟道（硅本体）</span><span><i class="sw" style="background:#3aa86b"></i>源/漏（掺杂）</span><span><i class="sw" style="background:#f2d35a"></i>栅氧化层(薄)</span><span><i class="sw" style="background:#d98e3f"></i>栅极</span><span style="color:#8fe9e1">→ 电流：源→漏，沿沟道流</span>
+          <span><i class="sw" style="background:#5b86c9"></i>沟道（硅本体）</span><span><i class="sw" style="background:#3aa86b"></i>源/漏（掺杂）</span><span><i class="sw" style="background:#f2d35a"></i>栅氧化层(薄)</span><span><i class="sw" style="background:#d98e3f"></i>栅极</span><span style="color:var(--t-teal1)">→ 电流：源→漏，沿沟道流</span>
         </div>
         <div class="evo">
           <div class="evocard">
@@ -1919,7 +2857,7 @@
           </g>
           <text x="310" y="254" font-size="8.5" fill="#8aa0c8" text-anchor="middle">注意第⑤帧的青色薄层：这 1–2nm 的 HfO₂ 就是「刻蚀·沉积」页 ALD 五个"非它不可"之首的本尊。</text>
         </svg>
-        <div class="note" style="border-left-color:#8fe9e1;background:rgba(143,233,225,.06)"><b style="color:#8fe9e1">这场手术留下的三条"基因"</b>：① <b>ALD 从此上位</b>——高K/功函数金属都要在原子尺度数层数，没有 ALD 就没有 HKMG（呼应「刻蚀·沉积」机制加深②）；② <b>牺牲层哲学成为通用武器</b>——逻辑芯片换栅、3D NAND 换字线（见「存储器」机制加深），一个思想两处开花；③ <b>"新材料进场"成为节点推进的常规动作</b>——应变硅→HKMG→FinFET→GAA→背面供电（本页 B/C/D 一脉相承），每次都是"材料-器件-工艺"三层联动。材料端：铪前驱体、功函数金属的供给格局见第二轨「材料」赛道。</div>
+        <div class="note" style="border-left-color:var(--t-teal1);background:rgba(143,233,225,.06)"><b style="color:var(--t-teal1)">这场手术留下的三条"基因"</b>：① <b>ALD 从此上位</b>——高K/功函数金属都要在原子尺度数层数，没有 ALD 就没有 HKMG（呼应「刻蚀·沉积」机制加深②）；② <b>牺牲层哲学成为通用武器</b>——逻辑芯片换栅、3D NAND 换字线（见「存储器」机制加深），一个思想两处开花；③ <b>"新材料进场"成为节点推进的常规动作</b>——应变硅→HKMG→FinFET→GAA→背面供电（本页 B/C/D 一脉相承），每次都是"材料-器件-工艺"三层联动。材料端：铪前驱体、功函数金属的供给格局见第二轨「材料」赛道。</div>
 
         
 
@@ -1959,7 +2897,7 @@
           <g stroke="#e9a04c" stroke-width="3"><line x1="356" y1="146" x2="566" y2="146"/><line x1="356" y1="158" x2="566" y2="158"/><line x1="356" y1="170" x2="566" y2="170"/></g><text x="574" y="158" font-size="7.5" fill="#e9a04c" text-anchor="start" transform="rotate(90 574 158)">专供电</text>
           <g fill="url(#gCuV)"><rect x="420" y="100" width="5" height="46"/><rect x="496" y="100" width="5" height="46"/></g><text x="466" y="190" font-size="8" fill="#f0c082" text-anchor="middle">纳米 TSV：背面供电直达晶体管</text>
         </svg>
-        <div class="note">传统芯片<b>信号线和供电线都挤在正面</b>的十几层金属里，互相抢空间、供电路径也长。<b>背面供电（BSPDN）</b>把<b>供电网络搬到晶圆背面</b>，用<b>纳米级 TSV</b> 从背面直达晶体管：正面腾出来专走信号、布线更松，供电路径更短 → <b>压降更小、性能 / 能效更好</b>。进展：<b>Intel 18A（PowerVia）已量产</b> <span style="color:#7a8aa8">[✓已核实·2026-06]</span>，<b>台积电 A16（超级电轨 SPR）2026 下半年</b>，三星 SF2Z（2027）跟进 <span style="color:#7a8aa8">[?待证·厂商路线图]</span>——是 2nm 世代竞争的关键变量。</div>
+        <div class="note">传统芯片<b>信号线和供电线都挤在正面</b>的十几层金属里，互相抢空间、供电路径也长。<b>背面供电（BSPDN）</b>把<b>供电网络搬到晶圆背面</b>，用<b>纳米级 TSV</b> 从背面直达晶体管：正面腾出来专走信号、布线更松，供电路径更短 → <b>压降更小、性能 / 能效更好</b>。进展：<b>Intel 18A（PowerVia）已量产</b> <span style="color:var(--t-dim2)">[✓已核实·2026-06]</span>，<b>台积电 A16（超级电轨 SPR）2026 下半年</b>，三星 SF2Z（2027）跟进 <span style="color:var(--t-dim2)">[?待证·厂商路线图]</span>——是 2nm 世代竞争的关键变量。</div>
         <div class="subttl">E · 芯片是平面一层，还是多层晶体管？</div>
         <svg viewBox="0 0 620 230">
           <text x="155" y="20" font-size="11.5" fill="#9fb0cc" text-anchor="middle" font-weight="700">主流逻辑：1 层晶体管 + 多层布线</text>
@@ -2006,8 +2944,8 @@
           <text x="310" y="138" font-size="10.5" fill="#aebbd2" text-anchor="middle">关键差别：<tspan fill="#7fd0c4">显影</tspan>只洗掉受光的胶（膜还连着）；<tspan fill="#7fd0c4">刻蚀</tspan>才顺着开口把<tspan fill="#f2d35a">膜</tspan>挖穿；去胶后剩下的就是图形化的膜。</text>
         </svg>
 
-        <div class="ghead" style="color:#e0556e">为什么"受光的胶"会被洗掉：光刻胶的感光机制</div>
-        <div class="cap">显影能"只洗掉该走的那部分"，靠的是光刻胶<b>受光后溶解性改变</b>：<b style="color:#f3a0b0">正胶</b>受光处变<b>可溶</b>（洗掉受光区，主流先进制程都用正胶）；<b style="color:#9fd6c0">负胶</b>受光处<b>交联固化</b>变不可溶（洗掉的是没受光的区域）。</div>
+        <div class="ghead" style="color:var(--t-red)">为什么"受光的胶"会被洗掉：光刻胶的感光机制</div>
+        <div class="cap">显影能"只洗掉该走的那部分"，靠的是光刻胶<b>受光后溶解性改变</b>：<b style="color:var(--t-pink)">正胶</b>受光处变<b>可溶</b>（洗掉受光区，主流先进制程都用正胶）；<b style="color:#9fd6c0">负胶</b>受光处<b>交联固化</b>变不可溶（洗掉的是没受光的区域）。</div>
         <svg viewBox="0 0 620 104" style="margin-top:4px">
           <defs><marker id="luv2" markerWidth="7" markerHeight="7" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#c8b3ff"/></marker></defs>
           <text x="155" y="15" font-size="10.5" fill="#f3a0b0" text-anchor="middle" font-weight="700">正胶：受光处被洗掉</text>
@@ -2024,7 +2962,7 @@
         </svg>
         <div class="note"><b>化学放大胶（CAR，DUV/EUV 主流）的关键</b>：胶里掺<b>光酸产生剂（PAG）</b>，曝光后放出<b>光酸 H⁺</b>；再经<b>后烘（PEB）</b>，<b>一个</b>光酸催化断开<b>许多</b>"保护基团"（一变多、把微弱曝光信号放大），受光区于是由不可溶变可溶、被显影液洗掉。<b>"光 → 光酸 → 去保护 → 可溶 → 显影"</b>就是受光的胶被洗掉的真正机理；EUV 光子数少、更依赖这种化学放大，EUV 胶因此是极高壁垒耗材。</div>
 
-        <div class="ghead" style="color:#c8b3ff">① EUV 的光怎么"造"出来：锡等离子体光源（LPP）</div>
+        <div class="ghead" style="color:var(--t-pur)">① EUV 的光怎么"造"出来：锡等离子体光源（LPP）</div>
         <svg viewBox="0 0 620 212">
           <defs>
             <radialGradient id="euvPlasma" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff7e0"/><stop offset="0.45" stop-color="#ffd36b"/><stop offset="1" stop-color="#e0556e" stop-opacity="0"/></radialGradient>
@@ -2047,8 +2985,8 @@
           <text x="551" y="104" font-size="9" fill="#c8b3ff">中间焦点 IF</text><text x="551" y="118" font-size="7.5" fill="#9a8cc0">→ 送往照明 / 掩膜</text>
         </svg>
         <div class="note">EUV 不是一盏"灯"——它是用<b>大功率 CO₂ 激光每秒轰击约 5 万颗锡(Sn)液滴</b>，把锡打成<b>等离子体</b>，等离子体辐射出 <b>13.5nm</b> 极紫外光；再用<b>椭球收集镜</b>聚到"中间焦点"送进光学系统。这条链路<b>效率极低</b>（注入功率 → 可用 EUV 仅约百分之几），整机功耗<b>兆瓦级</b>，且必须<b>全程真空</b>。光源的稳定与功率，正是 EUV 良率与产能的命门。</div>
-        <div class="ghead" style="color:#c8b3ff">② 光怎么"走"：DUV 折射式 vs EUV 反射式（全程真空）</div>
-        <div class="cap"><b>一句话对比：</b><b style="color:#7fa6e8">DUV（193nm）＝折射式</b> —— 用<b>玻璃透镜</b>+<b>透明掩膜</b>（光穿过），可在空气中、或<b>浸没在水里</b>（n≈1.44，把 NA 抬到 1.35）；<b style="color:#b08bf0">EUV（13.5nm）＝反射式</b> —— 会被玻璃和空气吸收，所以<b>全改用镜子、全程真空、连掩膜都反射</b>。下面分别画出两者光路：</div>
+        <div class="ghead" style="color:var(--t-pur)">② 光怎么"走"：DUV 折射式 vs EUV 反射式（全程真空）</div>
+        <div class="cap"><b>一句话对比：</b><b style="color:var(--t-blue2)">DUV（193nm）＝折射式</b> —— 用<b>玻璃透镜</b>+<b>透明掩膜</b>（光穿过），可在空气中、或<b>浸没在水里</b>（n≈1.44，把 NA 抬到 1.35）；<b style="color:var(--pur)">EUV（13.5nm）＝反射式</b> —— 会被玻璃和空气吸收，所以<b>全改用镜子、全程真空、连掩膜都反射</b>。下面分别画出两者光路：</div>
         <svg viewBox="0 0 620 300">
           <text x="310" y="18" font-size="12" fill="#7fa6e8" text-anchor="middle" font-weight="700">DUV（193nm）· 折射式：玻璃透镜 + 透明掩膜（光穿过）</text>
           <rect x="278" y="30" width="64" height="15" rx="3" fill="#2a3a5c" stroke="#5b7bd4"/><text x="310" y="41" font-size="8.5" fill="#cfe0ff" text-anchor="middle">ArF 193nm</text>
@@ -2091,7 +3029,7 @@
           <g font-size="8.5"><text x="30" y="350" fill="#7fd0c4">照明系统：刻面镜(FFM/PFM)把光均匀化、并设定照明光瞳</text><text x="30" y="364" fill="#7fd0c4">（离轴/dipole 等），整形成弧形场照到掩膜</text><text x="30" y="384" fill="#9fc0ec">投影光学：6 面大块曲面(非球面) Mo/Si 镜，每面近垂直入射 &lt;15°</text><text x="30" y="398" fill="#9fc0ec">逐面反射、整体缩 4×；M1–M2 间设光阑，其后成一次中间像</text></g>
         </svg>
         <div class="note">这是 EUV 最反直觉、也最贵的地方：<b>13.5nm EUV 会被几乎所有材料（玻璃、空气）吸收，没法像 DUV 那样用透镜</b>。于是整条光路<b>全部改用反射镜</b>，连<b>掩膜都是反射式</b>的（图案做在镜面上，斜约 6° 入射）。镜子是<b>钼/硅(Mo/Si)多层膜</b>反射镜，<b>单面也只反射约 70%</b>；一台机器十多面镜子叠下来，<b>光走到硅片只剩百分之几</b>——这就是为什么<b>光源功率</b>要拼命做大。掩膜还要加一层极薄的<b>防护膜 Pellicle</b> 挡颗粒，本身就是难做的高价耗材。</div>
-        <div class="ghead" style="color:#c8b3ff">③ 怎么画得更细：两个杠杆——更大的 NA，和多重曝光</div>
+        <div class="ghead" style="color:var(--t-pur)">③ 怎么画得更细：两个杠杆——更大的 NA，和多重曝光</div>
         <svg viewBox="0 0 620 188">
           <text x="155" y="15" font-size="10.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">杠杆一：更大的数值孔径 NA</text>
           <line x1="36" y1="150" x2="584" y2="150" stroke="#3a4870" stroke-width="7"/><text x="572" y="147" font-size="8" fill="#9bb0d0" text-anchor="end">硅片</text>
@@ -2213,9 +3151,9 @@
           <text x="465" y="212" font-size="8.5" fill="#8aa0c8" text-anchor="middle">产能数学：&gt;200 片/小时 ⇒ 每片 &lt;18 秒——曝光百个视场＋</text>
           <text x="465" y="225" font-size="8.5" fill="#8aa0c8" text-anchor="middle">步进＋调平对准＋换片全要塞进去 [~量级·厂商规格]</text>
         </svg>
-        <div class="note" style="border-left-color:#8fe9e1;background:rgba(143,233,225,.06)"><b style="color:#8fe9e1">收尾一句</b>：光刻机自己就是全厂最精密的量测仪器（每小时几百次对准+全片地形扫描，呼应「清洗·量测」页）；而它的运动系统（双工件台、磁悬浮电机、干涉测量）与光学系统（蔡司镜头）合起来，才是"两亿美元一台、全球一家能造"的完整答案。</div>
+        <div class="note" style="border-left-color:var(--t-teal1);background:rgba(143,233,225,.06)"><b style="color:var(--t-teal1)">收尾一句</b>：光刻机自己就是全厂最精密的量测仪器（每小时几百次对准+全片地形扫描，呼应「清洗·量测」页）；而它的运动系统（双工件台、磁悬浮电机、干涉测量）与光学系统（蔡司镜头）合起来，才是"两亿美元一台、全球一家能造"的完整答案。</div>
 
-        <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>为什么光刻是最硬的卡脖子环节：</b>EUV 光刻机<b>全球只有 ASML 一家</b>能造，一台标准 EUV 约 2 亿美元级（现役 NXE:3800E 约 2.2–2.4 亿）、<b>High-NA（EXE:5200B）约 3.8 亿美元</b>，年产量有限。配套同样高度垄断：<b>光刻胶</b>（JSR / 东京应化 / 信越 / 住友，EUV 金属氧化物胶 Inpria）、<b>掩膜基板</b>（Hoya / AGC）、<b>防护膜 Pellicle</b>（三井）、<b>光学</b>（蔡司）。进展（2026）：<b>Intel 率先用上 High-NA</b>（EXE:5200B，175 片/小时），三星、SK 海力士跟进；<b>台积电因太贵暂缓</b>（A14 暂不用 High-NA），High-NA 量产普遍预期 2027–28 <span style="color:#9a86c8">[✓已核实·2026-06；单价为 ~估算·多源，复核期 2027Q1]</span>。对国产替代，EUV 仍是<b>尚未突破</b>的最高壁垒。</div>
+        <div class="note" style="border-left-color:var(--pur);background:rgba(176,139,240,.07)"><b>为什么光刻是最硬的卡脖子环节：</b>EUV 光刻机<b>全球只有 ASML 一家</b>能造，一台标准 EUV 约 2 亿美元级（现役 NXE:3800E 约 2.2–2.4 亿）、<b>High-NA（EXE:5200B）约 3.8 亿美元</b>，年产量有限。配套同样高度垄断：<b>光刻胶</b>（JSR / 东京应化 / 信越 / 住友，EUV 金属氧化物胶 Inpria）、<b>掩膜基板</b>（Hoya / AGC）、<b>防护膜 Pellicle</b>（三井）、<b>光学</b>（蔡司）。进展（2026）：<b>Intel 率先用上 High-NA</b>（EXE:5200B，175 片/小时），三星、SK 海力士跟进；<b>台积电因太贵暂缓</b>（A14 暂不用 High-NA），High-NA 量产普遍预期 2027–28 <span style="color:#9a86c8">[✓已核实·2026-06；单价为 ~估算·多源，复核期 2027Q1]</span>。对国产替代，EUV 仍是<b>尚未突破</b>的最高壁垒。</div>
       </div>
 
       <!-- ===== SCENE 6: MEMORY ===== -->
@@ -2227,7 +3165,7 @@
           <radialGradient id="gPlasma" cx="0.5" cy="0.5" r="0.7"><stop offset="0" stop-color="#c9b3f5" stop-opacity="0.85"/><stop offset="0.6" stop-color="#8f7be0" stop-opacity="0.5"/><stop offset="1" stop-color="#5b48a8" stop-opacity="0.15"/></radialGradient>
         </defs></svg>
 
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px"><b style="color:#e8eef9">光刻只是把图形印在光刻胶上</b>——胶本身不是芯片。真正把图形变成材料结构的，是一对互补的工艺：<b style="color:#f0738a">刻蚀（减法：挖掉）</b>和<b style="color:#7fd0c4">沉积（加法：长上）</b>。一颗芯片就是几十层「<b>沉积 → 光刻 → 刻蚀</b>」循环叠出来的。本页接「<b>光刻</b>」，对应「<b>前道·制造流程</b>」里反复出现的那两个动作。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px"><b style="color:var(--txt)">光刻只是把图形印在光刻胶上</b>——胶本身不是芯片。真正把图形变成材料结构的，是一对互补的工艺：<b style="color:#f0738a">刻蚀（减法：挖掉）</b>和<b style="color:var(--t-teal2)">沉积（加法：长上）</b>。一颗芯片就是几十层「<b>沉积 → 光刻 → 刻蚀</b>」循环叠出来的。本页接「<b>光刻</b>」，对应「<b>前道·制造流程</b>」里反复出现的那两个动作。</div>
 
         <div class="subttl">一、先看全局：造一层图形 ＝ 一轮"加法 → 印刷 → 减法"</div>
         <svg viewBox="0 0 660 240">
@@ -2865,9 +3803,9 @@
         </svg>
         <div class="cap"><b>"卡点"的确切含义</b>：不是所有膜都用 ALD（太慢太贵），而是<b>最关键的那几层膜非它不可</b>——而这几层恰好都长在制程演进的咽喉上（栅介质、四面栅、多重图形化、存储电容、通道孔衬里）。把同一"自限制"哲学用在减法上＝ALE 原子层刻蚀（见上文刻蚀节）。设备端一句：ALD 领头羊 ASM International，国产拓荆科技在追——格局见第二轨「设备」赛道。</div>
 
-        <div class="note" style="border-left-color:#8fe9e1;background:rgba(143,233,225,.06)"><b style="color:#8fe9e1">矛与盾（两个"机制加深"合起来看）</b>：高深宽比刻蚀是<b>极限减法</b>，ALD 是<b>极限加法</b>——3D NAND 通道孔＝刻蚀打一口 60:1 的井，再用 ALD/CVD 往井壁铺电荷俘获三明治和多晶硅沟道；DRAM 电容＝刻蚀挖深筒 + ALD 铺高K。结构每立体一步（FinFET→GAA→3D 堆叠），这对矛与盾就同时升级一档——先进产线里<b>刻蚀与薄膜设备价值量占比持续膨胀</b>的机制根源就在这里（格局见第二轨「设备」赛道）。</div>
+        <div class="note" style="border-left-color:var(--t-teal1);background:rgba(143,233,225,.06)"><b style="color:var(--t-teal1)">矛与盾（两个"机制加深"合起来看）</b>：高深宽比刻蚀是<b>极限减法</b>，ALD 是<b>极限加法</b>——3D NAND 通道孔＝刻蚀打一口 60:1 的井，再用 ALD/CVD 往井壁铺电荷俘获三明治和多晶硅沟道；DRAM 电容＝刻蚀挖深筒 + ALD 铺高K。结构每立体一步（FinFET→GAA→3D 堆叠），这对矛与盾就同时升级一档——先进产线里<b>刻蚀与薄膜设备价值量占比持续膨胀</b>的机制根源就在这里（格局见第二轨「设备」赛道）。</div>
         <div class="note"><b>这道工艺用什么机器</b>：CVD/ALD 设备（应用材料、泛林、TEL、ASM International——ALD 领头羊）；PVD（应用材料近乎垄断）；电镀（应用材料、ACM/盛美）。国产：北方华创（CVD/PVD/炉管）、拓荆科技（PECVD/ALD）、盛美上海（电镀/清洗）——一句列示，格局详见第二轨「设备」赛道。</div>
-        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">串起来看（回链）</b>：一层铜互连＝<b>刻蚀</b>挖出沟槽 → <b>PVD</b> 铺阻挡层+种子层 → <b>电镀</b>填铜 → <b>CMP</b> 磨平——这正是「前道·制造流程」第 14–26 步大马士革循环的机制拆解。材料端：靶材、前驱体、电镀液的产业与国产化见第二轨「材料」赛道。</div>
+        <div class="note" style="border-left-color:var(--t-amber);background:rgba(240,192,130,.07)"><b style="color:var(--t-amber2)">串起来看（回链）</b>：一层铜互连＝<b>刻蚀</b>挖出沟槽 → <b>PVD</b> 铺阻挡层+种子层 → <b>电镀</b>填铜 → <b>CMP</b> 磨平——这正是「前道·制造流程」第 14–26 步大马士革循环的机制拆解。材料端：靶材、前驱体、电镀液的产业与国产化见第二轨「材料」赛道。</div>
       </div>
       <!-- ===== SCENE: CLEAN & METROLOGY ===== -->
       <div class="scene" id="s-clean" hidden>
@@ -2877,7 +3815,7 @@
           <marker id="clAo" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e9a04c"/></marker>
         </defs></svg>
 
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">芯片制造里<b style="color:#e8eef9">最没存在感、却无处不在</b>的两类工艺：<b style="color:#7fd0c4">清洗</b>——占全部工序步数约五分之一 <span style="color:#7a8aa8">[~估算·业界通行说法]</span>，几乎每道关键工序前后都要洗；<b style="color:#c8b3ff">量测与检测</b>——每造一层都要"体检"。它们不"造"任何结构，却直接决定良率的生死。接「<b>前道·制造流程</b>」与「<b>刻蚀·沉积</b>」；量测闭环与「<b>后道·封装测试</b>」的良率闭环首尾呼应。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">芯片制造里<b style="color:var(--txt)">最没存在感、却无处不在</b>的两类工艺：<b style="color:var(--t-teal2)">清洗</b>——占全部工序步数约五分之一 <span style="color:var(--t-dim2)">[~估算·业界通行说法]</span>，几乎每道关键工序前后都要洗；<b style="color:var(--t-pur)">量测与检测</b>——每造一层都要"体检"。它们不"造"任何结构，却直接决定良率的生死。接「<b>前道·制造流程</b>」与「<b>刻蚀·沉积</b>」；量测闭环与「<b>后道·封装测试</b>」的良率闭环首尾呼应。</div>
 
         <div class="subttl">一、先认识敌人：三类污染怎么"杀死"晶体管</div>
         <svg viewBox="0 0 660 240">
@@ -3175,7 +4113,7 @@
           </g>
           <text x="330" y="254" font-size="9" fill="#8aa0c8" text-anchor="middle">数字感：在一片 300mm 晶圆上找一颗 20nm 颗粒，面积比相当于<tspan fill="#e8eef9" font-weight="700">在整个北京市找一枚一元硬币</tspan> [△量级类比]——而且每小时要"翻找"几十片。</text>
         </svg>
-        <div class="note" style="border-left-color:#c8b3ff;background:rgba(200,179,255,.06)"><b style="color:#c8b3ff">为什么这是国产化最薄弱的设备环节</b>：量测检测＝精密光学＋纳米级运动平台＋物理建模＋<b>缺陷/量测数据库</b>四重积累，而数据库随装机量滚雪球（装得越多、认得越准）→ 强者恒强。过程控制市场 KLA 一家约 <b>56%</b>、光学晶圆检测超 <b>85%</b> [~估算·2025 市场研究口径]，第二名应用材料仅约 10%；国产中科飞测（缺陷检测/膜厚）、精测电子（膜厚/OCD）、睿励精仪（膜厚）在单点突破，整体自给率仍为个位数 [~估算·研报口径]。过程控制占晶圆厂设备投资约 11–13% 且随节点上行 [~估算]——机制根源正是上文的"每层必修课"。格局与公司详见第二轨「设备」赛道。</div>
+        <div class="note" style="border-left-color:var(--t-pur);background:rgba(200,179,255,.06)"><b style="color:var(--t-pur)">为什么这是国产化最薄弱的设备环节</b>：量测检测＝精密光学＋纳米级运动平台＋物理建模＋<b>缺陷/量测数据库</b>四重积累，而数据库随装机量滚雪球（装得越多、认得越准）→ 强者恒强。过程控制市场 KLA 一家约 <b>56%</b>、光学晶圆检测超 <b>85%</b> [~估算·2025 市场研究口径]，第二名应用材料仅约 10%；国产中科飞测（缺陷检测/膜厚）、精测电子（膜厚/OCD）、睿励精仪（膜厚）在单点突破，整体自给率仍为个位数 [~估算·研报口径]。过程控制占晶圆厂设备投资约 11–13% 且随节点上行 [~估算]——机制根源正是上文的"每层必修课"。格局与公司详见第二轨「设备」赛道。</div>
 
         <div class="subttl">量测数据的闭环：SPC / APC——工厂的"自动驾驶"</div>
         <svg viewBox="0 0 660 120">
@@ -3200,10 +4138,10 @@
           <text x="330" y="97" font-size="8.5" fill="#c9a86a" text-anchor="middle">参数回补机台——上千道工序能"不跑偏"，靠的就是这套每层都在转的小闭环</text>
         </svg>
         <div class="note"><b>这道工艺用什么机器</b>：缺陷检测近乎被 <b>KLA</b> 主导（明场/暗场/电子束复检），CD-SEM（日立高新）、OCD/膜厚（Nova、Onto）、套刻（KLA、ASML）；国产：中科飞测、精测电子、睿励精仪——量测检测是国产化最薄弱的设备环节之一 [~估算·多方研究口径]，格局详见第二轨「设备」赛道。</div>
-        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">全流程至此补齐（接第二轨）</b>：光刻（印）、刻蚀（挖）、沉积（长）、掺杂（注）、CMP（磨）、清洗（洗）、量测（量）——八大工艺在轨1 已各有其位。湿电子化学品、超纯水系统的产业与国产化见第二轨「材料」；清洗机、量测检测设备见第二轨「设备」。</div>
+        <div class="note" style="border-left-color:var(--t-amber);background:rgba(240,192,130,.07)"><b style="color:var(--t-amber2)">全流程至此补齐（接第二轨）</b>：光刻（印）、刻蚀（挖）、沉积（长）、掺杂（注）、CMP（磨）、清洗（洗）、量测（量）——八大工艺在轨1 已各有其位。湿电子化学品、超纯水系统的产业与国产化见第二轨「材料」；清洗机、量测检测设备见第二轨「设备」。</div>
       </div>
       <div class="scene" id="s-mem" hidden>
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">芯片分两大类：<b style="color:#e8eef9">逻辑</b>(负责运算)和<b style="color:#e8eef9">存储</b>(负责记忆)。存储又分<b style="color:#e8eef9">易失</b>(断电就丢：SRAM / DRAM)和<b style="color:#e8eef9">非易失</b>(断电仍在：NAND / NOR 闪存)。存储是<b style="color:#e8eef9">强周期、寡头</b>的大产业，也是 AI 最关键的"喂数据"瓶颈。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">芯片分两大类：<b style="color:var(--txt)">逻辑</b>(负责运算)和<b style="color:var(--txt)">存储</b>(负责记忆)。存储又分<b style="color:var(--txt)">易失</b>(断电就丢：SRAM / DRAM)和<b style="color:var(--txt)">非易失</b>(断电仍在：NAND / NOR 闪存)。存储是<b style="color:var(--txt)">强周期、寡头</b>的大产业，也是 AI 最关键的"喂数据"瓶颈。</div>
 
         <div class="subttl">A · 存储金字塔：越往上越快越贵越小，越往下越慢越便宜越大</div>
         <svg viewBox="0 0 620 244">
@@ -3546,9 +4484,9 @@
           <text x="310" y="152" font-size="8.5" fill="#8aa0c8" text-anchor="middle">EUV 成本压力正是 4F²/3D 提速的动力：结构省面积＝少几张 EUV 掩膜 [✓机制·TrendForce 2024-08]</text>
           <text x="310" y="168" font-size="8" fill="#7a8aa8" text-anchor="middle">快变声明由 FACT-REVIEW #20 跟踪</text>
         </svg>
-        <div class="note" style="border-left-color:#8fe9e1;background:rgba(143,233,225,.06)"><b style="color:#8fe9e1">两条专线对照收尾</b>：NAND 靠<b>加层数</b>逃出了光刻牢笼（DUV 就够，刻蚀/沉积扛大旗），DRAM 还锁在平面 pitch 里<b>逐代硬缩</b>——所以 DRAM 是 EUV 乃至 High-NA 在存储侧的主战场，而 HBM 则是 DRAM 用<b>封装堆叠</b>绕道的答案（见「先进封装」）。设备需求结构由此分野：<b>NAND 扩产利好刻蚀/薄膜，DRAM 扩产利好光刻/量测</b> [~业界共识]——轨2「设备」赛道的需求地图可以由这两条专线直接推出来。</div>
+        <div class="note" style="border-left-color:var(--t-teal1);background:rgba(143,233,225,.06)"><b style="color:var(--t-teal1)">两条专线对照收尾</b>：NAND 靠<b>加层数</b>逃出了光刻牢笼（DUV 就够，刻蚀/沉积扛大旗），DRAM 还锁在平面 pitch 里<b>逐代硬缩</b>——所以 DRAM 是 EUV 乃至 High-NA 在存储侧的主战场，而 HBM 则是 DRAM 用<b>封装堆叠</b>绕道的答案（见「先进封装」）。设备需求结构由此分野：<b>NAND 扩产利好刻蚀/薄膜，DRAM 扩产利好光刻/量测</b> [~业界共识]——轨2「设备」赛道的需求地图可以由这两条专线直接推出来。</div>
 
-        <div class="note" style="border-left-color:#b08bf0;background:rgba(176,139,240,.07)"><b>从研究角度记住三点：</b>① 存储是典型的<b>强周期、寡头</b>生意——产品高度标准化(近似大宗商品)，供需错配→价格大起大落，<b>景气周期</b>对相关公司业绩与股价影响极大。② 格局：<b>DRAM</b> ≈ 三星 / SK 海力士 / 美光(+长鑫)，<b>NAND</b> ≈ 三星 / SK 海力士 / 美光 / 铠侠·闪迪(+长江存储)。③ <b>HBM 改变了游戏</b>：它把本属周期品的 DRAM 变成<b>绑定 AI、供不应求的高毛利产品</b>(见 先进封装)，是当前存储里最贵、最紧的细分。</div>
+        <div class="note" style="border-left-color:var(--pur);background:rgba(176,139,240,.07)"><b>从研究角度记住三点：</b>① 存储是典型的<b>强周期、寡头</b>生意——产品高度标准化(近似大宗商品)，供需错配→价格大起大落，<b>景气周期</b>对相关公司业绩与股价影响极大。② 格局：<b>DRAM</b> ≈ 三星 / SK 海力士 / 美光(+长鑫)，<b>NAND</b> ≈ 三星 / SK 海力士 / 美光 / 铠侠·闪迪(+长江存储)。③ <b>HBM 改变了游戏</b>：它把本属周期品的 DRAM 变成<b>绑定 AI、供不应求的高毛利产品</b>(见 先进封装)，是当前存储里最贵、最紧的细分。</div>
         <!-- mem-end -->
       </div>
 
@@ -3559,7 +4497,7 @@
           <marker id="beAd" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#9fb0cc"/></marker>
         </defs></svg>
 
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">整条芯片生产分<b style="color:#e8eef9">大三段</b>：<b style="color:#7fd0c4">前道（晶圆制造）</b> → <b style="color:#34d6cf">中测（CP）</b> → <b style="color:#f0c082">后道（封装测试）</b>。前面几页讲的是<b>前道</b>（在晶圆上把电路造出来）；这一页讲<b>后道</b>——把"一整片晶圆"变成"一颗颗能用、带引脚/焊球的芯片"，由<b>封测厂（OSAT）</b>完成。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">整条芯片生产分<b style="color:var(--txt)">大三段</b>：<b style="color:var(--t-teal2)">前道（晶圆制造）</b> → <b style="color:var(--cy)">中测（CP）</b> → <b style="color:var(--t-amber)">后道（封装测试）</b>。前面几页讲的是<b>前道</b>（在晶圆上把电路造出来）；这一页讲<b>后道</b>——把"一整片晶圆"变成"一颗颗能用、带引脚/焊球的芯片"，由<b>封测厂（OSAT）</b>完成。</div>
 
         <div class="subttl">大尺度三段：芯片从晶圆到成品</div>
         <svg viewBox="0 0 620 116">
@@ -3601,7 +4539,7 @@
           <text x="428" y="200" font-size="14" fill="#34d6cf" text-anchor="middle">→</text>
           <g><rect x="470" y="178" width="60" height="18" rx="2" fill="#1a1f2b" stroke="#3a4150" stroke-width="0.8"/><line x1="478" y1="183" x2="522" y2="183" stroke="#6b7488" stroke-width="1"/><g fill="url(#gSolder)"><circle cx="480" cy="200" r="3.5"/><circle cx="494" cy="200" r="3.5"/><circle cx="508" cy="200" r="3.5"/><circle cx="522" cy="200" r="3.5"/></g>
             <text x="500" y="224" font-size="10" fill="#e8eef9" text-anchor="middle" font-weight="700">⑧ 成品（BGA）</text><text x="500" y="236" font-size="8" fill="#8b9bb8" text-anchor="middle">植球·打标·终测 FT</text></g>
-          <text x="310" y="266" font-size="10.5" fill="#9bb0d0" text-anchor="middle">划片之后，晶圆"由整变零"：一颗颗裸晶被装片、键合、塑封成有外壳的芯片；最后 <b style="color:#cfe0ff">终测 FT</b> 在不同温度/电压下全功能测试、分档（binning）出货。</text>
+          <text x="310" y="266" font-size="10.5" fill="#9bb0d0" text-anchor="middle">划片之后，晶圆"由整变零"：一颗颗裸晶被装片、键合、塑封成有外壳的芯片；最后 <tspan fill="#cfe0ff">终测 FT</tspan> 在不同温度/电压下全功能测试、分档（binning）出货。</text>
           <text x="310" y="286" font-size="9.5" fill="#8b9bb8" text-anchor="middle">中测 CP＝在"整片晶圆"上测（挑掉坏的，不浪费封装钱）；终测 FT＝在"封装好的成品"上测。两道测试一前一后。</text>
         </svg>
 
@@ -3774,14 +4712,14 @@
           <path d="M517,66 Q517,88 311,88 Q105,88 105,70" fill="none" stroke="#e9a04c" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#beAd)"/>
           <text x="311" y="84" font-size="8.5" fill="#c9a86a" text-anchor="middle">调机台 · 改配方 · 换耗材 —— 良率爬坡的闭环</text>
         </svg>
-        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">谁在做测试（接第二轨）</b>：测试机双雄<b>爱德万 / 泰瑞达</b>，探针台（东京精密、东京电子）、探针卡（FormFactor）、分选机各有专门玩家；国产<b>华峰测控、长川科技</b>从模拟/功率测试机切入。专业测试厂与封测厂的生意、格局与国产化，见第二轨「封装测试」赛道页。</div>
+        <div class="note" style="border-left-color:var(--t-amber);background:rgba(240,192,130,.07)"><b style="color:var(--t-amber2)">谁在做测试（接第二轨）</b>：测试机双雄<b>爱德万 / 泰瑞达</b>，探针台（东京精密、东京电子）、探针卡（FormFactor）、分选机各有专门玩家；国产<b>华峰测控、长川科技</b>从模拟/功率测试机切入。专业测试厂与封测厂的生意、格局与国产化，见第二轨「封装测试」赛道页。</div>
 
         <div class="note">封装外形也在<b>不断进化</b>：DIP → QFP → <b>QFN</b> → <b>BGA</b>（底部焊球阵列）→ 晶圆级 <b>WLP / Fan-out</b> → <b>2.5D / 3D 先进封装</b>（CoWoS / HBM / Chiplet）。摩尔定律放缓后，<b>先进封装</b>成了继续提性能的主路——详见 <b>先进封装</b>。</div>
-        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">谁在做（接第二轨）</b>：后道由<b>封测厂 OSAT</b> 承担——日月光（ASE）、安靠（Amkor）、长电科技、通富微电、华天等。它们的<b>产业格局、价值量、国产化</b>属<b>第二轨</b>的封测赛道，本页只讲"工艺怎么走"。</div>
+        <div class="note" style="border-left-color:var(--t-amber);background:rgba(240,192,130,.07)"><b style="color:var(--t-amber2)">谁在做（接第二轨）</b>：后道由<b>封测厂 OSAT</b> 承担——日月光（ASE）、安靠（Amkor）、长电科技、通富微电、华天等。它们的<b>产业格局、价值量、国产化</b>属<b>第二轨</b>的封测赛道，本页只讲"工艺怎么走"。</div>
       </div>
       <!-- ===== SCENE 7: ADVANCED PACKAGING ===== -->
       <div class="scene" id="s-pkg" hidden>
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">摩尔定律放缓后，<b style="color:#e8eef9">"把多颗芯片拼起来 / 叠起来"</b>成了继续提升性能的主路——这就是<b style="color:#e8eef9">先进封装</b>。今天最典型、也最紧缺的应用，就是 AI 加速器：一颗 GPU 主芯片 + 一圈 HBM 高带宽显存。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">摩尔定律放缓后，<b style="color:var(--txt)">"把多颗芯片拼起来 / 叠起来"</b>成了继续提升性能的主路——这就是<b style="color:var(--txt)">先进封装</b>。今天最典型、也最紧缺的应用，就是 AI 加速器：一颗 GPU 主芯片 + 一圈 HBM 高带宽显存。</div>
 
         <div class="subttl">A · 思路转变：从"单片大芯片"到"芯粒(Chiplet)拆分 + 封装拼装"</div>
         <svg viewBox="0 0 620 176">
@@ -3821,7 +4759,7 @@
           <rect x="66" y="86" width="78" height="30" rx="2" fill="url(#gSi)" stroke="#6f88c0"/><text x="105" y="104" font-size="8" fill="#cfe0ff" text-anchor="middle">GPU die</text>
           <rect x="170" y="86" width="80" height="30" rx="2" fill="url(#gSi)" stroke="#6f88c0"/><text x="210" y="104" font-size="8" fill="#cfe0ff" text-anchor="middle">HBM</text>
           <g fill="#d98f3e"><circle cx="80" cy="118" r="2.3"/><circle cx="105" cy="118" r="2.3"/><circle cx="130" cy="118" r="2.3"/><circle cx="186" cy="118" r="2.3"/><circle cx="210" cy="118" r="2.3"/><circle cx="234" cy="118" r="2.3"/></g>
-          <path d="M120 101 H170" stroke="#5eead4" stroke-width="1.8" marker-end="url(#pkgL)" marker-start="url(#pkgL)"/>
+          <path d="M146 101 H168" stroke="#5eead4" stroke-width="1.8" marker-end="url(#pkgL)" marker-start="url(#pkgL)"/>
           <text x="145" y="79" font-size="8" fill="#8ff0e6" text-anchor="middle">超高带宽横向连</text>
           <text x="155" y="207" font-size="9" fill="#aebbd2" text-anchor="middle">芯片"摊开"排在一块硅板上 — 代表：台积电 CoWoS</text>
           <line x1="310" y1="22" x2="310" y2="196" stroke="#2a3550" stroke-width="1"/>
@@ -3844,7 +4782,7 @@
           <span><i class="sw" style="background:#9aa6bb"></i>焊料球（C4 / BGA）</span>
           <span><i class="sw" style="background:#6e5c39"></i>封装基板</span>
         </div>
-        <div class="note" style="border-left-color:#34d6cf;background:rgba(52,214,207,.06)">一句话分清：<b>2.5D 是把芯片"摊开"排在一块硅中介层上</b>（靠中介层里的精细布线横向高速连）；<b>3D 是把芯片"叠起来"</b>（靠 TSV 硅通孔竖直打穿、上下直连，路径更短、更省电）。真实的 AI 芯片往往<b>两者并用</b>：HBM 自己是 3D 叠的，再和 GPU 一起 2.5D 放到中介层上。下面分别拆开看。</div>
+        <div class="note" style="border-left-color:var(--cy);background:rgba(52,214,207,.06)">一句话分清：<b>2.5D 是把芯片"摊开"排在一块硅中介层上</b>（靠中介层里的精细布线横向高速连）；<b>3D 是把芯片"叠起来"</b>（靠 TSV 硅通孔竖直打穿、上下直连，路径更短、更省电）。真实的 AI 芯片往往<b>两者并用</b>：HBM 自己是 3D 叠的，再和 GPU 一起 2.5D 放到中介层上。下面分别拆开看。</div>
         <div class="subttl">C · CoWoS 精细剖面：一颗 AI GPU 是怎么"拼"出来的（从下往上看）</div>
         <svg viewBox="0 0 660 350">
           <defs><marker id="pkgC" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#9fb0cc"/></marker></defs>
@@ -3854,10 +4792,10 @@
           <rect x="70" y="250" width="520" height="42" fill="url(#gSub)" stroke="#7a663f"/>
           <g stroke="#c79a64" stroke-width="1.3" opacity="0.75"><line x1="86" y1="262" x2="574" y2="262"/><line x1="86" y1="273" x2="574" y2="273"/><line x1="86" y1="284" x2="574" y2="284"/></g>
           <g stroke="#a87f3e" stroke-width="2"><line x1="200" y1="262" x2="200" y2="284"/><line x1="350" y1="262" x2="350" y2="284"/><line x1="470" y1="262" x2="470" y2="284"/></g>
-          <text x="330" y="244" font-size="9" fill="#e3d3a4" text-anchor="middle">封装基板 Substrate（有机多层布线）</text>
+          <text x="330" y="258" font-size="9" fill="#e3d3a4" text-anchor="middle">封装基板 Substrate（有机多层布线）</text>
           <g fill="url(#gSolder)"><circle cx="120" cy="242" r="5.5"/><circle cx="180" cy="242" r="5.5"/><circle cx="240" cy="242" r="5.5"/><circle cx="300" cy="242" r="5.5"/><circle cx="360" cy="242" r="5.5"/><circle cx="420" cy="242" r="5.5"/><circle cx="480" cy="242" r="5.5"/><circle cx="540" cy="242" r="5.5"/></g>
           <rect x="95" y="204" width="470" height="32" fill="url(#gSi)" stroke="#5a76b0"/>
-          <text x="330" y="224" font-size="9" fill="#bcd0f0" text-anchor="middle">硅中介层 Silicon Interposer（薄至 ~100µm）</text>
+          <line x1="92" y1="218" x2="102" y2="218" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="88" y="213" font-size="8" fill="#bcd0f0" text-anchor="end">硅中介层 Interposer</text><text x="88" y="224" font-size="7.5" fill="#9fb8e0" text-anchor="end">（薄至 ~100µm）</text>
           <g stroke="#e9a04c" stroke-width="1.3" opacity="0.95"><line x1="120" y1="209" x2="205" y2="209"/><line x1="232" y1="209" x2="330" y2="209"/><line x1="360" y1="209" x2="452" y2="209"/><line x1="474" y1="209" x2="544" y2="209"/></g>
           <g fill="url(#gCuV)"><rect x="128" y="212" width="4" height="24"/><rect x="190" y="212" width="4" height="24"/><rect x="252" y="212" width="4" height="24"/><rect x="328" y="212" width="4" height="24"/><rect x="404" y="212" width="4" height="24"/><rect x="466" y="212" width="4" height="24"/><rect x="528" y="212" width="4" height="24"/></g>
           <g fill="#d98f3e"><circle cx="112" cy="200" r="2.4"/><circle cx="140" cy="200" r="2.4"/><circle cx="168" cy="200" r="2.4"/><circle cx="230" cy="200" r="2.4"/><circle cx="262" cy="200" r="2.4"/><circle cx="294" cy="200" r="2.4"/><circle cx="326" cy="200" r="2.4"/><circle cx="358" cy="200" r="2.4"/><circle cx="390" cy="200" r="2.4"/><circle cx="448" cy="200" r="2.4"/><circle cx="476" cy="200" r="2.4"/><circle cx="504" cy="200" r="2.4"/></g>
@@ -3873,22 +4811,22 @@
           <rect x="440" y="183" width="84" height="10" fill="url(#gSi)" stroke="#4a64a0" stroke-width="0.6"/>
           <g fill="url(#gSi)" stroke="#4a64a0" stroke-width="0.6"><rect x="442" y="173" width="80" height="8"/><rect x="442" y="164" width="80" height="8"/><rect x="442" y="155" width="80" height="8"/><rect x="442" y="146" width="80" height="8"/><rect x="442" y="137" width="80" height="8"/><rect x="442" y="128" width="80" height="8"/></g>
           <g fill="url(#gCuV)"><rect x="464" y="128" width="3" height="65"/><rect x="498" y="128" width="3" height="65"/></g>
-          <line x1="64" y1="100" x2="140" y2="124" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="62" y="96" font-size="8.5" fill="#cfe0ff" text-anchor="end" font-weight="700">HBM 堆叠</text><text x="62" y="107" font-size="7" fill="#9fb8e0" text-anchor="end">base die + DRAM×N</text>
-          <line x1="60" y1="200" x2="108" y2="200" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="58" y="196" font-size="8" fill="#f0c082" text-anchor="end">微凸点 ~10µm</text>
-          <line x1="60" y1="242" x2="114" y2="242" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="58" y="238" font-size="8" fill="#aab4c6" text-anchor="end">C4 凸点 ~100µm</text>
-          <line x1="60" y1="295" x2="104" y2="295" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="58" y="291" font-size="8" fill="#aab4c6" text-anchor="end">BGA 焊球 → 主板</text>
+          <line x1="92" y1="100" x2="140" y2="124" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="88" y="96" font-size="8.5" fill="#cfe0ff" text-anchor="end" font-weight="700">HBM 堆叠</text><text x="88" y="107" font-size="7" fill="#9fb8e0" text-anchor="end">base die + DRAM×N</text>
+          <line x1="92" y1="200" x2="108" y2="200" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="88" y="196" font-size="8" fill="#f0c082" text-anchor="end">微凸点 ~40µm</text>
+          <line x1="92" y1="242" x2="114" y2="242" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="88" y="238" font-size="8" fill="#aab4c6" text-anchor="end">C4 凸点 ~100µm</text>
+          <line x1="92" y1="295" x2="104" y2="295" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="88" y="291" font-size="8" fill="#aab4c6" text-anchor="end">BGA 焊球 → 主板</text>
           <line x1="600" y1="150" x2="412" y2="160" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="602" y="147" font-size="8" fill="#cfe0ff">GPU 逻辑芯片</text>
           <line x1="600" y1="206" x2="544" y2="209" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="602" y="203" font-size="8" fill="#f0c082">RDL 精细布线</text>
           <line x1="600" y1="224" x2="532" y2="224" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="602" y="227" font-size="8" fill="#f0c082">TSV 硅通孔</text>
         </svg>
-        <div class="note">从下往上：<b>主板 PCB → BGA 焊球 → 封装基板 → C4 凸点(~100µm) → 硅中介层 → 微凸点(~10µm) → GPU + 多颗 HBM</b>。中介层是关键——它是一小片硅，上面有<b>极精细的布线(RDL)</b>和<b>竖直的 TSV 硅通孔</b>，把并排的 GPU 与 HBM 用<b>上万根超短走线</b>连起来，带宽远超普通基板。<b>越往上凸点越小越密</b>（基板用大焊球、中介层用微凸点），逐级把"芯片级"的细间距过渡到"电路板级"的粗间距。注：<b>NVIDIA Blackwell</b> 就是把<b>两颗 GPU die 用 CoWoS-L（内嵌硅桥）拼成"一颗"</b>，以突破单次光刻的面积上限。</div>
+        <div class="note">从下往上：<b>主板 PCB → BGA 焊球 → 封装基板 → C4 凸点(~100µm) → 硅中介层 → 微凸点(~40µm) → GPU + 多颗 HBM</b>。中介层是关键——它是一小片硅，上面有<b>极精细的布线(RDL)</b>和<b>竖直的 TSV 硅通孔</b>，把并排的 GPU 与 HBM 用<b>上万根超短走线</b>连起来，带宽远超普通基板。<b>越往上凸点越小越密</b>（基板用大焊球、中介层用微凸点），逐级把"芯片级"的细间距过渡到"电路板级"的粗间距。注：<b>NVIDIA Blackwell</b> 就是把<b>两颗 GPU die 用 CoWoS-L（内嵌硅桥）拼成"一颗"</b>，以突破单次光刻的面积上限。</div>
         <div class="subttl">D · 放大一颗 HBM：垂直叠 8~16 层 DRAM，用 TSV 打竖井</div>
         <svg viewBox="0 0 620 300">
           <defs><marker id="pkgD" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#9fb0cc"/></marker></defs>
           <rect x="118" y="50" width="196" height="222" rx="3" fill="#141b2b" stroke="#3a4768"/>
           <text x="216" y="40" font-size="11" fill="#9fb0cc" text-anchor="middle" font-weight="700">一颗 HBM 堆叠（放大）</text>
           <rect x="128" y="240" width="176" height="26" fill="url(#gSi)" stroke="#5a76b0"/>
-          <text x="216" y="256" font-size="8" fill="#bcd0f0" text-anchor="middle">基底逻辑 die</text>
+          <text x="205" y="256" font-size="8" fill="#bcd0f0" text-anchor="middle">基底逻辑 die</text>
           <g fill="url(#gSi)" stroke="#4a64a0" stroke-width="0.7"><rect x="132" y="218" width="168" height="18"/><rect x="132" y="196" width="168" height="18"/><rect x="132" y="174" width="168" height="18"/><rect x="132" y="152" width="168" height="18"/><rect x="132" y="130" width="168" height="18"/><rect x="132" y="108" width="168" height="18"/><rect x="132" y="86" width="168" height="18"/><rect x="132" y="64" width="168" height="18"/></g>
           <g fill="url(#gCuV)"><rect x="174" y="64" width="4" height="202"/><rect x="234" y="64" width="4" height="202"/><rect x="294" y="64" width="4" height="202"/></g>
           <g fill="#cfd6e2"><circle cx="156" cy="237" r="2.3"/><circle cx="216" cy="237" r="2.3"/><circle cx="276" cy="237" r="2.3"/><circle cx="156" cy="215" r="2.3"/><circle cx="216" cy="215" r="2.3"/><circle cx="276" cy="215" r="2.3"/><circle cx="156" cy="193" r="2.3"/><circle cx="216" cy="193" r="2.3"/><circle cx="276" cy="193" r="2.3"/><circle cx="156" cy="171" r="2.3"/><circle cx="216" cy="171" r="2.3"/><circle cx="276" cy="171" r="2.3"/><circle cx="156" cy="149" r="2.3"/><circle cx="216" cy="149" r="2.3"/><circle cx="276" cy="149" r="2.3"/><circle cx="156" cy="127" r="2.3"/><circle cx="216" cy="127" r="2.3"/><circle cx="276" cy="127" r="2.3"/><circle cx="156" cy="105" r="2.3"/><circle cx="216" cy="105" r="2.3"/><circle cx="276" cy="105" r="2.3"/><circle cx="156" cy="83" r="2.3"/><circle cx="216" cy="83" r="2.3"/><circle cx="276" cy="83" r="2.3"/></g>
@@ -3900,7 +4838,7 @@
           <line x1="372" y1="252" x2="306" y2="252" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgD)"/><text x="374" y="249" font-size="8.5" fill="#bcd0f0">基底逻辑 die</text><text x="374" y="260" font-size="7.5" fill="#9fb8e0">控制器/IO/ECC/刷新/供电</text>
           <text x="216" y="288" font-size="8" fill="#8fe9e1" text-anchor="middle">↓ 整颗 HBM 再用微凸点接到硅中介层上</text>
         </svg>
-        <div class="note">HBM（高带宽存储）把<b>一颗基底逻辑 die + 上面叠 8~16 层减薄的 DRAM</b>用 <b>TSV 硅通孔</b>竖直打穿、上下直连，做成一个"存储立方体"。因为连接是<b>又宽又短的竖井</b>，带宽极高、功耗低。<b>当下主力 HBM3E</b>：8/12 层、单颗 24/36 GB、带宽约 <b>1.2 TB/s</b>（一颗 AI GPU 旁边放 6~8 颗，如 NVIDIA B200＝8 颗 ≈ 192 GB）。<b>2026 量产的 HBM4</b>：接口位宽<b>翻倍到 2048-bit</b>、带宽约 <b>2 TB/s 以上</b>、规格上限 16 层 / 48 GB（首代量产为 12 层 / 36 GB，仍用 MR-MUF/TCB；<b>混合键合</b>预计 16 层 / HBM4E 世代导入，见下）。<span style="color:#7a8aa8">[✓已核实·2026-06，复核期 2026Q4]</span></div>
+        <div class="note">HBM（高带宽存储）把<b>一颗基底逻辑 die + 上面叠 8~16 层减薄的 DRAM</b>用 <b>TSV 硅通孔</b>竖直打穿、上下直连，做成一个"存储立方体"。因为连接是<b>又宽又短的竖井</b>，带宽极高、功耗低。<b>当下主力 HBM3E</b>：8/12 层、单颗 24/36 GB、带宽约 <b>1.2 TB/s</b>（一颗 AI GPU 旁边放 6~8 颗，如 NVIDIA B200＝8 颗 ≈ 192 GB）。<b>2026 量产的 HBM4</b>：接口位宽<b>翻倍到 2048-bit</b>、带宽约 <b>2 TB/s 以上</b>、规格上限 16 层 / 48 GB（首代量产为 12 层 / 36 GB，仍用 MR-MUF/TCB；<b>混合键合</b>预计 16 层 / HBM4E 世代导入，见下）。<span style="color:var(--t-dim2)">[✓已核实·2026-06，复核期 2026Q4]</span></div>
         <div class="subttl">E · 层间互连的进化：微凸点 → 混合键合</div>
         <svg viewBox="0 0 620 200">
           <text x="150" y="15" font-size="11" fill="#9fb0cc" text-anchor="middle" font-weight="700">微凸点 Microbump（现行）</text>
@@ -3909,7 +4847,7 @@
           <rect x="44" y="128" width="212" height="34" fill="url(#gSi)" stroke="#5a76b0"/><text x="150" y="149" font-size="8.5" fill="#bcd0f0" text-anchor="middle">下层 die</text>
           <g><g fill="url(#gCu)"><rect x="81" y="72" width="10" height="16"/><rect x="135" y="72" width="10" height="16"/><rect x="189" y="72" width="10" height="16"/><rect x="243" y="72" width="10" height="16"/><rect x="81" y="112" width="10" height="16"/><rect x="135" y="112" width="10" height="16"/><rect x="189" y="112" width="10" height="16"/><rect x="243" y="112" width="10" height="16"/></g>
           <g fill="url(#gSolder)"><circle cx="86" cy="100" r="7"/><circle cx="140" cy="100" r="7"/><circle cx="194" cy="100" r="7"/><circle cx="248" cy="100" r="7"/></g></g>
-          <text x="150" y="180" font-size="8.5" fill="#aebbd2" text-anchor="middle">铜柱 + 焊料凸点，间距 ~10~25µm；</text>
+          <text x="150" y="180" font-size="8.5" fill="#aebbd2" text-anchor="middle">铜柱 + 焊料凸点，间距 ~40µm（缩向 20~25µm 到极限）；</text>
           <text x="150" y="192" font-size="8.5" fill="#aebbd2" text-anchor="middle">芯片间有缝（填 underfill），电阻 / 热阻偏高</text>
           <line x1="310" y1="22" x2="310" y2="170" stroke="#2a3550" stroke-width="1"/>
           <text x="465" y="15" font-size="11" fill="#5eead4" text-anchor="middle" font-weight="700">混合键合 Hybrid Bonding（HBM4E·3D 堆叠趋势）</text>
@@ -3917,10 +4855,10 @@
           <rect x="354" y="100" width="222" height="60" fill="url(#gSi)" stroke="#5a76b0"/><text x="465" y="134" font-size="8.5" fill="#bcd0f0" text-anchor="middle">下层 die</text>
           <g fill="url(#gCu)"><rect x="390" y="93" width="16" height="14"/><rect x="438" y="93" width="16" height="14"/><rect x="486" y="93" width="16" height="14"/><rect x="534" y="93" width="16" height="14"/></g>
           <line x1="354" y1="100" x2="576" y2="100" stroke="#0a0e1a" stroke-width="0.8"/>
-          <text x="465" y="180" font-size="8.5" fill="#9ff0e6" text-anchor="middle">铜垫直接对接 + 介质键合，无焊料、亚微米间距：</text>
-          <text x="465" y="192" font-size="8.5" fill="#9ff0e6" text-anchor="middle">更密、更省电、更好散热（HBM4 起逐步采用）</text>
+          <text x="465" y="180" font-size="8.5" fill="#9ff0e6" text-anchor="middle">铜垫直接对接 + 介质键合，无焊料、间距 <10µm（量产 6~9µm）：</text>
+          <text x="465" y="192" font-size="8.5" fill="#9ff0e6" text-anchor="middle">更密、更省电、更好散热（HBM4E 起逐步导入）</text>
         </svg>
-        <div class="note"><b>为什么要换？</b>传统<b>微凸点</b>是"铜柱顶个焊料球"把上下两片芯片接起来，中间有缝、间距停在 ~10µm 量级；当堆叠层数越来越多、I/O 越来越密，焊料的<b>电阻、热阻和间距</b>都成了瓶颈。<b>混合键合</b>直接把两片芯片的<b>铜垫对铜垫压合、周围介质也键合在一起</b>，没有焊料、没有缝隙，间距能进到<b>亚微米</b>——更密、更省电、散热更好。HBM4 与台积电 SoIC（如 NVIDIA Rubin、AMD 3D V-Cache）正是这条路。</div>
+        <div class="note"><b>为什么要换？</b>传统<b>微凸点</b>是"铜柱顶个焊料球"把上下两片芯片接起来，中间有缝、间距停在 <b>~40µm 量级</b>（缩到约 10~20µm 就是焊料方案的极限）；当堆叠层数越来越多、I/O 越来越密，焊料的<b>电阻、热阻和间距</b>都成了瓶颈。<b>混合键合</b>直接把两片芯片的<b>铜垫对铜垫压合、周围介质也键合在一起</b>，没有焊料、没有缝隙，间距能进到<b>亚微米</b>（研发演示已验证）——更密、更省电、散热更好。<b>HBM4E（规划导入）</b>与台积电 SoIC（如 NVIDIA Rubin、AMD 3D V-Cache）正是这条路。</div>
 
         <div class="subttl" id="mk-advpkg">机制加深：这些结构是怎么"造"出来的——TSV、CoWoS 流水线与混合键合</div>
         <div class="cap">上面 B–E 讲的都是"结构长什么样"，这里补"工艺怎么走"。先进封装的本质＝<b>把前道的看家本领（深孔刻蚀、电镀、CMP、键合）搬到封装尺度</b>——这也是它毛利更高、且越来越由晶圆厂主导的机制原因（产业面见轨2「封测」赛道）。</div>
@@ -4067,51 +5005,179 @@
           <text x="310" y="258" font-size="8.5" fill="#8aa0c8" text-anchor="middle">NVIDIA Rubin＝SoIC 混合键合＋HBM4；2µm 级 D2W 在研；HBM 侧首代 HBM4 仍微凸点/MR-MUF</text>
           <text x="310" y="272" font-size="8" fill="#7a8aa8" text-anchor="middle">混合键合看 16 层/HBM4E——JEDEC 拟放宽堆高至 ~900µm，或再缓其紧迫性 [?待证·TrendForce 2026-03]（FACT-REVIEW #1/#19 跟踪）</text>
         </svg>
-        <div class="note" style="border-left-color:#5eead4;background:rgba(94,234,212,.06)"><b style="color:#5eead4">工艺哲学收尾</b>：混合键合把封装变成了<b>前道的延伸</b>——CMP 精度、洁净度、对准量测全部向 fab 标准看齐（呼应「清洗·量测」页），这正是"封装厂前道化、晶圆厂封装化"竞争的技术根源。设备材料一句：键合机（BESI、EVG、ASMPT；国产在追）、临时键合胶/载板、封装级 CMP——格局见第二轨「封测」「设备」「材料」赛道。</div>
+        <div class="note" style="border-left-color:var(--cy2);background:rgba(94,234,212,.06)"><b style="color:var(--cy2)">工艺哲学收尾</b>：混合键合把封装变成了<b>前道的延伸</b>——CMP 精度、洁净度、对准量测全部向 fab 标准看齐（呼应「清洗·量测」页），这正是"封装厂前道化、晶圆厂封装化"竞争的技术根源。设备材料一句：键合机（BESI、EVG、ASMPT；国产在追）、临时键合胶/载板、封装级 CMP——格局见第二轨「封测」「设备」「材料」赛道。</div>
 
         <div class="subttl">F · 产业现状：为什么先进封装＝当前 AI 算力的瓶颈</div>
         <div class="nm">
-          <div class="nmrow"><div class="co" style="color:#5eead4">2.5D 封装</div><div class="de">CoWoS 几乎由<b style="color:#e8eef9">台积电</b>独家大规模供应；2026 年 NVIDIA 一家就订走约<b style="color:#e8eef9">六成</b>产能，交期一度排到 <b>50+ 周</b>。台积电正把 CoWoS 产能向 <b>~13 万片/月</b>扩。<span style="color:#7a8aa8">[~估算·产业链调研口径·2026-06]</span></div></div>
-          <div class="nmrow"><div class="co" style="color:#b08bf0">HBM</div><div class="de">三家：<b style="color:#e8eef9">SK 海力士（领先）/ 三星 / 美光</b>。HBM3E 当前主力，<b style="color:#e8eef9">HBM4 于 2026 量产</b>（首代均为 12 层 36GB：SK 海力士 / 美光量产、三星 2026 初出货；SK 的 16 层 48GB 为已展示样品，对应下一代平台）。<span style="color:#7a8aa8">[✓已核实·2026-06]</span></div></div>
-          <div class="nmrow"><div class="co" style="color:#e9a04c">谁在用</div><div class="de">NVIDIA <b style="color:#e8eef9">Blackwell</b>（双 GPU die＋8×HBM3E）、下一代 <b style="color:#e8eef9">Rubin</b>（HBM4＋CoWoS-L＋SoIC 3D 堆叠）；AMD <b style="color:#e8eef9">MI300/MI350</b> 系列。先进封装＋HBM 已是 AI 算力扩张最紧的两个卡点之一。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">2.5D 封装</div><div class="de">CoWoS 几乎由<b style="color:var(--txt)">台积电</b>独家大规模供应；2026 年 NVIDIA 一家就订走约<b style="color:var(--txt)">六成</b>产能，交期一度排到 <b>50+ 周</b>。台积电正把 CoWoS 产能向 <b>~13 万片/月</b>扩。<span style="color:var(--t-dim2)">[~估算·产业链调研口径·2026-06]</span></div></div>
+          <div class="nmrow"><div class="co" style="color:var(--pur)">HBM</div><div class="de">三家：<b style="color:var(--txt)">SK 海力士（领先）/ 三星 / 美光</b>。HBM3E 当前主力，<b style="color:var(--txt)">HBM4 于 2026 量产</b>（首代均为 12 层 36GB：SK 海力士 / 美光量产、三星 2026 初出货；SK 的 16 层 48GB 为已展示样品，对应下一代平台）。<span style="color:var(--t-dim2)">[✓已核实·2026-06]</span></div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cu)">谁在用</div><div class="de">NVIDIA <b style="color:var(--txt)">Blackwell</b>（双 GPU die＋8×HBM3E）、下一代 <b style="color:var(--txt)">Rubin</b>（HBM4＋CoWoS-L＋SoIC 3D 堆叠）；AMD <b style="color:var(--txt)">MI300/MI350</b> 系列。先进封装＋HBM 已是 AI 算力扩张最紧的两个卡点之一。</div></div>
         </div>
-        <div class="note" style="border-left-color:#e9a04c;background:rgba(233,160,76,.06)">一句话收尾：当晶体管已经难再快速变小，<b>"把更多芯片更密地拼起来、叠起来、用 HBM 喂饱它们"</b>成了 AI 芯片继续变强的主战场——所以<b>先进封装(CoWoS) 与 HBM 的产能，直接决定了能造出多少 AI 算力</b>。</div>
+        <div class="note" style="border-left-color:var(--cu);background:rgba(233,160,76,.06)">一句话收尾：当晶体管已经难再快速变小，<b>"把更多芯片更密地拼起来、叠起来、用 HBM 喂饱它们"</b>成了 AI 芯片继续变强的主战场——所以<b>先进封装(CoWoS) 与 HBM 的产能，直接决定了能造出多少 AI 算力</b>。</div>
         <!-- pkg-end -->
       </div>
 
       <!-- ===== SCENE 8: POWER / COMPOUND ===== -->
       <div class="scene" id="s-pwr" hidden>
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">除了"硅基逻辑 / 存储"这条主线，还有一条<b style="color:#e8eef9">独立赛道：功率半导体 + 化合物半导体（SiC / GaN）</b>。它们不拼"更小更快"，而拼<b style="color:#e8eef9">扛高压、耐高温、低损耗、高频</b>——是<b style="color:#e8eef9">电动车 / 光伏储能 / 快充 / 5G / 电网</b>的核心器件，也是和 AI 主线并行、国产化更快的投资方向。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">除了"硅基逻辑 / 存储"这条主线，还有一条<b style="color:var(--txt)">独立赛道：功率半导体 + 化合物半导体（SiC / GaN）</b>。它们不拼"更小更快"，而拼<b style="color:var(--txt)">扛高压、耐高温、低损耗、高频</b>——是<b style="color:var(--txt)">电动车 / 光伏储能 / 快充 / 5G / 电网</b>的核心器件，也是和 AI 主线并行、国产化更快的投资方向。本节从"损耗从哪来"讲到"衬底为什么占一半成本"。</div>
 
-        <div class="subttl">A · 关键在"宽禁带"：Si vs SiC vs GaN</div>
-        <svg viewBox="0 0 620 212">
-          <text x="310" y="15" font-size="10.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">禁带宽度越宽 → 越能扛高压 / 高温、开关越快、损耗越低</text>
-          <line x1="60" y1="174" x2="560" y2="174" stroke="#3a4760" stroke-width="1.2"/><text x="34" y="100" font-size="9" fill="#8b9bb8" text-anchor="middle" transform="rotate(-90 34 100)">禁带宽度 (eV)</text>
-          <rect x="110" y="130" width="90" height="44" fill="url(#gSi)"/><text x="155" y="122" font-size="11" fill="#bcd0f0" text-anchor="middle" font-weight="700">1.1 eV</text><text x="155" y="190" font-size="9.5" fill="#9fb0cc" text-anchor="middle" font-weight="700">硅 Si</text><text x="155" y="204" font-size="8" fill="#7f8ca6" text-anchor="middle">成熟·便宜·中低压</text>
-          <rect x="270" y="38" width="90" height="136" fill="#3aa86b"/><text x="315" y="30" font-size="11" fill="#7fe0b0" text-anchor="middle" font-weight="700">3.4 eV</text><text x="315" y="190" font-size="9.5" fill="#9fb0cc" text-anchor="middle" font-weight="700">氮化镓 GaN</text><text x="315" y="204" font-size="8" fill="#7f8ca6" text-anchor="middle">高频·中低压</text>
-          <rect x="430" y="42" width="90" height="132" fill="url(#gCu)"/><text x="475" y="34" font-size="11" fill="#f0c082" text-anchor="middle" font-weight="700">3.3 eV</text><text x="475" y="190" font-size="9.5" fill="#9fb0cc" text-anchor="middle" font-weight="700">碳化硅 SiC</text><text x="475" y="204" font-size="8" fill="#7f8ca6" text-anchor="middle">高压·大功率</text>
-        </svg>
-        <div class="note">普通芯片用的是<b>硅(Si)</b>。而 <b>SiC(碳化硅)、GaN(氮化镓)</b> 是"<b>宽禁带</b>"半导体——禁带宽度约为硅的 3 倍。宽禁带意味着：<b>能承受更高电压、更高温度，开关更快、能量损耗更低</b>。所以它们不去和先进逻辑拼纳米，而是专攻<b>功率转换</b>(把电"变压/变流")和<b>射频</b>：同样一台电动车逆变器、一个快充头，用 SiC/GaN 能做得<b>更小、更凉、更省电</b>。</div>
-        <div class="subttl">B · 用在哪：SiC 管高压、GaN 管高频</div>
+        <div class="subttl">A · 它是"电的开关与阀门"：损耗从哪来</div>
+        <div class="note">功率半导体的任务不是计算，而是<b>把电"变压、变流"</b>：交流 ↔ 直流（整流 / 逆变）、高压 ↔ 低压（DC-DC）。理想开关<b>导通时电阻为零、关断时电流为零、切换不花时间</b>，全程不耗能；真实器件两头都漏：开着的时候有电阻（<b>导通损耗</b>），每次开 / 关的瞬间电压与电流有交叠（<b>开关损耗</b>，且<b>频率越高、每秒交叠次数越多</b>）。所以功率器件的全部进化方向就三条：<b>导通电阻更低、开关更快、更耐高温</b>（耐温高 → 散热器更小 → 系统更轻更便宜）。</div>
         <div class="evo">
-          <div class="evocard"><h4 style="color:#9fc0ec">硅 Si（传统）</h4><p>中低压的消费 / 工业 / 家电，<b>量大、便宜、最成熟</b>。今天绝大多数功率器件仍是硅（IGBT / MOSFET）。</p></div>
-          <div class="evocard"><h4 style="color:#7fe0b0">GaN 氮化镓（高频·中低压）</h4><p>约 100–650V：<b>快充 / 电源适配器、数据中心供电、射频（5G 基站 / 手机）</b>。优势是开关极快、体积小。</p></div>
-          <div class="evocard"><h4 style="color:#f0c082">SiC 碳化硅（高压·大功率）</h4><p>600–1700V+：<b>电动车主驱逆变器、光伏 / 储能、充电桩、电网</b>。优势是耐高压高温、省电、续航更长。</p></div>
+          <div class="evocard"><h4 style="color:var(--t-blue)">导通损耗（开着的时候）</h4><p>电流 × 导通电阻（I²R）。<b>耐压越高，漂移区就要越厚、掺杂越低 → 电阻越大</b>——这是硅器件"高压 = 高损耗"的死结，正是宽禁带材料要解开的。</p></div>
+          <div class="evocard"><h4 style="color:var(--t-amber)">开关损耗（切换的瞬间）</h4><p>每次开 / 关，电压与电流短暂交叠产生功率尖峰，损耗 = 单次能量 × <b>开关频率</b>。器件开关越快、交叠越短，就越能用<b>高频</b>换取更小的电感 / 变压器 / 散热器——这就是 GaN 快充头为什么能做到又小又凉。</p></div>
         </div>
-        <div class="subttl">C · 产业链与主要玩家</div>
+
+        <div class="subttl">B · 为什么是"宽禁带"：一张参数图看懂 Si vs SiC vs GaN</div>
+        <svg viewBox="0 0 620 236">
+          <text x="310" y="14" font-size="10.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">物理链条：禁带宽度 ×3 → 临界击穿场强 ~×10 → 同样耐压下漂移区更薄、掺杂更高 → 导通电阻数量级下降</text>
+          <g font-size="8" fill="#9fb0cc"><rect x="376" y="24" width="10" height="10" fill="url(#gSi)"/><text x="390" y="33">硅 Si</text><rect x="436" y="24" width="10" height="10" fill="url(#gCu)"/><text x="450" y="33">碳化硅 SiC</text><rect x="516" y="24" width="10" height="10" fill="#3aa86b"/><text x="530" y="33">氮化镓 GaN</text></g>
+          <line x1="14" y1="196" x2="606" y2="196" stroke="#3a4760" stroke-width="1.2"/>
+          <g>
+            <rect x="18" y="151" width="30" height="45" fill="url(#gSi)"/><rect x="63" y="60" width="30" height="136" fill="url(#gCu)"/><rect x="108" y="56" width="30" height="140" fill="#3aa86b"/>
+            <g font-size="8.5" text-anchor="middle" font-weight="700"><text x="33" y="145" fill="#bcd0f0">1.1</text><text x="78" y="54" fill="#f0c082">3.3</text><text x="123" y="50" fill="#7fe0b0">3.4</text></g>
+            <text x="78" y="210" font-size="9.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">禁带宽度 (eV)</text>
+          </g>
+          <g>
+            <rect x="173" y="183" width="30" height="13" fill="url(#gSi)"/><rect x="218" y="103" width="30" height="93" fill="url(#gCu)"/><rect x="263" y="56" width="30" height="140" fill="#3aa86b"/>
+            <g font-size="8.5" text-anchor="middle" font-weight="700"><text x="188" y="177" fill="#bcd0f0">0.3</text><text x="233" y="97" fill="#f0c082">2.2</text><text x="278" y="50" fill="#7fe0b0">3.3</text></g>
+            <text x="233" y="210" font-size="9.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">临界击穿场强 (MV/cm)</text>
+          </g>
+          <g>
+            <rect x="328" y="153" width="30" height="43" fill="url(#gSi)"/><rect x="373" y="56" width="30" height="140" fill="url(#gCu)"/><rect x="418" y="159" width="30" height="37" fill="#3aa86b"/>
+            <g font-size="8.5" text-anchor="middle" font-weight="700"><text x="343" y="147" fill="#bcd0f0">1.5</text><text x="388" y="50" fill="#f0c082">4.9</text><text x="433" y="153" fill="#7fe0b0">1.3</text></g>
+            <text x="388" y="210" font-size="9.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">热导率 (W/cm·K)</text>
+          </g>
+          <g>
+            <rect x="483" y="140" width="30" height="56" fill="url(#gSi)"/><rect x="528" y="84" width="30" height="112" fill="url(#gCu)"/><rect x="573" y="56" width="30" height="140" fill="#3aa86b"/>
+            <g font-size="8.5" text-anchor="middle" font-weight="700"><text x="498" y="134" fill="#bcd0f0">1.0</text><text x="543" y="78" fill="#f0c082">2.0</text><text x="588" y="50" fill="#7fe0b0">2.5</text></g>
+            <text x="543" y="210" font-size="9.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">电子饱和速度 (10⁷ cm/s)</text>
+          </g>
+          <text x="310" y="228" font-size="8" fill="#7f8ca6" text-anchor="middle">数值为教科书典型值（4H-SiC / GaN-on-Si）；不同来源口径略有差异，量级关系稳定</text>
+        </svg>
+        <div class="note">四个参数连成一条链：<b>击穿场强</b>决定"同样 1200V 耐压，漂移区能做薄多少"——SiC / GaN 的漂移区厚度与电阻可以比硅低一个数量级，直接砍导通损耗；<b>电子饱和速度</b>决定开关能多快（GaN 最快 → 频率最高）；<b>热导率</b>决定热量散不散得出去（SiC 4.9 约为硅的 3 倍 +，GaN 反而是短板，靠结构和衬底弥补）。所以分工定型：<b>SiC 主打高压大功率（耐高温耐高压），GaN 主打高频中低压（快）</b>。</div>
+
+        <div class="subttl">C · 电压 × 频率地图：三条路线各守哪块阵地</div>
+        <svg viewBox="0 0 620 262">
+          <text x="310" y="14" font-size="10.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">横轴＝耐压（对数刻度），纵轴＝开关频率（对数刻度）；色块为各路线的主战场</text>
+          <line x1="66" y1="222" x2="600" y2="222" stroke="#3a4760" stroke-width="1.2"/><line x1="66" y1="222" x2="66" y2="26" stroke="#3a4760" stroke-width="1.2"/>
+          <g font-size="8" fill="#8b9bb8" text-anchor="middle">
+            <text x="90" y="234">100V</text><text x="178" y="234">400V</text><text x="240" y="234">650V</text><text x="300" y="234">1.2kV</text><text x="370" y="234">2kV</text><text x="425" y="234">3.3kV</text><text x="490" y="234">6.5kV</text><text x="552" y="234">10kV</text>
+          </g>
+          <g font-size="8" fill="#8b9bb8" text-anchor="end">
+            <text x="60" y="204">10kHz</text><text x="60" y="152">100kHz</text><text x="60" y="100">1MHz</text><text x="60" y="48">10MHz</text>
+          </g>
+          <text x="310" y="250" font-size="8.5" fill="#8b9bb8" text-anchor="middle">耐压（V）</text>
+          <text x="22" y="124" font-size="8.5" fill="#8b9bb8" text-anchor="middle" transform="rotate(-90 22 124)">开关频率（Hz）</text>
+          <rect x="88" y="60" width="150" height="92" rx="6" fill="#3aa86b" fill-opacity=".16" stroke="#3aa86b" stroke-opacity=".7"/>
+          <text x="163" y="76" font-size="9.5" fill="#7fe0b0" text-anchor="middle" font-weight="700">GaN HEMT · 高频</text>
+          <text x="163" y="90" font-size="8" fill="#9fb0cc" text-anchor="middle">快充 / 数据中心电源 / 激光雷达</text>
+          <text x="163" y="102" font-size="8" fill="#9fb0cc" text-anchor="middle">100–700V · 300k–10MHz</text>
+          <rect x="88" y="160" width="140" height="52" rx="6" fill="#5b86c9" fill-opacity=".16" stroke="#5b86c9" stroke-opacity=".7"/>
+          <text x="158" y="178" font-size="9.5" fill="#a8c4ee" text-anchor="middle" font-weight="700">Si MOSFET · 中低压</text>
+          <text x="158" y="192" font-size="8" fill="#9fb0cc" text-anchor="middle">消费电源 / 适配器 / 低压 DC-DC</text>
+          <rect x="252" y="104" width="168" height="72" rx="6" fill="#e9a04c" fill-opacity=".18" stroke="#e9a04c" stroke-opacity=".8"/>
+          <text x="336" y="122" font-size="9.5" fill="#f0c082" text-anchor="middle" font-weight="700">SiC MOSFET · 高压高频</text>
+          <text x="336" y="136" font-size="8" fill="#d8c4a8" text-anchor="middle">800V 主驱 / 直流充电桩 / 储能</text>
+          <text x="336" y="148" font-size="8" fill="#d8c4a8" text-anchor="middle">600V–3.3kV · 20k–300kHz</text>
+          <rect x="252" y="182" width="300" height="32" rx="6" fill="#46567f" fill-opacity=".4" stroke="#8fa3c8" stroke-opacity=".7"/>
+          <text x="402" y="202" font-size="9.5" fill="#c6d4ee" text-anchor="middle" font-weight="700">Si IGBT · 高压低频：400V 主驱 / 光伏 / 工控 / 轨交电网</text>
+          <path d="M300,178 L316,166" stroke="#f0738a" stroke-width="1.4" stroke-dasharray="3 2" marker-end="url(#pwrA)"/>
+          <text x="282" y="190" font-size="7.5" fill="#f0a0ae">SiC 正向 650–1200V 区间蚕食 IGBT</text>
+          <defs><marker id="pwrA" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f0738a"/></marker></defs>
+        </svg>
+        <div class="note">读法：<b>越往右上越难做</b>（高压 + 高频不可兼得）。硅 IGBT 靠"电导调制"守住了高压低频的大功率阵地（主驱 / 光伏 / 电网）；<b>SiC 从 650V 以上、且需要更高频率的场景切入</b>——800V 电车主驱是它的主场；<b>GaN 守高频中低压</b>——快充 / 服务器电源，正在向车载 OBC / DC-DC 渗透，主驱仍在工程验证期。三者不是替代而是<b>分层共存 + 边界蚕食</b>。</div>
+
+        <div class="subttl">D · 器件结构要点：MOSFET / IGBT / SiC MOSFET / GaN HEMT</div>
+        <svg viewBox="0 0 620 300">
+          <g>
+            <text x="76" y="16" font-size="9.5" fill="#a8c4ee" text-anchor="middle" font-weight="700">Si 功率 MOSFET（平面栅）</text>
+            <rect x="22" y="120" width="108" height="112" fill="#2b3958" stroke="#46567f"/>
+            <rect x="22" y="232" width="108" height="14" fill="#46567f"/>
+            <rect x="22" y="96" width="34" height="24" fill="#8a5a2e"/><rect x="96" y="96" width="34" height="24" fill="#8a5a2e"/>
+            <rect x="26" y="88" width="26" height="10" fill="#5b9bd4"/><rect x="100" y="88" width="26" height="10" fill="#5b9bd4"/>
+            <rect x="60" y="92" width="32" height="6" fill="#c9d0de"/><rect x="60" y="78" width="32" height="14" rx="1.5" fill="url(#gCu)"/>
+            <g font-size="7.5" fill="#9fb0cc" text-anchor="middle"><text x="76" y="72" fill="#f0c082" font-weight="700">栅极 G</text><text x="39" y="84" fill="#a8c4ee">源极 S</text><text x="113" y="84" fill="#a8c4ee">源极 S</text><text x="76" y="180">n- 漂移区（耐压靠它扛）</text><text x="76" y="241">漏极 D</text><text x="39" y="110" fill="#e8b98a">p 体区</text><text x="113" y="110" fill="#e8b98a">p 体区</text></g>
+            <text x="76" y="266" font-size="8" fill="#8fa0bc" text-anchor="middle">多子（电子）导通：开关快</text>
+            <text x="76" y="280" font-size="8" fill="#8fa0bc" text-anchor="middle">但高压 → 漂移区厚 → 电阻大</text>
+          </g>
+          <g>
+            <text x="232" y="16" font-size="9.5" fill="#f0c082" text-anchor="middle" font-weight="700">IGBT = MOSFET + 少子注入</text>
+            <rect x="178" y="120" width="108" height="106" fill="#2b3958" stroke="#46567f"/>
+            <rect x="178" y="226" width="108" height="8" fill="#5b9bd4"/>
+            <rect x="178" y="234" width="108" height="12" fill="#e9a04c"/>
+            <rect x="178" y="96" width="34" height="24" fill="#8a5a2e"/><rect x="252" y="96" width="34" height="24" fill="#8a5a2e"/>
+            <rect x="182" y="88" width="26" height="10" fill="#5b9bd4"/><rect x="256" y="88" width="26" height="10" fill="#5b9bd4"/>
+            <rect x="216" y="92" width="32" height="6" fill="#c9d0de"/><rect x="216" y="78" width="32" height="14" rx="1.5" fill="url(#gCu)"/>
+            <path d="M232,240 L232,180" stroke="#f0738a" stroke-width="1.3" stroke-dasharray="3 2" marker-end="url(#pwrA)"/>
+            <g font-size="7.5" fill="#9fb0cc" text-anchor="middle"><text x="232" y="72" fill="#f0c082" font-weight="700">栅极 G</text><text x="195" y="84" fill="#a8c4ee">发射极 E</text><text x="269" y="84" fill="#a8c4ee">发射极 E</text><text x="232" y="160">n- 漂移区</text><text x="232" y="243" fill="#3a2206" font-weight="700">p+ 集电层</text><text x="249" y="206" fill="#f0a0ae">少子（空穴）注入</text></g>
+            <text x="232" y="266" font-size="8" fill="#8fa0bc" text-anchor="middle">电导调制：少子把漂移区电阻"灌低"</text>
+            <text x="232" y="280" font-size="8" fill="#8fa0bc" text-anchor="middle">高压低损耗，但关断有拖尾 → 不快</text>
+          </g>
+          <g>
+            <text x="388" y="16" font-size="9.5" fill="#f0c082" text-anchor="middle" font-weight="700">SiC MOSFET（沟槽栅）</text>
+            <rect x="334" y="142" width="108" height="90" fill="#2b3958" stroke="#46567f"/>
+            <rect x="334" y="232" width="108" height="14" fill="#46567f"/>
+            <rect x="334" y="96" width="40" height="46" fill="#8a5a2e"/><rect x="402" y="96" width="40" height="46" fill="#8a5a2e"/>
+            <rect x="338" y="88" width="30" height="10" fill="#5b9bd4"/><rect x="408" y="88" width="30" height="10" fill="#5b9bd4"/>
+            <rect x="380" y="84" width="16" height="52" rx="2" fill="url(#gCu)" stroke="#c9d0de" stroke-width="1.5"/>
+            <g font-size="7.5" fill="#9fb0cc" text-anchor="middle"><text x="388" y="72" fill="#f0c082" font-weight="700">沟槽栅 G（埋入体内）</text><text x="353" y="84" fill="#a8c4ee">源极 S</text><text x="423" y="84" fill="#a8c4ee">源极 S</text><text x="388" y="180">n- 漂移区（可比硅薄 ~10×）</text><text x="388" y="241">漏极 D</text></g>
+            <text x="388" y="266" font-size="8" fill="#8fa0bc" text-anchor="middle">击穿场强高 → 漂移区薄 + 掺杂高</text>
+            <text x="388" y="280" font-size="8" fill="#8fa0bc" text-anchor="middle">平面栅 → 沟槽栅是降电阻主线</text>
+          </g>
+          <g>
+            <text x="544" y="16" font-size="9.5" fill="#7fe0b0" text-anchor="middle" font-weight="700">GaN HEMT（横向 · 2DEG）</text>
+            <rect x="490" y="204" width="108" height="30" fill="#46567f"/>
+            <rect x="490" y="160" width="108" height="44" fill="#3aa86b" fill-opacity=".5"/>
+            <rect x="490" y="150" width="108" height="10" fill="#7fe0b0"/>
+            <line x1="490" y1="160" x2="598" y2="160" stroke="#06222a" stroke-width="1.6" stroke-dasharray="4 2"/>
+            <rect x="498" y="136" width="14" height="14" fill="url(#gCu)"/><rect x="537" y="136" width="14" height="14" fill="#c9d0de"/><rect x="576" y="136" width="14" height="14" fill="url(#gCu)"/>
+            <g font-size="7.5" fill="#9fb0cc" text-anchor="middle"><text x="505" y="130" fill="#f0c082">源 S</text><text x="544" y="130">栅 G</text><text x="583" y="130" fill="#f0c082">漏 D</text><text x="544" y="172" fill="#06222a" font-weight="700">2DEG 二维电子气沟道</text><text x="544" y="190" fill="#d6f5e8">GaN 层</text><text x="544" y="222">Si 衬底（便宜、可直接用硅产线）</text></g>
+            <text x="544" y="266" font-size="8" fill="#8fa0bc" text-anchor="middle">AlGaN/GaN 异质结感生 2DEG：</text>
+            <text x="544" y="280" font-size="8" fill="#8fa0bc" text-anchor="middle">无 PN 结、无体二极管 → 开关最快</text>
+          </g>
+        </svg>
+        <div class="note">四个结构的记忆点：① <b>MOSFET 是"多子"器件</b>——只有多数载流子导电，开关快，但高压下漂移区电阻失控，所以硅 MOSFET 止步于中低压；② <b>IGBT 在漏极侧加一层 p+ 集电层</b>，导通时向漂移区注入少子（空穴）把电阻"灌低"（<b>电导调制</b>），换来高压下的低损耗，代价是关断时少子要复合消失、产生<b>拖尾电流</b>——快不起来，因此 IGBT 守低频大功率；③ <b>SiC MOSFET</b> 靠材料把漂移区做薄，从平面栅演进到<b>沟槽栅</b>（把栅埋进体内、消除 JFET 区电阻）继续压导通电阻；④ <b>GaN HEMT</b> 不做纵向 PN 结，靠 AlGaN/GaN 界面感生的<b>二维电子气（2DEG）</b>横向导电，没有体二极管、没有少子存储，是四者里最快的开关。</div>
+
+        <div class="subttl">E · SiC 的成本结构：衬底为什么占一半</div>
+        <svg viewBox="0 0 620 128">
+          <text x="310" y="14" font-size="10.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">SiC 器件成本拆分：衬底 + 外延 ≈ 70%（价值与壁垒都集中在上游）</text>
+          <rect x="40" y="34" width="254" height="34" fill="#e9a04c"/><rect x="294" y="34" width="124" height="34" fill="#5b86c9"/><rect x="418" y="34" width="162" height="34" fill="#46567f"/>
+          <g font-size="9.5" font-weight="700" text-anchor="middle"><text x="167" y="55" fill="#3a2206">衬底 ~47%</text><text x="356" y="55" fill="#0a1626">外延 ~23%</text><text x="499" y="55" fill="#c6d4ee">器件制造 + 封测 ~30%</text></g>
+          <g font-size="8" fill="#8fa0bc" text-anchor="middle">
+            <text x="167" y="84">PVT 长晶慢（一炉以周计）· 良率低 · 硬度仅次金刚石难切磨抛</text>
+            <text x="356" y="84">外延层质量决定器件耐压与良率</text>
+            <text x="499" y="84">成熟制程即可，不拼纳米</text>
+            <text x="310" y="104" fill="#9fb0cc">6 英寸 → 8 英寸：单片可切芯片数 ~1.8×、单位成本约 −35%；但 8 英寸良率是国际 75–80% vs 国内头部 50–60% 的分水岭</text>
+            <text x="310" y="118" fill="#9fb0cc">价格战实录：6 英寸导电型衬底均价 4,781 元（2023）→ 1,696 元（2025，−64.5%，天科合达招股书）；2026 年止跌回升（见轨2 M7）</text>
+          </g>
+        </svg>
+        <div class="note">硅功率器件的成本大头在制造，而 <b>SiC 把价值量挪到了最上游</b>：衬底长晶用物理气相传输法（PVT），2,000℃+ 密闭坩埚里一炉长几周、可用晶体只有几厘米厚，且微管 / 位错缺陷直接决定良率；SiC 硬度仅次于金刚石，切磨抛又慢又贵——所以<b>衬底一度占器件成本近一半</b>，谁掌握衬底谁就卡住全链。也正因为贵，<b>扩径（6 → 8 英寸）是最确定的降本路径</b>；而中国衬底产能 2023-2025 翻倍式扩张引发价格战（2025 年全球衬底产能 ~400 万片 vs 需求 ~250 万片），价格两年跌去六成以上，反而把 SiC 器件打到了"成本可接受"的放量区间。</div>
+
+        <div class="subttl">F · 用在哪：应用场景地图</div>
+        <div class="evo">
+          <div class="evocard"><h4 style="color:var(--t-amber)">🚗 电动车主驱逆变器</h4><p>功率器件最大单一战场。400V 平台用 <b>Si IGBT 模块</b>；<b>800V 平台主驱基本必选 SiC MOSFET</b>（2025 年 800V 车型 SiC 渗透率已 ~71%）。单车功率半导体价值量：燃油 ~$71 → 纯电 ~$387 → 800V 高端 $700–1,000。</p></div>
+          <div class="evocard"><h4 style="color:var(--t-amber)">🔌 OBC / DC-DC / 充电桩</h4><p>车载充电机与 DC-DC：<b>SiC + GaN 混用</b>（高压侧 SiC、高频侧 GaN）；直流快充桩是 SiC 模块的第二增长极，超充功率越大越离不开 SiC。</p></div>
+          <div class="evocard"><h4 style="color:var(--t-green)">🌞 光伏 / 储能</h4><p>组串逆变器以 <b>IGBT</b> 为主，SiC 渗透率 2020 ~5% → 2025 ~25%（2030E ~50%）；1500V 系统、储能 PCS 高压化持续推高器件规格。</p></div>
+          <div class="evocard"><h4 style="color:var(--t-blue)">🏭 工控 / 白电 / 轨交电网</h4><p>IGBT 模块与 IPM（智能功率模块）的基本盘：变频器、伺服、变频空调；高压 IGBT（3.3kV+）守轨交与电网——这是国产高压器件最早立住的阵地（轨交）。</p></div>
+          <div class="evocard"><h4 style="color:var(--t-green)">📱 消费快充</h4><p><b>GaN 的第一桶金</b>：65W+ 快充头靠 GaN 把体积砍半；功率 GaN 市场 2025 年 ~$5.9 亿（+63%，Yole），消费仍占近半。</p></div>
+          <div class="evocard"><h4 style="color:var(--t-blue)">🖥️ AI 数据中心供电（新引擎）</h4><p>机柜功率 30kW → 100kW+，48V 母线与 800V 直流架构拉动 <b>GaN / SiC 进服务器电源</b>——钛金电源效率 96%+、体积 −60%，是 2026 年后最快的边际增量。</p></div>
+        </div>
+
+        <div class="subttl">G · 产业链与主要玩家</div>
         <div class="nm">
-          <div class="nmrow"><div class="co" style="color:#5eead4">器件类型</div><div class="de">功率 <b>MOSFET / IGBT / 二极管</b>——做开关与整流，把电"变压、变流"（逆变 / 整流 / DC-DC）。</div></div>
-          <div class="nmrow"><div class="co" style="color:#f0c082">SiC 产业链</div><div class="de"><b>衬底（长晶最难＝最大壁垒）→ 外延 → 器件 / 模块</b>；车规可靠性门槛高。衬底是价值与壁垒最集中处。</div></div>
-          <div class="nmrow"><div class="co" style="color:#9fb0cc">国际玩家</div><div class="de">英飞凌 Infineon、意法 ST、Wolfspeed、安森美 onsemi、罗姆 ROHM。</div></div>
-          <div class="nmrow"><div class="co" style="color:#9fb0cc">国产玩家</div><div class="de">三安光电、时代电气、斯达半导、天岳先进（衬底）、天科合达 等——国产化进展相对较快。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">器件类型</div><div class="de">功率 <b>MOSFET / IGBT / 二极管 / 模块</b>——做开关与整流，把电"变压、变流"（逆变 / 整流 / DC-DC）；商业模式以 <b>IDM（设计+制造+封测一体）</b>为主，是 IDM 最后的堡垒之一。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-amber)">SiC 产业链</div><div class="de"><b>衬底（长晶最难＝最大壁垒）→ 外延 → 器件 / 模块</b>；车规可靠性门槛高。衬底是价值与壁垒最集中处（占成本 ~47%）。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--chip-txt)">国际玩家</div><div class="de">英飞凌 Infineon（功率分立+模块全球第一 ~21%）、意法 ST（SiC 器件第一 ~33%）、安森美 onsemi、罗姆 ROHM、三菱电机、Wolfspeed（衬底第一，2025 破产重整）。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--chip-txt)">国产玩家</div><div class="de">斯达半导（IGBT 模块国内第一）、时代电气（轨交高压）、士兰微 / 华润微 / 扬杰科技（IDM）、新洁能（MOSFET 设计）、天岳先进 / 天科合达（SiC 衬底全球前三）、英诺赛科（GaN 全球第一）——国产化进展相对较快。</div></div>
         </div>
-        <div class="note" style="border-left-color:#e9a04c;background:rgba(233,160,76,.06)"><b>从研究角度：</b>这条赛道与先进逻辑的<b>卡脖子点不同</b>——壁垒在<b>衬底长晶、外延、车规可靠性</b>，而非 EUV 光刻；需求由<b>新能源（电动车 / 光伏 / 储能 / 快充）</b>与 <b>5G / 数据中心供电</b>驱动，是与 AI 主线<b>并行</b>、且<b>国产替代推进相对顺利</b>的一块。研究重点：衬底自给率、车规导入（上车）进度、产能扩张与价格走势。</div>
+        <div class="note" style="border-left-color:var(--cu);background:rgba(233,160,76,.06)"><b>从研究角度：</b>这条赛道与先进逻辑的<b>卡脖子点不同</b>——壁垒在<b>衬底长晶、外延、车规可靠性</b>，而非 EUV 光刻；需求由<b>新能源（电动车 / 光伏 / 储能 / 快充）</b>与 <b>AI 数据中心供电</b>驱动，是与 AI 主线<b>并行</b>、且<b>国产替代推进相对顺利</b>的一块。研究重点：衬底自给率与价格战节奏、车规导入（上车）进度、8 英寸良率爬坡。<b>深入阅读</b>：衬底 / 硅片怎么长出来 → <a href="#wafer" onclick="window.__gotoPage('wafer');return false" style="color:var(--cy2);font-weight:700">硅片·掩膜</a>；器件怎么造 → <a href="#fab" onclick="window.__gotoPage('fab');return false" style="color:var(--cy2);font-weight:700">前道·制造流程</a>；模块封装 → <a href="#bepkg" onclick="window.__gotoPage('bepkg');return false" style="color:var(--cy2);font-weight:700">后道·封装测试</a>；晶体管开关原理 → <a href="#tr" onclick="window.__gotoPage('tr');return false" style="color:var(--cy2);font-weight:700">晶体管</a>。份额、单车价值量与 A 股标的 → <a href="../atlas.html#pwr" style="color:#8fd6ad;font-weight:700">直达第二轨「M7 功率半导体」→</a>。</div>
         <!-- pwr-end -->
       </div>
 
       <!-- ===== SCENE: CHIP FAMILIES OVERVIEW ===== -->
       <div class="scene" id="s-family" hidden>
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">前面几页主要在讲<b style="color:#9fc0ec">逻辑芯片</b>（数字/计算芯片）的原理与制造。但芯片世界<b>远不止逻辑</b>——按"做什么用"分，大致有六大家族。这是一张<b style="color:#e8eef9">按产品家族</b>切的地图（和「全链条」那张<b>按工序</b>切的互补）。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">前面几页主要在讲<b style="color:var(--t-blue)">逻辑芯片</b>（数字/计算芯片）的原理与制造。但芯片世界<b>远不止逻辑</b>——按"做什么用"分，大致有六大家族。这是一张<b style="color:var(--txt)">按产品家族</b>切的地图（和「全链条」那张<b>按工序</b>切的互补）。</div>
 
         <div class="subttl">全球半导体按家族 · 占比示意（2024，约 6300 亿美元）</div>
         <svg viewBox="0 0 620 96">
@@ -4122,26 +5188,26 @@
             <rect x="476" y="30" width="52" height="26" fill="#9a6a3a"/><text x="502" y="47" fill="#f3dcc0" text-anchor="middle" font-size="8">光电+传感 ~9%</text>
             <rect x="528" y="30" width="62" height="26" fill="#9a4a4a"/><text x="559" y="47" fill="#f3d0d0" text-anchor="middle" font-size="8">功率/分立 ~6%</text>
           </g>
-          <text x="310" y="76" font-size="9.5" fill="#8aa0c8" text-anchor="middle">占比仅示意、随周期波动（<b style="color:#7fe0c0">存储尤其</b>：2024 因 AI 暴涨 +81%）。<b style="color:#9fc0ec">射频</b>横跨逻辑/模拟，单独看约百亿美元级，未单列。</text>
+          <text x="310" y="76" font-size="9.5" fill="#8aa0c8" text-anchor="middle">占比仅示意、随周期波动（<tspan fill="#7fe0c0">存储尤其</tspan>：2024 因 AI 需求暴涨约 +80%）。<tspan fill="#9fc0ec">射频</tspan>横跨逻辑/模拟，单独看约百亿美元级，未单列。</text>
           <text x="310" y="90" font-size="8.5" fill="#7f8ca6" text-anchor="middle">WSTS 官方分法：集成电路 IC（逻辑·存储·微处理·模拟）＋ 光电子 O ＋ 传感器 S ＋ 分立器件 D。</text>
         </svg>
 
         <div class="subttl">六大器件家族</div>
         <div class="nm">
-          <div class="nmrow"><div class="co" style="color:#9fc0ec">① 逻辑 Logic（数字/计算）<span style="color:#5eead4;font-weight:400">← 本图解主角</span></div><div class="de"><b>CPU·GPU·FPGA·ASIC·MCU·SoC·AI/NPU</b>。<b style="color:#e8eef9">最大家族</b>（2024 ~$2126 亿、约 1/3），<b>先进制程主战场</b>、AI 拉动最猛。玩家：Intel·AMD·NVIDIA·高通·苹果·联发科（台积电代工）。</div></div>
-          <div class="nmrow"><div class="co" style="color:#7fe0c0">② 存储 Memory<span style="color:#8b9bb8;font-weight:400"> → 存储器</span></div><div class="de"><b>DRAM·SRAM·NAND·HBM</b>。<b style="color:#e8eef9">第二大</b>（2024 ~$1651 亿），<b>强周期、寡头</b>，产品近大宗商品。三星·SK 海力士·美光（＋长鑫/长存）。HBM 绑 AI 最紧。</div></div>
-          <div class="nmrow"><div class="co" style="color:#c8b3ff">③ 模拟 Analog（信号/电源）</div><div class="de"><b>电源管理 PMIC·放大器·数据转换 ADC/DAC·接口</b>。<b>不追先进制程</b>、料号成千上万、<b>生命周期长、毛利稳</b>。TI·ADI·英飞凌·ST。把真实世界的连续信号和数字芯片对接。</div></div>
-          <div class="nmrow"><div class="co" style="color:#f0a86a">④ 功率与分立 Power/Discrete<span style="color:#8b9bb8;font-weight:400"> → 功率/化合物</span></div><div class="de"><b>功率 MOSFET·IGBT·SiC/GaN 器件·二极管</b>。管"<b>大电流/高电压</b>"，电动车/工业/光储/快充。英飞凌·安森美·ST·Wolfspeed·三安。化合物半导体（SiC/GaN）就在这一族。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5ec8ea">⑤ 射频/通信 RF</div><div class="de"><b>功率放大 PA·低噪放 LNA·滤波器·射频前端·基带</b>。手机/基站/卫星通信，常用<b>砷化镓 GaAs / SOI</b>。Skyworks·Qorvo·博通·高通。横跨逻辑与模拟，是"无线"那一块。</div></div>
-          <div class="nmrow"><div class="co" style="color:#e0b050">⑥ 光电与传感 Opto & Sensors</div><div class="de"><b>CMOS 图像传感器 CIS·MEMS·LED·光器件</b>。摄像头/汽车/光通信/消费电子。索尼·三星·豪威(韦尔)·博世·ST。把光、声、运动等物理量变成电信号。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-blue)">① 逻辑 Logic（数字/计算）<span style="color:var(--cy2);font-weight:400">← 本图解主角</span></div><div class="de"><b>CPU·GPU·FPGA·ASIC·MCU·SoC·AI/NPU</b>。<b style="color:var(--txt)">最大家族</b>（2024 ~$2126 亿、约 1/3），<b>先进制程主战场</b>、AI 拉动最猛。玩家：Intel·AMD·NVIDIA·高通·苹果·联发科（台积电代工）。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-green2)">② 存储 Memory<span style="color:var(--mut);font-weight:400"> → 存储器</span></div><div class="de"><b>DRAM·SRAM·NAND·HBM</b>。<b style="color:var(--txt)">第二大</b>（2024 ~$1651 亿），<b>强周期、寡头</b>，产品近大宗商品。三星·SK 海力士·美光（＋长鑫/长存）。HBM 绑 AI 最紧。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-pur)">③ 模拟 Analog（信号/电源）</div><div class="de"><b>电源管理 PMIC·放大器·数据转换 ADC/DAC·接口</b>。<b>不追先进制程</b>、料号成千上万、<b>生命周期长、毛利稳</b>。TI·ADI·英飞凌·ST。把真实世界的连续信号和数字芯片对接。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-orange)">④ 功率与分立 Power/Discrete<span style="color:var(--mut);font-weight:400"> → 功率/化合物</span></div><div class="de"><b>功率 MOSFET·IGBT·SiC/GaN 器件·二极管</b>。管"<b>大电流/高电压</b>"，电动车/工业/光储/快充。英飞凌·安森美·ST·Wolfspeed·三安。化合物半导体（SiC/GaN）就在这一族。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-sky)">⑤ 射频/通信 RF</div><div class="de"><b>功率放大 PA·低噪放 LNA·滤波器·射频前端·基带</b>。手机/基站/卫星通信，常用<b>砷化镓 GaAs / SOI</b>。Skyworks·Qorvo·博通·高通。横跨逻辑与模拟，是"无线"那一块。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-gold)">⑥ 光电与传感 Opto & Sensors</div><div class="de"><b>CMOS 图像传感器 CIS·MEMS·LED·光器件</b>。摄像头/汽车/光通信/消费电子。索尼·三星·豪威(韦尔)·博世·ST。把光、声、运动等物理量变成电信号。</div></div>
         </div>
 
         <div class="note">读这张图的方法：<b>逻辑＋存储</b>就占了全球约六成，是大盘的"两根顶梁柱"；<b>模拟/功率/射频/光电传感</b>虽然单块小，但<b>不追先进制程、生命周期长、车规/工业刚需</b>，是另一类"闷声赚钱"的生意。本图解（晶体管→CMOS→制造→先进制程）讲的是<b>逻辑</b>这条主线；<b>存储</b>见「存储器」，<b>功率/化合物</b>见「功率/化合物」。</div>
         <div class="note"><b>各家族怎么造（制造特点一句话列示）</b>：<b>逻辑</b>——最先进 CMOS 制程（FinFET/GAA）、层数最多；<b>存储</b>——DRAM 拼电容工艺、3D NAND 拼超高深宽比刻蚀与沉积（见 刻蚀·沉积），成本导向、工艺高度特化；<b>模拟</b>——成熟制程（180nm~28nm）＋BCD 等特色工艺，赢在器件匹配与经验而非线宽；<b>功率</b>——纵向器件（电流上下穿透晶圆）、厚外延、衬底减薄，SiC/GaN 用特殊衬底（见 功率/化合物）；<b>射频</b>——GaAs/SOI/SiGe 特色衬底与工艺；<b>光电传感</b>——CIS 背照式两片键合堆栈、MEMS 要"释放"可动微结构的特殊刻蚀。</div>
-        <div class="note" style="border-left-color:#f0c082;background:rgba(240,192,130,.07)"><b style="color:#f3cf9c">接第二轨</b>：这张"按家族"的地图，正是<b>第二轨产业链/赛道研究</b>的入口——每个家族（尤其模拟、射频、光电传感这些本页只概览的）都可以展开成独立赛道，看它的<b>玩家格局、价值量、国产化</b>。</div>
+        <div class="note" style="border-left-color:var(--t-amber);background:rgba(240,192,130,.07)"><b style="color:var(--t-amber2)">接第二轨</b>：这张"按家族"的地图，正是<b>第二轨产业链/赛道研究</b>的入口——每个家族（尤其模拟、射频、光电传感这些本页只概览的）都可以展开成独立赛道，看它的<b>玩家格局、价值量、国产化</b>。</div>
       </div>
       <div class="scene" id="s-chain">
-        <div class="pill" style="font-size:12.5px;color:#8b9bb8;margin-bottom:6px">🗺️ 这是<b style="color:#e8eef9">全局地图</b>——先看懂整条链，再按上方导航钻细节：上游原料 → <b>硅片·掩膜</b>；器件原理 → <b>晶体管 / 先进结构演进</b>；图案转印 → <b>光刻</b>；制造工序 → <b>制造流程</b>；存储 → <b>存储器</b>；后道封测 → <b>后道·封装测试</b>；芯粒集成 → <b>先进封装</b>；功率器件 → <b>功率/化合物</b>。</div>
+        <div class="pill" style="font-size:12.5px;color:var(--mut);margin-bottom:6px">🗺️ 这是<b style="color:var(--txt)">全局地图</b>——先看懂整条链，再按上方导航钻细节：上游原料 → <b>硅片·掩膜</b>；器件原理 → <b>晶体管 / 先进结构演进</b>；图案转印 → <b>光刻</b>；制造工序 → <b>制造流程</b>；存储 → <b>存储器</b>；后道封测 → <b>后道·封装测试</b>；芯粒集成 → <b>先进封装</b>；功率器件 → <b>功率/化合物</b>。</div>
         <div class="subttl">一张图看懂：两条上游汇成主干</div>
         <svg viewBox="0 0 620 168">
           <defs><marker id="ca" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d6cf"/></marker></defs>
@@ -4166,24 +5232,37 @@
 
         <div class="subttl">逐段拆解：投入 → 产出 → 由谁做</div>
         <div class="nm">
-          <div class="nmrow"><div class="co" style="color:#bdebd0">①硅材料链</div><div class="de">石英砂 → 工业硅 → 电子级多晶硅(硅料) → 单晶硅棒(直拉法) → 切片抛光。<b style="color:#e8eef9">产出：空白晶圆</b>。由硅料厂、硅片厂做。 ↪ 详见 硅片·掩膜。</div></div>
-          <div class="nmrow"><div class="co" style="color:#c8b3ff">②芯片设计</div><div class="de">用 EDA 软件 + IP 核，把规格做成电路版图并"流片"。<b style="color:#e8eef9">产出：掩膜版</b>。由设计公司、EDA/IP 厂、掩膜厂做。 ↪ 设计流程详见 设计·EDA；掩膜制作详见 硅片·掩膜。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">③前段 FEOL</div><div class="de">在晶圆上造晶体管(隔离 → 栅极 → 源漏 → 接触)，<b>只做一遍</b>。<b style="color:#e8eef9">产出：带晶体管层的晶圆</b>。由晶圆代工厂 / IDM 做(设备厂、材料厂供应)。 ↪ 工序详见 制造流程。</div></div>
-          <div class="nmrow"><div class="co" style="color:#5eead4">④后段 BEOL</div><div class="de">叠 10~20 层金属布线，<b>反复做</b>。<b style="color:#e8eef9">产出：布线完成的整片晶圆</b>(满是未切开的芯片)。由晶圆代工厂 / IDM 做。 ↪ 详见 制造流程。</div></div>
-          <div class="nmrow"><div class="co" style="color:#34d6cf">⑤晶圆测试</div><div class="de">用探针扎每一颗芯片测好坏。<b style="color:#e8eef9">产出：标好良品的晶圆</b>(良率)。由代工厂 / 测试厂做。</div></div>
-          <div class="nmrow"><div class="co" style="color:#e9a04c">⑥封装</div><div class="de">减薄 → 切割成裸晶 → 贴装键合 → 塑封做出引脚/焊球。<b style="color:#e8eef9">产出：封装好的芯片</b>。由封测厂(OSAT)做。 ↪ 流程详见 后道·封装测试 与 先进封装。</div></div>
-          <div class="nmrow"><div class="co" style="color:#f0c082">⑦成测 & 出货</div><div class="de">成品测试、打标、出货分销。<b style="color:#e8eef9">产出：可用的成品芯片</b>。由封测厂、分销商做。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-mint)">①硅材料链</div><div class="de">石英砂 → 工业硅 → 电子级多晶硅(硅料) → 单晶硅棒(直拉法) → 切片抛光。<b style="color:var(--txt)">产出：空白晶圆</b>。由硅料厂、硅片厂做。 ↪ 详见 硅片·掩膜。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-pur)">②芯片设计</div><div class="de">用 EDA 软件 + IP 核，把规格做成电路版图并"流片"。<b style="color:var(--txt)">产出：掩膜版</b>。由设计公司、EDA/IP 厂、掩膜厂做。 ↪ 设计流程详见 设计·EDA；掩膜制作详见 硅片·掩膜。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">③前段 FEOL</div><div class="de">在晶圆上造晶体管(隔离 → 栅极 → 源漏 → 接触)，<b>只做一遍</b>。<b style="color:var(--txt)">产出：带晶体管层的晶圆</b>。由晶圆代工厂 / IDM 做(设备厂、材料厂供应)。 ↪ 工序详见 制造流程。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy2)">④后段 BEOL</div><div class="de">叠 10~20 层金属布线，<b>反复做</b>。<b style="color:var(--txt)">产出：布线完成的整片晶圆</b>(满是未切开的芯片)。由晶圆代工厂 / IDM 做。 ↪ 详见 制造流程。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cy)">⑤晶圆测试</div><div class="de">用探针扎每一颗芯片测好坏。<b style="color:var(--txt)">产出：标好良品的晶圆</b>(良率)。由代工厂 / 测试厂做。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--cu)">⑥封装</div><div class="de">减薄 → 切割成裸晶 → 贴装键合 → 塑封做出引脚/焊球。<b style="color:var(--txt)">产出：封装好的芯片</b>。由封测厂(OSAT)做。 ↪ 流程详见 后道·封装测试 与 先进封装。</div></div>
+          <div class="nmrow"><div class="co" style="color:var(--t-amber)">⑦成测 & 出货</div><div class="de">成品测试、打标、出货分销。<b style="color:var(--txt)">产出：可用的成品芯片</b>。由封测厂、分销商做。</div></div>
         </div>
         <div class="note">把这条"产物链"连起来就是全貌：<b>石英砂 → 工业硅 → 多晶硅 → 硅棒 → 空白晶圆</b>；另一边 <b>设计 → 掩膜版</b>；两者汇入晶圆厂，<b>前段造出晶体管层 → 后段叠好多层布线 → 整片晶圆 → 测试 → 切成裸晶 → 封装 → 成品芯片</b>。每一步都清楚"投入什么、产出什么"。</div>
 
         <div class="subttl">关于"硅料"的一个常见混淆</div>
-        <div class="note" style="border-left-color:#3aa86b;background:rgba(58,168,107,.07)"><b style="color:#7fe0b0">多晶硅(硅料)分两档</b>：① <b>太阳能级</b>(纯度约 6~9 个 9)给光伏发电用；② <b>电子级</b>(纯度要到约 <b>11 个 9</b>，即 99.999999999%)才是造芯片用的，纯度高一个量级、是另一个小得多的赛道。平时新闻里说的"硅料涨价"多半指太阳能级，和芯片用的电子级不是同一种货。</div>
+        <div class="note" style="border-left-color:#3aa86b;background:rgba(58,168,107,.07)"><b style="color:var(--t-green)">多晶硅(硅料)分两档</b>：① <b>太阳能级</b>(纯度约 6~9 个 9)给光伏发电用；② <b>电子级</b>(纯度要到约 <b>11 个 9</b>，即 99.999999999%)才是造芯片用的，纯度高一个量级、是另一个小得多的赛道。平时新闻里说的"硅料涨价"多半指太阳能级，和芯片用的电子级不是同一种货。</div>
       </div>
 
     </div>
   </div>
 
   <div class="foot">动画为示意性简化，仅用于理解概念；实际一颗先进芯片要经过上千道工序、数月时间。<br>颜色对应真实结构：硅衬底 · 沟道 · 氧化层 · 光刻胶 · 掺杂 · 沉积介质 · 铜互连。</div>
+</div>
+      <div class="page-foot">
+        <button id="prevPage"></button>
+        <button id="nextPage"></button>
+      </div>
+    </article>
+  </main>
+
+  <aside class="toc" id="toc">
+    <div class="t">本页目录</div>
+    <div id="tocLinks"></div>
+    <div class="meta" id="tocMeta"></div>
+  </aside>
 </div>
 
 <script>
@@ -4348,7 +5427,7 @@
     {n:'3 · STI 氧化物过填充 ⌇',show:['f-stiHM','f-stiRough'],cap:'沟槽里<b>填满二氧化硅</b>并过量沉积，盖过整个表面——注意此时<b>表面是凹凸不平的（⌇）</b>，正等着被磨平。'},
     {n:'4 · STI ▣ CMP 磨平',show:['f-sti','f-cmpSTI'],cap:'<b>CMP（化学机械抛光）</b>用旋转抛光头把上一步那层<b>凹凸磨平</b>（虚线=磨掉的部分），再去掉氮化硅。相邻晶体管被隔开。<b>【第 1 次 CMP】</b>'},
     {n:'5 · 栅介质 + 栅极沉积',show:['f-sti','f-gateBlanket'],cap:'整面长一层极薄的<b>栅氧化层（或高K介质）</b>，再<b>整面沉积栅极材料</b>（多晶硅 / 金属栅）——尚未图形化。'},
-    {n:'6 · 栅极光刻 + 刻蚀',show:['f-sti','f-gate'],cap:'用光刻 + 刻蚀把栅极<b>刻成一条精细的线</b>。这道<b>关键尺寸（栅长）基本决定了"几纳米"</b>，是最难的一步。'},
+    {n:'6 · 栅极光刻 + 刻蚀',show:['f-sti','f-gate'],cap:'用光刻 + 刻蚀把栅极<b>刻成一条精细的线</b>。这道<b>关键尺寸（栅长）在早期节点基本决定了"几纳米"的叫法</b>（后来节点名已与物理尺寸脱钩，见 制程节点与经济），是最难的一步。'},
     {n:'7 · LDD 轻掺杂',show:['f-sti','f-gate','f-ldd','f-lddimp'],cap:'以栅为掩膜，两侧打一层<b>浅而轻的掺杂延伸区（LDD）</b>，抑制短沟道漏电与热载流子。'},
     {n:'8 · 侧墙 Spacer',show:['f-sti','f-gate','f-ldd','f-spacer'],cap:'沉积一层介质 → 各向异性回刻，在栅两侧留下<b>弧形侧墙</b>；它让随后的重掺杂离栅远一点。'},
     {n:'9 · 源漏重掺杂',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sdimp'],cap:'以<b>"栅 + 侧墙"自对准</b>，向两侧硅里<b>重掺杂</b>，打出<b>源极 S / 漏极 D</b>；中间没掺杂的硅就是<b>沟道</b>。'},
@@ -4364,8 +5443,8 @@
     {n:'19 · 铜 ▣ CMP 平坦化',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-cmpCu','f-loop'],cap:'<b>铜 CMP</b> 把多余的铜<b>磨掉</b>，只留嵌在介质里的铜线和通孔（这就是 M1）。<b>【每层布线都要做 CMP】</b>'},
     {n:'20 · 重复叠层 M2…Mn',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-loop'],cap:'把第 16~19 步<b>重复 10~20 次</b>，叠出 M2、M3…多层铜布线，用<b>通孔</b>上下贯通。晶体管始终只有最底层。'},
     {n:'21 · 顶层金属+钝化+焊盘',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-top'],cap:'做<b>最上层较粗的金属</b>和对外<b>焊盘</b>，盖一层<b>钝化层</b>保护、焊盘处开口。<b>整片晶圆上的芯片全部做好。</b>'},
-    {n:'22 · 晶圆减薄',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-top','f-thin'],cap:'把晶圆<b>背面磨薄</b>（从近 800µm 磨到一两百µm），便于切割和散热。'},
-    {n:'23 · 晶圆测试 CP',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-top','f-probe'],cap:'用<b>探针逐颗扎到焊盘上通电测试</b>，标出好 / 坏——这就是良率。'},
+    {n:'22 · 晶圆测试 CP',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-top','f-probe'],cap:'用<b>探针逐颗扎到焊盘上通电测试</b>（趁整片厚片先测），标出好 / 坏——这就是良率。'},
+    {n:'23 · 晶圆减薄',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-top','f-thin'],cap:'测完再把晶圆<b>背面磨薄</b>（从近 800µm 磨到几十~两百µm，视封装需求），便于切割和散热。'},
     {n:'24 · 切割 Dicing',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-top','f-dice'],cap:'沿芯片之间的<b>划片道切割</b>，把整片晶圆切成<b>一颗颗独立的裸晶（die）</b>。'},
     {n:'25 · 封装',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-top','f-pkg'],cap:'把好的裸晶<b>贴装</b>到基板/引线框，用<b>引线键合或倒装凸点</b>接出来，再<b>塑封</b>成带引脚/焊球的外壳。'},
     {n:'26 · 成测 & 打标',show:['f-sti','f-gate','f-ldd','f-spacer','f-sd','f-sal','f-ild0','f-cont','f-ild1','f-m1','f-stack','f-top','f-mark'],cap:'<b>成品测试</b>挑出合格品，<b>激光打标</b>、出货——一颗芯片到此真正完成。'}
@@ -4468,17 +5547,241 @@
       if(on){M.e.forEach(function(ln,li){for(var m=0;m<4;m++){var t=((ePhase+li*0.13+m*0.25)%1);var r=rot([ln.x0+(ln.x1-ln.x0)*t,ln.y,ln.z]);var p=proj(r);items.push({k:'e',x:p[0],y:p[1],r:8*p[2],depth:r[2]});}});}
       items.sort(function(a,b){return a.depth-b.depth;});
       for(var i=0;i<items.length;i++){var it=items[i];if(it.k==='p'){ctx.beginPath();ctx.moveTo(it.pts[0][0],it.pts[0][1]);ctx.lineTo(it.pts[1][0],it.pts[1][1]);ctx.lineTo(it.pts[2][0],it.pts[2][1]);ctx.lineTo(it.pts[3][0],it.pts[3][1]);ctx.closePath();ctx.fillStyle=it.fill;ctx.fill();ctx.lineWidth=1.1;ctx.strokeStyle=(it.m==='gate'||it.m==='gate2')?'rgba(92,56,18,0.5)':'rgba(6,10,18,0.42)';ctx.stroke();}else{ctx.save();ctx.shadowColor='#5eead4';ctx.shadowBlur=16;ctx.beginPath();ctx.arc(it.x,it.y,it.r,0,6.2832);ctx.fillStyle='#a8f7ee';ctx.fill();ctx.restore();}}
-      var ga=proj(rot(M.lg[0])),gbp=proj(rot(M.lg[1]));ctx.strokeStyle='#f0ad55';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ga[0],ga[1]);ctx.lineTo(gbp[0],gbp[1]);ctx.stroke();[ga,gbp].forEach(function(p){ctx.beginPath();ctx.moveTo(p[0],p[1]-7);ctx.lineTo(p[0],p[1]+7);ctx.stroke();});ctx.fillStyle='#f0ad55';ctx.font='700 22px -apple-system,sans-serif';ctx.textAlign='center';ctx.fillText('栅长 Lg',(ga[0]+gbp[0])/2,(ga[1]+gbp[1])/2-14);ctx.textAlign='left';
+      var ga=proj(rot(M.lg[0])),gbp=proj(rot(M.lg[1]));ctx.strokeStyle='#f0ad55';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ga[0],ga[1]);ctx.lineTo(gbp[0],gbp[1]);ctx.stroke();[ga,gbp].forEach(function(p){ctx.beginPath();ctx.moveTo(p[0],p[1]-7);ctx.lineTo(p[0],p[1]+7);ctx.stroke();});ctx.fillStyle='#f0ad55';ctx.font='700 22px "Noto Sans SC",-apple-system,sans-serif';ctx.textAlign='center';ctx.fillText('栅长 Lg',(ga[0]+gbp[0])/2,(ga[1]+gbp[1])/2-14);ctx.textAlign='left';
       ctx.textBaseline='middle';
-      for(var j=0;j<labels.length;j++){var lb=labels[j];var p=proj(rot(lb.a));var tx=p[0]+lb.o[0],ty=p[1]+lb.o[1];ctx.strokeStyle='rgba(150,165,190,0.45)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(tx,ty);ctx.stroke();ctx.fillStyle='rgba(150,165,190,0.85)';ctx.beginPath();ctx.arc(p[0],p[1],3,0,6.2832);ctx.fill();ctx.font='600 22px -apple-system,Segoe UI,"PingFang SC","Microsoft YaHei",sans-serif';var wM=ctx.measureText(lb.t).width;var wE=0;if(lb.e){ctx.font='400 15px -apple-system,sans-serif';wE=ctx.measureText(' '+lb.e).width;}var total=wM+wE,pad=9,h=31;var bx=lb.o[0]<0?tx-total-pad*2:tx;ctx.fillStyle='rgba(12,18,30,0.85)';rr(bx,ty-h/2,total+pad*2,h,8);ctx.fill();ctx.textAlign='left';ctx.fillStyle=lb.c;ctx.font='600 22px -apple-system,Segoe UI,"PingFang SC","Microsoft YaHei",sans-serif';ctx.fillText(lb.t,bx+pad,ty);if(lb.e){ctx.fillStyle='rgba(165,180,205,0.85)';ctx.font='400 15px -apple-system,sans-serif';ctx.fillText(' '+lb.e,bx+pad+wM,ty+1);}}
-      if(on){var gp=proj(rot(M.vpos));ctx.fillStyle='#f0ad55';ctx.textAlign='center';ctx.font='700 26px -apple-system,sans-serif';ctx.fillText('+V',gp[0],gp[1]-64);ctx.textAlign='left';}
+      for(var j=0;j<labels.length;j++){var lb=labels[j];var p=proj(rot(lb.a));var tx=p[0]+lb.o[0],ty=p[1]+lb.o[1];ctx.strokeStyle='rgba(150,165,190,0.45)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(tx,ty);ctx.stroke();ctx.fillStyle='rgba(150,165,190,0.85)';ctx.beginPath();ctx.arc(p[0],p[1],3,0,6.2832);ctx.fill();ctx.font='600 22px "Noto Sans SC",-apple-system,Segoe UI,"PingFang SC","Microsoft YaHei",sans-serif';var wM=ctx.measureText(lb.t).width;var wE=0;if(lb.e){ctx.font='400 15px "Noto Sans SC",-apple-system,sans-serif';wE=ctx.measureText(' '+lb.e).width;}var total=wM+wE,pad=9,h=31;var bx=lb.o[0]<0?tx-total-pad*2:tx;ctx.fillStyle='rgba(12,18,30,0.85)';rr(bx,ty-h/2,total+pad*2,h,8);ctx.fill();ctx.textAlign='left';ctx.fillStyle=lb.c;ctx.font='600 22px "Noto Sans SC",-apple-system,Segoe UI,"PingFang SC","Microsoft YaHei",sans-serif';ctx.fillText(lb.t,bx+pad,ty);if(lb.e){ctx.fillStyle='rgba(165,180,205,0.85)';ctx.font='400 15px "Noto Sans SC",-apple-system,sans-serif';ctx.fillText(' '+lb.e,bx+pad+wM,ty+1);}}
+      if(on){var gp=proj(rot(M.vpos));ctx.fillStyle='#f0ad55';ctx.textAlign='center';ctx.font='700 26px "Noto Sans SC",-apple-system,sans-serif';ctx.fillText('+V',gp[0],gp[1]-64);ctx.textAlign='left';}
       var lx=34,ly=CH-96;ctx.fillStyle='rgba(12,18,30,0.8)';rr(lx-12,ly-26,372,86,10);ctx.fill();ctx.textBaseline='middle';
-      arrowMini(lx,ly,1,'#5eead4');ctx.fillStyle='#a8f7ee';ctx.font='600 21px -apple-system,"PingFang SC",sans-serif';ctx.fillText('  电子 e⁻：源 S → 漏 D',lx+34,ly);
+      arrowMini(lx,ly,1,'#5eead4');ctx.fillStyle='#a8f7ee';ctx.font='600 21px "Noto Sans SC",-apple-system,"PingFang SC",sans-serif';ctx.fillText('  电子 e⁻：源 S → 漏 D',lx+34,ly);
       arrowMini(lx+38,ly+38,-1,'#f0ad55');ctx.fillStyle='#f0c082';ctx.fillText('  电流 I：漏 D → 源 S（相反）',lx+34,ly+38);
     }
     function loop(){var scn=document.getElementById('s-tr'),w3=document.getElementById('tr3d-wrap');if(scn&&!scn.hidden&&w3&&!w3.hidden){if(autoRot)rotY+=0.005;if(on)ePhase=(ePhase+0.011)%1;draw();}requestAnimationFrame(loop);}
     loop();
   }
+})();
+</script>
+
+<script>
+(function(){
+  /* ================= 页面数据 ================= */
+  var GROUPS = [
+    { g:'A', title:'A 全局导览',   pages:[['A1','chain','全链条'],['A2','basics','基础概念']] },
+    { g:'B', title:'B 器件原理',   pages:[['B1','tr','晶体管'],['B2','advstruct','先进结构演进']] },
+    { g:'C', title:'C 制造与封装', pages:[['C1','eda','设计·EDA'],['C2','wafer','硅片·掩膜'],['C3','fab','前道·制造流程'],['C4','litho','光刻'],['C5','etch','刻蚀·沉积'],['C6','clean','清洗·量测'],['C7','adv','制程节点与经济'],['C8','bepkg','后道·封装测试'],['C9','pkg','先进封装']] },
+    { g:'D', title:'D 芯片家族',   pages:[['D1','family','芯片品类'],['D2','mem','存储器'],['D3','pwr','功率化合物']] }
+  ];
+  var FLAT = []; /* {code,key,title,gtitle} */
+  GROUPS.forEach(function(gr){
+    gr.pages.forEach(function(p){ FLAT.push({ code:p[0], key:p[1], title:p[2], gtitle:gr.title, g:gr.g }); });
+  });
+  var activeKey = null;
+
+  function gotoPage(key, scrollTop){
+    var info = FLAT.filter(function(p){ return p.key === key; })[0];
+    if (!info) return;
+    var tb = document.querySelector('.tab[data-s="' + key + '"]');
+    if (!tb) return;
+    var gb = document.querySelector('.gtab[data-g="' + tb.dataset.g + '"]');
+    if (gb) gb.click();
+    tb.click();
+    activeKey = key;
+    syncChrome(info, scrollTop !== false);
+  }
+
+  function syncChrome(info, scrollTop){
+    document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.toggle('on', n.dataset.key === info.key); });
+    var crumb = document.getElementById('crumb');
+    crumb.innerHTML = '<span>轨1 · 原理科普</span><span class="sep">/</span><span>' + info.gtitle + '</span><span class="sep">/</span><b>' + info.code + ' ' + info.title + '</b>';
+    document.getElementById('pageTitle').textContent = info.code + ' · ' + info.title;
+    document.title = info.code + ' ' + info.title + ' · 半导体制造知识库';
+    buildToc();
+    buildFoot(info);
+    if (scrollTop) window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  /* ================= 左侧导航树 ================= */
+  var navTree = document.getElementById('navTree');
+  GROUPS.forEach(function(gr){
+    var grp = document.createElement('div'); grp.className = 'nav-group';
+    var gh = document.createElement('button'); gh.className = 'nav-ghead';
+    gh.innerHTML = '<span class="chev">▾</span><span class="nav-badge g' + gr.g + '">' + gr.g + '</span>'
+                 + '<span class="gname">' + gr.title.replace(/^[A-D]\s*/, '') + '</span>'
+                 + '<span class="gcount">' + gr.pages.length + ' 页</span>';
+    gh.addEventListener('click', function(){ grp.classList.toggle('closed'); });
+    var items = document.createElement('div'); items.className = 'nav-items';
+    gr.pages.forEach(function(p){
+      var it = document.createElement('button');
+      it.className = 'nav-item'; it.dataset.key = p[1];
+      it.innerHTML = '<span class="code">' + p[0] + '</span><span class="nttl">' + p[2] + '</span>';
+      it.addEventListener('click', function(){ gotoPage(p[1]); });
+      items.appendChild(it);
+    });
+    grp.appendChild(gh); grp.appendChild(items);
+    navTree.appendChild(grp);
+  });
+  document.getElementById('sideFold').addEventListener('click', function(){ document.body.classList.add('side-closed'); });
+  document.getElementById('sideOpen').addEventListener('click', function(){ document.body.classList.remove('side-closed'); });
+
+  /* ================= 主题切换（10 浅色 + 经典暗夜） ================= */
+  var THEMES = [
+    { slug:'warm-vermilion', name:'暖纸朱砂', family:'暖纸家族', bg:'#faf8f4', ac:'#c2410c' },
+    { slug:'warm-indigo',    name:'宣纸黛蓝', family:'暖纸家族', bg:'#faf9f4', ac:'#1d4ed8' },
+    { slug:'warm-pine',      name:'绢色松绿', family:'暖纸家族', bg:'#faf8f1', ac:'#0f766e' },
+    { slug:'warm-tea',       name:'浅驼茶褐', family:'暖纸家族', bg:'#f5efe6', ac:'#92400e' },
+    { slug:'warm-ink',       name:'象牙素墨', family:'暖纸家族', bg:'#fcfbf7', ac:'#1c1917' },
+    { slug:'cool-indigo',    name:'冷灰靛蓝', family:'冷灰家族', bg:'#f3f4f6', ac:'#4f46e5' },
+    { slug:'cool-steel',     name:'雾灰钢蓝', family:'冷灰家族', bg:'#eceff3', ac:'#2563eb' },
+    { slug:'cool-teal',      name:'浅灰青',   family:'冷灰家族', bg:'#f1f4f3', ac:'#0d9488' },
+    { slug:'cool-violet',    name:'亚麻灰紫', family:'冷灰家族', bg:'#f4f3f6', ac:'#7c3aed' },
+    { slug:'cool-navy',      name:'冷白海军', family:'冷灰家族', bg:'#f5f6f8', ac:'#1e3a8a' },
+    { slug:'classic-dark',   name:'经典暗夜', family:'暗夜',     bg:'#070b14', ac:'#34d6cf' }
+  ];
+  var picker = document.getElementById('themePicker');
+  var tpBtn = document.getElementById('tpBtn');
+  var tpDot = document.getElementById('tpDot');
+  var tpName = document.getElementById('tpName');
+  var tpCols = document.getElementById('tpCols');
+  function mkItem(t, dark){
+    var it = document.createElement('button');
+    it.className = 'tp-item' + (dark ? ' tp-dark' : ''); it.dataset.set = t.slug; it.title = t.name;
+    it.innerHTML = '<span class="tp-dot" style="background:' + t.bg + '"><i style="background:' + t.ac + '"></i></span>'
+                 + '<span>' + t.name + '</span><span class="chk">✓</span>';
+    it.addEventListener('click', function(){ applyTheme(t.slug); picker.classList.remove('open'); });
+    return it;
+  }
+  ['暖纸家族','冷灰家族'].forEach(function(fam){
+    var col = document.createElement('div');
+    var gt = document.createElement('div'); gt.className = 'tp-gt'; gt.textContent = fam;
+    col.appendChild(gt);
+    THEMES.filter(function(t){ return t.family === fam; }).forEach(function(t){ col.appendChild(mkItem(t)); });
+    tpCols.appendChild(col);
+  });
+  var sep = document.createElement('div'); sep.className = 'tp-sep'; tpCols.appendChild(sep);
+  tpCols.appendChild(mkItem(THEMES[THEMES.length-1], true));
+
+  function applyTheme(slug){
+    var t = THEMES.filter(function(x){ return x.slug === slug; })[0] || THEMES[0];
+    document.documentElement.dataset.theme = t.slug;
+    tpDot.style.background = t.bg;
+    tpDot.querySelector('i').style.background = t.ac;
+    tpName.textContent = t.name;
+    document.querySelectorAll('.tp-item').forEach(function(it){ it.classList.toggle('on', it.dataset.set === t.slug); });
+    try { localStorage.setItem('semlab-theme', t.slug); } catch(e){}
+  }
+  tpBtn.addEventListener('click', function(e){ e.stopPropagation(); picker.classList.toggle('open'); });
+  document.addEventListener('click', function(e){ if (!picker.contains(e.target)) picker.classList.remove('open'); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') picker.classList.remove('open'); });
+  applyTheme(document.documentElement.dataset.theme || 'warm-vermilion');
+
+  /* ================= 搜索 ================= */
+  var sInput = document.getElementById('searchInput');
+  var sDrop = document.getElementById('searchDrop');
+  function doSearch(){
+    var q = sInput.value.trim();
+    if (!q) { sDrop.classList.remove('open'); sDrop.innerHTML=''; return; }
+    var ql = q.toLowerCase();
+    var hits = FLAT.filter(function(p){
+      return p.title.indexOf(q) !== -1 || p.code.toLowerCase().indexOf(ql) !== -1 || p.key.indexOf(ql) !== -1;
+    });
+    sDrop.innerHTML = '';
+    if (!hits.length) {
+      sDrop.innerHTML = '<div class="sd-empty">没有匹配「' + q.replace(/</g,'&lt;') + '」的页面</div>';
+    } else {
+      hits.forEach(function(p){
+        var d = document.createElement('div'); d.className = 'sd-item';
+        d.innerHTML = '<span class="sd-code">' + p.code + '</span><span class="sd-title">' + p.title + '</span><span class="sd-path">轨1·原理科普 / ' + p.gtitle + '</span>';
+        d.addEventListener('mousedown', function(e){
+          e.preventDefault();
+          gotoPage(p.key);
+          sDrop.classList.remove('open'); sInput.blur();
+        });
+        sDrop.appendChild(d);
+      });
+    }
+    sDrop.classList.add('open');
+  }
+  sInput.addEventListener('input', doSearch);
+  sInput.addEventListener('focus', doSearch);
+  sInput.addEventListener('blur', function(){ setTimeout(function(){ sDrop.classList.remove('open'); }, 120); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === '/' && document.activeElement !== sInput) { e.preventDefault(); sInput.focus(); sInput.select(); }
+    if (e.key === 'Escape' && document.activeElement === sInput) { sInput.blur(); sDrop.classList.remove('open'); }
+  });
+
+  /* ================= 右侧本页目录（scroll-spy） ================= */
+  var tocBox = document.getElementById('tocLinks');
+  var tocMeta = document.getElementById('tocMeta');
+  var tocIds = [];
+  function activeScene(){
+    var sc = document.querySelectorAll('.scene');
+    for (var i = 0; i < sc.length; i++) if (!sc[i].hidden) return sc[i];
+    return null;
+  }
+  function shortTitle(txt){
+    txt = txt.replace(/\s+/g, ' ').trim();
+    /* 取第一个分隔符前的部分，太长则截断 */
+    var cut = txt.split(/[：:，,（(]/)[0];
+    if (cut.length >= 8) txt = cut;
+    if (txt.length > 22) txt = txt.slice(0, 21) + '…';
+    return txt;
+  }
+  function buildToc(){
+    var sc = activeScene(); tocBox.innerHTML = ''; tocIds = [];
+    if (!sc) return;
+    var subs = sc.querySelectorAll('.subttl');
+    subs.forEach(function(st, i){
+      if (!st.id) st.id = 'toc-' + sc.id + '-' + i;
+      tocIds.push(st.id);
+      var a = document.createElement('a');
+      a.href = '#' + st.id; a.dataset.sec = st.id;
+      a.textContent = shortTitle(st.textContent);
+      a.title = st.textContent.trim();
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        var el = document.getElementById(st.id);
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 66, behavior: 'smooth' });
+      });
+      tocBox.appendChild(a);
+    });
+    var info = FLAT.filter(function(p){ return p.key === activeKey; })[0];
+    tocMeta.innerHTML = info ? (info.code + ' ' + info.title + ' · 轨1 原理科普<br>' + subs.length + ' 个小节') : '';
+    spy();
+  }
+  var spyTick = false;
+  function spy(){
+    spyTick = false;
+    if (!tocIds.length) return;
+    var cur = tocIds[0];
+    tocIds.forEach(function(id){
+      var el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= 120) cur = id;
+    });
+    tocBox.querySelectorAll('a').forEach(function(a){ a.classList.toggle('on', a.dataset.sec === cur); });
+  }
+  window.addEventListener('scroll', function(){ if(!spyTick){ spyTick = true; requestAnimationFrame(spy); } }, { passive:true });
+
+  /* ================= 页脚翻页 ================= */
+  function buildFoot(info){
+    var i = FLAT.indexOf(info);
+    var prev = FLAT[i-1], next = FLAT[i+1];
+    var pb = document.getElementById('prevPage'), nb = document.getElementById('nextPage');
+    pb.textContent = prev ? ('← ' + prev.code + ' ' + prev.title) : '← 已是第一页';
+    nb.textContent = next ? (next.code + ' ' + next.title + ' →') : '已是最后一页 →';
+    pb.onclick = prev ? function(){ gotoPage(prev.key); } : null;
+    nb.onclick = next ? function(){ gotoPage(next.key); } : null;
+  }
+
+  /* ================= 初始化：与 hash 深链/默认页同步 ================= */
+  var sc = activeScene();
+  var initKey = 'chain';
+  if (sc) {
+    var m = sc.id.match(/^s-(.+)$/);
+    if (m) initKey = m[1];
+  }
+  var info = FLAT.filter(function(p){ return p.key === initKey; })[0] || FLAT[0];
+  activeKey = info.key;
+  syncChrome(info, false);
+  window.__gotoPage = gotoPage; /* 供测试/调试 */
 })();
 </script>
 </body>

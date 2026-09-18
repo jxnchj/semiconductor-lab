@@ -1,66 +1,538 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="warm-vermilion">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>半导体研究知识库 · Semiconductor Atlas</title>
+<title>半导体制造知识库 · 双轨入口</title>
+<script>
+try{var t=localStorage.getItem('semlab-theme');
+var OK=['warm-vermilion','warm-indigo','warm-pine','warm-tea','warm-ink','cool-indigo','cool-steel','cool-teal','cool-violet','cool-navy','classic-dark'];
+if(t&&OK.indexOf(t)!==-1)document.documentElement.dataset.theme=t;}catch(e){}
+</script>
 <style>
-  :root{--bg1:#070b14;--bg2:#0b1322;--panel:#111a2e;--line:#23304d;--txt:#e8eef9;--mut:#8b9bb8;--dim:#5d6b88;--cy:#34d6cf;--cy2:#5eead4;--cu:#e9a04c;--pur:#b08bf0;--si:#5b86c9}
+  /* ============ 自托管字体：思源黑体 Noto Sans SC（与两轨共享同一份子集，零 CDN，离线可用） ============ */
+  @font-face{font-family:"Noto Sans SC";font-style:normal;font-weight:400;font-display:swap;src:url("principles/fonts/noto-sans-sc-400.woff2") format("woff2")}
+  @font-face{font-family:"Noto Sans SC";font-style:normal;font-weight:500;font-display:swap;src:url("principles/fonts/noto-sans-sc-500.woff2") format("woff2")}
+  @font-face{font-family:"Noto Sans SC";font-style:normal;font-weight:700;font-display:swap;src:url("principles/fonts/noto-sans-sc-700.woff2") format("woff2")}
+  /* ============ 主题变量系统（11 套：10 浅色 + 经典暗夜，与两轨外壳完全一致） ============ */
+/* ---- 经典暗夜 classic-dark（= 本站原始配色，默认值） ---- */
+:root, :root[data-theme="classic-dark"] {
+  /* 内容变量（原始值，零改动） */
+  --bg1:#070b14; --bg2:#0b1322; --panel:#111a2e; --line:#23304d;
+  --txt:#e8eef9; --mut:#8b9bb8; --dim:#5d6b88;
+  --cy:#34d6cf; --cy2:#5eead4; --cu:#e9a04c; --pur:#b08bf0; --red:#f0738a; --si:#5b86c9;
+  /* 语义扩展变量（硬编码颜色变量化后的暗夜原值） */
+  --bg-glow:#14203a; --panel-2:#0a1120;
+  --t-strong2:#cdd7e8; --t-dim2:#7a8aa8; --t-frow:#c2cde0;
+  --t-teal1:#8fe9e1; --t-teal2:#7fd0c4;
+  --t-pur:#c8b3ff; --t-amber:#f0c082; --t-amber2:#f3cf9c;
+  --t-blue:#9fc0ec; --t-blue2:#7fa6e8; --t-sky:#5ec8ea;
+  --t-green:#7fe0b0; --t-green2:#7fe0c0; --t-mint:#bdebd0;
+  --t-orange:#f0a86a; --t-gold:#e0b050; --t-red:#e0556e; --t-pink:#f3a0b0;
+  --chip-bg:#1d2c46; --chip-txt:#9fb0cc;
+  --cmp-bg:#5a4422; --cmp-txt:#f5c97a; --frow-line:#2a3550;
+  /* 外壳变量（暗夜版） */
+  --bg:#070b14; --bg-elev:#0e1626; --bg-soft:#111a2e; --bg-sunk:#0a1120;
+  --text:#e8eef9; --text-2:#9aa8c4; --muted:#5d6b88;
+  --accent:#34d6cf; --accent-deep:#5eead4;
+  --accent-soft:rgba(52,214,207,.12); --accent-softer:rgba(52,214,207,.22);
+  --border:#23304d; --border-strong:#33446b;
+  --topbar-bg:rgba(7,11,20,.85);
+  --plate:#111a2e; --plate-line:#263450;
+  --hover:rgba(232,238,249,.06);
+  --shadow-drop:0 12px 32px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+}
+:root[data-theme="warm-vermilion"] {
+  --bg:#faf8f4; --bg-elev:#fffdf8; --bg-soft:#f4f0e7; --bg-sunk:#efeadd;
+  --text:#1a1a18; --text-2:#55524a; --muted:#8d8676;
+  --accent:#c2410c; --accent-deep:#9a3412;
+  --accent-soft:rgba(194,65,12,.08); --accent-softer:rgba(194,65,12,.16);
+  --border:#e7e0d2; --border-strong:#d7cebb;
+  --topbar-bg:rgba(250,248,244,.86);
+  --plate:#111a2e; --plate-line:#263450;
+  --hover:rgba(26,26,24,.045);
+  --shadow-drop:0 12px 32px rgba(60,45,20,.14), 0 2px 6px rgba(60,45,20,.08);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#faf8f4; --bg2:#f4f0e7; --panel:#fffdf8; --line:#e7e0d2;
+  --txt:#1a1a18; --mut:#55524a; --dim:#8d8676;
+  --cy:#c2410c; --cy2:#9a3412;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#f4f0e7; --panel-2:#fffdf8;
+  --t-strong2:#1a1a18; --t-dim2:#8d8676; --t-frow:#3f4956;
+  --t-teal1:#9a3412; --t-teal2:#9a3412;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#f4f0e7; --chip-txt:#55524a;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e7e0d2;
+}
+:root[data-theme="warm-indigo"] {
+  --bg:#faf9f4; --bg-elev:#fffefa; --bg-soft:#f3f1e9; --bg-sunk:#edeade;
+  --text:#191a1c; --text-2:#4e5058; --muted:#8a887c;
+  --accent:#1d4ed8; --accent-deep:#1e40af;
+  --accent-soft:rgba(29,78,216,.07); --accent-softer:rgba(29,78,216,.15);
+  --border:#e5e1d3; --border-strong:#d4cfbd;
+  --topbar-bg:rgba(250,249,244,.86);
+  --plate:#121a30; --plate-line:#28355a;
+  --hover:rgba(25,26,28,.045);
+  --shadow-drop:0 12px 32px rgba(55,50,30,.13), 0 2px 6px rgba(55,50,30,.07);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#faf9f4; --bg2:#f3f1e9; --panel:#fffefa; --line:#e5e1d3;
+  --txt:#191a1c; --mut:#4e5058; --dim:#8a887c;
+  --cy:#1d4ed8; --cy2:#1e40af;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#f3f1e9; --panel-2:#fffefa;
+  --t-strong2:#191a1c; --t-dim2:#8a887c; --t-frow:#3f4956;
+  --t-teal1:#1e40af; --t-teal2:#1e40af;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#f3f1e9; --chip-txt:#4e5058;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e5e1d3;
+}
+:root[data-theme="warm-pine"] {
+  --bg:#faf8f1; --bg-elev:#fffdf7; --bg-soft:#f2efe4; --bg-sunk:#ece8d9;
+  --text:#1a1b18; --text-2:#4f534c; --muted:#8b897a;
+  --accent:#0f766e; --accent-deep:#115e59;
+  --accent-soft:rgba(15,118,110,.08); --accent-softer:rgba(15,118,110,.16);
+  --border:#e5e1d0; --border-strong:#d3cdb8;
+  --topbar-bg:rgba(250,248,241,.86);
+  --plate:#101c28; --plate-line:#24344a;
+  --hover:rgba(26,27,24,.045);
+  --shadow-drop:0 12px 32px rgba(45,55,35,.13), 0 2px 6px rgba(45,55,35,.07);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#faf8f1; --bg2:#f2efe4; --panel:#fffdf7; --line:#e5e1d0;
+  --txt:#1a1b18; --mut:#4f534c; --dim:#8b897a;
+  --cy:#0f766e; --cy2:#115e59;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#f2efe4; --panel-2:#fffdf7;
+  --t-strong2:#1a1b18; --t-dim2:#8b897a; --t-frow:#3f4956;
+  --t-teal1:#115e59; --t-teal2:#115e59;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#f2efe4; --chip-txt:#4f534c;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e5e1d0;
+}
+:root[data-theme="warm-tea"] {
+  --bg:#f5efe6; --bg-elev:#fcf8f0; --bg-soft:#eee6d8; --bg-sunk:#e7ddca;
+  --text:#201a13; --text-2:#5a5044; --muted:#91836e;
+  --accent:#92400e; --accent-deep:#78350f;
+  --accent-soft:rgba(146,64,14,.09); --accent-softer:rgba(146,64,14,.17);
+  --border:#e2d7c2; --border-strong:#d1c3a8;
+  --topbar-bg:rgba(245,239,230,.86);
+  --plate:#181512; --plate-line:#3a3128;
+  --hover:rgba(32,26,19,.05);
+  --shadow-drop:0 12px 32px rgba(70,50,20,.15), 0 2px 6px rgba(70,50,20,.08);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f5efe6; --bg2:#eee6d8; --panel:#fcf8f0; --line:#e2d7c2;
+  --txt:#201a13; --mut:#5a5044; --dim:#91836e;
+  --cy:#92400e; --cy2:#78350f;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#eee6d8; --panel-2:#fcf8f0;
+  --t-strong2:#201a13; --t-dim2:#91836e; --t-frow:#3f4956;
+  --t-teal1:#78350f; --t-teal2:#78350f;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#eee6d8; --chip-txt:#5a5044;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e2d7c2;
+}
+:root[data-theme="warm-ink"] {
+  --bg:#fcfbF7; --bg-elev:#ffffff; --bg-soft:#f4f2ec; --bg-sunk:#edebe3;
+  --text:#1c1917; --text-2:#57534e; --muted:#8f8a83;
+  --accent:#1c1917; --accent-deep:#000000;
+  --accent-soft:rgba(28,25,23,.06); --accent-softer:rgba(28,25,23,.13);
+  --border:#e6e3db; --border-strong:#d4d0c5;
+  --topbar-bg:rgba(252,251,247,.86);
+  --plate:#15161c; --plate-line:#2c2e3a;
+  --hover:rgba(28,25,23,.04);
+  --shadow-drop:0 12px 32px rgba(40,35,25,.13), 0 2px 6px rgba(40,35,25,.07);
+  --font-head:Georgia,"Songti SC","STSong","SimSun",serif; --head-weight:700; --head-ls:.01em;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#fcfbF7; --bg2:#f4f2ec; --panel:#ffffff; --line:#e6e3db;
+  --txt:#1c1917; --mut:#57534e; --dim:#8f8a83;
+  --cy:#1c1917; --cy2:#000000;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#f4f2ec; --panel-2:#ffffff;
+  --t-strong2:#1c1917; --t-dim2:#8f8a83; --t-frow:#3f4956;
+  --t-teal1:#000000; --t-teal2:#000000;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#f4f2ec; --chip-txt:#57534e;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#e6e3db;
+}
+:root[data-theme="cool-indigo"] {
+  --bg:#f3f4f6; --bg-elev:#ffffff; --bg-soft:#e9ebef; --bg-sunk:#e0e3e9;
+  --text:#12151a; --text-2:#4c5563; --muted:#7d8593;
+  --accent:#4f46e5; --accent-deep:#4338ca;
+  --accent-soft:rgba(79,70,229,.08); --accent-softer:rgba(79,70,229,.16);
+  --border:#dcdfe7; --border-strong:#c8cdd9;
+  --topbar-bg:rgba(243,244,246,.86);
+  --plate:#101830; --plate-line:#243154;
+  --hover:rgba(18,21,26,.045);
+  --shadow-drop:0 12px 32px rgba(30,40,80,.13), 0 2px 6px rgba(30,40,80,.07);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f3f4f6; --bg2:#e9ebef; --panel:#ffffff; --line:#dcdfe7;
+  --txt:#12151a; --mut:#4c5563; --dim:#7d8593;
+  --cy:#4f46e5; --cy2:#4338ca;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#e9ebef; --panel-2:#ffffff;
+  --t-strong2:#12151a; --t-dim2:#7d8593; --t-frow:#3f4956;
+  --t-teal1:#4338ca; --t-teal2:#4338ca;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#e9ebef; --chip-txt:#4c5563;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#dcdfe7;
+}
+:root[data-theme="cool-steel"] {
+  --bg:#eceff3; --bg-elev:#f8fafc; --bg-soft:#e2e7ed; --bg-sunk:#d9dfe7;
+  --text:#131820; --text-2:#48525f; --muted:#76808e;
+  --accent:#2563eb; --accent-deep:#1d4ed8;
+  --accent-soft:rgba(37,99,235,.09); --accent-softer:rgba(37,99,235,.17);
+  --border:#d5dbe3; --border-strong:#c0c8d4;
+  --topbar-bg:rgba(236,239,243,.86);
+  --plate:#101a30; --plate-line:#25324e;
+  --hover:rgba(19,24,32,.05);
+  --shadow-drop:0 12px 32px rgba(30,45,75,.14), 0 2px 6px rgba(30,45,75,.08);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#eceff3; --bg2:#e2e7ed; --panel:#f8fafc; --line:#d5dbe3;
+  --txt:#131820; --mut:#48525f; --dim:#76808e;
+  --cy:#2563eb; --cy2:#1d4ed8;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#e2e7ed; --panel-2:#f8fafc;
+  --t-strong2:#131820; --t-dim2:#76808e; --t-frow:#3f4956;
+  --t-teal1:#1d4ed8; --t-teal2:#1d4ed8;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#e2e7ed; --chip-txt:#48525f;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#d5dbe3;
+}
+:root[data-theme="cool-teal"] {
+  --bg:#f1f4f3; --bg-elev:#fbfdfc; --bg-soft:#e6ebe9; --bg-sunk:#dce3e0;
+  --text:#121817; --text-2:#49554f; --muted:#7a8683;
+  --accent:#0d9488; --accent-deep:#0f766e;
+  --accent-soft:rgba(13,148,136,.08); --accent-softer:rgba(13,148,136,.16);
+  --border:#d9e0de; --border-strong:#c4cec9;
+  --topbar-bg:rgba(241,244,243,.86);
+  --plate:#0e1c26; --plate-line:#22343e;
+  --hover:rgba(18,24,23,.045);
+  --shadow-drop:0 12px 32px rgba(20,50,45,.13), 0 2px 6px rgba(20,50,45,.07);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f1f4f3; --bg2:#e6ebe9; --panel:#fbfdfc; --line:#d9e0de;
+  --txt:#121817; --mut:#49554f; --dim:#7a8683;
+  --cy:#0d9488; --cy2:#0f766e;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#e6ebe9; --panel-2:#fbfdfc;
+  --t-strong2:#121817; --t-dim2:#7a8683; --t-frow:#3f4956;
+  --t-teal1:#0f766e; --t-teal2:#0f766e;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#e6ebe9; --chip-txt:#49554f;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#d9e0de;
+}
+:root[data-theme="cool-violet"] {
+  --bg:#f4f3f6; --bg-elev:#fdfcfe; --bg-soft:#eae8ee; --bg-sunk:#e0dde5;
+  --text:#16141c; --text-2:#504b5c; --muted:#817b8c;
+  --accent:#7c3aed; --accent-deep:#6d28d9;
+  --accent-soft:rgba(124,58,237,.08); --accent-softer:rgba(124,58,237,.16);
+  --border:#dedbe4; --border-strong:#c9c5d4;
+  --topbar-bg:rgba(244,243,246,.86);
+  --plate:#141227; --plate-line:#2b2750;
+  --hover:rgba(22,20,28,.045);
+  --shadow-drop:0 12px 32px rgba(45,30,80,.13), 0 2px 6px rgba(45,30,80,.07);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f4f3f6; --bg2:#eae8ee; --panel:#fdfcfe; --line:#dedbe4;
+  --txt:#16141c; --mut:#504b5c; --dim:#817b8c;
+  --cy:#7c3aed; --cy2:#6d28d9;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#eae8ee; --panel-2:#fdfcfe;
+  --t-strong2:#16141c; --t-dim2:#817b8c; --t-frow:#3f4956;
+  --t-teal1:#6d28d9; --t-teal2:#6d28d9;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#eae8ee; --chip-txt:#504b5c;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#dedbe4;
+}
+:root[data-theme="cool-navy"] {
+  --bg:#f5f6f8; --bg-elev:#ffffff; --bg-soft:#ebeef2; --bg-sunk:#e1e5ea;
+  --text:#12161f; --text-2:#4a5260; --muted:#78808e;
+  --accent:#1e3a8a; --accent-deep:#1e40af;
+  --accent-soft:rgba(30,58,138,.08); --accent-softer:rgba(30,58,138,.15);
+  --border:#dde1e8; --border-strong:#c7cdd8;
+  --topbar-bg:rgba(245,246,248,.86);
+  --plate:#0f1830; --plate-line:#233052;
+  --hover:rgba(18,22,31,.045);
+  --shadow-drop:0 12px 32px rgba(25,35,70,.13), 0 2px 6px rgba(25,35,70,.07);
+  --font-head:inherit; --head-weight:700; --head-ls:0;
+  /* 内容变量 → 浅色映射 */
+  --bg1:#f5f6f8; --bg2:#ebeef2; --panel:#ffffff; --line:#dde1e8;
+  --txt:#12161f; --mut:#4a5260; --dim:#78808e;
+  --cy:#1e3a8a; --cy2:#1e40af;
+  --cu:#9a6209; --pur:#7c3aed; --red:#dc2f52; --si:#3b6fc4;
+  --bg-glow:#ebeef2; --panel-2:#ffffff;
+  --t-strong2:#12161f; --t-dim2:#78808e; --t-frow:#3f4956;
+  --t-teal1:#1e40af; --t-teal2:#1e40af;
+  --t-pur:#6d28d9; --t-amber:#935f0c; --t-amber2:#8a5a10;
+  --t-blue:#2f5fc4; --t-blue2:#2f5fc4; --t-sky:#0274b8;
+  --t-green:#0f7a4d; --t-green2:#0f766e; --t-mint:#0f7a4d;
+  --t-orange:#b06a10; --t-gold:#8a6a0c; --t-red:#d22b4a; --t-pink:#c2255c;
+  --chip-bg:#ebeef2; --chip-txt:#4a5260;
+  --cmp-bg:#f3e7d2; --cmp-txt:#8a5a10; --frow-line:#dde1e8;
+}
+
+  /* ============ 着陆页布局 ============ */
   *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;padding:48px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(1200px 640px at 50% -8%,#14203a 0%,var(--bg1) 62%);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-  .wrap{max-width:880px;width:100%}
-  .brand{display:flex;align-items:center;gap:11px;justify-content:center;font-size:12px;letter-spacing:.3em;color:var(--mut);text-transform:uppercase;margin-bottom:14px}
-  .brand .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--cy),#1f7a6b);box-shadow:0 0 16px rgba(52,214,207,.4);position:relative}
-  .brand .logo::after{content:"";position:absolute;inset:8px;border:2px solid #07120f;border-radius:3px}
-  h1{font-size:32px;font-weight:800;text-align:center;margin:0 0 8px;letter-spacing:.01em}
-  h1 .en{display:block;font-size:15px;font-weight:600;color:var(--mut);letter-spacing:.18em;margin-top:6px}
-  .lede{text-align:center;color:var(--mut);font-size:14.5px;max-width:620px;margin:0 auto 12px}
-  .lede b{color:#cdd7e8}
-  .pickhint{text-align:center;color:var(--dim);font-size:12.5px;margin-bottom:24px}
-  .tracks{display:grid;grid-template-columns:1fr;gap:16px}
-  @media(min-width:680px){.tracks{grid-template-columns:1fr 1fr}}
-  .tcard{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:linear-gradient(165deg,var(--bg2),#0a1120);border:1px solid var(--line);border-radius:18px;padding:24px 22px 20px;transition:.18s;position:relative;overflow:hidden;min-height:230px}
+  html,body{height:100%}
+  body{
+    margin:0;min-height:100vh;display:flex;flex-direction:column;
+    background:radial-gradient(1100px 520px at 50% -8%,var(--bg-glow) 0%,var(--bg) 62%);
+    color:var(--text);
+    font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6;
+  }
+  a{text-decoration:none;color:inherit}
+
+  /* 顶部细栏 */
+  .topbar{
+    position:sticky;top:0;z-index:50;height:56px;flex:none;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 22px;
+    background:var(--topbar-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .brand{display:flex;align-items:center;gap:10px;flex:none}
+  .logo-mark{
+    width:28px;height:28px;border-radius:8px;flex:none;
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent-deep) 100%);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
+  }
+  .brand-name{font-weight:700;font-size:15px;letter-spacing:.01em;white-space:nowrap}
+  .brand-sub{font-size:11px;color:var(--muted);margin-left:2px;white-space:nowrap}
+  @media (max-width:640px){.brand-sub{display:none}}
+
+  /* 主题选择器（与两轨同款） */
+  .theme-picker{position:relative}
+  .tp-btn{
+    display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;
+    border:1px solid var(--border);border-radius:999px;background:var(--bg-soft);
+    font-size:12.5px;font-weight:600;color:var(--text-2);white-space:nowrap;cursor:pointer;
+    transition:border-color .12s,color .12s;font-family:inherit;
+  }
+  .tp-btn:hover{border-color:var(--border-strong);color:var(--text)}
+  .tp-dot{width:14px;height:14px;border-radius:50%;flex:none;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+  .tp-dot i{width:6px;height:6px;border-radius:50%;display:block}
+  .tp-chev{font-size:9px;color:var(--muted);transition:transform .15s}
+  .theme-picker.open .tp-chev{transform:rotate(180deg)}
+  .tp-panel{
+    position:absolute;top:42px;right:0;z-index:80;width:392px;max-width:calc(100vw - 32px);
+    background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;
+    box-shadow:var(--shadow-drop);padding:14px 14px 10px;display:none;
+  }
+  .theme-picker.open .tp-panel{display:block}
+  .tp-cols{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
+  @media (max-width:480px){.tp-cols{grid-template-columns:1fr}}
+  .tp-gt{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);padding:2px 8px 8px}
+  .tp-item{
+    display:flex;align-items:center;gap:9px;width:100%;text-align:left;
+    padding:6px 8px;border-radius:8px;font-size:12.5px;color:var(--text-2);
+    transition:background .1s,color .1s;background:none;border:none;cursor:pointer;font-family:inherit;
+  }
+  .tp-item:hover{background:var(--hover);color:var(--text)}
+  .tp-item .tp-dot{width:16px;height:16px}
+  .tp-item.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+  .tp-item .chk{margin-left:auto;font-size:11px;color:var(--accent);opacity:0}
+  .tp-item.on .chk{opacity:1}
+  .tp-sep{grid-column:1 / -1;border-top:1px solid var(--border);margin:6px 0 2px}
+  .tp-item.tp-dark{grid-column:1 / -1}
+
+  /* 中部标题区 */
+  .wrap{flex:1;width:100%;max-width:960px;margin:0 auto;padding:64px 24px 40px;display:flex;flex-direction:column;justify-content:center}
+  .hero{text-align:center;margin-bottom:36px}
+  .hero .eyebrow{font-size:12px;font-weight:700;letter-spacing:.24em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+  .hero h1{
+    margin:0 0 12px;font-size:34px;line-height:1.25;
+    font-family:var(--font-head);font-weight:var(--head-weight);letter-spacing:var(--head-ls);
+  }
+  .hero .lede{color:var(--text-2);font-size:14.5px;max-width:600px;margin:0 auto}
+  .hero .lede b{color:var(--text);font-weight:600}
+  @media (max-width:640px){.hero h1{font-size:26px}.wrap{padding-top:44px}}
+
+  /* 双轨卡片 */
+  .tracks{display:grid;grid-template-columns:1fr;gap:18px}
+  @media (min-width:720px){.tracks{grid-template-columns:1fr 1fr}}
+  .tcard{
+    --ac:var(--accent);
+    display:flex;flex-direction:column;position:relative;overflow:hidden;
+    background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;
+    padding:26px 24px 20px;min-height:264px;
+    transition:transform .18s,border-color .18s,box-shadow .18s;
+  }
   .tcard::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--ac),transparent)}
-  .tcard:hover{transform:translateY(-4px);border-color:var(--ac);box-shadow:0 18px 44px rgba(0,0,0,.45)}
-  .t1{--ac:var(--cy)} .t2{--ac:var(--cu)}
-  .tnum{font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--ac);text-transform:uppercase}
-  .tic{font-size:30px;margin:10px 0 6px}
-  .tcard h2{margin:0 0 4px;font-size:20px;font-weight:800}
-  .tcard .sub{font-size:13px;color:var(--mut);margin-bottom:14px}
-  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-  .chip{font-size:11px;color:#bcc8de;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:20px;padding:3px 9px}
-  .go{margin-top:auto;font-size:13.5px;font-weight:700;color:var(--ac);display:inline-flex;align-items:center;gap:6px}
-  footer{margin-top:30px;text-align:center;color:var(--dim);font-size:12px;line-height:1.8}
-  footer b{color:var(--mut)}
+  .tcard:hover{transform:translateY(-4px);border-color:var(--ac);box-shadow:var(--shadow-drop)}
+  .t2{--ac:var(--cu)}
+  .tnum{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--ac);text-transform:uppercase}
+  .thead{display:flex;align-items:center;gap:12px;margin:14px 0 8px}
+  .tic{
+    width:44px;height:44px;flex:none;border-radius:12px;font-size:22px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--accent-soft);border:1px solid var(--border);
+  }
+  .t2 .tic{background:var(--cmp-bg)}
+  .tcard h2{margin:0;font-size:20px;font-weight:700;letter-spacing:.01em}
+  .tcard .en{display:block;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.12em;margin-top:2px}
+  .tcard .sub{font-size:13px;color:var(--text-2);margin:0 0 16px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+  .chip{font-size:11px;color:var(--chip-txt);background:var(--chip-bg);border:1px solid var(--border);border-radius:20px;padding:3px 10px}
+  .tfoot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--border);padding-top:14px}
+  .tmeta{font-size:12px;color:var(--muted)}
+  .go{font-size:13.5px;font-weight:700;color:var(--ac);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .go .arr{transition:transform .15s}
+  .tcard:hover .go .arr{transform:translateX(3px)}
+
+  /* 页脚 */
+  footer{flex:none;text-align:center;color:var(--muted);font-size:12px;padding:18px 20px 26px}
+  footer .dot{margin:0 8px;opacity:.5}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="brand"><span class="logo"></span>Semiconductor Lab · 双轨知识库</div>
-  <h1>半导体研究知识库<span class="en">Semiconductor Atlas</span></h1>
-  <p class="lede">一个长期化的半导体专题知识库，分<b>两条轨道</b>。所有图形手绘、尽量贴合产业实际；数据标来源与时间、区分事实 vs 厂商叙事。</p>
-  <p class="pickhint">↓ 选一条轨道进入</p>
 
-  <div class="tracks">
-    <a class="tcard t1" href="principles/">
-      <div class="tnum">第一轨 · Track 1</div>
-      <div class="tic">🔬</div>
-      <h2>原理科普</h2>
-      <div class="sub">芯片制造原理 · 交互图解 —— 理解一颗芯片是怎么造出来的</div>
-      <div class="chips"><span class="chip">晶体管 / 反型层</span><span class="chip">光刻</span><span class="chip">先进制程</span><span class="chip">制造流程</span><span class="chip">存储器</span><span class="chip">先进封装</span><span class="chip">功率/化合物</span></div>
-      <span class="go">进入交互图解 →</span>
-    </a>
-    <a class="tcard t2" href="atlas.html">
-      <div class="tnum">第二轨 · Track 2</div>
-      <div class="tic">🗺️</div>
-      <h2>产业链价值</h2>
-      <div class="sub">研究终端 · 六大赛道 —— 护城河 / 玩家格局 / 价值量 / 国产替代，投研视角</div>
-      <div class="chips"><span class="chip">材料</span><span class="chip">设备</span><span class="chip">晶圆制造</span><span class="chip">封装测试</span><span class="chip">EDA·设计</span><span class="chip">存储器</span><span class="chip">公司速查</span></div>
-      <span class="go">进入研究终端 →</span>
-    </a>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo-mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect x="2" y="2" width="12" height="12" rx="2.5" stroke="#fff" stroke-width="1.4"/>
+        <path d="M5 6h6M5 8.2h6M5 10.4h4" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <span class="brand-name">半导体制造知识库</span>
+      <span class="brand-sub">Semiconductor Lab</span>
+    </div>
+  </div>
+  <div class="theme-picker" id="themePicker">
+    <button class="tp-btn" id="tpBtn" aria-haspopup="true" aria-label="切换主题">
+      <span class="tp-dot" id="tpDot"><i></i></span><span id="tpName">暖纸朱砂</span><span class="tp-chev">▾</span>
+    </button>
+    <div class="tp-panel" id="tpPanel" role="menu">
+      <div class="tp-cols" id="tpCols"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Semiconductor Lab</div>
+    <h1>半导体制造知识库</h1>
+    <p class="lede">面向投资研究的制造原理与产业链知识库 —— 先用<b>交互图解</b>看懂一颗芯片怎么造出来，再用<b>研究终端</b>看清每一环的护城河与玩家格局。</p>
   </div>
 
-  <footer><b>说明</b>：纯前端、单文件页面、无外部依赖。两轨各自独立、可分别浏览；数据持续更新。</footer>
-</div>
+  <div class="tracks">
+    <a class="tcard t1" href="principles/index.html">
+      <div class="tnum">轨1 · Track 1</div>
+      <div class="thead">
+        <div class="tic">🔬</div>
+        <h2>原理科普<span class="en">PRINCIPLES</span></h2>
+      </div>
+      <p class="sub">芯片制造原理 · 交互图解 —— 从晶体管到先进封装，把制造链路讲透</p>
+      <div class="chips"><span class="chip">晶体管</span><span class="chip">光刻</span><span class="chip">制程</span><span class="chip">存储</span><span class="chip">先进封装</span><span class="chip">功率/化合物</span></div>
+      <div class="tfoot">
+        <span class="tmeta">16 页 · 4 组</span>
+        <span class="go">进入交互图解 <span class="arr">→</span></span>
+      </div>
+    </a>
+    <a class="tcard t2" href="atlas.html">
+      <div class="tnum">轨2 · Track 2</div>
+      <div class="thead">
+        <div class="tic">🗺️</div>
+        <h2>产业链价值<span class="en">INDUSTRY ATLAS</span></h2>
+      </div>
+      <p class="sub">六大赛道 · 公司深卡 · 投研视角 —— 护城河 / 玩家格局 / 价值量 / 国产替代</p>
+      <div class="chips"><span class="chip">材料</span><span class="chip">设备</span><span class="chip">晶圆制造</span><span class="chip">封测</span><span class="chip">EDA</span><span class="chip">存储</span></div>
+      <div class="tfoot">
+        <span class="tmeta">9 页 · 68 家公司速查</span>
+        <span class="go">进入研究终端 <span class="arr">→</span></span>
+      </div>
+    </a>
+  </div>
+</main>
+
+<footer>更新日期 2026-09<span class="dot">·</span>纯前端单文件<span class="dot">·</span>数据持续更新</footer>
+
+<script>
+/* ================= 主题切换（10 浅色 + 经典暗夜，与两轨共享 localStorage） ================= */
+var THEMES = [
+  { slug:'warm-vermilion', name:'暖纸朱砂', family:'暖纸家族', bg:'#faf8f4', ac:'#c2410c' },
+  { slug:'warm-indigo',    name:'宣纸黛蓝', family:'暖纸家族', bg:'#faf9f4', ac:'#1d4ed8' },
+  { slug:'warm-pine',      name:'绢色松绿', family:'暖纸家族', bg:'#faf8f1', ac:'#0f766e' },
+  { slug:'warm-tea',       name:'浅驼茶褐', family:'暖纸家族', bg:'#f5efe6', ac:'#92400e' },
+  { slug:'warm-ink',       name:'象牙素墨', family:'暖纸家族', bg:'#fcfbf7', ac:'#1c1917' },
+  { slug:'cool-indigo',    name:'冷灰靛蓝', family:'冷灰家族', bg:'#f3f4f6', ac:'#4f46e5' },
+  { slug:'cool-steel',     name:'雾灰钢蓝', family:'冷灰家族', bg:'#eceff3', ac:'#2563eb' },
+  { slug:'cool-teal',      name:'浅灰青',   family:'冷灰家族', bg:'#f1f4f3', ac:'#0d9488' },
+  { slug:'cool-violet',    name:'亚麻灰紫', family:'冷灰家族', bg:'#f4f3f6', ac:'#7c3aed' },
+  { slug:'cool-navy',      name:'冷白海军', family:'冷灰家族', bg:'#f5f6f8', ac:'#1e3a8a' },
+  { slug:'classic-dark',   name:'经典暗夜', family:'暗夜',     bg:'#070b14', ac:'#34d6cf' }
+];
+var picker = document.getElementById('themePicker');
+var tpBtn = document.getElementById('tpBtn');
+var tpDot = document.getElementById('tpDot');
+var tpName = document.getElementById('tpName');
+var tpCols = document.getElementById('tpCols');
+function mkItem(t, dark){
+  var it = document.createElement('button');
+  it.className = 'tp-item' + (dark ? ' tp-dark' : ''); it.dataset.set = t.slug; it.title = t.name;
+  it.innerHTML = '<span class="tp-dot" style="background:' + t.bg + '"><i style="background:' + t.ac + '"></i></span>'
+               + '<span>' + t.name + '</span><span class="chk">✓</span>';
+  it.addEventListener('click', function(){ applyTheme(t.slug); picker.classList.remove('open'); });
+  return it;
+}
+['暖纸家族','冷灰家族'].forEach(function(fam){
+  var col = document.createElement('div');
+  var gt = document.createElement('div'); gt.className = 'tp-gt'; gt.textContent = fam;
+  col.appendChild(gt);
+  THEMES.filter(function(t){ return t.family === fam; }).forEach(function(t){ col.appendChild(mkItem(t)); });
+  tpCols.appendChild(col);
+});
+var sep = document.createElement('div'); sep.className = 'tp-sep'; tpCols.appendChild(sep);
+tpCols.appendChild(mkItem(THEMES[THEMES.length-1], true));
+
+function applyTheme(slug){
+  var t = THEMES.filter(function(x){ return x.slug === slug; })[0] || THEMES[0];
+  document.documentElement.dataset.theme = t.slug;
+  tpDot.style.background = t.bg;
+  tpDot.querySelector('i').style.background = t.ac;
+  tpName.textContent = t.name;
+  document.querySelectorAll('.tp-item').forEach(function(it){ it.classList.toggle('on', it.dataset.set === t.slug); });
+  try { localStorage.setItem('semlab-theme', t.slug); } catch(e){}
+}
+tpBtn.addEventListener('click', function(e){ e.stopPropagation(); picker.classList.toggle('open'); });
+document.addEventListener('click', function(e){ if (!picker.contains(e.target)) picker.classList.remove('open'); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') picker.classList.remove('open'); });
+applyTheme(document.documentElement.dataset.theme || 'warm-vermilion');
+</script>
 </body>
 </html>
