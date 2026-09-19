@@ -894,8 +894,8 @@ html[data-theme]:not([data-theme="classic-dark"]) .view svg {
   <div class="top-right">
     <nav class="top-links">
       <a href="principles/index.html">轨1 · 原理科普 →</a>
-      <a href="#" onclick="return false">学习路线</a>
-      <a href="#" onclick="return false">更新日志</a>
+      <a href="index.html">学习路线</a>
+      <a href="#" onclick="openChangelog();return false">更新日志</a>
     </nav>
     <div class="theme-picker" id="themePicker">
       <button class="tp-btn" id="tpBtn" aria-haspopup="true" aria-label="切换主题">
@@ -3923,7 +3923,7 @@ html[data-theme]:not([data-theme="classic-dark"]) .view svg {
       <div class="stats">
         <div class="stat"><div class="v" style="color:var(--red)">~−80<small>%</small></div><div class="l">SOX 历史最大回撤</div><div class="d">2000–02 科网破灭 · 峰谷</div></div>
         <div class="stat cu"><div class="v">−32<small>%</small></div><div class="l">行业最大单年跌幅</div><div class="d">2001 · SIA 销售额口径</div></div>
-        <div class="stat si"><!-- AUTO:SOX-STAT:START --><div class="v">−21<small>%</small></div><div class="l">SOX 当前距 ATH</div><div class="d">2026-09-17 · 回撤进行中</div><!-- AUTO:SOX-STAT:END --></div>
+        <div class="stat si"><!-- AUTO:SOX-STAT:START --><div class="v">−19<small>%</small></div><div class="l">SOX 当前距 ATH</div><div class="d">2026-09-18 · 回撤进行中</div><!-- AUTO:SOX-STAT:END --></div>
         <div class="stat pur"><div class="v">6 × 11</div><div class="l">风险类 × 跟踪指标</div><div class="d">仪表盘见 ④</div></div>
       </div>
       <div class="panelbox">
@@ -4138,7 +4138,7 @@ html[data-theme]:not([data-theme="classic-dark"]) .view svg {
         <div class="tblwrap">
         <table class="tbl">
           <tr><th style="width:158px">指标</th><th style="width:52px">频率</th><th>免费数据源</th><th>当前读数（2026-09）</th><th style="width:118px">告警信号</th></tr>
-          <tr><td class="seg">SOX 回撤幅度 <span class="mut" style="font-size:10px">🤖 自动</span></td><td>日</td><td class="mut">indexes.nasdaqomx.com/Index/Overview/SOX</td><td class="num"><!-- AUTO:SOX-ROW:START -->11,599（09-17）· 距 ATH <b>−21%</b><sup class="s">6</sup><!-- AUTO:SOX-ROW:END --></td><td class="mut">回撤 &gt;30% 进入历史熊市带</td></tr>
+          <tr><td class="seg">SOX 回撤幅度 <span class="mut" style="font-size:10px">🤖 自动</span></td><td>日</td><td class="mut">indexes.nasdaqomx.com/Index/Overview/SOX</td><td class="num"><!-- AUTO:SOX-ROW:START -->11,922（09-18）· 距 ATH <b>−19%</b><sup class="s">6</sup><!-- AUTO:SOX-ROW:END --></td><td class="mut">回撤 &gt;30% 进入历史熊市带</td></tr>
           <tr><td class="seg">DRAM/NAND 现货价</td><td>日/周</td><td class="mut">DRAMeXchange（TrendForce）</td><td>高位分化：PC 零售现货自高点已回落 25–30%<sup class="s">10</sup></td><td class="mut">现货跌破合约价且价差扩大</td></tr>
           <tr><td class="seg">WSTS 月销 3MMA YoY</td><td>月</td><td class="mut">semiconductors.org 新闻稿</td><td>2026 秋测 +26.3%（春测曾 +90%）<sup class="s">4</sup></td><td class="mut">增速连续 3 个月放缓</td></tr>
           <tr><td class="seg">DRAM/NAND 合约价 QoQ</td><td>季</td><td class="mut">TrendForce 新闻稿</td><td class="num">Q3 DRAM +13~18%（自 Q1 +93~98% 收窄）<sup class="s">10</sup></td><td class="mut">环比转负 = 情景 A 触发</td></tr>
@@ -4542,6 +4542,27 @@ html[data-theme]:not([data-theme="classic-dark"]) .view svg {
   syncChrome(info, false);
   window.__gotoPage = gotoPage; /* 供测试/调试 */
 })();
+</script>
+<div id="changelogMask" style="display:none;position:fixed;inset:0;background:rgba(10,14,22,.55);z-index:900" onclick="if(event.target===this)closeChangelog()">
+  <div style="max-width:580px;margin:9vh auto;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px 26px;box-shadow:0 18px 50px rgba(0,0,0,.28);max-height:74vh;overflow:auto;font-size:13.5px;line-height:1.75">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <b style="font-size:16px">更新日志</b>
+      <a href="#" onclick="closeChangelog();return false" style="color:var(--mut);text-decoration:none;font-size:20px;line-height:1">×</a>
+    </div>
+    <div style="border-left:2px solid var(--border);padding-left:16px">
+      <p style="margin:0 0 4px"><b>2026-09-18 ｜ Q1–Q3 大批次</b></p>
+      <p style="margin:0 0 14px;color:var(--mut)">全站错漏修正 45+ 处；159 张图解逐张审计、8 处缺陷修复；新增 FEOL→BEOL 摩天楼剖面图、28nm 成本反转曲线；功率化合物章重写（A–G 七节 + 4 张新图）；轨2 扩容 9→14 页：存储周期框架、政策与出口管制时间线 C3、估值框架 C4、需求结构 V2、风险框架 C5、功率赛道 M7；SOX 回撤指标接入每日自动更新（C5 页 🤖 行）；全站新外壳 + 11 套主题 + 自托管中文字体。</p>
+      <p style="margin:0 0 4px"><b>2026-07-17 ｜ 轨2 做深②收官</b></p>
+      <p style="margin:0 0 14px;color:var(--mut)">六赛道龙头公司基本面深度卡片（12 家 A 股 × 14 家国际锚），竞争格局机制化改写，21 条深链回轨1。</p>
+      <p style="margin:0 0 4px"><b>2026-07-15 ｜ 初版上线</b></p>
+      <p style="margin:0;color:var(--mut)">知识库双轨结构建立：轨1 原理科普（16 章）+ 轨2 产业链价值（9 页）。</p>
+    </div>
+  </div>
+</div>
+<script>
+function openChangelog(){document.getElementById('changelogMask').style.display='block'}
+function closeChangelog(){document.getElementById('changelogMask').style.display='none'}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeChangelog()});
 </script>
 </body>
 </html>

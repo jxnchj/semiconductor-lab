@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>晶体管架构演进 · 3D 交互</title>
+<style>
+  :root{
+    --ink:#e8f0f8; --ink-dim:#9db4cc; --line:rgba(150,180,215,.55);
+    --panel:rgba(13,20,32,.55); --panel-border:rgba(140,170,210,.16);
+    --accent:#8fbdf0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{width:100%;height:100%;overflow:hidden;background:#0d1420;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  #stage{position:fixed;inset:0;display:block;cursor:grab;}
+  #stage.dragging{cursor:grabbing;}
+  #vignette{position:fixed;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 120% 90% at 50% 42%, transparent 55%, rgba(4,8,14,.55) 100%);}
+  #wires{position:fixed;inset:0;pointer-events:none;z-index:5;}
+  /* 顶部标题 */
+  #hdr{position:fixed;top:26px;left:34px;z-index:10;pointer-events:none;}
+  #hdr h1{font-size:21px;font-weight:700;letter-spacing:.06em;color:var(--ink);}
+  #hdr h1 .en{font-size:11px;font-weight:500;letter-spacing:.18em;color:var(--ink-dim);margin-left:10px;text-transform:uppercase;}
+  #hdr p{margin-top:8px;font-size:13px;letter-spacing:.05em;color:var(--ink-dim);}
+  #hdr p b{color:var(--accent);font-weight:600;}
+  /* 顶部模型切换 tabs */
+  #tabs{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:10;
+    display:flex;gap:4px;padding:5px;border-radius:999px;
+    background:var(--panel);border:1px solid var(--panel-border);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+  .tab{padding:8px 18px;border-radius:999px;border:none;background:transparent;
+    color:var(--ink-dim);font-size:12.5px;letter-spacing:.06em;cursor:pointer;
+    transition:background .25s,color .25s;white-space:nowrap;font-family:inherit;}
+  .tab:hover{color:var(--ink);}
+  .tab.on{background:var(--accent);color:#0d1420;font-weight:600;}
+  #caption{position:fixed;top:76px;left:50%;transform:translateX(-50%);z-index:9;
+    font-size:12.5px;letter-spacing:.06em;color:var(--ink-dim);pointer-events:none;
+    transition:opacity .4s;white-space:nowrap;}
+  #caption b{color:var(--accent);font-weight:600;}
+  /* 底部控制簇 */
+  #ctrls{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:10;
+    display:flex;flex-direction:column;align-items:center;gap:10px;}
+  #ctrls .row{display:flex;gap:10px;align-items:center;}
+  .pill{padding:11px 24px;border-radius:999px;border:1px solid var(--panel-border);
+    background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    color:var(--ink);font-size:13px;letter-spacing:.12em;cursor:pointer;
+    transition:border-color .25s,color .25s,background .25s,box-shadow .25s;user-select:none;
+    font-family:inherit;white-space:nowrap;}
+  .pill:hover{border-color:rgba(143,189,240,.6);}
+  .pill.on{color:#0d1420;background:var(--accent);border-color:var(--accent);
+    box-shadow:0 0 24px rgba(143,189,240,.35);font-weight:600;}
+  #powerBtn.on{color:#08222e;background:#7fe7ff;border-color:#7fe7ff;
+    box-shadow:0 0 26px rgba(127,231,255,.4);}
+  /* 透视分段 */
+  #xraySeg{display:flex;align-items:center;gap:2px;padding:5px 6px 5px 14px;border-radius:999px;
+    background:var(--panel);border:1px solid var(--panel-border);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+  #xraySeg .lab{font-size:12px;letter-spacing:.1em;color:var(--ink-dim);margin-right:8px;}
+  #xraySeg button{padding:6px 13px;border-radius:999px;border:none;background:transparent;
+    color:var(--ink-dim);font-size:12px;cursor:pointer;font-family:inherit;letter-spacing:.04em;
+    transition:background .2s,color .2s;}
+  #xraySeg button:hover{color:var(--ink);}
+  #xraySeg button.on{background:rgba(143,189,240,.22);color:var(--accent);font-weight:600;}
+  #pnote{font-size:11px;letter-spacing:.08em;color:rgba(127,231,255,.75);display:none;pointer-events:none;}
+  #hint{position:fixed;bottom:34px;left:34px;z-index:10;font-size:11px;letter-spacing:.1em;color:rgba(157,180,204,.6);pointer-events:none;}
+  /* 3D 标注（半透明） */
+  .anno{position:fixed;left:0;top:0;z-index:6;pointer-events:none;
+    padding:6px 10px;border-radius:8px;border:1px solid var(--panel-border);
+    background:var(--panel);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+    white-space:nowrap;will-change:transform,opacity;}
+  .anno .t{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.04em;line-height:1.3;}
+  .anno .s{font-size:11px;color:var(--ink-dim);letter-spacing:.03em;line-height:1.35;margin-top:1px;}
+  /* 底座型号标签 */
+  .mtag{position:fixed;left:0;top:0;z-index:6;pointer-events:none;transform:translate(-50%,0);
+    text-align:center;will-change:transform,opacity;}
+  .mtag .n{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:.08em;
+    text-shadow:0 1px 8px rgba(4,8,14,.8);}
+  .mtag .n .yr{font-size:11px;font-weight:600;color:#0d1420;background:var(--accent);
+    border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:2px;letter-spacing:.06em;
+    text-shadow:none;}
+  .mtag .d{margin-top:5px;font-size:11px;color:var(--ink-dim);letter-spacing:.08em;
+    text-shadow:0 1px 8px rgba(4,8,14,.8);}
+  /* 窄视口（正文嵌入 iframe ~810×580）：紧凑布局，防控制簇溢出/重叠 */
+  @media (max-width: 960px){
+    #hdr{top:14px;left:16px;}
+    #hdr h1{font-size:15px;}
+    #hdr h1 .en{display:none;}
+    #hdr p{margin-top:4px;font-size:11px;max-width:440px;}
+    #tabs{top:12px;left:auto;right:12px;transform:none;flex-wrap:wrap;justify-content:flex-end;max-width:330px;border-radius:16px;}
+    .tab{padding:6px 12px;font-size:11.5px;}
+    #caption{display:none;}
+    #hint{display:none;}
+    #ctrls{bottom:14px;gap:8px;}
+    .pill{padding:8px 16px;font-size:12px;}
+    #xraySeg{padding:4px 5px 4px 10px;}
+    #xraySeg .lab{font-size:11px;margin-right:5px;}
+    #xraySeg button{padding:5px 10px;font-size:11px;}
+    .anno .t{font-size:12px;} .anno .s{font-size:10px;}
+    .mtag .n{font-size:13px;} .mtag .d{font-size:10px;}
+  }
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<div id="vignette"></div>
+<svg id="wires"></svg>
+<div id="hdr">
+  <h1>晶体管架构演进<span class="en">Transistor Evolution</span></h1>
+  <p>栅极：<b>平面压覆沟道</b> → <b>三面环绕鳍片</b> → <b>四面环抱纳米片</b></p>
+</div>
+<div id="tabs">
+  <button class="tab" data-m="0">平面 MOSFET · 1990s</button>
+  <button class="tab" data-m="1">FinFET · 2011</button>
+  <button class="tab" data-m="2">GAA 纳米片 · 2022</button>
+  <button class="tab on" data-m="compare">三代对比</button>
+</div>
+<div id="caption"></div>
+<div id="hint">拖拽旋转 · 滚轮缩放 · 可转至正下方仰视</div>
+<div id="ctrls">
+  <div id="pnote">电子：源 → 漏（NMOS）· 传统电流（conventional current）方向相反</div>
+  <div class="row">
+    <button id="clipBtn" class="pill">剖切内部结构</button>
+    <div id="xraySeg"><span class="lab">透视</span>
+      <button data-v="0" class="on">关</button><button data-v="0.5">50%</button><button data-v="1">100%</button>
+    </div>
+    <button id="powerBtn" class="pill">⚡ 通电</button>
+  </div>
+</div>
+<div id="labels"></div>
+
+<script src="../lib/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+const Q = new URLSearchParams(location.search);
+const AUTO = !Q.has('noauto');
+THREE.ColorManagement.legacyMode = false; // 关键：材质颜色按 sRGB 正确解码
+
+/* ---------- 渲染器 / 场景 ---------- */
+const canvas = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.12;
+renderer.localClippingEnabled = true;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d1420);
+scene.fog = new THREE.Fog(0x0d1420, 42, 85);
+
+const camera = new THREE.PerspectiveCamera(36, innerWidth/Math.max(innerHeight,1)||1, 0.1, 200);
+
+/* ---------- 程序化环境贴图（摄影棚灯带） ---------- */
+function makeEnvTexture(){
+  const w=1024, h=512, cv=document.createElement('canvas');
+  cv.width=w; cv.height=h;
+  const g=cv.getContext('2d');
+  const grad=g.createLinearGradient(0,0,0,h);
+  grad.addColorStop(0.00,'#4a5568');
+  grad.addColorStop(0.32,'#2a3340');
+  grad.addColorStop(0.55,'#1a212c');
+  grad.addColorStop(1.00,'#070a0f');
+  g.fillStyle=grad; g.fillRect(0,0,w,h);
+  function band(y, hh, alpha){
+    const bg=g.createLinearGradient(0,y-hh,0,y+hh);
+    bg.addColorStop(0,'rgba(235,242,252,0)');
+    bg.addColorStop(0.5,'rgba(235,242,252,'+alpha+')');
+    bg.addColorStop(1,'rgba(235,242,252,0)');
+    g.fillStyle=bg; g.fillRect(0,y-hh,w,hh*2);
+  }
+  band(h*0.14, h*0.075, 0.7);
+  band(h*0.30, h*0.05, 0.32);
+  const vb=g.createLinearGradient(w*0.52,0,w*0.66,0);
+  vb.addColorStop(0,'rgba(225,236,248,0)');
+  vb.addColorStop(0.5,'rgba(225,236,248,0.4)');
+  vb.addColorStop(1,'rgba(225,236,248,0)');
+  g.fillStyle=vb; g.fillRect(w*0.52,h*0.15,w*0.14,h*0.55);
+  const vb2=g.createLinearGradient(w*0.02,0,w*0.12,0);
+  vb2.addColorStop(0,'rgba(200,220,240,0)');
+  vb2.addColorStop(0.5,'rgba(200,220,240,0.28)');
+  vb2.addColorStop(1,'rgba(200,220,240,0)');
+  g.fillStyle=vb2; g.fillRect(w*0.02,h*0.2,w*0.1,h*0.45);
+  const sg=g.createRadialGradient(w*0.82,h*0.42,10, w*0.82,h*0.42,w*0.3);
+  sg.addColorStop(0,'rgba(255,214,170,0.28)'); sg.addColorStop(1,'rgba(255,214,170,0)');
+  g.fillStyle=sg; g.fillRect(0,0,w,h);
+  const tex=new THREE.CanvasTexture(cv);
+  tex.mapping=THREE.EquirectangularReflectionMapping;
+  tex.encoding=THREE.sRGBEncoding;
+  return tex;
+}
+const pmrem = new THREE.PMREMGenerator(renderer);
+pmrem.compileEquirectangularShader();
+scene.environment = pmrem.fromEquirectangular(makeEnvTexture()).texture;
+
+/* ---------- 光照 ---------- */
+scene.add(new THREE.HemisphereLight(0xb9c9dd, 0x141c28, 0.28));
+const key = new THREE.DirectionalLight(0xfff1dc, 1.4);
+key.position.set(9, 15, 7);
+key.castShadow = true;
+key.shadow.mapSize.set(4096, 4096);
+key.shadow.camera.left=-18; key.shadow.camera.right=18;
+key.shadow.camera.top=14;  key.shadow.camera.bottom=-10;
+key.shadow.camera.near=2;  key.shadow.camera.far=45;
+key.shadow.bias=-0.0012;
+key.shadow.normalBias=0.03;
+scene.add(key);
+const rim = new THREE.DirectionalLight(0x7fa8ff, 1.0);
+rim.position.set(-11, 6, -13);
+scene.add(rim);
+const fill = new THREE.DirectionalLight(0x9fb8d8, 0.22);
+fill.position.set(-4, 3, 12);
+scene.add(fill);
+
+/* ---------- 阴影接收地面 ---------- */
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(220, 220),
+  new THREE.ShadowMaterial({opacity:0.45})
+);
+ground.rotation.x = -Math.PI/2;
+ground.position.y = -1.52;
+ground.receiveShadow = true;
+scene.add(ground);
+
+/* ---------- 剖切平面（每模型一个，从右侧推入） ---------- */
+const MODEL_X = [-9.5, 0, 9.5];
+const clipPlanes = MODEL_X.map(cx => new THREE.Plane(new THREE.Vector3(-1,0,0), cx + 6));
+let clipT = 0, clipTarget = 0;
+const CLIP_IN = 0.28;
+
+/* ---------- 材质工厂（每模型独立材质以挂各自剖切面） ---------- */
+function makeMats(plane){
+  const M = (c, m, r, env, extra) => {
+    const mt = new THREE.MeshStandardMaterial(
+      Object.assign({color:c, metalness:m, roughness:r, envMapIntensity:env,
+        clippingPlanes:[plane], clipShadows:true, side:THREE.DoubleSide}, extra||{}));
+    mt.userData.baseMetal = m;
+    if(mt.emissive) mt.userData.baseEmissive = mt.emissive.getHex();
+    return mt;
+  };
+  return {
+    substrate: M(0x1f2630, 0.60, 0.40, 0.35, {emissive:0x0b1018}),
+    sti:       M(0x3f4c58, 0.05, 0.92, 0.22, {side:THREE.FrontSide, emissive:0x0a0f14}),
+    sd:        M(0x5786b8, 0.30, 0.42, 0.45, {emissive:0x0a1220}),
+    gate:      M(0xc09a5e, 0.95, 0.27, 1.05, {emissive:0x120d06}),
+    oxide:     M(0x4fb2f0, 0.10, 0.22, 0.70, {transparent:true, opacity:0.55, side:THREE.FrontSide}),
+    contact:   M(0xdfe6ee, 0.85, 0.22, 1.45, {emissive:0x232a33}),
+    fin:       M(0x7b8ea0, 0.45, 0.42, 0.45, {emissive:0x0c1320}),
+    sheet:     M(0x93b0cc, 0.55, 0.36, 0.50, {emissive:0x0d1522}),
+    chan:      M(0x9fc8e8, 0.35, 0.35, 0.60, {emissive:0x12202e}),
+    spacer:    M(0x8b96a6, 0.10, 0.85, 0.30, {emissive:0x0c1016}),
+    pedestal:  M(0x111927, 0.45, 0.50, 0.30, {clippingPlanes:[]}),
+    plate:     M(0x182233, 0.30, 0.46, 0.22, {clippingPlanes:[]})
+  };
+}
+
+/* ---------- 圆角几何工具 ---------- */
+function roundedRectShape(w, h, r){
+  const s = new THREE.Shape(), x=-w/2, y=-h/2;
+  s.moveTo(x+r, y);
+  s.lineTo(x+w-r, y);        s.absarc(x+w-r, y+r,   r, -Math.PI/2, 0, false);
+  s.lineTo(x+w, y+h-r);      s.absarc(x+w-r, y+h-r, r, 0, Math.PI/2, false);
+  s.lineTo(x+r, y+h);        s.absarc(x+r,   y+h-r, r, Math.PI/2, Math.PI, false);
+  s.lineTo(x, y+r);          s.absarc(x+r,   y+r,   r, Math.PI, Math.PI*1.5, false);
+  return s;
+}
+function roundedBox(w, h, d, r, mat){
+  r = Math.min(r, w/2-0.001, h/2-0.001);
+  const bev = Math.min(0.035, r*0.35);
+  const geo = new THREE.ExtrudeGeometry(roundedRectShape(w, h, r), {
+    depth: d - bev*2, bevelEnabled:true, bevelThickness:bev, bevelSize:bev,
+    bevelSegments:2, curveSegments:14
+  });
+  geo.translate(0, 0, -(d - bev*2)/2);
+  const m = new THREE.Mesh(geo, mat);
+  m.castShadow = true; m.receiveShadow = true;
+  return m;
+}
+function box(w,h,d,mat,x,y,z){
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat);
+  m.position.set(x,y,z); m.castShadow = true; m.receiveShadow = true;
+  return m;
+}
+function anchor(parent, x,y,z){
+  const o = new THREE.Object3D(); o.position.set(x,y,z); parent.add(o); return o;
+}
+
+/* ================================================================
+   模型一：平面 MOSFET（1990s）
+================================================================ */
+function buildPlanar(mat){
+  const g = new THREE.Group();
+  g.add(box(5.2, 1.0, 3.2, mat.substrate, 0, -0.48, 0));
+  g.add(box(0.85, 0.55, 3.14, mat.sti, -2.05, -0.125, 0));
+  g.add(box(0.85, 0.55, 3.14, mat.sti,  2.05, -0.125, 0));
+  g.add(box(1.05, 0.28, 1.9, mat.sd, -1.25, -0.02, 0));
+  g.add(box(1.05, 0.28, 1.9, mat.sd,  1.25, -0.02, 0));
+  // 沟道反型层（透视/通电时高亮保持不透明）
+  g.add(box(1.5, 0.05, 1.9, mat.chan, 0, 0.025, 0));
+  g.add(box(2.05, 0.06, 2.3, mat.oxide, 0, 0.06, 0));
+  const gate = roundedBox(1.6, 0.6, 1.95, 0.08, mat.gate);
+  gate.position.set(0, 0.39, 0); g.add(gate);
+  [-1.25, 1.25].forEach(x=>{
+    const c = new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,1.0,24), mat.contact);
+    c.position.set(x, 0.62, 0); c.castShadow = true; g.add(c);
+  });
+  return {group:g, a:{
+    gate:   anchor(g, 0, 0.66, 0),
+    oxide:  anchor(g, 0.86, 0.06, 0.55),
+    sd:     anchor(g, -1.25, 0.14, 0.5),
+    chan:   anchor(g, 0, 0.02, 1.05)
+  }};
+}
+
+/* ================================================================
+   模型二：FinFET（2011）
+================================================================ */
+function buildFinFET(mat){
+  const g = new THREE.Group();
+  g.add(box(5.2, 1.0, 3.2, mat.substrate, 0, -0.48, 0));
+  g.add(box(5.2, 0.6, 1.26, mat.sti, 0, -0.1, -0.94));
+  g.add(box(5.2, 0.6, 1.26, mat.sti, 0, -0.1,  0.94));
+  const fin = roundedBox(4.4, 1.5, 0.5, 0.2, mat.fin);
+  fin.position.set(0, 0.75, 0); g.add(fin);
+  const ox = roundedBox(1.14, 1.12, 0.68, 0.26, mat.oxide);
+  ox.position.set(0, 1.14, 0); g.add(ox);
+  const s = new THREE.Shape();
+  const OW=1.86/2, IW=0.74/2, TOP=0, BOT=-1.52, CEIL=-0.30, R=0.26;
+  s.moveTo(-OW, BOT);
+  s.lineTo(-OW, TOP-R);  s.absarc(-OW+R, TOP-R, R, Math.PI, Math.PI/2, true);
+  s.lineTo(OW-R, TOP);   s.absarc(OW-R, TOP-R, R, Math.PI/2, 0, true);
+  s.lineTo(OW, BOT);
+  s.lineTo(IW, BOT);
+  s.lineTo(IW, CEIL);
+  s.lineTo(-IW, CEIL);
+  s.lineTo(-IW, BOT);
+  s.closePath();
+  const gateGeo = new THREE.ExtrudeGeometry(s, {
+    depth:1.0, bevelEnabled:true, bevelThickness:0.03, bevelSize:0.03, bevelSegments:2, curveSegments:14
+  });
+  gateGeo.translate(0, 0, -0.5);
+  const gate = new THREE.Mesh(gateGeo, mat.gate);
+  gate.rotation.y = Math.PI/2;
+  gate.position.set(0, 1.98, 0);
+  gate.castShadow = true; gate.receiveShadow = true;
+  g.add(gate);
+  [-2.0, 2.0].forEach(x=>{
+    const e = roundedBox(1.0, 0.85, 1.15, 0.16, mat.sd);
+    e.position.set(x, 0.42, 0); g.add(e);
+    const c = new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,1.0,24), mat.contact);
+    c.position.set(x, 1.35, 0); c.castShadow = true; g.add(c);
+  });
+  return {group:g, a:{
+    gate:  anchor(g, 0, 2.02, 0),
+    fin:   anchor(g, 1.05, 1.52, 0),
+    sd:    anchor(g, -2.0, 0.86, 0.35),
+    oxide: anchor(g, 0.5, 1.5, 0.3)
+  }};
+}
+
+/* ================================================================
+   模型三：GAA 纳米片（2022）
+================================================================ */
+function buildGAA(mat){
+  const g = new THREE.Group();
+  g.add(box(5.2, 1.0, 3.2, mat.substrate, 0, -0.48, 0));
+  g.add(box(5.2, 0.6, 1.02, mat.sti, 0, -0.1, -1.10));
+  g.add(box(5.2, 0.6, 1.02, mat.sti, 0, -0.1,  1.10));
+  const sheetY = [0.72, 1.27, 1.82];
+  sheetY.forEach(y=>{
+    const sh = roundedBox(3.6, 0.24, 1.35, 0.1, mat.sheet);
+    sh.position.set(0, y, 0); g.add(sh);
+    const ox = roundedBox(1.06, 0.37, 1.48, 0.13, mat.oxide);
+    ox.position.set(0, y, 0); g.add(ox);
+  });
+  const gate = roundedBox(1.14, 2.34, 1.86, 0.15, mat.gate);
+  gate.position.set(0, 1.27, 0); g.add(gate);
+  [-0.63, 0.63].forEach(x=>{
+    [0.995, 1.545].forEach(y=>{
+      g.add(box(0.09, 0.29, 1.38, mat.spacer, x, y, 0));
+    });
+  });
+  [-2.1, 2.1].forEach(x=>{
+    const e = roundedBox(1.05, 2.2, 1.8, 0.16, mat.sd);
+    e.position.set(x, 1.2, 0); g.add(e);
+    const c = new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,1.05,24), mat.contact);
+    c.position.set(x, 2.85, 0); c.castShadow = true; g.add(c);
+  });
+  return {group:g, a:{
+    gate:   anchor(g, 0, 2.5, 0),
+    sheet:  anchor(g, 1.25, 1.82, 0.45),
+    sd:     anchor(g, -2.1, 2.34, 0.45),
+    spacer: anchor(g, 0.58, 1.27, 0.7)
+  }};
+}
+
+/* ---------- 组装场景 ---------- */
+const models = [
+  {build:buildPlanar, x:MODEL_X[0], tag:'平面 MOSFET', yr:'1990s', desc:'栅极从上方单面压覆沟道'},
+  {build:buildFinFET, x:MODEL_X[1], tag:'FinFET',      yr:'2011',  desc:'栅极 ∩ 形三面环绕鳍片'},
+  {build:buildGAA,    x:MODEL_X[2], tag:'GAA 纳米片',  yr:'2022',  desc:'栅极四面环抱每层纳米片'}
+];
+const annos = [];
+const mtags = [];
+const groups = [];
+const matSets = [];
+const labelsBox = document.getElementById('labels');
+const wires = document.getElementById('wires');
+const SVGNS = 'http://www.w3.org/2000/svg';
+
+/* 各标注所属部件在模型局部 X 方向的范围（用于剖切跟随：
+   锚点在被裁侧 → 投影到剖面；部件整体被切穿 → 标注淡出） */
+const PART_X = [
+  // 平面 MOSFET
+  {gate:[-0.8,0.8], chan:[-0.75,0.75], sd:[-1.78,-0.72], oxide:[-1.03,1.03]},
+  // FinFET
+  {gate:[-0.53,0.53], fin:[-2.2,2.2], sd:[-2.5,-1.5], oxide:[-0.57,0.57]},
+  // GAA
+  {gate:[-0.6,0.6], sheet:[-1.8,1.8], sd:[-2.63,-1.58], spacer:[-0.53,0.53]}
+];
+
+models.forEach((cfg, i)=>{
+  const mat = makeMats(clipPlanes[i]);  matSets.push(mat);
+  const {group, a} = cfg.build(mat);
+  const ped = roundedBox(6.6, 0.5, 4.8, 0.12, mat.pedestal);
+  ped.position.set(0, -1.25, 0); group.add(ped);
+  const plate = roundedBox(6.9, 0.09, 5.1, 0.04, mat.plate);
+  plate.position.set(0, -0.92, 0); group.add(plate);
+  group.position.x = cfg.x;
+  scene.add(group);
+  groups.push(group);
+
+  const tagAnchor = anchor(group, 0, -1.5, 2.05);
+  const tagEl = document.createElement('div');
+  tagEl.className = 'mtag';
+  tagEl.innerHTML = '<div class="n">'+cfg.tag+'<span class="yr">'+cfg.yr+'</span></div>'+
+                    '<div class="d">'+cfg.desc+'</div>';
+  labelsBox.appendChild(tagEl);
+  mtags.push({obj:tagAnchor, el:tagEl, dy:26, mi:i, grp:group, op:1});
+
+  const annoDefs = [
+    {key:'gate',  t:'栅极 Gate',
+                  s: i===0?'平面压覆沟道':(i===1?'∩ 形跨越鳍片 · 三面环绕':'四面环抱每层纳米片'),
+                  dx:0,    dy:[-78,-85,-90][i]},
+    {key: i===0?'chan':(i===1?'fin':'sheet'),
+                  t: i===0?'平面沟道':(i===1?'鳍片沟道 Fin':'纳米片沟道 ×3'),
+                  s: i===0?'电子在表面反型层中导电':(i===1?'竖立硅鳍 · 高瘦截面':'悬浮硅片 · 层间栅极填充'),
+                  dx:[60,100,104][i], dy:[70,-12,-28][i]},
+    {key:'sd',    t:'源 / 漏 S·D',
+                  s: i===0?'重掺杂扩散区':(i===1?'外延抬升源漏':'外延连接各层片端'),
+                  dx:[-96,-100,-104][i], dy:[20,28,5][i]},
+    {key: i===2?'spacer':'oxide',
+                  t: '栅氧层 Gate Oxide',
+                  s: i===2?'高 k 介质 · 四面环抱（剖切可见）':(i===0?'极薄介质 · 栅与沟道绝缘':'贴附鳍片三面 · 高 k 介质'),
+                  dx:[98,-88,96][i], dy:[-56,-48,48][i]}
+  ];
+  annoDefs.forEach(d=>{
+    const el = document.createElement('div');
+    el.className = 'anno';
+    el.innerHTML = '<div class="t">'+d.t+'</div><div class="s">'+d.s+'</div>';
+    labelsBox.appendChild(el);
+    const line = document.createElementNS(SVGNS,'line');
+    line.setAttribute('stroke','rgba(150,180,215,.5)');
+    line.setAttribute('stroke-width','1');
+    wires.appendChild(line);
+    const halo = document.createElementNS(SVGNS,'circle');
+    halo.setAttribute('r','6'); halo.setAttribute('fill','rgba(156,196,238,.22)');
+    wires.appendChild(halo);
+    const dot = document.createElementNS(SVGNS,'circle');
+    dot.setAttribute('r','2.6'); dot.setAttribute('fill','#9cc4ee');
+    wires.appendChild(dot);
+    annos.push({obj:a[d.key], base:a[d.key].position.clone(), range:PART_X[i][d.key],
+      el, line, halo, dot, dx:d.dx, dy:d.dy, mi:i, grp:group, op:1});
+  });
+});
+
+/* ---------- 通电：电子流（粒子 + 方向箭头） ---------- */
+function makeFlowTexture(){
+  const cv=document.createElement('canvas'); cv.width=cv.height=64;
+  const g=cv.getContext('2d');
+  const gr=g.createRadialGradient(32,32,0,32,32,32);
+  gr.addColorStop(0,'rgba(255,255,255,1)');
+  gr.addColorStop(0.35,'rgba(190,242,255,0.85)');
+  gr.addColorStop(1,'rgba(120,220,255,0)');
+  g.fillStyle=gr; g.fillRect(0,0,64,64);
+  return new THREE.CanvasTexture(cv);
+}
+const flowTex = makeFlowTexture();
+// 各模型的电流路径（局部坐标，S → D 为 +X）
+const FLOW_PATHS = [
+  // 平面：栅氧下表面沟道，3 条横向道
+  [[[-1.55,0.17,-0.6],[-0.7,0.06,-0.6],[0.7,0.06,-0.6],[1.55,0.17,-0.6]],
+   [[-1.55,0.17,0],   [-0.7,0.06,0],   [0.7,0.06,0],   [1.55,0.17,0]],
+   [[-1.55,0.17,0.6], [-0.7,0.06,0.6], [0.7,0.06,0.6], [1.55,0.17,0.6]]],
+  // FinFET：鳍片顶面 + 两侧壁
+  [[[-2.0,1.55,0],[2.0,1.55,0]],
+   [[-2.0,1.08,0.29],[2.0,1.08,0.29]],
+   [[-2.0,1.08,-0.29],[2.0,1.08,-0.29]]],
+  // GAA：三层纳米片，三股并行
+  [[[-2.0,0.72,0],[2.0,0.72,0]],
+   [[-2.0,1.27,0],[2.0,1.27,0]],
+   [[-2.0,1.82,0],[2.0,1.82,0]]]
+];
+function pathPoint(p, t, out){
+  const segs=p.length-1, ft=Math.min(t,0.99999)*segs, i=Math.floor(ft), lt=ft-i;
+  const a=p[i], b=p[i+1];
+  out[0]=a[0]+(b[0]-a[0])*lt; out[1]=a[1]+(b[1]-a[1])*lt; out[2]=a[2]+(b[2]-a[2])*lt;
+}
+const flows = [];
+groups.forEach((group, mi)=>{
+  const paths = FLOW_PATHS[mi];
+  const PER = 14, n = paths.length*PER;
+  const pos = new Float32Array(n*3);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const pmat = new THREE.PointsMaterial({size:0.2, map:flowTex, color:0x7fe7ff,
+    transparent:true, opacity:0.95, blending:THREE.AdditiveBlending,
+    depthWrite:false, sizeAttenuation:true, clippingPlanes:[clipPlanes[mi]]});
+  const pts = new THREE.Points(geo, pmat);
+  pts.visible = false; pts.frustumCulled = false;
+  group.add(pts);
+  const parts = [];
+  paths.forEach((p,pi)=>{ for(let k=0;k<PER;k++) parts.push({pi, t:(k/PER + pi*0.13)%1}); });
+  // 路径两端的 S→D 方向箭头
+  const arrows = [];
+  const tmp=[0,0,0];
+  paths.forEach(p=>{
+    [0.05, 0.95].forEach(f=>{
+      pathPoint(p, f, tmp);
+      const cone = new THREE.Mesh(new THREE.ConeGeometry(0.085, 0.26, 12),
+        new THREE.MeshBasicMaterial({color:0x8ff0ff, transparent:true, opacity:0.9,
+          depthWrite:false, clippingPlanes:[clipPlanes[mi]]}));
+      cone.position.set(tmp[0], tmp[1], tmp[2]);
+      cone.rotation.z = -Math.PI/2; // +Y → +X（源→漏）
+      cone.visible = false;
+      group.add(cone); arrows.push(cone);
+    });
+  });
+  flows.push({pts, geo, paths, parts, arrows});
+});
+let powerOn = false;
+const pnote = document.getElementById('pnote');
+const powerBtn = document.getElementById('powerBtn');
+function setPower(on){
+  powerOn = on;
+  powerBtn.classList.toggle('on', on);
+  powerBtn.textContent = on ? '⚡ 断电' : '⚡ 通电';
+  pnote.style.display = on ? 'block' : 'none';
+  flows.forEach(f=>{ f.pts.visible = on; f.arrows.forEach(a=>a.visible = on); });
+  // 沟道材质通电微发光
+  matSets.forEach(m=>{
+    [m.chan, m.fin, m.sheet].forEach(mt=>{
+      mt.emissive.setHex(on ? 0x16405a : mt.userData.baseEmissive);
+    });
+  });
+}
+powerBtn.addEventListener('click', ()=>setPower(!powerOn));
+const _fp = [0,0,0];
+function updateFlows(dt){
+  if(!powerOn) return;
+  flows.forEach((f, mi)=>{
+    if(!groups[mi].visible) return;
+    const pos = f.geo.attributes.position.array;
+    f.parts.forEach((pt,i)=>{
+      pt.t += dt*0.42; if(pt.t>1) pt.t-=1;
+      pathPoint(f.paths[pt.pi], pt.t, _fp);
+      pos[i*3]=_fp[0]; pos[i*3+1]=_fp[1]; pos[i*3+2]=_fp[2];
+    });
+    f.geo.attributes.position.needsUpdate = true;
+  });
+}
+
+/* ---------- 透视（X-ray） ---------- */
+const XRAY_KEYS = ['substrate','sti','sd','gate','contact','spacer'];
+function setXray(v){
+  matSets.forEach(m=>{
+    XRAY_KEYS.forEach(k=>{
+      const mt = m[k];
+      mt.transparent = v > 0;
+      mt.opacity = 1 - 0.78*v;
+      mt.metalness = mt.userData.baseMetal * (1 - 0.85*v);
+      mt.depthWrite = v === 0;   // 避免透明排序错乱
+    });
+  });
+  document.querySelectorAll('#xraySeg button').forEach(b=>{
+    b.classList.toggle('on', parseFloat(b.dataset.v) === v);
+  });
+  // 透视时粒子/箭头关闭深度测试 → X 光式透见内部电流路径
+  flows.forEach(f=>{
+    f.pts.material.depthTest = (v === 0);
+    f.arrows.forEach(a=>{ a.material.depthTest = (v === 0); });
+  });
+}
+document.querySelectorAll('#xraySeg button').forEach(b=>{
+  b.addEventListener('click', ()=>setXray(parseFloat(b.dataset.v)));
+});
+
+/* ---------- 模型切换 tabs + 相机平滑过渡 ---------- */
+const VIEWS = {
+  'compare':{t:[0,0.75,0],    r:27},
+  '0':      {t:[-9.5,0.35,0], r:11.5},
+  '1':      {t:[0,0.9,0],     r:11},
+  '2':      {t:[9.5,1.25,0],  r:11.5}
+};
+const CAPTIONS = {
+  'compare':'栅极包围方式的演进：<b>单面压覆 → 三面环绕 → 四面环抱</b>',
+  '0':'栅极从上方单面压覆沟道 —— <b>平面时代的终点是短沟道效应</b>',
+  '1':'栅极 ∩ 形三面环绕竖立鳍片 —— <b>静电控制的第一次飞跃</b>',
+  '2':'栅极四面包裹每层纳米片 —— <b>漏电控制的终点形态</b>'
+};
+let mode = 'compare';
+let camAnim = null; // {fromT, toT, fromR, toR, t}
+const target = new THREE.Vector3(0, 0.75, 0);
+// 窄视口（如正文嵌入 iframe）自动拉远相机，保证三代模型完整入画
+function fitR(){ const a = innerWidth/Math.max(innerHeight,1); return Math.max(1, Math.min(1.75/a, 1.6)); }
+let lastFit = fitR();
+let theta = 0.58, phi = 1.08, radius = 27 * lastFit;
+let tTheta = theta, tPhi = phi, tRadius = radius;
+const captionEl = document.getElementById('caption');
+
+function setMode(m, instant){
+  mode = m;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on', b.dataset.m===m));
+  captionEl.style.opacity = 0;
+  setTimeout(()=>{ captionEl.innerHTML = CAPTIONS[m]; captionEl.style.opacity = 1; }, instant?0:200);
+  groups.forEach((g,i)=>{ g.visible = (m==='compare' || i===parseInt(m)); });
+  const v = VIEWS[m], vr = v.r * fitR();
+  if(instant){
+    camAnim = null;
+    target.set(v.t[0],v.t[1],v.t[2]);
+    radius = tRadius = vr;
+  } else {
+    camAnim = {fromT:target.clone(), toT:new THREE.Vector3(v.t[0],v.t[1],v.t[2]),
+               fromR:radius, toR:vr, t:0};
+    tRadius = vr;
+  }
+}
+document.querySelectorAll('.tab').forEach(b=>{
+  b.addEventListener('click', ()=>setMode(b.dataset.m, false));
+});
+setMode('compare', true);
+
+/* ---------- 自写轨道控制（完整球面：极角 0.02 ~ π-0.02） ---------- */
+let autoRot = AUTO;
+let dragging = false, px = 0, py = 0;
+canvas.addEventListener('pointerdown', e=>{
+  dragging = true; autoRot = false;
+  px = e.clientX; py = e.clientY;
+  canvas.classList.add('dragging');
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', e=>{
+  if(!dragging) return;
+  tTheta -= (e.clientX - px) * 0.0052;
+  tPhi   -= (e.clientY - py) * 0.0052;
+  tPhi = Math.max(0.02, Math.min(Math.PI-0.02, tPhi));
+  px = e.clientX; py = e.clientY;
+});
+addEventListener('pointerup', ()=>{ dragging = false; canvas.classList.remove('dragging'); });
+canvas.addEventListener('wheel', e=>{
+  e.preventDefault();
+  tRadius *= (1 + e.deltaY * 0.0011);
+  tRadius = Math.max(6, Math.min(46, tRadius));
+}, {passive:false});
+
+/* ---------- 剖切按钮 ---------- */
+const clipBtn = document.getElementById('clipBtn');
+clipBtn.addEventListener('click', ()=>{
+  clipTarget = clipTarget ? 0 : 1;
+  clipBtn.classList.toggle('on', !!clipTarget);
+  clipBtn.textContent = clipTarget ? '复原外观' : '剖切内部结构';
+});
+
+/* ---------- 标注投影 + 背面淡化 + 剖面跟随 ---------- */
+const v3 = new THREE.Vector3();
+const cw = new THREE.Vector3();
+const cd = new THREE.Vector3();
+const effP = new THREE.Vector3();  // 剖面跟随后的局部锚点
+const wPos = new THREE.Vector3();  // 世界坐标
+function project(obj){
+  obj.getWorldPosition(v3);
+  v3.project(camera);
+  return {x:(v3.x*0.5+0.5)*innerWidth, y:(-v3.y*0.5+0.5)*innerHeight, behind: v3.z > 1};
+}
+function projectWorld(w){
+  v3.copy(w).project(camera);
+  return {x:(v3.x*0.5+0.5)*innerWidth, y:(-v3.y*0.5+0.5)*innerHeight, behind: v3.z > 1};
+}
+// 锚点朝向（相对模型中心的外向法线）与视线方向的点积 → 背面时淡化
+const MODEL_CY = [0.1, 0.7, 1.2]; // 各模型包围盒中心高度
+function facingOpacity(item, w){
+  item.grp.getWorldPosition(cw); cw.y += MODEL_CY[item.mi];
+  cd.copy(camera.position).sub(w);
+  const nx = w.x-cw.x, ny = w.y-cw.y, nz = w.z-cw.z;
+  const nl = Math.hypot(nx,ny,nz) || 1;
+  const dot = (nx*cd.x + ny*cd.y + nz*cd.z) / (nl * (cd.length()||1));
+  return dot < 0.04 ? 0.3 : 1;
+}
+function updateLabels(){
+  wires.setAttribute('viewBox','0 0 '+innerWidth+' '+innerHeight);
+  // 当前剖面在各模型局部坐标中的位置（与 clipPlanes 动画同一公式）
+  const cutX = 6 + (CLIP_IN-6)*clipT;
+  annos.forEach(a=>{
+    const hidden = (mode!=='compare' && a.mi !== parseInt(mode));
+    // 剖面跟随：锚点位于被裁侧 → 沿法线收回到剖切平面上（落在该部件断面）
+    effP.copy(a.base);
+    if(effP.x > cutX) effP.x = cutX;
+    wPos.copy(effP);
+    a.grp.localToWorld(wPos);
+    const p = projectWorld(wPos);
+    let lx = p.x + a.dx, ly = p.y + a.dy;
+    lx = Math.max(92, Math.min(innerWidth-92, lx));
+    ly = Math.max(46, Math.min(innerHeight-70, ly));
+    const offscreen = hidden || p.behind || p.x<-60 || p.x>innerWidth+60 || p.y<-60 || p.y>innerHeight+60;
+    if(offscreen){ a.el.style.display='none'; a.line.style.display='none';
+      a.dot.style.display='none'; a.halo.style.display='none'; return; }
+    // 部件整体被切穿 → 标注淡出隐藏（不指向空处）
+    let clipOp = 1;
+    if(cutX <= a.range[0]) clipOp = 0;
+    else if(cutX < a.range[0]+0.35) clipOp = (cutX - a.range[0])/0.35;
+    // 背面淡化 × 剖切淡化（平滑过渡）
+    const toOp = facingOpacity(a, wPos) * clipOp;
+    a.op += (toOp - a.op) * 0.18;
+    if(a.op < 0.02){ a.el.style.display='none'; a.line.style.display='none';
+      a.dot.style.display='none'; a.halo.style.display='none'; return; }
+    a.el.style.display='block'; a.line.style.display='';
+    a.dot.style.display=''; a.halo.style.display='';
+    a.el.style.opacity = a.op;
+    a.line.style.opacity = a.op; a.dot.style.opacity = a.op; a.halo.style.opacity = a.op;
+    a.el.style.transform = 'translate('+(lx)+'px,'+(ly)+'px) translate(-50%,-50%)';
+    const ex = lx - Math.sign(a.dx)*Math.min(Math.abs(a.dx)*0.55, 46);
+    const ey = ly - Math.sign(a.dy)*Math.min(Math.abs(a.dy)*0.5, 22);
+    a.line.setAttribute('x1',p.x); a.line.setAttribute('y1',p.y);
+    a.line.setAttribute('x2',ex);  a.line.setAttribute('y2',ey);
+    a.dot.setAttribute('cx',p.x);  a.dot.setAttribute('cy',p.y);
+    a.halo.setAttribute('cx',p.x); a.halo.setAttribute('cy',p.y);
+  });
+  mtags.forEach(t=>{
+    // 单模型模式下隐藏底座标签（tabs + caption 已表明身份，且避免与控制簇重叠）
+    const hidden = (mode!=='compare');
+    t.obj.getWorldPosition(wPos);
+    const p = projectWorld(wPos);
+    if(hidden || p.behind || p.x<-80 || p.x>innerWidth+80 || p.y<-40 || p.y>innerHeight+40){
+      t.el.style.display='none'; return; }
+    const toOp = facingOpacity(t, wPos);
+    t.op += (toOp - t.op) * 0.18;
+    t.el.style.display='block';
+    t.el.style.opacity = t.op;
+    t.el.style.transform = 'translate('+p.x+'px,'+(p.y+t.dy)+'px) translate(-50%,0)';
+  });
+}
+
+/* ---------- 主循环 ---------- */
+const clock = new THREE.Clock();
+function easeInOut(t){ return t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+let clipAnim = null;
+function animate(){
+  requestAnimationFrame(animate);
+  if(innerWidth < 2 || innerHeight < 2) return; // 嵌入宿主章节未显示时（0×0 视口）跳过渲染，避免投影 NaN
+  const dt = Math.min(clock.getDelta(), 0.05);
+  if(autoRot) tTheta += dt * (Math.PI*2/8);
+  theta += (tTheta - theta) * 0.075;
+  phi   += (tPhi   - phi)   * 0.075;
+  // 相机模式过渡（900ms 平滑，不瞬移）
+  if(camAnim){
+    camAnim.t += dt/0.9;
+    const e = easeInOut(Math.min(camAnim.t, 1));
+    target.lerpVectors(camAnim.fromT, camAnim.toT, e);
+    radius = camAnim.fromR + (camAnim.toR - camAnim.fromR)*e;
+    if(camAnim.t >= 1) camAnim = null;
+  } else {
+    radius += (tRadius - radius) * 0.075;
+  }
+  camera.position.set(
+    target.x + radius*Math.sin(phi)*Math.sin(theta),
+    target.y + radius*Math.cos(phi),
+    target.z + radius*Math.sin(phi)*Math.cos(theta)
+  );
+  camera.lookAt(target);
+  if(clipT !== clipTarget){
+    if(!clipAnim) clipAnim = {from:clipT, to:clipTarget, t:0};
+    clipAnim.t += dt/0.6;
+    if(clipAnim.t >= 1){ clipT = clipAnim.to; clipAnim = null; }
+    else clipT = clipAnim.from + (clipAnim.to-clipAnim.from)*easeInOut(Math.min(clipAnim.t,1));
+    MODEL_X.forEach((cx,i)=>{ clipPlanes[i].constant = cx + 6 + (CLIP_IN-6)*clipT; });
+  }
+  updateFlows(dt);
+  renderer.render(scene, camera);
+  updateLabels();
+}
+animate();
+
+addEventListener('resize', ()=>{
+  if(innerWidth < 2 || innerHeight < 2) return;
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  const f = fitR();
+  if(Math.abs(f - lastFit) > 0.01){ tRadius = tRadius/lastFit*f; radius = radius/lastFit*f; lastFit = f; }
+});
+
+/* ---------- 调试钩子（供自动化验收） ---------- */
+window.__dbg = {
+  view:(th,ph,r)=>{ tTheta=theta=th; tPhi=phi=ph; tRadius=r; autoRot=false; camAnim=null;
+    const v=VIEWS[mode]; target.set(v.t[0],v.t[1],v.t[2]); radius=r; },
+  viewAt:(th,ph,r,tx,ty,tz)=>{ tTheta=theta=th; tPhi=phi=ph; tRadius=radius=r;
+    autoRot=false; camAnim=null; target.set(tx,ty,tz); },
+  clip:(v)=>{ clipTarget=v; clipT=v; clipAnim=null;
+    MODEL_X.forEach((cx,i)=>{ clipPlanes[i].constant = cx + 6 + (CLIP_IN-6)*v; }); },
+  mode:(m)=>setMode(m, true),
+  xray:(v)=>setXray(v),
+  power:(b)=>setPower(!!b),
+  state:()=>({theta, phi, radius, clipT, mode, powerOn}),
+  pick:(sx,sy)=>{ const nd=new THREE.Vector2(sx/innerWidth*2-1, -(sy/innerHeight)*2+1);
+    const rc=new THREE.Raycaster(); rc.setFromCamera(nd,camera);
+    const hits=rc.intersectObjects(scene.children,true);
+    return hits.slice(0,4).map(h=>({d:+h.distance.toFixed(2), geo:h.object.geometry.type,
+      col:h.object.material&&h.object.material.color?h.object.material.color.getHexString():null,
+      pos:h.object.getWorldPosition(new THREE.Vector3()).toArray().map(v=>+v.toFixed(2))})); }
+};
+})();
+</script>
+</body>
+</html>

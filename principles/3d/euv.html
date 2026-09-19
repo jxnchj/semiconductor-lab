@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EUV 光刻 · 六镜光路 · 3D 交互</title>
+<style>
+  :root{
+    --ink:#e8f0f8; --ink-dim:#9db4cc; --line:rgba(150,180,215,.55);
+    --panel:rgba(13,20,32,.55); --panel-border:rgba(140,170,210,.16);
+    --accent:#8fbdf0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{width:100%;height:100%;overflow:hidden;background:#0d1420;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  #stage{position:fixed;inset:0;display:block;cursor:grab;}
+  #stage.dragging{cursor:grabbing;}
+  #vignette{position:fixed;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 120% 90% at 50% 42%, transparent 55%, rgba(4,8,14,.55) 100%);}
+  #wires{position:fixed;inset:0;pointer-events:none;z-index:5;}
+  /* 顶部标题 */
+  #hdr{position:fixed;top:26px;left:34px;z-index:10;pointer-events:none;}
+  #hdr h1{font-size:21px;font-weight:700;letter-spacing:.06em;color:var(--ink);}
+  #hdr h1 .en{font-size:11px;font-weight:500;letter-spacing:.18em;color:var(--ink-dim);margin-left:10px;text-transform:uppercase;}
+  #hdr p{margin-top:8px;font-size:13px;letter-spacing:.05em;color:var(--ink-dim);}
+  #hdr p b{color:var(--accent);font-weight:600;}
+  #caption{position:fixed;top:76px;left:50%;transform:translateX(-50%);z-index:9;
+    font-size:12.5px;letter-spacing:.06em;color:var(--ink-dim);pointer-events:none;
+    transition:opacity .4s;white-space:nowrap;}
+  #caption b{color:#ffd9a0;font-weight:600;}
+  /* 底部控制簇 */
+  #ctrls{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:10;
+    display:flex;flex-direction:column;align-items:center;gap:10px;}
+  #ctrls .row{display:flex;gap:10px;align-items:center;}
+  .pill{padding:11px 24px;border-radius:999px;border:1px solid var(--panel-border);
+    background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    color:var(--ink);font-size:13px;letter-spacing:.12em;cursor:pointer;
+    transition:border-color .25s,color .25s,background .25s,box-shadow .25s;user-select:none;
+    font-family:inherit;white-space:nowrap;}
+  .pill:hover{border-color:rgba(143,189,240,.6);}
+  .pill.on{color:#0d1420;background:var(--accent);border-color:var(--accent);
+    box-shadow:0 0 24px rgba(143,189,240,.35);font-weight:600;}
+  #powerBtn.on{color:#08222e;background:#7fe7ff;border-color:#7fe7ff;
+    box-shadow:0 0 26px rgba(127,231,255,.4);}
+  #pnote{font-size:11px;letter-spacing:.08em;color:rgba(127,231,255,.85);display:none;pointer-events:none;
+    padding:5px 14px;border-radius:999px;background:var(--panel);border:1px solid var(--panel-border);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+  #pnote b{color:#ffc26a;font-weight:600;}
+  #hint{position:fixed;bottom:34px;left:34px;z-index:10;font-size:11px;letter-spacing:.1em;color:rgba(157,180,204,.6);pointer-events:none;}
+  /* 3D 标注（半透明） */
+  .anno{position:fixed;left:0;top:0;z-index:6;pointer-events:none;
+    padding:6px 10px;border-radius:8px;border:1px solid var(--panel-border);
+    background:var(--panel);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+    white-space:nowrap;will-change:transform,opacity;}
+  .anno .t{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.04em;line-height:1.3;}
+  .anno .s{font-size:11px;color:var(--ink-dim);letter-spacing:.03em;line-height:1.35;margin-top:1px;}
+  .anno.pw .t{color:#b8a3ff;}
+  /* 窄视口（正文嵌入 iframe ~810×580）：紧凑布局，防控制簇溢出/重叠 */
+  @media (max-width: 960px){
+    #hdr{top:14px;left:16px;}
+    #hdr h1{font-size:15px;}
+    #hdr h1 .en{display:none;}
+    #hdr p{margin-top:4px;font-size:11px;max-width:440px;}
+    #caption{display:none;}
+    #hint{display:none;}
+    #ctrls{bottom:14px;gap:8px;}
+    .pill{padding:8px 16px;font-size:12px;}
+    .anno .t{font-size:12px;} .anno .s{font-size:10px;}
+  }
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<div id="vignette"></div>
+<svg id="wires"></svg>
+<div id="hdr">
+  <h1>EUV 光刻 · 六镜光路<span class="en">Extreme Ultraviolet · All-Reflective Optics</span></h1>
+  <p>13.5nm 的光会被一切透镜吸收——从锡滴等离子体到晶圆，<b>全程只能靠反射镜</b></p>
+</div>
+<div id="caption">光源 → 收集镜 → 照明 ×2 → 反射掩膜 → 投影 ×4 → 晶圆 —— <b>每面镜只反射 ~70%，能量一路衰减</b></div>
+<div id="hint">拖拽旋转 · 滚轮缩放 · 可转至正下方仰视</div>
+<div id="ctrls">
+  <div id="pnote">光束前进中：每到一面镜子，<b>该镜点亮并弹出说明</b> · 亮度沿程递减 = 能量衰减</div>
+  <div class="row">
+    <button id="powerBtn" class="pill">⚡ 点亮光路</button>
+  </div>
+</div>
+<div id="labels"></div>
+
+<script src="../lib/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+const Q = new URLSearchParams(location.search);
+const AUTO = !Q.has('noauto');
+THREE.ColorManagement.legacyMode = false; // 关键：材质颜色按 sRGB 正确解码
+
+/* ---------- 渲染器 / 场景 ---------- */
+const canvas = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.12;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d1420);
+scene.fog = new THREE.Fog(0x0d1420, 48, 110);
+
+const camera = new THREE.PerspectiveCamera(36, innerWidth/Math.max(innerHeight,1)||1, 0.1, 300);
+
+/* ---------- 程序化环境贴图（摄影棚灯带） ---------- */
+function makeEnvTexture(){
+  const w=1024, h=512, cv=document.createElement('canvas');
+  cv.width=w; cv.height=h;
+  const g=cv.getContext('2d');
+  const grad=g.createLinearGradient(0,0,0,h);
+  grad.addColorStop(0.00,'#4a5568');
+  grad.addColorStop(0.32,'#2a3340');
+  grad.addColorStop(0.55,'#1a212c');
+  grad.addColorStop(1.00,'#070a0f');
+  g.fillStyle=grad; g.fillRect(0,0,w,h);
+  function band(y, hh, alpha){
+    const bg=g.createLinearGradient(0,y-hh,0,y+hh);
+    bg.addColorStop(0,'rgba(235,242,252,0)');
+    bg.addColorStop(0.5,'rgba(235,242,252,'+alpha+')');
+    bg.addColorStop(1,'rgba(235,242,252,0)');
+    g.fillStyle=bg; g.fillRect(0,y-hh,w,hh*2);
+  }
+  band(h*0.14, h*0.075, 0.7);
+  band(h*0.30, h*0.05, 0.32);
+  const vb=g.createLinearGradient(w*0.52,0,w*0.66,0);
+  vb.addColorStop(0,'rgba(225,236,248,0)');
+  vb.addColorStop(0.5,'rgba(225,236,248,0.4)');
+  vb.addColorStop(1,'rgba(225,236,248,0)');
+  g.fillStyle=vb; g.fillRect(w*0.52,h*0.15,w*0.14,h*0.55);
+  const sg=g.createRadialGradient(w*0.82,h*0.42,10, w*0.82,h*0.42,w*0.3);
+  sg.addColorStop(0,'rgba(255,214,170,0.28)'); sg.addColorStop(1,'rgba(255,214,170,0)');
+  g.fillStyle=sg; g.fillRect(0,0,w,h);
+  const tex=new THREE.CanvasTexture(cv);
+  tex.mapping=THREE.EquirectangularReflectionMapping;
+  tex.encoding=THREE.sRGBEncoding;
+  return tex;
+}
+const pmrem = new THREE.PMREMGenerator(renderer);
+pmrem.compileEquirectangularShader();
+scene.environment = pmrem.fromEquirectangular(makeEnvTexture()).texture;
+
+/* ---------- 光照 ---------- */
+scene.add(new THREE.HemisphereLight(0xb9c9dd, 0x232c3a, 0.45));
+const key = new THREE.DirectionalLight(0xfff1dc, 1.4);
+key.position.set(9, 16, 8);
+key.castShadow = true;
+key.shadow.mapSize.set(4096, 4096);
+key.shadow.camera.left=-16; key.shadow.camera.right=16;
+key.shadow.camera.top=14;  key.shadow.camera.bottom=-14;
+key.shadow.camera.near=2;  key.shadow.camera.far=70;
+key.shadow.bias=-0.0012;
+key.shadow.normalBias=0.03;
+scene.add(key);
+const rim = new THREE.DirectionalLight(0x7fa8ff, 1.0);
+rim.position.set(-11, 6, -13);
+scene.add(rim);
+const fill = new THREE.DirectionalLight(0x9fb8d8, 0.42);
+fill.position.set(-4, 3, 12);
+scene.add(fill);
+const fill2 = new THREE.DirectionalLight(0xffe8cf, 0.30);   // 补亮右侧投影镜组
+fill2.position.set(14, 2, 6);
+scene.add(fill2);
+// 等离子体点光源（点亮光路时增强）
+const plasmaLight = new THREE.PointLight(0xa88fff, 1.2, 16);
+scene.add(plasmaLight);
+
+/* ---------- 阴影接收地面 ---------- */
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(260, 260),
+  new THREE.ShadowMaterial({opacity:0.32})
+);
+ground.rotation.x = -Math.PI/2;
+ground.position.y = -8.1;
+ground.receiveShadow = true;
+scene.add(ground);
+
+/* ---------- 材质 ---------- */
+const M = (c, m, r, env, extra) => {
+  const mt = new THREE.MeshStandardMaterial(
+    Object.assign({color:c, metalness:m, roughness:r, envMapIntensity:env,
+      side:THREE.DoubleSide}, extra||{}));
+  mt.userData.baseMetal = m;
+  if(mt.emissive) mt.userData.baseEmissive = mt.emissive.getHex();
+  return mt;
+};
+const mat = {
+  mirrorBack: M(0x2a3442, 0.60, 0.48, 0.50, {emissive:0x0a0e14}),   // 镜坯背板
+  reticleBase:M(0x1a2230, 0.40, 0.50, 0.45, {emissive:0x070b11}),   // 掩膜基板
+  absorber:   M(0x8a6a34, 0.85, 0.38, 0.90, {emissive:0x3a2a10}),   // 掩膜吸收层图形
+  wafer:      M(0x2b3c52, 0.50, 0.32, 0.90, {emissive:0x0a1018}),   // 晶圆
+  waferGrid:  M(0xc09a5e, 0.85, 0.35, 1.00, {emissive:0x1a1208}),   // 晶圆 die 网格
+  stage:      M(0x232e3d, 0.60, 0.45, 0.55, {emissive:0x080c12}),   // 工件台
+  rail:       M(0x1a2430, 0.55, 0.50, 0.40, {emissive:0x060a0f}),   // 磁悬浮导轨
+  vessel:     M(0x3a4a5e, 0.30, 0.60, 0.30, {transparent:true, opacity:0.13,
+                depthWrite:false, emissive:0x0a1016}),              // 真空腔体（幽灵壳）
+  droplet:    M(0xcfd8e2, 0.90, 0.22, 1.30, {emissive:0x141a22}),   // 锡滴
+  nozzle:     M(0x4a5866, 0.70, 0.40, 0.70, {emissive:0x0b0f14}),   // 发生器喷嘴
+  plate:      M(0x111927, 0.45, 0.50, 0.30, {clippingPlanes:[]})    // 展示底板（不剖切）
+};
+// 每面反射镜独立材质（点亮时各自高亮）：Mo/Si 多层膜——银白、极低吸光
+function mirrorMat(){
+  return M(0xdfe9f5, 0.92, 0.12, 1.50, {emissive:0x0a0f16});
+}
+
+/* ---------- 几何工具 ---------- */
+function box(w,h,d,m,x,y,z){
+  const ms = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), m);
+  ms.position.set(x,y,z); ms.castShadow = true; ms.receiveShadow = true;
+  return ms;
+}
+function anchor(parent, x,y,z){
+  const o = new THREE.Object3D(); o.position.set(x,y,z); parent.add(o); return o;
+}
+const UP = new THREE.Vector3(0,1,0);
+// 真实曲面反射镜：凹面碟 / 凸面穹（LatheGeometry 旋转面，带厚度与背板）
+function mirrorMesh(R, sag, convex, mFront){
+  const N = 26, pts = [];
+  for(let i=0;i<=N;i++){
+    const t=i/N, r=Math.max(t*R, 1e-4);
+    pts.push(new THREE.Vector2(r, convex ? sag*(1-t*t) : sag*t*t));
+  }
+  const edgeY = convex ? 0 : sag;
+  pts.push(new THREE.Vector2(R+0.03, edgeY-0.05));
+  pts.push(new THREE.Vector2(R+0.03, edgeY-0.16));
+  for(let i=N;i>=0;i--){
+    const t=i/N, r=Math.max(t*R, 1e-4);
+    pts.push(new THREE.Vector2(r, (convex ? sag*(1-t*t) : sag*t*t) - 0.16));
+  }
+  const ms = new THREE.Mesh(new THREE.LatheGeometry(pts, 48), mFront);
+  ms.castShadow = true; ms.receiveShadow = true;
+  return ms;
+}
+// 让镜面（局部 +Y 为反射面法线）对准光路转角平分线
+function orientMirror(obj, pPrev, pCur, pNext){
+  const din = new THREE.Vector3().subVectors(pCur, pPrev).normalize();
+  const dout = new THREE.Vector3().subVectors(pNext, pCur).normalize();
+  const n = new THREE.Vector3().subVectors(dout, din).normalize();
+  obj.quaternion.setFromUnitVectors(UP, n);
+}
+
+/* ================================================================
+   模型：EUV 光路（光源 → 收集镜 → 照明×2 → 反射掩膜 → 投影×4 → 晶圆）
+   全光路位于 z≈0 平面；每个光学元件一个 Group（供标注锚点归属）
+================================================================ */
+const P_PLASMA = [-8.5, 3.0, 0];    // 锡滴等离子体
+const P_COL    = [-6.4, 1.4, 0];    // 收集镜
+const P_I1     = [-3.4, 4.8, 0];    // 照明镜 1（凸）
+const P_I2     = [-0.4, 2.0, 0];    // 照明镜 2（凹）
+const P_RET    = [ 2.8, 5.4, 0];    // 反射式掩膜
+const P_M1     = [ 5.6, 2.0, 0];    // 投影镜 1（凹）
+const P_M2     = [ 3.2,-0.8, 0];    // 投影镜 2（凸）
+const P_M3     = [ 6.0,-3.0, 0];    // 投影镜 3（凹）
+const P_M4     = [ 3.6,-4.8, 0];    // 投影镜 4（凹）
+const P_WAF    = [ 6.0,-6.4, 0];    // 晶圆
+
+const gSrc = new THREE.Group(), gCol = new THREE.Group(),
+      gI1  = new THREE.Group(), gI2  = new THREE.Group(),
+      gRet = new THREE.Group(),
+      gM1  = new THREE.Group(), gM2  = new THREE.Group(),
+      gM3  = new THREE.Group(), gM4  = new THREE.Group(),
+      gWaf = new THREE.Group();
+[gSrc, gCol, gI1, gI2, gRet, gM1, gM2, gM3, gM4, gWaf].forEach(g=>scene.add(g));
+
+/* --- 1. 光源端：锡滴发生器 + CO2 激光（预脉冲+主脉冲）+ LPP 等离子体 --- */
+const droplets = [];
+let plasmaCore, plasmaHalo, laserMats = [];
+{
+  // 真空腔体（幽灵壳）
+  const vessel = box(6.5, 7.6, 4.5, mat.vessel, -7.2, 2.9, 0);
+  vessel.castShadow = false; gSrc.add(vessel);
+  // 锡滴发生器：顶部储罐 + 喷嘴
+  gSrc.add(box(1.1, 0.8, 1.1, mat.nozzle, -8.5, 6.3, 0));
+  const noz = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.055, 0.8, 14), mat.nozzle);
+  noz.position.set(-8.5, 5.6, 0); noz.castShadow = true; gSrc.add(noz);
+  // 锡滴串（循环下落）
+  const dGeo = new THREE.SphereGeometry(0.085, 12, 10);
+  for(let i=0;i<6;i++){
+    const d = new THREE.Mesh(dGeo, mat.droplet);
+    d.castShadow = true; gSrc.add(d); droplets.push(d);
+  }
+  // CO2 红外激光 10.6µm：预脉冲（细）+ 主脉冲（粗），红外不可见，以红/橙红示意
+  function laserBeam(from, to, r){
+    const dir = new THREE.Vector3().subVectors(to, from);
+    const len = dir.length();
+    const m = new THREE.MeshBasicMaterial({color:0xff4a2a, transparent:true, opacity:0.45,
+      blending:THREE.AdditiveBlending, depthWrite:false});
+    laserMats.push(m);
+    const ms = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 10), m);
+    ms.position.copy(from).addScaledVector(dir, 0.5);
+    ms.quaternion.setFromUnitVectors(UP, dir.clone().normalize());
+    gSrc.add(ms);
+  }
+  laserBeam(new THREE.Vector3(-13.6, 3.35, 0.3), new THREE.Vector3(...P_PLASMA), 0.035);
+  laserBeam(new THREE.Vector3(-13.6, 2.65, -0.3), new THREE.Vector3(...P_PLASMA), 0.060);
+  // 等离子体核心 + 光晕
+  plasmaCore = new THREE.Mesh(new THREE.SphereGeometry(0.22, 20, 16),
+    new THREE.MeshBasicMaterial({color:0xf0f8ff}));
+  plasmaCore.position.set(...P_PLASMA); gSrc.add(plasmaCore);
+  plasmaHalo = new THREE.Mesh(new THREE.SphereGeometry(0.55, 20, 16),
+    new THREE.MeshBasicMaterial({color:0x9d7bff, transparent:true, opacity:0.22,
+      blending:THREE.AdditiveBlending, depthWrite:false}));
+  plasmaHalo.position.set(...P_PLASMA); gSrc.add(plasmaHalo);
+  plasmaLight.position.set(...P_PLASMA);
+}
+
+/* --- 2~8. 七面反射镜（收集镜 + 照明×2 + 投影×4）：真实凹/凸曲面 --- */
+const mirrors = [];   // {mat, hitT, glow}
+function addMirror(grp, pos, R, sag, convex, prev, next){
+  const mf = mirrorMat();
+  const ms = mirrorMesh(R, sag, convex, mf);
+  ms.position.set(...pos);
+  orientMirror(ms, new THREE.Vector3(...prev), new THREE.Vector3(...pos), new THREE.Vector3(...next));
+  grp.add(ms);
+  // 背板（随镜面同向）
+  const back = new THREE.Mesh(new THREE.CylinderGeometry(R*1.06, R*1.06, 0.14, 40), mat.mirrorBack);
+  back.position.set(...pos); back.quaternion.copy(ms.quaternion);
+  back.translateY(-0.24);
+  back.castShadow = true; grp.add(back);
+  mirrors.push({mat:mf, glow:0});
+  return ms;
+}
+addMirror(gCol, P_COL, 1.70, 0.62, false, P_PLASMA, P_I1);   // 收集镜：大凹面
+addMirror(gI1,  P_I1,  0.72, 0.20, true,  P_COL, P_I2);      // 照明镜 1：凸面
+addMirror(gI2,  P_I2,  0.95, 0.30, false, P_I1, P_RET);      // 照明镜 2：凹面
+addMirror(gM1,  P_M1,  1.15, 0.34, false, P_RET, P_M2);      // 投影镜 1：凹面
+addMirror(gM2,  P_M2,  0.58, 0.18, true,  P_M1, P_M3);       // 投影镜 2：凸面
+addMirror(gM3,  P_M3,  0.85, 0.26, false, P_M2, P_M4);       // 投影镜 3：凹面
+addMirror(gM4,  P_M4,  0.72, 0.22, false, P_M3, P_WAF);      // 投影镜 4：凹面
+
+/* --- 9. 反射式掩膜（反射面朝下朝向投影物镜，吸收层图形在反射面上） --- */
+let retScan, retFaceMat;
+{
+  retScan = new THREE.Group(); gRet.add(retScan);   // 掩膜台扫描子组
+  const slab = box(2.4, 0.26, 1.7, mat.reticleBase, 0, 0, 0);
+  retScan.add(slab);
+  // 反射面（Mo/Si 多层膜）：朝下
+  retFaceMat = mirrorMat();
+  const face = box(2.3, 0.03, 1.6, retFaceMat, 0, -0.145, 0);
+  retScan.add(face);
+  // 吸收层图形：反射面上的细条阵列
+  for(let i=-4;i<=4;i++){
+    retScan.add(box(0.10, 0.02, 1.5, mat.absorber, i*0.24, -0.165, 0));
+  }
+  // 掩膜台滑架
+  gRet.add(box(3.4, 0.18, 2.2, mat.rail, 0, 0.45, 0));
+  // 掩膜朝向：反射面法线对准光路平分线（同镜面算法）
+  const din = new THREE.Vector3().subVectors(new THREE.Vector3(...P_RET), new THREE.Vector3(...P_I2)).normalize();
+  const dout = new THREE.Vector3().subVectors(new THREE.Vector3(...P_M1), new THREE.Vector3(...P_RET)).normalize();
+  const n = new THREE.Vector3().subVectors(dout, din).normalize();
+  gRet.children.forEach(o=>{}); // 保持组原点不动，旋转整个扫描子组与滑架
+  retScan.quaternion.setFromUnitVectors(new THREE.Vector3(0,-1,0), n);
+  retScan.position.set(...P_RET);
+  gRet.children[gRet.children.length-1].position.set(P_RET[0], P_RET[1]+0.45, P_RET[2]);
+}
+
+/* --- 10. 晶圆台：晶圆 + 吸盘（扫描子组）+ 磁悬浮基座 + 导轨 + 双工件台 --- */
+let wafScan, waferExposeMat;
+{
+  wafScan = new THREE.Group(); gWaf.add(wafScan);
+  wafScan.position.set(...P_WAF);
+  // 晶圆（带 die 网格）
+  const wafer = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 1.15, 0.10, 48), mat.wafer);
+  wafer.castShadow = true; wafer.receiveShadow = true; wafScan.add(wafer);
+  for(let i=-3;i<=3;i++){
+    wafScan.add(box(2.2, 0.012, 0.03, mat.waferGrid, 0, 0.056, i*0.3));
+    wafScan.add(box(0.03, 0.012, 2.2, mat.waferGrid, i*0.3, 0.056, 0));
+  }
+  // 曝光视场（点亮末端亮起）
+  waferExposeMat = new THREE.MeshBasicMaterial({color:0xa07dff, transparent:true, opacity:0,
+    blending:THREE.AdditiveBlending, depthWrite:false});
+  const slit = box(0.9, 0.02, 0.5, waferExposeMat, 0, 0.07, 0);
+  slit.castShadow = false; wafScan.add(slit);
+  // 吸盘 + 磁悬浮台 + 导轨
+  gWaf.add(box(2.6, 0.30, 2.0, mat.stage, P_WAF[0], P_WAF[1]-0.32, 0));
+  gWaf.add(box(3.4, 0.22, 2.6, mat.rail, P_WAF[0], P_WAF[1]-0.62, 0));
+  gWaf.add(box(7.5, 0.16, 0.35, mat.rail, P_WAF[0]-1.5, P_WAF[1]-0.85, 1.15));
+  gWaf.add(box(7.5, 0.16, 0.35, mat.rail, P_WAF[0]-1.5, P_WAF[1]-0.85, -1.15));
+  // 双工件台：旁边停驻的第二台（测量位）
+  const idle = new THREE.Group(); idle.position.set(P_WAF[0]-4.6, P_WAF[1], 0); gWaf.add(idle);
+  const w2 = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 1.15, 0.10, 48), mat.wafer);
+  w2.castShadow = true; idle.add(w2);
+  idle.add(box(2.6, 0.30, 2.0, mat.stage, 0, -0.32, 0));
+  idle.add(box(3.4, 0.22, 2.6, mat.rail, 0, -0.62, 0));
+  // 台区外壳（幽灵壳）
+  const enc = box(4.6, 2.8, 3.4, mat.vessel, P_WAF[0], P_WAF[1]-0.3, 0);
+  enc.castShadow = false; gWaf.add(enc);
+}
+
+/* ================================================================
+   EUV 光束：逐段发光管（亮度 = 沿程剩余能量）+ 流动粒子 + 波前推进
+   8 次反射（收集镜+照明×2+掩膜+投影×4），每段起点能量 = 0.7^反射次数
+================================================================ */
+const PATH = [
+  ['src', ...P_PLASMA], ['col', ...P_COL], ['i1', ...P_I1], ['i2', ...P_I2],
+  ['ret', ...P_RET], ['m1', ...P_M1], ['m2', ...P_M2], ['m3', ...P_M3],
+  ['m4', ...P_M4], ['waf', ...P_WAF]
+];
+const SEG_E = [1, 0.7, 0.49, 0.343, 0.240, 0.168, 0.118, 0.082, 0.058]; // 每段剩余能量
+// 累计长度 → 波前阈值
+const segLen = [], cumT = [0];
+{
+  let acc = 0;
+  for(let i=0;i<PATH.length-1;i++){
+    const a = PATH[i], b = PATH[i+1];
+    const l = Math.hypot(b[1]-a[1], b[2]-a[2], b[3]-a[3]);
+    segLen.push(l); acc += l; cumT.push(acc);
+  }
+  const tot = acc;
+  for(let i=0;i<cumT.length;i++) cumT[i] /= tot;
+}
+function pathWorldPoints(out){
+  for(let i=0;i<PATH.length;i++){
+    out[i][0]=PATH[i][1]; out[i][1]=PATH[i][2]; out[i][2]=PATH[i][3];   // 静态光路
+  }
+}
+function pathPointArr(pts, t, out){
+  const segs=pts.length-1, ft=Math.min(t,0.99999)*segs, i=Math.floor(ft), lt=ft-i;
+  const a=pts[i], b=pts[i+1];
+  out[0]=a[0]+(b[0]-a[0])*lt; out[1]=a[1]+(b[1]-a[1])*lt; out[2]=a[2]+(b[2]-a[2])*lt;
+}
+// 逐段发光管（每段独立材质：透明度 ∝ 该段剩余能量，波前到达才点亮）
+// EUV 13.5nm 不可见，统一以蓝紫/紫罗兰示意
+const segMats = [], segTubes = [];
+const _ta = new THREE.Vector3(), _tb = new THREE.Vector3(), _td = new THREE.Vector3();
+for(let i=0;i<PATH.length-1;i++){
+  const m = new THREE.MeshBasicMaterial({color:0xa07dff, transparent:true, opacity:0,
+    blending:THREE.AdditiveBlending, depthWrite:false});
+  m.userData.on = (0.22 + 0.78*SEG_E[i]) * 0.85;
+  segMats.push(m);
+  const ms = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 1, 10), m);
+  ms.visible = false; ms.frustumCulled = false;
+  scene.add(ms); segTubes.push({mesh:ms, a:PATH[i], b:PATH[i+1]});
+}
+// 静态光路：管变换构建时定位一次即可
+(function placeTubes(){
+  segTubes.forEach(t=>{
+    _ta.set(t.a[1], t.a[2], t.a[3]);
+    _tb.set(t.b[1], t.b[2], t.b[3]);
+    _td.subVectors(_tb, _ta);
+    const len = _td.length() || 0.001;
+    t.mesh.position.copy(_ta).addScaledVector(_td, 0.5);
+    t.mesh.quaternion.setFromUnitVectors(UP, _td.normalize());
+    t.mesh.scale.set(1, len, 1);
+  });
+})();
+// 流动粒子（波前后方的彗星尾）
+function makeFlowTexture(){
+  const cv=document.createElement('canvas'); cv.width=cv.height=64;
+  const g=cv.getContext('2d');
+  const gr=g.createRadialGradient(32,32,0,32,32,32);
+  gr.addColorStop(0,'rgba(255,255,255,1)');
+  gr.addColorStop(0.35,'rgba(200,180,255,0.85)');
+  gr.addColorStop(1,'rgba(150,120,255,0)');
+  g.fillStyle=gr; g.fillRect(0,0,64,64);
+  return new THREE.CanvasTexture(cv);
+}
+const FLOW_N = 36;
+const flowGeo = new THREE.BufferGeometry();
+flowGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(FLOW_N*3), 3));
+const flowMat = new THREE.PointsMaterial({size:0.34, map:makeFlowTexture(), color:0xc9b8ff,
+  transparent:true, opacity:0.95, blending:THREE.AdditiveBlending,
+  depthWrite:false, sizeAttenuation:true});
+const flowPts = new THREE.Points(flowGeo, flowMat);
+flowPts.visible = false; flowPts.frustumCulled = false;
+scene.add(flowPts);
+const flowParts = [];
+for(let k=0;k<FLOW_N;k++) flowParts.push({t:k/FLOW_N});
+const _pathW = PATH.map(()=>[0,0,0]);
+const _fp = [0,0,0];
+function updateFlow(dt){
+  if(!flowPts.visible) return;
+  pathWorldPoints(_pathW);
+  const pos = flowGeo.attributes.position.array;
+  flowParts.forEach((pt,i)=>{
+    pt.t += dt*0.12; if(pt.t>1) pt.t-=1;
+    if(pt.t > beamFront){ pos[i*3]=0; pos[i*3+1]=-999; pos[i*3+2]=0; return; } // 波前未到：藏起
+    pathPointArr(_pathW, pt.t, _fp);
+    pos[i*3]=_fp[0]; pos[i*3+1]=_fp[1]; pos[i*3+2]=_fp[2];
+  });
+  flowGeo.attributes.position.needsUpdate = true;
+}
+
+/* ---------- 点亮光路开关 + 波前推进 ---------- */
+let powerOn = false, powerT = 0, beamFront = 0;
+const pnote = document.getElementById('pnote');
+const powerBtn = document.getElementById('powerBtn');
+function setPower(on){
+  powerOn = on;
+  powerBtn.classList.toggle('on', on);
+  powerBtn.textContent = on ? '⚡ 光路点亮中 · 点击关闭' : '⚡ 点亮光路';
+  pnote.style.display = on ? 'block' : 'none';
+  flowPts.visible = on;
+  segTubes.forEach(t=>{ t.mesh.visible = on; });
+  if(!on){ beamFront = 0; mirrors.forEach(m=>m.glow=0); }
+}
+powerBtn.addEventListener('click', ()=>setPower(!powerOn));
+
+/* ================================================================
+   标注（锚点为层组子对象；powerOnly + frontAt：点亮光路的波前到达该镜时才弹出）
+================================================================ */
+const labelsBox = document.getElementById('labels');
+const wires = document.getElementById('wires');
+const SVGNS = 'http://www.w3.org/2000/svg';
+const annos = [];
+const annoDefs = [
+  // —— 常驻结构标注 ——
+  {key:'src', grp:gSrc, pos:[-8.5, 3.6, 0], range:[-2.5, 2.5], cy:3.0, dx: 70, dy: 60,
+   t:'LPP 光源 · 锡滴等离子体', s:'CO₂ 红外激光 10.6µm（红）· 锡滴 25µm、每秒 5 万滴 · 预脉冲压扁+主脉冲汽化 · EUV 13.5nm 不可见，以蓝紫示意'},
+  {key:'col', grp:gCol, pos:[-6.4, 0.9, 0], range:[-2.0, 2.0], cy:1.4, dx: -100, dy: 90,
+   t:'收集镜 Collector', s:'椭球面 Mo/Si 多层膜 · 把 EUV 收拢到中间焦点 IF · 全程真空（EUV 被空气吸收）'},
+  {key:'ill', grp:gI2,  pos:[-0.4, 1.5, 0], range:[-1.5, 1.5], cy:2.0, dx: -60, dy: 120,
+   t:'照明系统 · 整形镜 ×2（示意）', s:'匀化 + 光瞳整形 · 示意简化（量产机照明侧 ~4 面，含多面体积分镜）'},
+  {key:'ret', grp:gRet, pos:[2.8, 5.9, 0], range:[-1.5, 1.5], cy:5.4, dx: 160, dy: -50, minY: 110,
+   t:'反射式掩膜 Reticle', s:'~40 对 Mo/Si 多层膜 + 吸收层图形 · EUV 下掩膜也是一面镜子'},
+  {key:'proj',grp:gM3,  pos:[6.0, -3.5, 0], range:[-1.5, 1.5], cy:-1.5, dx: 150, dy: 30,
+   t:'投影物镜 · 反射镜 ×4（示意）', s:'示意简化，量产 NXE 为 6 面 · NA 0.33（EXE 高NA 0.55）· Zeiss 镜面放大到德国起伏 0.1mm · 4× 缩小'},
+  {key:'waf', grp:gWaf, pos:[7.3, -6.4, 0], range:[-2.0, 2.0], cy:-6.4, dx: 120, dy: 60,
+   t:'晶圆台 Wafer Stage', s:'磁悬浮双工件台 · 加速度 ~6g · 与掩膜台 4:1 反向同步扫描'},
+  // —— 点亮光路：逐镜弹出（frontAt = 波前到达该点的路径进度） ——
+  {key:'pCol', grp:gCol, pos:[-6.4, 2.2, 0], range:[-2.0, 2.0], cy:1.4, dx: 60, dy: -120,
+   powerOnly:true, frontAt:cumT[1],
+   t:'① 收集镜：捕获等离子体 EUV', s:'反射一次 · 能量剩 ~70%'},
+  {key:'pI1', grp:gI1, pos:[-3.4, 5.4, 0], range:[-1.5, 1.5], cy:4.8, dx: 70, dy: 105,
+   powerOnly:true, frontAt:cumT[2],
+   t:'② 照明镜 1：扩束 · 视场整形', s:'第二次反射 · 累计 ~49%'},
+  {key:'pI2', grp:gI2, pos:[-0.4, 2.6, 0], range:[-1.5, 1.5], cy:2.0, dx: 130, dy: 90,
+   powerOnly:true, frontAt:cumT[3],
+   t:'③ 照明镜 2：光瞳整形 · 均匀化', s:'第三次反射 · 累计 ~34%'},
+  {key:'pRet', grp:gRet, pos:[2.8, 4.8, 0], range:[-1.5, 1.5], cy:5.4, dx: 200, dy: 20,
+   powerOnly:true, frontAt:cumT[4],
+   t:'④ 掩膜反射：图形投向投影物镜', s:'第四次反射 · 累计 ~24%'},
+  {key:'pM1', grp:gM1, pos:[5.6, 2.8, 0], range:[-1.5, 1.5], cy:2.0, dx: 140, dy: -70,
+   powerOnly:true, frontAt:cumT[5],
+   t:'⑤ 投影镜 1', s:'第五次反射 · 累计 ~17%'},
+  {key:'pM2', grp:gM2, pos:[3.2, -0.2, 0], range:[-1.5, 1.5], cy:-0.8, dx: -170, dy: -60,
+   powerOnly:true, frontAt:cumT[6],
+   t:'⑥ 投影镜 2', s:'第六次反射 · 累计 ~12%'},
+  {key:'pM3', grp:gM3, pos:[6.0, -2.3, 0], range:[-1.5, 1.5], cy:-3.0, dx: 150, dy: -30,
+   powerOnly:true, frontAt:cumT[7],
+   t:'⑦ 投影镜 3', s:'第七次反射 · 累计 ~8%'},
+  {key:'pM4', grp:gM4, pos:[3.6, -4.1, 0], range:[-1.5, 1.5], cy:-4.8, dx: -170, dy: 30,
+   powerOnly:true, frontAt:cumT[8],
+   t:'⑧ 投影镜 4：聚焦到晶圆', s:'第八次反射 · 累计 ~6%'},
+  {key:'pWaf', grp:gWaf, pos:[6.0, -7.0, 0], range:[-2.0, 2.0], cy:-6.4, dx: -60, dy: 100,
+   powerOnly:true, frontAt:0.995,
+   t:'曝光：光刻胶感光', s:'6 面光学反射镜 0.7⁶≈12% · 计入收集镜与掩膜共 8 次反射 ≈6% 到达 —— 这就是 EUV 光源功率如此重要的原因'}
+];
+annoDefs.forEach(d=>{
+  const el = document.createElement('div');
+  el.className = 'anno' + (d.powerOnly ? ' pw' : '');
+  el.innerHTML = '<div class="t">'+d.t+'</div><div class="s">'+d.s+'</div>';
+  labelsBox.appendChild(el);
+  const line = document.createElementNS(SVGNS,'line');
+  line.setAttribute('stroke','rgba(150,180,215,.5)');
+  line.setAttribute('stroke-width','1');
+  wires.appendChild(line);
+  const halo = document.createElementNS(SVGNS,'circle');
+  halo.setAttribute('r','6'); halo.setAttribute('fill','rgba(156,196,238,.22)');
+  wires.appendChild(halo);
+  const dot = document.createElementNS(SVGNS,'circle');
+  dot.setAttribute('r','2.6'); dot.setAttribute('fill','#9cc4ee');
+  wires.appendChild(dot);
+  const obj = anchor(d.grp, d.pos[0], d.pos[1], d.pos[2]);
+  annos.push({key:d.key, obj, base:obj.position.clone(), grp:d.grp, range:d.range, cy:d.cy,
+    powerOnly:!!d.powerOnly, frontAt:d.frontAt||0, minY:d.minY||46, el, line, halo, dot,
+    dx:d.dx, dy:d.dy, op:1});
+});
+
+/* ---------- 相机（自写轨道：完整球面） ---------- */
+function fitR(){ const a = innerWidth/Math.max(innerHeight,1); return Math.max(1, Math.min(1.75/a, 1.6)); }
+let lastFit = fitR();
+const target = new THREE.Vector3(-0.5, -0.3, 0);
+let theta = 0.55, phi = 1.12, radius = 23.5 * lastFit;
+let tTheta = theta, tPhi = phi, tRadius = radius;
+let autoRot = AUTO;
+let dragging = false, px = 0, py = 0;
+canvas.addEventListener('pointerdown', e=>{
+  dragging = true; autoRot = false;
+  px = e.clientX; py = e.clientY;
+  canvas.classList.add('dragging');
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', e=>{
+  if(!dragging) return;
+  tTheta -= (e.clientX - px) * 0.0052;
+  tPhi   -= (e.clientY - py) * 0.0052;
+  tPhi = Math.max(0.02, Math.min(Math.PI-0.02, tPhi));
+  px = e.clientX; py = e.clientY;
+});
+addEventListener('pointerup', ()=>{ dragging = false; canvas.classList.remove('dragging'); });
+canvas.addEventListener('wheel', e=>{
+  e.preventDefault();
+  tRadius *= (1 + e.deltaY * 0.0011);
+  tRadius = Math.max(6, Math.min(60, tRadius));
+}, {passive:false});
+
+/* ---------- 标注投影 + 背面淡化 ---------- */
+const v3 = new THREE.Vector3();
+const wPos = new THREE.Vector3();
+function projectWorld(w){
+  v3.copy(w).project(camera);
+  return {x:(v3.x*0.5+0.5)*innerWidth, y:(-v3.y*0.5+0.5)*innerHeight, behind: v3.z > 1};
+}
+function facingOpacity(w){
+  // 平面光路场景：仅在相机转到锚点背后（z 负向深处）时淡化
+  return (camera.position.z < w.z - 4) ? 0.3 : 1;
+}
+function updateLabels(){
+  wires.setAttribute('viewBox','0 0 '+innerWidth+' '+innerHeight);
+  annos.forEach(a=>{
+    const modeHidden = a.powerOnly && (!powerOn || beamFront < a.frontAt);
+    wPos.copy(a.base);
+    a.grp.localToWorld(wPos);
+    const p = projectWorld(wPos);
+    let lx = p.x + a.dx, ly = p.y + a.dy;
+    lx = Math.max(92, Math.min(innerWidth-92, lx));
+    ly = Math.max(a.minY, Math.min(innerHeight-70, ly));
+    const offscreen = modeHidden || p.behind || p.x<-60 || p.x>innerWidth+60 || p.y<-60 || p.y>innerHeight+60;
+    if(offscreen){ a.el.style.display='none'; a.line.style.display='none';
+      a.dot.style.display='none'; a.halo.style.display='none'; return; }
+    const toOp = facingOpacity(wPos);
+    a.op += (toOp - a.op) * 0.18;
+    if(a.op < 0.02){ a.el.style.display='none'; a.line.style.display='none';
+      a.dot.style.display='none'; a.halo.style.display='none'; return; }
+    a.el.style.display='block'; a.line.style.display='';
+    a.dot.style.display=''; a.halo.style.display='';
+    a.el.style.opacity = a.op;
+    a.line.style.opacity = a.op; a.dot.style.opacity = a.op; a.halo.style.opacity = a.op;
+    a.el.style.transform = 'translate('+(lx)+'px,'+(ly)+'px) translate(-50%,-50%)';
+    const ex = lx - Math.sign(a.dx)*Math.min(Math.abs(a.dx)*0.55, 46);
+    const ey = ly - Math.sign(a.dy)*Math.min(Math.abs(a.dy)*0.5, 22);
+    a.line.setAttribute('x1',p.x); a.line.setAttribute('y1',p.y);
+    a.line.setAttribute('x2',ex);  a.line.setAttribute('y2',ey);
+    a.dot.setAttribute('cx',p.x);  a.dot.setAttribute('cy',p.y);
+    a.halo.setAttribute('cx',p.x); a.halo.setAttribute('cy',p.y);
+  });
+}
+
+/* ---------- 主循环 ---------- */
+const clock = new THREE.Clock();
+let _fpsFrames = 0, _fpsTime = 0, _fpsVal = 0;
+let scanT = 0;
+function animate(){
+  requestAnimationFrame(animate);
+  if(innerWidth < 2 || innerHeight < 2) return; // 嵌入宿主 0×0 视口守卫：跳过渲染避免投影 NaN
+  const dt = Math.min(clock.getDelta(), 0.05);
+  _fpsFrames++; _fpsTime += dt;
+  if(_fpsTime >= 1){ _fpsVal = _fpsFrames/_fpsTime; _fpsFrames = 0; _fpsTime = 0; }
+  if(autoRot) tTheta += dt * (Math.PI*2/8);
+  theta += (tTheta - theta) * 0.075;
+  phi   += (tPhi   - phi)   * 0.075;
+  radius += (tRadius - radius) * 0.075;
+  camera.position.set(
+    target.x + radius*Math.sin(phi)*Math.sin(theta),
+    target.y + radius*Math.cos(phi),
+    target.z + radius*Math.sin(phi)*Math.cos(theta)
+  );
+  camera.lookAt(target);
+  // 点亮：波前推进（约 7 秒扫完全程）+ 各镜高亮
+  powerT += ((powerOn?1:0) - powerT) * 0.1;
+  if(powerOn) beamFront = Math.min(1, beamFront + dt/7);
+  for(let i=0;i<segMats.length;i++){
+    const arrived = beamFront >= cumT[i];
+    segMats[i].opacity = arrived ? segMats[i].userData.on * powerT : 0;
+  }
+  mirrors.forEach((m, i)=>{
+    const hitT = cumT[i+1];
+    m.glow += (((powerOn && beamFront >= hitT) ? 1 : 0) - m.glow) * 0.08;
+    m.mat.emissive.setHex(m.mat.userData.baseEmissive);
+    const e = m.mat.emissive;
+    e.r += 0.42*m.glow; e.g += 0.30*m.glow; e.b += 0.70*m.glow;
+  });
+  // 掩膜面与曝光视场
+  retFaceMat.emissive.setHex(retFaceMat.userData.baseEmissive);
+  if(powerOn && beamFront >= cumT[4]){
+    retFaceMat.emissive.r += 0.38; retFaceMat.emissive.g += 0.26; retFaceMat.emissive.b += 0.6;
+  }
+  waferExposeMat.opacity = (powerOn && beamFront >= 0.995)
+    ? (0.55 + 0.25*Math.sin(scanT*6)) * powerT : 0;
+  // 光源端常动：锡滴下落 + 等离子体脉动 + 激光
+  scanT += dt;
+  droplets.forEach((d, i)=>{
+    d.position.set(-8.5, 5.3 - ((scanT*1.3 + i*0.47) % 2.3), 0);
+  });
+  const pulse = 1 + 0.18*Math.sin(scanT*12) + 0.08*Math.sin(scanT*29);
+  plasmaCore.scale.setScalar(pulse);
+  plasmaHalo.scale.setScalar(pulse * (1 + 0.6*powerT));
+  plasmaHalo.material.opacity = 0.22 + 0.25*powerT;
+  plasmaLight.intensity = (1.2 + 2.2*powerT) * pulse;
+  plasmaLight.position.set(P_PLASMA[0], P_PLASMA[1], P_PLASMA[2]);
+  laserMats.forEach(m=>{ m.opacity = 0.45 + 0.35*powerT; });
+  // 扫描曝光：掩膜台与晶圆台 4:1 反向同步
+  const scanAmp = 0.4 + 0.6*powerT;
+  retScan.position.x = P_RET[0] - 1.3*scanAmp*Math.sin(scanT*0.9);
+  wafScan.position.x = P_WAF[0] + 0.33*scanAmp*Math.sin(scanT*0.9);
+  updateFlow(dt);
+  renderer.render(scene, camera);
+  updateLabels();
+}
+animate();
+
+addEventListener('resize', ()=>{
+  if(innerWidth < 2 || innerHeight < 2) return;
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  const f = fitR();
+  if(Math.abs(f - lastFit) > 0.01){ tRadius = tRadius/lastFit*f; radius = radius/lastFit*f; lastFit = f; }
+});
+
+/* ---------- 调试钩子（供自动化验收） ---------- */
+window.__dbg = {
+  view:(th,ph,r)=>{ tTheta=theta=th; tPhi=phi=ph; tRadius=radius=r; autoRot=false; },
+  viewAt:(th,ph,r,tx,ty,tz)=>{ tTheta=theta=th; tPhi=phi=ph; tRadius=radius=r;
+    autoRot=false; target.set(tx,ty,tz); },
+  power:(b)=>setPower(!!b),
+  beam:(v)=>{ if(v===undefined) return beamFront; beamFront=v; },
+  fps:()=>_fpsVal,
+  flow:()=>Array.from(flowGeo.attributes.position.array).map(v=>+v.toFixed(2)),
+  state:()=>({theta, phi, radius, powerOn, beamFront:+beamFront.toFixed(3)}),
+  pick:(sx,sy)=>{ const nd=new THREE.Vector2(sx/innerWidth*2-1, -(sy/innerHeight)*2+1);
+    const rc=new THREE.Raycaster(); rc.setFromCamera(nd,camera);
+    const hits=rc.intersectObjects(scene.children,true);
+    return hits.slice(0,4).map(h=>({d:+h.distance.toFixed(2), geo:h.object.geometry.type,
+      col:h.object.material&&h.object.material.color?h.object.material.color.getHexString():null,
+      pos:h.object.getWorldPosition(new THREE.Vector3()).toArray().map(v=>+v.toFixed(2))})); }
+};
+})();
+</script>
+</body>
+</html>

@@ -646,6 +646,9 @@ html[data-theme]:not([data-theme="classic-dark"]) .scene svg {
   background:var(--plate); border:1px solid var(--plate-line); border-radius:12px;
 }
 html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transparent; border:none; }
+
+/* ---- 嵌入的 3D 交互场景（iframe）：全站深色图版底 ---- */
+.scene iframe.evo3d{width:100%;height:580px;border:1px solid var(--plate-line);border-radius:12px;background:#0d1420;display:block}
 </style>
 </head>
 <body>
@@ -686,8 +689,8 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
   <div class="top-right">
     <nav class="top-links">
       <a href="../atlas.html">轨2 · 产业链价值 →</a>
-      <a href="#" onclick="return false">学习路线</a>
-      <a href="#" onclick="return false">更新日志</a>
+      <a href="../index.html">学习路线</a>
+      <a href="#" onclick="openChangelog();return false">更新日志</a>
     </nav>
     <div class="theme-picker" id="themePicker">
       <button class="tp-btn" id="tpBtn" aria-haspopup="true" aria-label="切换主题">
@@ -1554,6 +1557,7 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
           <canvas id="tr3d" style="width:100%;height:auto;display:block;cursor:grab;touch-action:none;border-radius:12px;background:radial-gradient(720px 400px at 50% 30%,#0e1828,#070c16)"></canvas>
           <div class="legend" id="tr3dleg" style="justify-content:center"></div>
         </div>
+        <div class="pill" id="tr-evo3d-pill" style="font-size:12.5px;color:var(--mut);margin-top:10px">上面这个 3D 看的是单管结构；想把<b style="color:var(--txt)">平面 → FinFET → GAA 三代同台对比</b>、还能剖切与通电演示的 3D 交互版，在 <a href="#advstruct" onclick="window.__gotoPage('advstruct');return false" style="color:var(--cy2);font-weight:700">B2 先进结构演进</a> 章。</div>
         <div id="tr2d-wrap" hidden style="margin-top:12px">
           <div id="tr2d-planar">
           <svg viewBox="0 0 620 430">
@@ -2737,6 +2741,12 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
         </div>
         <div class="note">三种结构里<b>栅氧化层从未消失</b>——它始终是栅极与沟道之间那层薄绝缘膜，只是从"盖一面"变成"包三面""绕四面"。电流都一样：<b>沿沟道从源极流到漏极</b>，由栅极在中间隔空开关。</div>
 
+        <!-- inserted-3d-evolution -->
+        <div class="subttl">3D 交互：亲手转一转三代结构（平面 → FinFET → GAA）</div>
+        <iframe class="evo3d" src="3d/transistor-evolution.html" loading="lazy" title="晶体管架构演进 3D 交互场景"></iframe>
+        <div class="cap">上面三张卡片讲清了结构差异，这个 3D 场景让你<b>亲手转一转</b>：拖拽旋转、滚轮缩放（可转到正下方仰视）；顶部切换 <b>平面 MOSFET / FinFET / GAA 纳米片 / 三代对比</b>，底部可 <b>剖切内部结构</b>、调 <b>透视</b> 看沟道被栅极包住的程度，<b>⚡ 通电</b> 看电子从源极流向漏极。栅极从"盖 1 面"到"包 3 面"再到"绕 4 面"——转一圈比看十张图都直观。</div>
+        <!-- /inserted-3d-evolution -->
+
         <div class="subttl" id="mk-hkmg">机制加深：HKMG——"栅氧化层"的一次生死危机（45nm 世代的换心手术）</div>
         <div class="cap">上面刚说"栅氧化层从未消失"——但它其实<b>换过一次心</b>：2000 年代中期，SiO₂ 栅氧被缩到 ~1.2nm、只剩约 <b>5 个原子层</b>，量子隧穿让"绝缘层"漏成了筛子。这场危机的解法牵动<b>材料-器件-工艺</b>整条链，是理解"换一个材料＝重构一条工艺链"的最佳案例。</div>
         <svg viewBox="0 0 620 244">
@@ -3029,6 +3039,13 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
           <g font-size="8.5"><text x="30" y="350" fill="#7fd0c4">照明系统：刻面镜(FFM/PFM)把光均匀化、并设定照明光瞳</text><text x="30" y="364" fill="#7fd0c4">（离轴/dipole 等），整形成弧形场照到掩膜</text><text x="30" y="384" fill="#9fc0ec">投影光学：6 面大块曲面(非球面) Mo/Si 镜，每面近垂直入射 &lt;15°</text><text x="30" y="398" fill="#9fc0ec">逐面反射、整体缩 4×；M1–M2 间设光阑，其后成一次中间像</text></g>
         </svg>
         <div class="note">这是 EUV 最反直觉、也最贵的地方：<b>13.5nm EUV 会被几乎所有材料（玻璃、空气）吸收，没法像 DUV 那样用透镜</b>。于是整条光路<b>全部改用反射镜</b>，连<b>掩膜都是反射式</b>的（图案做在镜面上，斜约 6° 入射）。镜子是<b>钼/硅(Mo/Si)多层膜</b>反射镜，<b>单面也只反射约 70%</b>；一台机器十多面镜子叠下来，<b>光走到硅片只剩百分之几</b>——这就是为什么<b>光源功率</b>要拼命做大。掩膜还要加一层极薄的<b>防护膜 Pellicle</b> 挡颗粒，本身就是难做的高价耗材。</div>
+
+        <!-- inserted-3d-euv -->
+        <div class="subttl" id="euv-3d">3D 交互：亲手转一转 EUV 反射式光路</div>
+        <iframe class="evo3d" src="3d/euv.html" loading="lazy" title="EUV 反射式光路 3D 交互场景"></iframe>
+        <div class="cap">上图 ② 的静态光路看<b>器件名称与角度标注</b>，这个 3D 场景看<b>整条光路的立体走向</b>——两者互补。亲手转一转：拖拽旋转、滚轮缩放（可转至正下方仰视）；点 <b>⚡ 点亮光路</b>，看 13.5nm 光从锡等离子体光源出发，波前逐段推进——每到一面镜子，<b>该镜点亮并弹出说明</b>，且<b>亮度沿程递减</b>（每面镜只反射约 70%，光走到硅片只剩百分之几），最终落到晶圆曝光视场。"全用镜子、没有透镜"到底是什么样——转一圈就明白了。</div>
+        <!-- /inserted-3d-euv -->
+
         <div class="ghead" style="color:var(--t-pur)">③ 怎么画得更细：两个杠杆——更大的 NA，和多重曝光</div>
         <svg viewBox="0 0 620 188">
           <text x="155" y="15" font-size="10.5" fill="#cdd7e8" text-anchor="middle" font-weight="700">杠杆一：更大的数值孔径 NA</text>
@@ -4213,6 +4230,12 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
         </svg>
         <div class="note">NAND 闪存把电荷存在每个单元的<b>电荷俘获层</b>里（断电也不丢 = 非易失）。平面 NAND 缩到极限后，改走 <b>3D：把上百层"字线 / 控制栅"竖着叠起来</b>，再用一道刻蚀打出<b>垂直沟道孔</b>穿过所有层——<b>每个"字线 × 沟道"的交点就是一个存储单元</b>，一根柱子上的单元串成一串(NAND string)。妙处是<b>靠"加层数"而不是"缩尺寸"来降低每比特成本</b>，所以层数竞赛(200→300→400+)成了主线。玩家：<b>三星 / SK 海力士(含 Solidigm) / 美光 / 铠侠·闪迪</b>，国产 <b>长江存储 YMTC</b>——也是国产存储突破最快的方向。</div>
 
+        <!-- inserted-3d-nand -->
+        <div class="subttl">3D 交互：亲手转一转 3D NAND 存储塔</div>
+        <iframe class="evo3d" src="3d/3d-nand.html" loading="lazy" title="3D NAND 存储塔 3D 交互场景"></iframe>
+        <div class="cap">上图 D 的静态"竣工照"看参数标注，这个 3D 场景看<b>立体结构</b>——两者互补。亲手转一转：拖拽旋转、滚轮缩放（可转至正下方仰视）；底部可 <b>剖切内部结构</b> 看沟道孔里的 ONO 电荷俘获三明治、调 <b>透视</b> 看穿整叠字线，<b>⚡ 通电读出</b> 看选通字线如何在位线上读出 0/1，<b>宏观阵列</b> 拉远看一座存储塔里成千上万根沟道柱并肩矗立。"字线 × 沟道的交点 = 一个存储单元"——转一圈就刻进脑子里了。</div>
+        <!-- /inserted-3d-nand -->
+
         <div class="subttl" id="mk-nand">机制加深：3D NAND 是怎么"盖"起来的——刻蚀与沉积的极限接力</div>
         <div class="cap">上图 D 是"竣工照"，这里看"施工过程"。3D NAND 的制造哲学与逻辑芯片完全不同：<b>不靠先进光刻</b>（成熟 DUV 就够用），靠<b>叠层沉积＋极限刻蚀＋牺牲层替换</b>——正是「刻蚀·沉积」页两个机制加深的实战合体。先看六步总览：</div>
         <svg viewBox="0 0 620 312">
@@ -4820,6 +4843,13 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
           <line x1="600" y1="224" x2="532" y2="224" stroke="#9fb0cc" stroke-width="0.8" marker-end="url(#pkgC)"/><text x="602" y="227" font-size="8" fill="#f0c082">TSV 硅通孔</text>
         </svg>
         <div class="note">从下往上：<b>主板 PCB → BGA 焊球 → 封装基板 → C4 凸点(~100µm) → 硅中介层 → 微凸点(~40µm) → GPU + 多颗 HBM</b>。中介层是关键——它是一小片硅，上面有<b>极精细的布线(RDL)</b>和<b>竖直的 TSV 硅通孔</b>，把并排的 GPU 与 HBM 用<b>上万根超短走线</b>连起来，带宽远超普通基板。<b>越往上凸点越小越密</b>（基板用大焊球、中介层用微凸点），逐级把"芯片级"的细间距过渡到"电路板级"的粗间距。注：<b>NVIDIA Blackwell</b> 就是把<b>两颗 GPU die 用 CoWoS-L（内嵌硅桥）拼成"一颗"</b>，以突破单次光刻的面积上限。</div>
+
+        <!-- inserted-3d-cowos -->
+        <div class="subttl" id="cowos-3d">3D 交互：亲手转一转 CoWoS 封装（GPU + HBM + 硅中介层）</div>
+        <iframe class="evo3d" src="3d/cowos.html" loading="lazy" title="CoWoS 2.5D 先进封装 3D 交互场景"></iframe>
+        <div class="cap">上图 C 的静态剖面看<b>层级与尺寸标注</b>，这个 3D 场景看<b>立体装配关系</b>——两者互补。亲手转一转：拖拽旋转、滚轮缩放（可转至正下方仰视）；底部可 <b>剖切内部结构</b> 看中介层里的 TSV 与 RDL 布线、调 <b>透视</b> 看穿各层，<b>⚡ 数据通路</b> 看信号（die → μ-bump → RDL → HBM）与供电（基板 → C4 → TSV → die）两条通路，<b>爆炸滑杆</b> 把基板 / C4 / 中介层 / 微凸点 / die 逐层拉开——"层间逐级放大"一眼看清。</div>
+        <!-- /inserted-3d-cowos -->
+
         <div class="subttl">D · 放大一颗 HBM：垂直叠 8~16 层 DRAM，用 TSV 打竖井</div>
         <svg viewBox="0 0 620 300">
           <defs><marker id="pkgD" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#9fb0cc"/></marker></defs>
@@ -5388,7 +5418,7 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
 
   // ---- hash deep link: principles/#eda 切页；principles/#etch:mk-har 切页后再滚到小节锚点（轨2 机制证据链回链用）----
   (function(){
-    var h=(location.hash||'').replace('#',''),parts=h.split(':'),pg=parts[0],anc=parts[1];
+    var h=(location.hash||'').replace(/^#\/*/,''),parts=h.split(':'),pg=parts[0],anc=parts[1];
     if(pg&&scenes[pg]){
       var tb=document.querySelector('.tab[data-s="'+pg+'"]');
       if(tb){
@@ -5783,6 +5813,27 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
   syncChrome(info, false);
   window.__gotoPage = gotoPage; /* 供测试/调试 */
 })();
+</script>
+<div id="changelogMask" style="display:none;position:fixed;inset:0;background:rgba(10,14,22,.55);z-index:900" onclick="if(event.target===this)closeChangelog()">
+  <div style="max-width:580px;margin:9vh auto;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px 26px;box-shadow:0 18px 50px rgba(0,0,0,.28);max-height:74vh;overflow:auto;font-size:13.5px;line-height:1.75">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <b style="font-size:16px">更新日志</b>
+      <a href="#" onclick="closeChangelog();return false" style="color:var(--mut);text-decoration:none;font-size:20px;line-height:1">×</a>
+    </div>
+    <div style="border-left:2px solid var(--border);padding-left:16px">
+      <p style="margin:0 0 4px"><b>2026-09-18 ｜ Q1–Q3 大批次</b></p>
+      <p style="margin:0 0 14px;color:var(--mut)">全站错漏修正 45+ 处；159 张图解逐张审计、8 处缺陷修复；新增 FEOL→BEOL 摩天楼剖面图（C3 章）、28nm 成本反转曲线（C7 章）；功率化合物章重写（A–G 七节 + 4 张新图）；轨2 扩容 9→14 页；SOX 回撤指标接入每日自动更新；全站新外壳 + 11 套主题 + 自托管中文字体。</p>
+      <p style="margin:0 0 4px"><b>2026-07-17 ｜ 内容做深</b></p>
+      <p style="margin:0 0 14px;color:var(--mut)">存储、功率、封装等章节机制加深，新增 3D NAND 字线抽换、DRAM 立电容等交互步进图解。</p>
+      <p style="margin:0 0 4px"><b>2026-07-15 ｜ 初版上线</b></p>
+      <p style="margin:0;color:var(--mut)">轨1 原理科普 16 章建立：从晶体管物理到先进封装的制造全链条图解。</p>
+    </div>
+  </div>
+</div>
+<script>
+function openChangelog(){document.getElementById('changelogMask').style.display='block'}
+function closeChangelog(){document.getElementById('changelogMask').style.display='none'}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeChangelog()});
 </script>
 </body>
 </html>
