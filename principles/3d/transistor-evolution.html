@@ -19,13 +19,7 @@
   #vignette{position:fixed;inset:0;pointer-events:none;
     background:radial-gradient(ellipse 120% 90% at 50% 42%, transparent 55%, rgba(4,8,14,.55) 100%);}
   #wires{position:fixed;inset:0;pointer-events:none;z-index:5;}
-  /* 顶部标题 */
-  #hdr{position:fixed;top:26px;left:34px;z-index:10;pointer-events:none;}
-  #hdr h1{font-size:21px;font-weight:700;letter-spacing:.06em;color:var(--ink);}
-  #hdr h1 .en{font-size:11px;font-weight:500;letter-spacing:.18em;color:var(--ink-dim);margin-left:10px;text-transform:uppercase;}
-  #hdr p{margin-top:8px;font-size:13px;letter-spacing:.05em;color:var(--ink-dim);}
-  #hdr p b{color:var(--accent);font-weight:600;}
-  /* 顶部模型切换 tabs */
+  /* 顶部模型切换 tabs（唯一模式切换条，承载演进叙事） */
   #tabs{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:10;
     display:flex;gap:4px;padding:5px;border-radius:999px;
     background:var(--panel);border:1px solid var(--panel-border);
@@ -84,11 +78,8 @@
     text-shadow:0 1px 8px rgba(4,8,14,.8);}
   /* 窄视口（正文嵌入 iframe ~810×580）：紧凑布局，防控制簇溢出/重叠 */
   @media (max-width: 960px){
-    #hdr{top:14px;left:16px;}
-    #hdr h1{font-size:15px;}
-    #hdr h1 .en{display:none;}
-    #hdr p{margin-top:4px;font-size:11px;max-width:440px;}
-    #tabs{top:12px;left:auto;right:12px;transform:none;flex-wrap:wrap;justify-content:flex-end;max-width:330px;border-radius:16px;}
+    #tabs{top:10px;left:50%;right:auto;transform:translateX(-50%);
+      flex-wrap:wrap;justify-content:center;max-width:96vw;border-radius:16px;}
     .tab{padding:6px 12px;font-size:11.5px;}
     #caption{display:none;}
     #hint{display:none;}
@@ -106,15 +97,11 @@
 <canvas id="stage"></canvas>
 <div id="vignette"></div>
 <svg id="wires"></svg>
-<div id="hdr">
-  <h1>晶体管架构演进<span class="en">Transistor Evolution</span></h1>
-  <p>栅极：<b>平面压覆沟道</b> → <b>三面环绕鳍片</b> → <b>四面环抱纳米片</b></p>
-</div>
 <div id="tabs">
-  <button class="tab" data-m="0">平面 MOSFET · 1990s</button>
-  <button class="tab" data-m="1">FinFET · 2011</button>
-  <button class="tab" data-m="2">GAA 纳米片 · 2022</button>
-  <button class="tab on" data-m="compare">三代对比</button>
+  <button class="tab on" data-m="0">① 平面 MOSFET · 1990s｜栅盖顶面</button>
+  <button class="tab" data-m="1">② FinFET · 2011｜栅包三面</button>
+  <button class="tab" data-m="2">③ GAA 纳米片 · 2022｜栅绕四面</button>
+  <button class="tab" data-m="compare">⇄ 三代对比</button>
 </div>
 <div id="caption"></div>
 <div id="hint">拖拽旋转 · 滚轮缩放 · 可转至正下方仰视</div>
@@ -613,13 +600,13 @@ const CAPTIONS = {
   '1':'栅极 ∩ 形三面环绕竖立鳍片 —— <b>静电控制的第一次飞跃</b>',
   '2':'栅极四面包裹每层纳米片 —— <b>漏电控制的终点形态</b>'
 };
-let mode = 'compare';
+let mode = '0';
 let camAnim = null; // {fromT, toT, fromR, toR, t}
 const target = new THREE.Vector3(0, 0.75, 0);
 // 窄视口（如正文嵌入 iframe）自动拉远相机，保证三代模型完整入画
 function fitR(){ const a = innerWidth/Math.max(innerHeight,1); return Math.max(1, Math.min(1.75/a, 1.6)); }
 let lastFit = fitR();
-let theta = 0.58, phi = 1.08, radius = 27 * lastFit;
+let theta = 0.58, phi = 1.08, radius = 11.5 * lastFit;
 let tTheta = theta, tPhi = phi, tRadius = radius;
 const captionEl = document.getElementById('caption');
 
@@ -643,7 +630,7 @@ function setMode(m, instant){
 document.querySelectorAll('.tab').forEach(b=>{
   b.addEventListener('click', ()=>setMode(b.dataset.m, false));
 });
-setMode('compare', true);
+setMode('0', true);
 
 /* ---------- 自写轨道控制（完整球面：极角 0.02 ~ π-0.02） ---------- */
 let autoRot = AUTO;

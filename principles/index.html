@@ -1543,9 +1543,9 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
             <button class="btn vbtn acc" data-v="3d">🧊 立体透视</button>
             <button class="btn vbtn" data-v="2d">📐 平面剖面</button>
           </div>
-          <span class="pill">🖱️ 立体图默认自动旋转、可拖拽（拖时暂停）；▭/⊓/▤ 切换平面 / FinFET / GAA 三种结构，📐 可切到 2D 剖面</span>
+          <span class="pill">🖱️ 立体视图是交互 3D 场景：拖拽旋转、滚轮缩放，场景内顶部可切 平面 / FinFET / GAA / 三代对比，底部可剖切与通电；📐 平面剖面切到 2D（配 ⚡ 通电演示）</span>
         </div>
-        <div class="ctrls" style="margin:8px 0 0">
+        <div class="ctrls" id="tr-struct-ctrls" style="margin:8px 0 0;display:none">
           <div class="nodebtns">
             <button class="btn mbtn acc" data-m="planar">▭ 平面 Planar</button>
             <button class="btn mbtn" data-m="fin">⊓ 鳍式 FinFET</button>
@@ -1554,10 +1554,9 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
           <span class="pill" id="trmode">当前结构：平面 MOSFET — 栅极只盖住沟道顶面（1 面）</span>
         </div>
         <div id="tr3d-wrap" style="margin-top:10px">
-          <canvas id="tr3d" style="width:100%;height:auto;display:block;cursor:grab;touch-action:none;border-radius:12px;background:radial-gradient(720px 400px at 50% 30%,#0e1828,#070c16)"></canvas>
-          <div class="legend" id="tr3dleg" style="justify-content:center"></div>
+          <iframe class="evo3d" src="3d/transistor-evolution.html" loading="lazy" title="晶体管结构 3D 交互场景"></iframe>
         </div>
-        <div class="pill" id="tr-evo3d-pill" style="font-size:12.5px;color:var(--mut);margin-top:10px">上面这个 3D 看的是单管结构；想把<b style="color:var(--txt)">平面 → FinFET → GAA 三代同台对比</b>、还能剖切与通电演示的 3D 交互版，在 <a href="#advstruct" onclick="window.__gotoPage('advstruct');return false" style="color:var(--cy2);font-weight:700">B2 先进结构演进</a> 章。</div>
+        <div class="pill" id="tr-evo3d-pill" style="font-size:12.5px;color:var(--mut);margin-top:10px">上面这个 3D 场景顶部就能切<b style="color:var(--txt)">平面 / FinFET / GAA / 三代同台对比</b>；想看配套的图文讲解（结构为什么这样演进、HKMG、背面供电），去 <a href="#advstruct" onclick="window.__gotoPage('advstruct');return false" style="color:var(--cy2);font-weight:700">B2 先进结构演进</a> 章——同一场景也嵌在那里。</div>
         <div id="tr2d-wrap" hidden style="margin-top:12px">
           <div id="tr2d-planar">
           <svg viewBox="0 0 620 430">
@@ -1668,13 +1667,11 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
           <div class="legend" style="justify-content:center;font-size:11px"><span><i class="sw" style="background:#e9a04c"></i>栅极 Gate</span><span><i class="sw" style="background:#f2d35a"></i>栅氧化层</span><span><i class="sw" style="background:#54d68a"></i>源/漏 N⁺</span><span><i class="sw" style="background:#3a4870"></i>纳米片/衬底（硅）</span><span><i class="sw" style="background:#5eead4"></i>沟道·电子流</span></div>
           </div>
         </div>
-        <div class="ctrls">
+        <div class="ctrls" id="tr-pwr-ctrls" style="display:none">
           <button class="btn amber" id="gbtn">⚡ 给栅极加电压（开）</button>
-          <button class="btn" id="tr-trans">👁 切换 透明/实体</button>
-          <button class="btn" id="tr-reset">↺ 复位视角</button>
           <span class="pill" id="trstate">当前：关 OFF — 沟道未导通</span>
         </div>
-        <div class="cap" id="trcap"><b>晶体管 = 一个电控开关。</b><b>源极 (S)</b> 和 <b>漏极 (D)</b> 是电流的两端，中间那段硅是<b>沟道</b>。上方金属是 <b>栅极 (Gate)</b>，与沟道之间隔着一层极薄的 <b>栅氧化层</b>（绝缘层）——栅极不碰沟道，只靠"电场"隔空控制它。<b>立体图默认半透明</b>，能看清栅极如何"骑"在沟道之上、又被栅氧化层隔开（上方 ▭/⊓/▤ 可切换<b>平面</b>/<b>FinFET</b>/<b>GAA 纳米片</b>三种结构：栅极从盖 <b>1 面</b> → 包 <b>3 面</b> → <b>360° 环绕每片沟道</b>，越包越紧、对短沟道漏电的控制力越强）；<b>栅极沿电流方向的长度就是"栅极长度 Lg"</b>，正是历史上定义"制程"的那个尺寸。<br>点⚡加电压：电场把电子吸到沟道表面形成通路。注意方向——<b>电子 e⁻ 从源极流向漏极</b>（青点动画），而<b>习惯上说的"电流 I"方向相反，从漏极流入、源极流出</b>。<br>那"沟道"本身又是怎么凭空出现的？接着看下面的<b>反型层 5 步</b>交互。</div>
+        <div class="cap" id="trcap"><b>晶体管 = 一个电控开关。</b><b>源极 (S)</b> 和 <b>漏极 (D)</b> 是电流的两端，中间那段硅是<b>沟道</b>。上方金属是 <b>栅极 (Gate)</b>，与沟道之间隔着一层极薄的 <b>栅氧化层</b>（绝缘层）——栅极不碰沟道，只靠"电场"隔空控制它。<b>立体视图（3D 场景）里把「透视」调高就能看穿栅极</b>，看清栅极如何"骑"在沟道之上、又被栅氧化层隔开（3D 场景顶部可切换<b>平面</b>/<b>FinFET</b>/<b>GAA 纳米片</b>与<b>三代对比</b>：栅极从盖 <b>1 面</b> → 包 <b>3 面</b> → <b>360° 环绕每片沟道</b>，越包越紧、对短沟道漏电的控制力越强；📐 切到 2D 剖面时，上方 ▭/⊓/▤ 切换三种结构的剖面图）；<b>栅极沿电流方向的长度就是"栅极长度 Lg"</b>，正是历史上定义"制程"的那个尺寸。<br>点⚡加电压（2D 剖面下的按钮；3D 场景内也有独立的 ⚡ 通电演示）：电场把电子吸到沟道表面形成通路。注意方向——<b>电子 e⁻ 从源极流向漏极</b>（青点动画），而<b>习惯上说的"电流 I"方向相反，从漏极流入、源极流出</b>。<br>那"沟道"本身又是怎么凭空出现的？接着看下面的<b>反型层 5 步</b>交互。</div>
 
         <div class="subttl">沟道是怎么"拉"出来的？——栅极把"反型层"现场造出来（点"下一步"看 5 步）</div>
         <div class="step-nav" style="margin-bottom:10px">
@@ -2695,7 +2692,7 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
 
         <div class="subttl">B · 晶体管结构进化：把栅极包得更紧（栅氧化层始终都在）</div>
         <div class="legend" style="margin-bottom:8px">
-          <span><i class="sw" style="background:#5b86c9"></i>沟道（硅本体）</span><span><i class="sw" style="background:#3aa86b"></i>源/漏（掺杂）</span><span><i class="sw" style="background:#f2d35a"></i>栅氧化层(薄)</span><span><i class="sw" style="background:#d98e3f"></i>栅极</span><span style="color:var(--t-teal1)">→ 电流：源→漏，沿沟道流</span>
+          <span><i class="sw" style="background:#5b86c9"></i>沟道（硅本体）</span><span><i class="sw" style="background:#3aa86b"></i>源/漏（掺杂）</span><span><i class="sw" style="background:#f2d35a"></i>栅氧化层(薄)</span><span><i class="sw" style="background:#d98e3f"></i>栅极</span><span style="color:var(--t-teal1)">→ 电子 e⁻：源→漏，沿沟道流（电流 I 方向相反）</span>
         </div>
         <div class="evo">
           <div class="evocard">
@@ -5513,81 +5510,29 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
     ivrender();
   })();
 
-  /* ===== 立体晶体管引擎 ===== */
-  var cv=document.getElementById('tr3d');
-  if(cv){
-    var ctx=cv.getContext('2d');cv.width=1240;cv.height=940;
-    var CW=1240,CH=940,CX=620,CY=468,ZOOM=3.0,FOC=540;
-    var rotX=0.5,rotY=-0.62,autoRot=true,dragging=false,lastX=0,lastY=0,transp=true,mode='planar';
-    var DEF={planar:{rotX:0.5,rotY:-0.62},fin:{rotX:0.5,rotY:-0.62},gaa:{rotX:0.5,rotY:-0.62}};
-    var L1=(function(){var x=-0.34,y=0.64,z=0.69,m=Math.sqrt(x*x+y*y+z*z);return[x/m,y/m,z/m];})();
-    var L2=(function(){var x=0.55,y=0.30,z=0.40,m=Math.sqrt(x*x+y*y+z*z);return[x/m,y/m,z/m];})();
-    function rot(p){var sy=Math.sin(rotY),cyv=Math.cos(rotY),sx=Math.sin(rotX),cxv=Math.cos(rotX);var x=p[0],y=p[1],z=p[2];var x1=x*cyv+z*sy,z1=-x*sy+z*cyv;var y2=y*cxv-z1*sx,z2=y*sx+z1*cxv;return[x1,y2,z2];}
-    function proj(r){var f=FOC/(FOC-r[2]);return[CX+r[0]*ZOOM*f,CY-r[1]*ZOOM*f,f];}
-    function cl(v){return v<0?0:(v>255?255:v);}
-    function col(c,s,a){return'rgba('+cl(Math.round(c[0]*s))+','+cl(Math.round(c[1]*s))+','+cl(Math.round(c[2]*s))+','+a+')';}
-    function shade(n){var rn=rot(n);var d1=rn[0]*L1[0]+rn[1]*L1[1]+rn[2]*L1[2];if(d1<0)d1=0;var d2=rn[0]*L2[0]+rn[1]*L2[1]+rn[2]*L2[2];if(d2<0)d2=0;var s=0.46+0.72*d1+0.2*d2;return s>1.3?1.3:s;}
-    function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
-    function mkbox(x0,y0,z0,x1,y1,z1,m){var v=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];var faces=[{i:[0,1,5,4],n:[0,-1,0]},{i:[3,7,6,2],n:[0,1,0]},{i:[4,5,6,7],n:[0,0,1]},{i:[0,3,2,1],n:[0,0,-1]},{i:[0,4,7,3],n:[-1,0,0]},{i:[1,2,6,5],n:[1,0,0]}];return{v:v,faces:faces,m:m};}
-    var COL={sub:[46,60,96],si:[92,132,196],si2:[112,152,218],sd:[58,168,107],ox:[238,206,86],gate:[214,140,62],gate2:[214,140,62],sti:[206,182,96],inv:[94,234,212],depl:[74,92,134]};
-    function matColor(m){return COL[m]||[140,140,140];}
-    function matAlpha(m){if(!transp)return 1;return({sub:0.5,si:0.5,si2:0.7,sd:0.5,ox:0.58,gate:0.4,gate2:0.28,sti:0.5,inv:0.96,depl:0.62})[m]||0.6;}
-    function planarModel(){
-      return {base:[mkbox(-100,-40,-60,100,-0.6,60,'sub'),mkbox(-92,0,-52,-32,22,52,'sd'),mkbox(32,0,-52,92,22,52,'sd'),mkbox(-30,0,-52,30,3.0,52,'si'),mkbox(-30,5.0,-52,30,10.5,52,'ox'),mkbox(-28,10.8,-72,28,40,72,'gate')],
-        onB:[mkbox(-30,3.0,-52,30,4.2,52,'depl'),mkbox(-30,4.2,-52,30,4.9,52,'inv')],
-        labels:[{t:'栅极',e:'Gate',c:'#f0ad55',a:[0,40,0],o:[0,-34]},{t:'栅氧化层',e:'',c:'#f2d35a',a:[30,8,52],o:[122,-2]},{t:'沟道',e:'channel',c:'#7fb0f0',a:[0,1.5,52],o:[96,54]},{t:'源极 S',e:'电流出',c:'#8fe9e1',a:[-62,22,30],o:[-118,-18]},{t:'漏极 D',e:'电流入',c:'#8fe9e1',a:[62,22,30],o:[112,-18]},{t:'衬底',e:'P-Si',c:'#aebbd2',a:[-62,-40,60],o:[-74,48]}],
-        e:[{y:4.55,z:-34,x0:-30,x1:30},{y:4.55,z:-12,x0:-30,x1:30},{y:4.55,z:12,x0:-30,x1:30},{y:4.55,z:34,x0:-30,x1:30}],
-        lg:[[-28,40,72],[28,40,72]],vpos:[0,40,0],
-        legend:[['gate','栅极 Gate'],['ox','栅氧化层'],['sd','源/漏 N+'],['si','沟道(硅)'],['inv','反型层(导通)'],['depl','耗尽区'],['sub','衬底 P-Si']]};
-    }
-    function finModel(){
-      return {base:[mkbox(-100,-40,-60,100,-0.6,60,'sub'),mkbox(-100,-0.6,-60,100,8,-9,'sti'),mkbox(-100,-0.6,9,100,8,60,'sti'),mkbox(-92,-0.6,-15,-30,24,15,'sd'),mkbox(30,-0.6,-15,92,24,15,'sd'),mkbox(-30,-0.6,-8.5,30,28,8.5,'si'),mkbox(-18,28,-9,18,29.6,9,'ox'),mkbox(-18,8,-10.8,18,29.6,-9,'ox'),mkbox(-18,8,9,18,29.6,10.8,'ox'),mkbox(-18,29.6,-17,18,42,17,'gate'),mkbox(-18,8,-17,18,29.6,-10.8,'gate'),mkbox(-18,8,10.8,18,29.6,17,'gate')],
-        onB:[mkbox(-18,27.2,-9,18,28,9,'inv'),mkbox(-18,8,-9,18,28,-8.5,'inv'),mkbox(-18,8,8.5,18,28,9,'inv')],
-        labels:[{t:'栅极',e:'三面环绕',c:'#f0ad55',a:[0,42,0],o:[0,-34]},{t:'栅氧化层',e:'',c:'#f2d35a',a:[18,18,10.8],o:[118,-6]},{t:'鳍 Fin',e:'沟道(竖立)',c:'#7fb0f0',a:[24,16,8.5],o:[-132,40]},{t:'源极 S',e:'',c:'#8fe9e1',a:[-62,20,15],o:[-104,-16]},{t:'漏极 D',e:'',c:'#8fe9e1',a:[62,20,15],o:[100,-16]},{t:'STI 隔离',e:'SiO₂',c:'#e0cf86',a:[-66,5,40],o:[-104,26]},{t:'衬底',e:'P-Si',c:'#aebbd2',a:[64,-30,55],o:[78,42]}],
-        e:[{y:27.6,z:0,x0:-34,x1:34},{y:27.6,z:-5,x0:-34,x1:34},{y:27.6,z:5,x0:-34,x1:34},{y:18,z:-8.75,x0:-34,x1:34},{y:18,z:8.75,x0:-34,x1:34}],
-        lg:[[-18,42,17],[18,42,17]],vpos:[0,44,0],
-        legend:[['gate','栅极(环绕)'],['ox','栅氧化层'],['sd','源/漏 N+'],['si','鳍 Fin(沟道)'],['inv','反型层(导通)'],['sti','STI 隔离'],['sub','衬底 P-Si']]};
-    }
-    function gaaModel(){
-      return {base:[mkbox(-100,-40,-60,100,-0.6,60,'sub'),mkbox(-100,-0.6,-60,100,8,-20,'sti'),mkbox(-100,-0.6,20,100,8,60,'sti'),mkbox(-92,-0.6,-18,-34,33,18,'sd'),mkbox(34,-0.6,-18,92,33,18,'sd'),mkbox(-34,12,-16,34,15,16,'si2'),mkbox(-34,19.5,-16,34,22.5,16,'si2'),mkbox(-34,27,-16,34,30,16,'si2'),mkbox(-20,10.8,-17.2,20,16.2,17.2,'ox'),mkbox(-20,18.3,-17.2,20,23.7,17.2,'ox'),mkbox(-20,25.8,-17.2,20,31.2,17.2,'ox'),mkbox(-20,8,-20,20,33.5,20,'gate2')],
-        onB:[mkbox(-20,11.4,-16.6,20,15.6,16.6,'inv'),mkbox(-20,18.9,-16.6,20,23.1,16.6,'inv'),mkbox(-20,26.4,-16.6,20,30.6,16.6,'inv')],
-        labels:[{t:'栅极',e:'环绕全部',c:'#f0ad55',a:[0,33.5,0],o:[0,-34]},{t:'栅氧化层',e:'',c:'#f2d35a',a:[20,21,17.2],o:[116,-6]},{t:'纳米片',e:'沟道×3(竖叠)',c:'#7fb0f0',a:[-31,21,16],o:[-142,38]},{t:'源极 S',e:'',c:'#8fe9e1',a:[-62,16,18],o:[-104,-16]},{t:'漏极 D',e:'',c:'#8fe9e1',a:[62,16,18],o:[100,-16]},{t:'STI 隔离',e:'SiO₂',c:'#e0cf86',a:[-66,5,42],o:[-104,26]},{t:'衬底',e:'P-Si',c:'#aebbd2',a:[64,-30,55],o:[78,42]}],
-        e:[{y:13.5,z:0,x0:-38,x1:38},{y:21,z:0,x0:-38,x1:38},{y:28.5,z:0,x0:-38,x1:38}],
-        lg:[[-20,33.5,20],[20,33.5,20]],vpos:[0,33.5,0],
-        legend:[['gate2','栅极(环绕全部)'],['ox','栅氧化层'],['sd','源/漏 N+'],['si2','纳米片(沟道)'],['inv','反型层(导通)'],['sti','STI 隔离'],['sub','衬底 P-Si']]};
-    }
-    var M=planarModel();
-    function buildLegend(){var box=document.getElementById('tr3dleg');if(!box)return;var sw={gate:'rgb(214,140,62)',gate2:'rgb(214,140,62)',ox:'rgb(238,206,86)',sd:'rgb(58,168,107)',si:'rgb(92,132,196)',si2:'rgb(112,152,218)',inv:'rgb(94,234,212)',depl:'rgb(74,92,134)',sti:'rgb(206,182,96)',sub:'rgb(46,60,96)'};box.innerHTML=M.legend.map(function(it){return '<span><i class="sw" style="background:'+sw[it[0]]+'"></i>'+it[1]+'</span>';}).join('');}
-    buildLegend();
-    var labels=M.labels,ePhase=0;
-    function setMode(mm){mode=mm;M=(mm==='gaa')?gaaModel():(mm==='fin')?finModel():planarModel();labels=M.labels;rotX=DEF[mm].rotX;rotY=DEF[mm].rotY;autoRot=true;buildLegend();['planar','fin','gaa'].forEach(function(x){var el=document.getElementById('tr2d-'+x);if(el)el.hidden=(x!==mm);});var pill=document.getElementById('trmode');if(pill)pill.textContent=(mm==='gaa')?'当前结构：GAA 纳米片 — 栅极 360° 环绕每一片沟道（控制力最强）':(mm==='fin')?'当前结构：FinFET — 栅极从 3 个面包住硅鳍（控制力更强）':'当前结构：平面 MOSFET — 栅极只盖住沟道顶面（1 面）';}
-    document.querySelectorAll('.mbtn').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.mbtn').forEach(function(x){x.classList.remove('acc')});b.classList.add('acc');setMode(b.dataset.m);});});
-    document.querySelectorAll('.vbtn').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.vbtn').forEach(function(x){x.classList.remove('acc')});b.classList.add('acc');document.getElementById('tr3d-wrap').hidden=b.dataset.v!=='3d';document.getElementById('tr2d-wrap').hidden=b.dataset.v!=='2d';var d3=b.dataset.v==='3d';['tr-trans','tr-reset'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=d3?'':'none';});});});
-    var tb=document.getElementById('tr-trans');if(tb)tb.addEventListener('click',function(){transp=!transp;});
-    cv.addEventListener('pointerdown',function(e){dragging=true;autoRot=false;lastX=e.clientX;lastY=e.clientY;try{cv.setPointerCapture(e.pointerId);}catch(_){}cv.style.cursor='grabbing';});
-    cv.addEventListener('pointermove',function(e){if(!dragging)return;var dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;rotY+=dx*0.01;rotX+=dy*0.01;if(rotX>1.45)rotX=1.45;if(rotX<-1.45)rotX=-1.45;});
-    function endDrag(){if(dragging){dragging=false;cv.style.cursor='grab';}}
-    cv.addEventListener('pointerup',endDrag);cv.addEventListener('pointercancel',endDrag);cv.addEventListener('pointerleave',endDrag);
-    var rb=document.getElementById('tr-reset');if(rb)rb.addEventListener('click',function(){rotX=DEF[mode].rotX;rotY=DEF[mode].rotY;autoRot=true;});
-    function arrowMini(x,y,dir,c){ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+28*dir,y);ctx.stroke();ctx.beginPath();ctx.moveTo(x+28*dir,y-5);ctx.lineTo(x+38*dir,y);ctx.lineTo(x+28*dir,y+5);ctx.closePath();ctx.fill();}
-    function draw(){
-      ctx.clearRect(0,0,CW,CH);var items=[];
-      var boxes=M.base.concat(on?M.onB:[]);
-      boxes.forEach(function(b){var c=matColor(b.m),a=matAlpha(b.m);b.faces.forEach(function(f){var rs=[rot(b.v[f.i[0]]),rot(b.v[f.i[1]]),rot(b.v[f.i[2]]),rot(b.v[f.i[3]])];var pts=[proj(rs[0]),proj(rs[1]),proj(rs[2]),proj(rs[3])];var depth=(rs[0][2]+rs[1][2]+rs[2][2]+rs[3][2])/4;var s=shade(f.n);items.push({k:'p',pts:pts,depth:depth,fill:col(c,s,a),m:b.m});});});
-      if(on){M.e.forEach(function(ln,li){for(var m=0;m<4;m++){var t=((ePhase+li*0.13+m*0.25)%1);var r=rot([ln.x0+(ln.x1-ln.x0)*t,ln.y,ln.z]);var p=proj(r);items.push({k:'e',x:p[0],y:p[1],r:8*p[2],depth:r[2]});}});}
-      items.sort(function(a,b){return a.depth-b.depth;});
-      for(var i=0;i<items.length;i++){var it=items[i];if(it.k==='p'){ctx.beginPath();ctx.moveTo(it.pts[0][0],it.pts[0][1]);ctx.lineTo(it.pts[1][0],it.pts[1][1]);ctx.lineTo(it.pts[2][0],it.pts[2][1]);ctx.lineTo(it.pts[3][0],it.pts[3][1]);ctx.closePath();ctx.fillStyle=it.fill;ctx.fill();ctx.lineWidth=1.1;ctx.strokeStyle=(it.m==='gate'||it.m==='gate2')?'rgba(92,56,18,0.5)':'rgba(6,10,18,0.42)';ctx.stroke();}else{ctx.save();ctx.shadowColor='#5eead4';ctx.shadowBlur=16;ctx.beginPath();ctx.arc(it.x,it.y,it.r,0,6.2832);ctx.fillStyle='#a8f7ee';ctx.fill();ctx.restore();}}
-      var ga=proj(rot(M.lg[0])),gbp=proj(rot(M.lg[1]));ctx.strokeStyle='#f0ad55';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ga[0],ga[1]);ctx.lineTo(gbp[0],gbp[1]);ctx.stroke();[ga,gbp].forEach(function(p){ctx.beginPath();ctx.moveTo(p[0],p[1]-7);ctx.lineTo(p[0],p[1]+7);ctx.stroke();});ctx.fillStyle='#f0ad55';ctx.font='700 22px "Noto Sans SC",-apple-system,sans-serif';ctx.textAlign='center';ctx.fillText('栅长 Lg',(ga[0]+gbp[0])/2,(ga[1]+gbp[1])/2-14);ctx.textAlign='left';
-      ctx.textBaseline='middle';
-      for(var j=0;j<labels.length;j++){var lb=labels[j];var p=proj(rot(lb.a));var tx=p[0]+lb.o[0],ty=p[1]+lb.o[1];ctx.strokeStyle='rgba(150,165,190,0.45)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(tx,ty);ctx.stroke();ctx.fillStyle='rgba(150,165,190,0.85)';ctx.beginPath();ctx.arc(p[0],p[1],3,0,6.2832);ctx.fill();ctx.font='600 22px "Noto Sans SC",-apple-system,Segoe UI,"PingFang SC","Microsoft YaHei",sans-serif';var wM=ctx.measureText(lb.t).width;var wE=0;if(lb.e){ctx.font='400 15px "Noto Sans SC",-apple-system,sans-serif';wE=ctx.measureText(' '+lb.e).width;}var total=wM+wE,pad=9,h=31;var bx=lb.o[0]<0?tx-total-pad*2:tx;ctx.fillStyle='rgba(12,18,30,0.85)';rr(bx,ty-h/2,total+pad*2,h,8);ctx.fill();ctx.textAlign='left';ctx.fillStyle=lb.c;ctx.font='600 22px "Noto Sans SC",-apple-system,Segoe UI,"PingFang SC","Microsoft YaHei",sans-serif';ctx.fillText(lb.t,bx+pad,ty);if(lb.e){ctx.fillStyle='rgba(165,180,205,0.85)';ctx.font='400 15px "Noto Sans SC",-apple-system,sans-serif';ctx.fillText(' '+lb.e,bx+pad+wM,ty+1);}}
-      if(on){var gp=proj(rot(M.vpos));ctx.fillStyle='#f0ad55';ctx.textAlign='center';ctx.font='700 26px "Noto Sans SC",-apple-system,sans-serif';ctx.fillText('+V',gp[0],gp[1]-64);ctx.textAlign='left';}
-      var lx=34,ly=CH-96;ctx.fillStyle='rgba(12,18,30,0.8)';rr(lx-12,ly-26,372,86,10);ctx.fill();ctx.textBaseline='middle';
-      arrowMini(lx,ly,1,'#5eead4');ctx.fillStyle='#a8f7ee';ctx.font='600 21px "Noto Sans SC",-apple-system,"PingFang SC",sans-serif';ctx.fillText('  电子 e⁻：源 S → 漏 D',lx+34,ly);
-      arrowMini(lx+38,ly+38,-1,'#f0ad55');ctx.fillStyle='#f0c082';ctx.fillText('  电流 I：漏 D → 源 S（相反）',lx+34,ly+38);
-    }
-    function loop(){var scn=document.getElementById('s-tr'),w3=document.getElementById('tr3d-wrap');if(scn&&!scn.hidden&&w3&&!w3.hidden){if(autoRot)rotY+=0.005;if(on)ePhase=(ePhase+0.011)%1;draw();}requestAnimationFrame(loop);}
-    loop();
-  }
+  /* ===== B1 晶体管：2D/3D 视图切换（3D 视图 = three.js 嵌入场景，见 tr3d-wrap 内 iframe）===== */
+  (function(){
+    var wrap3=document.getElementById('tr3d-wrap'),wrap2=document.getElementById('tr2d-wrap');
+    var structCtrls=document.getElementById('tr-struct-ctrls'),pwrCtrls=document.getElementById('tr-pwr-ctrls');
+    /* 🧊/📐 切换：3D 场景（iframe）与 2D 剖面互斥显示；结构选择与 ⚡ 通电按钮组只在 2D 下出现（3D 场景内自带）*/
+    document.querySelectorAll('.vbtn').forEach(function(b){b.addEventListener('click',function(){
+      document.querySelectorAll('.vbtn').forEach(function(x){x.classList.remove('acc')});b.classList.add('acc');
+      var d3=b.dataset.v==='3d';
+      if(wrap3)wrap3.hidden=!d3;
+      if(wrap2)wrap2.hidden=d3;
+      /* 注意：.ctrls 有 display:flex，会盖过 hidden 属性，必须用 style.display 切换 */
+      if(structCtrls)structCtrls.style.display=d3?'none':'';
+      if(pwrCtrls)pwrCtrls.style.display=d3?'none':'';
+    });});
+    /* ▭/⊓/▤ 结构选择：切换 2D 剖面图与说明 pill */
+    document.querySelectorAll('.mbtn').forEach(function(b){b.addEventListener('click',function(){
+      document.querySelectorAll('.mbtn').forEach(function(x){x.classList.remove('acc')});b.classList.add('acc');
+      var mm=b.dataset.m;
+      ['planar','fin','gaa'].forEach(function(x){var el=document.getElementById('tr2d-'+x);if(el)el.hidden=(x!==mm);});
+      var pill=document.getElementById('trmode');
+      if(pill)pill.textContent=(mm==='gaa')?'当前结构：GAA 纳米片 — 栅极 360° 环绕每一片沟道（控制力最强）':(mm==='fin')?'当前结构：FinFET — 栅极从 3 个面包住硅鳍（控制力更强）':'当前结构：平面 MOSFET — 栅极只盖住沟道顶面（1 面）';
+    });});
+  })();
 })();
 </script>
 
@@ -5821,6 +5766,10 @@ html[data-theme]:not([data-theme="classic-dark"]) .ccard svg { background:transp
       <a href="#" onclick="closeChangelog();return false" style="color:var(--mut);text-decoration:none;font-size:20px;line-height:1">×</a>
     </div>
     <div style="border-left:2px solid var(--border);padding-left:16px">
+      <p style="margin:0 0 4px"><b>2026-09-20 ｜ 3D 场景优化 + 全站体检</b></p>
+      <p style="margin:0 0 14px;color:var(--mut)">晶体管场景头部精简（模式 tab 横排上置、默认平面 MOSFET）；B1 章换装同款新 3D、旧手写引擎退役；B2 卡片图例电流方向纠错；过时计数全面回改（七大赛道 / 14 页 / 66 家速查）、速查表编号乱序修复、EUV 单价两轨口径统一。</p>
+      <p style="margin:0 0 4px"><b>2026-09-18 ｜ 3D 交互场景系列上线</b></p>
+      <p style="margin:0 0 14px;color:var(--mut)">新增四个 Three.js 3D 交互场景（内联库、离线可用）：晶体管架构演进（B1/B2 章）、3D NAND 存储塔（D2 章，含宏观阵列协同读出）、CoWoS 2.5D 封装爆炸图（C9 章，数据通路点亮）、EUV 六镜光路（C4 章，点亮光路看能量逐镜衰减）；深链 #/页 与 #页 等价，支持直达小节锚点（如 #/pkg:cowos-3d）。</p>
       <p style="margin:0 0 4px"><b>2026-09-18 ｜ Q1–Q3 大批次</b></p>
       <p style="margin:0 0 14px;color:var(--mut)">全站错漏修正 45+ 处；159 张图解逐张审计、8 处缺陷修复；新增 FEOL→BEOL 摩天楼剖面图（C3 章）、28nm 成本反转曲线（C7 章）；功率化合物章重写（A–G 七节 + 4 张新图）；轨2 扩容 9→14 页；SOX 回撤指标接入每日自动更新；全站新外壳 + 11 套主题 + 自托管中文字体。</p>
       <p style="margin:0 0 4px"><b>2026-07-17 ｜ 内容做深</b></p>
