@@ -3,3 +3,4 @@ _to_delete/
 knowledge-delivery-log.md
 AGENTS.md
 demo-redesign/
+__pycache__/

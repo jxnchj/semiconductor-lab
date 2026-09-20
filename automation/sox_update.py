@@ -1,20 +1,23 @@
 """SOX 回撤指标每日自动更新。
 
-注意：本文件是项目内的参考副本。实际由定时任务执行的副本位于
-daimon blueprint/automations/automation_6a52964f-…/assets/automation.py，
-两者内容保持一致；修改时请同步。
+注意：本文件是项目内的参考副本（会推送到公开仓库，**严禁写本机绝对路径**）。
+实际由定时任务执行的副本位于本机 daimon blueprint/automations/automation_6a52964f-…/assets/automation.py（不入库），
+那里保留本机绝对路径属正常；两份副本除路径解析行外内容保持一致。
 
 抓取费城半导体指数 (^SOX) 最新收盘，计算相对历史高点 (ATH) 的回撤，
 重写知识库 atlas.html 中 AUTO:SOX-STAT / AUTO:SOX-ROW 标记之间的内容。
 失败/数据过期时不改文件，直接抛错让本次运行失败。
 """
 
+import os
 import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-ATLAS = Path("/Volumes/Data/Kimi/Semiconductor-learning/atlas.html")
+# 路径解析：优先环境变量 SEMILAB_ATLAS；否则按仓库结构推导（本脚本位于 <repo>/automation/）
+_repo_default = Path(__file__).resolve().parents[1] / "atlas.html"
+ATLAS = Path(os.environ.get("SEMILAB_ATLAS", _repo_default))
 KNOWN_ATH = 14634.72          # 2026-06-22 收盘历史高点（C5 来源 6）
 KNOWN_ATH_DATE = "2026-06-22"
 STALE_DAYS = 7                # 最新交易日距今超过 7 天视为数据过期

@@ -1,7 +1,7 @@
 # 轨2 · atlas.html 时效性修正清单（Track 2 Fix List）
 
 - 修正日期：2026-09-16
-- 文件：`/Volumes/Data/Kimi/Semiconductor-learning/atlas.html`（单文件知识库，修正前 3,195 行 / 342KB）
+- 文件：`atlas.html`（单文件知识库，修正前 3,195 行 / 342KB）
 - 方式：77 处精确文本替换（脚本校验每处全文件唯一后应用），只改数据与表述，未碰外壳 / 交互 / git
 - 验证：puppeteer 渲染五视图（overview / mem / pkg / eda / lookup）＋四张深卡＋速查表长鑫行，`CONSOLE_ERRORS=0`，截图目检无破版
 
